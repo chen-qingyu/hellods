@@ -41,6 +41,6 @@ String* String_From(const char* chars);
 
 ### 5. C++版本
 
-这个是C语言版本的数据结构库，目标是为了学习，特点是简洁、优雅。
+这个是C版本的数据结构库，目标是学习数据结构，特点是简洁、优雅。
 
-我还写了C++版本的： MDSPP（还在开发中） ，目标是像Python一样方便，特点是简洁、好用、安全。
+我还写了C++版本的： [MDSPP (GitHub)](https://github.com/chen-qingyu/MDSPP) [MDSPP (Gitee)](https://gitee.com/ChobitsY/mdspp) （还在开发中），目标是像Python一样方便，特点是简洁、好用、安全。
