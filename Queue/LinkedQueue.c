@@ -1,7 +1,11 @@
 #include "LinkedQueue.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <limits.h> // INT_MAX
+#include <stdlib.h> // malloc free
+
+#include "../common/check_empty.h"
+#include "../common/check_full.h"
+#include "../common/check_pointer.h"
 
 struct node
 {
@@ -19,16 +23,6 @@ struct queue
 /*******************************
 Helper functions implementation.
 *******************************/
-
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer)
-{
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
 
 /*******************************
 Interface functions implementation.
@@ -72,6 +66,8 @@ bool LinkedQueue_IsEmpty(const Queue* self)
 
 void LinkedQueue_Enqueue(Queue* self, QueueItem data)
 {
+    check_full(self->count, INT_MAX);
+
     struct node* add = (struct node*)malloc(sizeof(struct node));
     check_pointer(add);
 
@@ -86,11 +82,7 @@ void LinkedQueue_Enqueue(Queue* self, QueueItem data)
 
 QueueItem LinkedQueue_Dequeue(Queue* self)
 {
-    if (self->count == 0)
-    {
-        fprintf(stderr, "ERROR: The queue is empty.\n");
-        exit(EXIT_FAILURE);
-    }
+    check_empty(self->count);
 
     struct node* del = self->front->next;
     QueueItem data = del->data;

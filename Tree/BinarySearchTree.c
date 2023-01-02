@@ -1,8 +1,10 @@
 #include "BinarySearchTree.h"
 #include "QueueForTree.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdio.h>  // fprintf stderr
+#include <stdlib.h> // malloc free exit EXIT_FAILURE
+
+#include "../common/check_pointer.h"
 
 struct node
 {
@@ -28,16 +30,6 @@ struct tree
 /*******************************
 Helper functions implementation.
 *******************************/
-
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer)
-{
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
 
 static void destroy_node(struct node* node)
 {

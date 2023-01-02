@@ -1,7 +1,12 @@
 #include "ArrayList.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <limits.h> // INT_MAX
+#include <stdlib.h> // malloc free realloc
+
+#include "../common/check_bounds.h"
+#include "../common/check_empty.h"
+#include "../common/check_full.h"
+#include "../common/check_pointer.h"
 
 struct list
 {
@@ -19,24 +24,12 @@ struct list
 Helper functions implementation.
 *******************************/
 
-// Check whether the index is valid (begin <= pos < end).
-static inline void check_bounds(int pos, int begin, int end)
+// Expand capacity safely.
+static inline void expand_capacity(List* self)
 {
-    if (pos < begin || pos >= end)
-    {
-        fprintf(stderr, "ERROR: Out of range: %d not in [%d, %d)\n", pos, begin, end);
-        exit(EXIT_FAILURE);
-    }
-}
-
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer)
-{
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
+    self->capacity = (self->capacity < INT_MAX / 2) ? self->capacity * 2 : INT_MAX; // double the capacity until INT_MAX
+    self->data = (ListItem*)realloc(self->data, sizeof(ListItem) * self->capacity);
+    check_pointer(self->data);
 }
 
 /*******************************
@@ -93,13 +86,13 @@ int ArrayList_Find(const List* self, ListItem data)
 
 void ArrayList_Insert(List* self, int i, ListItem data)
 {
+    check_full(self->count, INT_MAX);
+
     check_bounds(i, 0, self->count + 1);
 
     if (self->count == self->capacity) // need to expand capacity
     {
-        self->capacity *= 2; // double the capacity
-        self->data = (ListItem*)realloc(self->data, sizeof(ListItem) * self->capacity);
-        check_pointer(self->data);
+        expand_capacity(self);
     }
 
     for (int j = self->count; j > i; j--)
@@ -112,6 +105,8 @@ void ArrayList_Insert(List* self, int i, ListItem data)
 
 void ArrayList_Delete(List* self, int i)
 {
+    check_empty(self->count);
+
     check_bounds(i, 0, self->count);
 
     for (int j = i + 1; j < self->count; j++)

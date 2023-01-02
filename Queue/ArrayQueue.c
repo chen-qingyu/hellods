@@ -1,9 +1,13 @@
 #include "ArrayQueue.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> // malloc free
 
-#define QUEUE_CAPACITY 100
+#include "../common/check_empty.h"
+#include "../common/check_full.h"
+#include "../common/check_pointer.h"
+
+// 为保证入队是严格的 O(1) 时间复杂度，故这里采用固定的容量，而不是动态增长。
+#define QUEUE_CAPACITY 256
 
 struct queue
 {
@@ -15,16 +19,6 @@ struct queue
 /*******************************
 Helper functions implementation.
 *******************************/
-
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer)
-{
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
 
 /*******************************
 Interface functions implementation.
@@ -58,11 +52,7 @@ bool ArrayQueue_IsEmpty(const Queue* self)
 
 void ArrayQueue_Enqueue(Queue* self, QueueItem data)
 {
-    if (ArrayQueue_Size(self) == QUEUE_CAPACITY)
-    {
-        fprintf(stderr, "ERROR: The queue is full.\n");
-        return;
-    }
+    check_full(ArrayQueue_Size(self), QUEUE_CAPACITY);
 
     self->rear = (self->rear + 1) % QUEUE_CAPACITY;
     self->data[self->rear] = data;
@@ -70,11 +60,7 @@ void ArrayQueue_Enqueue(Queue* self, QueueItem data)
 
 QueueItem ArrayQueue_Dequeue(Queue* self)
 {
-    if (ArrayQueue_IsEmpty(self))
-    {
-        fprintf(stderr, "ERROR: The queue is empty.\n");
-        exit(EXIT_FAILURE);
-    }
+    check_empty(ArrayQueue_Size(self));
 
     self->front = (self->front + 1) % QUEUE_CAPACITY;
 

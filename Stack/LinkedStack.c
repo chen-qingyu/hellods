@@ -1,7 +1,11 @@
 #include "LinkedStack.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <limits.h> // INT_MAX
+#include <stdlib.h> // malloc free
+
+#include "../common/check_empty.h"
+#include "../common/check_full.h"
+#include "../common/check_pointer.h"
 
 struct node
 {
@@ -18,16 +22,6 @@ struct stack
 /*******************************
 Helper functions implementation.
 *******************************/
-
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer)
-{
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
 
 /*******************************
 Interface functions implementation.
@@ -67,6 +61,8 @@ bool LinkedStack_IsEmpty(const Stack* self)
 
 void LinkedStack_Push(Stack* self, StackItem data)
 {
+    check_full(self->count, INT_MAX);
+
     struct node* node = (struct node*)malloc(sizeof(struct node));
     check_pointer(node);
 
@@ -79,11 +75,7 @@ void LinkedStack_Push(Stack* self, StackItem data)
 
 StackItem LinkedStack_Pop(Stack* self)
 {
-    if (LinkedStack_IsEmpty(self))
-    {
-        fprintf(stderr, "ERROR: The stack is empty.\n");
-        exit(EXIT_FAILURE);
-    }
+    check_empty(self->count);
 
     struct node* node = self->top;
     self->top = node->next;
@@ -97,11 +89,7 @@ StackItem LinkedStack_Pop(Stack* self)
 
 StackItem LinkedStack_Top(const Stack* self)
 {
-    if (LinkedStack_IsEmpty(self))
-    {
-        fprintf(stderr, "ERROR: The stack is empty.\n");
-        exit(EXIT_FAILURE);
-    }
+    check_empty(self->count);
 
     return self->top->data;
 }

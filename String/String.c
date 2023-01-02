@@ -13,8 +13,13 @@
 #include "String.h"
 
 #include <math.h>   // pow
-#include <stdio.h>  // fprintf
-#include <stdlib.h> // malloc realloc free exit
+#include <stdio.h>  // fprintf stderr
+#include <stdlib.h> // malloc realloc free exit EXIT_FAILURE
+
+#include "../common/check_bounds.h"
+#include "../common/check_empty.h"
+#include "../common/check_full.h"
+#include "../common/check_pointer.h"
 
 /*******************************
  * Type definition.
@@ -66,12 +71,6 @@ enum event
 /*******************************
  * Helper function declaration.
  *******************************/
-
-// Check whether the index is valid (begin <= pos < end).
-static inline void check_bounds(int pos, int begin, int end);
-
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer);
 
 // Use the KMP algorithm to find the position of the pattern.
 static inline int find_pattern(const char* str, const char* pattern, int n, int m);
@@ -542,20 +541,17 @@ void String_Upper(String* self)
 
 void String_Append(String* self, const String* str)
 {
+    check_full(self->count, INT_MAX);
+
+    // TODO: self->count + str->count maybe overflow
     if (self->count + str->count >= self->capacity) // need to expand capacity
     {
         while (self->count + str->count >= self->capacity)
         {
-            self->capacity *= 2;
+            self->capacity = (self->capacity < INT_MAX / 2) ? self->capacity * 2 : INT_MAX; // double the capacity until INT_MAX
         }
-        char* tmp = (char*)malloc(sizeof(char) * self->capacity);
-        check_pointer(tmp);
-        for (int i = 0; i < self->count; i++)
-        {
-            tmp[i] = self->data[i];
-        }
-        free(self->data);
-        self->data = tmp;
+        self->data = (char*)realloc(self->data, sizeof(char) * self->capacity);
+        check_pointer(self->data);
     }
 
     for (int i = 0; i < str->count; i++)
@@ -668,24 +664,6 @@ void String_Clear(String* self)
 /*******************************
  * Helper function definition.
  *******************************/
-
-static inline void check_bounds(int pos, int begin, int end)
-{
-    if (pos < begin || pos >= end)
-    {
-        fprintf(stderr, "ERROR: Out of range: %d not in [%d, %d)\n", pos, begin, end);
-        exit(EXIT_FAILURE);
-    }
-}
-
-static inline void check_pointer(const void* pointer)
-{
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
 
 static inline int find_pattern(const char* str, const char* pattern, int n, int m)
 {

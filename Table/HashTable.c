@@ -1,9 +1,12 @@
 #include "HashTable.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+#include <stdio.h>  // fprintf stderr
+#include <stdlib.h> // malloc free exit EXIT_FAILURE
+#include <string.h> // strcmp strlen strcpy
 
+#include "../common/check_pointer.h"
+
+// TODO 动态增长
 #define HASHTABLE_CAPACITY 17
 
 typedef enum
@@ -23,16 +26,6 @@ struct item
 /*******************************
 Helper functions implementation.
 *******************************/
-
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer)
-{
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
 
 static int hash(TableKey key)
 {

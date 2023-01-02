@@ -1,8 +1,9 @@
 #include "MatrixGraph.h"
 #include "../Queue/ArrayQueue.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h> // malloc free
+
+#include "../common/check_pointer.h"
 
 #define NOT_FOUND (-1)
 
@@ -20,16 +21,6 @@ static bool visited[VERTEX_NUMBER] = {false};
 /*******************************
 Helper functions implementation.
 *******************************/
-
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer)
-{
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
 
 static void clean_visited_flag(void)
 {

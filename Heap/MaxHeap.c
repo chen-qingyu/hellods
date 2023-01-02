@@ -1,7 +1,11 @@
 #include "MaxHeap.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <limits.h> // INT_MAX
+#include <stdlib.h> // malloc free realloc
+
+#include "../common/check_empty.h"
+#include "../common/check_full.h"
+#include "../common/check_pointer.h"
 
 #define MAX_ITEM INT_MAX // max value of HeapItem
 
@@ -16,14 +20,12 @@ struct heap
 Helper functions implementation.
 *******************************/
 
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer)
+// Expand capacity safely.
+static inline void expand_capacity(Heap* self)
 {
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
+    self->capacity = (self->capacity < INT_MAX / 2) ? self->capacity * 2 : INT_MAX; // double the capacity until INT_MAX
+    self->data = (HeapItem*)realloc(self->data, sizeof(HeapItem) * self->capacity);
+    check_pointer(self->data);
 }
 
 /*******************************
@@ -63,11 +65,11 @@ bool MaxHeap_IsEmpty(const Heap* self)
 
 void MaxHeap_Push(Heap* self, HeapItem data)
 {
+    check_full(self->count, INT_MAX);
+
     if (self->count == self->capacity) // need to expand capacity
     {
-        self->capacity *= 2; // double the capacity
-        self->data = (HeapItem*)realloc(self->data, sizeof(HeapItem) * self->capacity);
-        check_pointer(self->data);
+        expand_capacity(self);
     }
 
     int pos;
@@ -80,11 +82,7 @@ void MaxHeap_Push(Heap* self, HeapItem data)
 
 HeapItem MaxHeap_Pop(Heap* self)
 {
-    if (self->count == 0)
-    {
-        fprintf(stderr, "ERROR: The heap is empty.\n");
-        exit(EXIT_FAILURE);
-    }
+    check_empty(self->count);
 
     HeapItem max_item = self->data[1];
     HeapItem tmp = self->data[self->count--];
@@ -114,11 +112,7 @@ HeapItem MaxHeap_Pop(Heap* self)
 
 HeapItem MaxHeap_Top(Heap* self)
 {
-    if (self->count == 0)
-    {
-        fprintf(stderr, "ERROR: The heap is empty.\n");
-        exit(EXIT_FAILURE);
-    }
+    check_empty(self->count);
 
     return self->data[1];
 }

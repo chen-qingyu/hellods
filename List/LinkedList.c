@@ -1,7 +1,12 @@
 #include "LinkedList.h"
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <limits.h> // INT_MAX
+#include <stdlib.h> // malloc free
+
+#include "../common/check_bounds.h"
+#include "../common/check_empty.h"
+#include "../common/check_full.h"
+#include "../common/check_pointer.h"
 
 struct node
 {
@@ -24,26 +29,6 @@ struct list
 /*******************************
 Helper functions implementation.
 *******************************/
-
-// Check whether the index is valid (begin <= pos < end).
-static inline void check_bounds(int pos, int begin, int end)
-{
-    if (pos < begin || pos >= end)
-    {
-        fprintf(stderr, "ERROR: Out of range: %d not in [%d, %d)\n", pos, begin, end);
-        exit(EXIT_FAILURE);
-    }
-}
-
-// Check whether the pointer is a non-null pointer.
-static inline void check_pointer(const void* pointer)
-{
-    if (pointer == NULL)
-    {
-        fprintf(stderr, "ERROR: Memory allocation failed.\n");
-        exit(EXIT_FAILURE);
-    }
-}
 
 /*******************************
 Interface functions implementation.
@@ -115,6 +100,8 @@ int LinkedList_Find(const List* self, ListItem data)
 
 void LinkedList_Insert(List* self, int i, ListItem data)
 {
+    check_full(self->count, INT_MAX);
+
     check_bounds(i, 0, self->count + 1);
 
     struct node* node = (struct node*)malloc(sizeof(struct node));
@@ -134,6 +121,8 @@ void LinkedList_Insert(List* self, int i, ListItem data)
 
 void LinkedList_Delete(List* self, int i)
 {
+    check_empty(self->count);
+
     check_bounds(i, 0, self->count);
 
     struct node* tmp = self->header;
