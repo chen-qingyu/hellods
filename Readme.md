@@ -3,10 +3,13 @@
 ### 1. 基本特性
 
 - 语言：采用标准C语言编写，最低兼容版本： C99 。
-- 目标：学习数据结构。
-- 特点：简洁、优雅。
+- 目标：实现完整而标准的数据结构。
 - 模块：Graph, Heap, List, Queue, Stack, String, Table, Tree.
+- 简洁：Stay simple, stay young. 在保证好用和安全的前提下，尽量简洁，便于维护和阅读。
+- 好用：提供了许多方便的函数，比如String类提供了像Python的str那样的替换、分割、查找等操作，比如List类和String类都支持像Python那样的负数下标等等。当然，功能与标准库重合的部分的性能肯定比不上标准库，但是简单用用是完全没问题的。唯一的缺点，就是不支持泛型，所以我还写了C++版本的，目标是像Python的内置类型一样好用又优雅。
+- 安全：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查。这么多检查，肯定会对性能有一定影响，但是这个库追求的并不是性能，而是简洁，好用和安全。
 - 封装：经过我的精心设计，使用者无法通过主函数访问或修改到对象（结构体）的内部变量，几乎可以说等同于实现了 private 的效果。
+- 优雅：我用了一些算法上的小技巧——比如独热码思想+有限状态机实现字符串转数字、内部状态指针加速双链表元素下标访问、位运算防止溢出等等。
 
 ### 2. 面向对象
 
@@ -41,6 +44,6 @@ String* String_From(const char* chars);
 
 ### 5. C++版本
 
-这个是C版本的数据结构库，目标是学习数据结构，特点是简洁、优雅。
+这个是C版本的数据结构库，目标是实现完整而标准的数据结构。
 
-我还写了C++版本的： [MDSPP (GitHub)](https://github.com/chen-qingyu/MDSPP) [MDSPP (Gitee)](https://gitee.com/ChobitsY/mdspp) （还在开发中），目标是像Python一样方便，特点是简洁、好用、安全。
+我还写了C++版本的： [MDSPP (GitHub)](https://github.com/chen-qingyu/MDSPP) [MDSPP (Gitee)](https://gitee.com/ChobitsY/mdspp) （还在开发中），目标是像Python的内置类型一样好用又优雅。
