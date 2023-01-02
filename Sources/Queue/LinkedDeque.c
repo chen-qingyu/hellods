@@ -1,0 +1,69 @@
+#include "LinkedDeque.h"
+#include "../List/DoublyLinkedList.h"
+
+#include <stdlib.h> // malloc free
+
+#include "../common/check_pointer.h"
+
+struct deque
+{
+    List* dlist;
+};
+
+/*******************************
+Helper functions implementation.
+*******************************/
+
+/*******************************
+Interface functions implementation.
+*******************************/
+
+Deque* LinkedDeque_Create(void)
+{
+    Deque* deque = (Deque*)malloc(sizeof(Deque));
+    check_pointer(deque);
+
+    deque->dlist = DoublyLinkedList_Create();
+
+    return deque;
+}
+
+void LinkedDeque_Destroy(Deque* self)
+{
+    DoublyLinkedList_Destroy(self->dlist);
+    free(self);
+}
+
+int LinkedDeque_Size(const Deque* self)
+{
+    return DoublyLinkedList_Size(self->dlist);
+}
+
+bool LinkedDeque_IsEmpty(const Deque* self)
+{
+    return DoublyLinkedList_IsEmpty(self->dlist);
+}
+
+void LinkedDeque_PushFront(Deque* self, DequeItem data)
+{
+    DoublyLinkedList_Insert(self->dlist, 0, data);
+}
+
+void LinkedDeque_PushBack(Deque* self, DequeItem data)
+{
+    DoublyLinkedList_Insert(self->dlist, DoublyLinkedList_Size(self->dlist), data);
+}
+
+DequeItem LinkedDeque_PopFront(Deque* self)
+{
+    DequeItem data = DoublyLinkedList_At(self->dlist, 0);
+    DoublyLinkedList_Delete(self->dlist, 0);
+    return data;
+}
+
+DequeItem LinkedDeque_PopBack(Deque* self)
+{
+    DequeItem data = DoublyLinkedList_At(self->dlist, DoublyLinkedList_Size(self->dlist) - 1);
+    DoublyLinkedList_Delete(self->dlist, DoublyLinkedList_Size(self->dlist) - 1);
+    return data;
+}

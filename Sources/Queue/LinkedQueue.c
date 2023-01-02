@@ -1,7 +1,7 @@
 #include "LinkedQueue.h"
 
 #include <limits.h> // INT_MAX
-#include <stdlib.h> // malloc free
+#include <stdlib.h> // malloc free NULL
 
 #include "../common/check_empty.h"
 #include "../common/check_full.h"

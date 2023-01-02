@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 // TestGraph
 void TestMatrixGraph(void);
 
@@ -7,10 +9,12 @@ void TestMaxHeap(void);
 // TestList
 void TestArrayList(void);
 void TestLinkedList(void);
+void TestDoublyLinkedList(void);
 
 // TestQueue
 void TestArrayQueue(void);
 void TestLinkedQueue(void);
+void TestLinkedDeque(void);
 
 // TestStack
 void TestArrayStack(void);
@@ -27,32 +31,38 @@ void TestBinarySearchTree(void);
 
 int main(void)
 {
-    // TestGraph
+    printf("\n=== Test Start ===\n");
+
+    printf("\nTest Graph...\n");
     TestMatrixGraph();
 
-    // TestHeap
+    printf("\nTest Heap...\n");
     TestMaxHeap();
 
-    // TestList
+    printf("\nTest List...\n");
     TestArrayList();
     TestLinkedList();
+    TestDoublyLinkedList();
 
-    // TestQueue
+    printf("\nTest Queue...\n");
     TestArrayQueue();
     TestLinkedQueue();
+    TestLinkedDeque();
 
-    // TestStack
+    printf("\nTest Stack...\n");
     TestArrayStack();
     TestLinkedStack();
 
-    // TestString
+    printf("\nTest String...\n");
     TestString();
 
-    // TestTable
+    printf("\nTest Table...\n");
     TestHashTable();
 
-    // TestTree
+    printf("\nTest Tree...\n");
     TestBinarySearchTree();
+
+    printf("\n=== Test Finish ===\n");
 
     return 0;
 }

@@ -8,8 +8,8 @@ test: Tests/MainTest.exe
 MainTest = Tests/MainTest.c
 TestGraph = Tests/TestGraph.c Sources/Graph/MatrixGraph.o
 TestHeap = Tests/TestHeap.c Sources/Heap/MaxHeap.o
-TestList = Tests/TestList.c Sources/List/ArrayList.o Sources/List/LinkedList.o
-TestQueue = Tests/TestQueue.c Sources/Queue/ArrayQueue.o Sources/Queue/LinkedQueue.o
+TestList = Tests/TestList.c Sources/List/ArrayList.o Sources/List/LinkedList.o Sources/List/DoublyLinkedList.o
+TestQueue = Tests/TestQueue.c Sources/Queue/ArrayQueue.o Sources/Queue/LinkedQueue.o Sources/Queue/LinkedDeque.o
 TestStack = Tests/TestStack.c Sources/Stack/ArrayStack.o Sources/Stack/LinkedStack.o
 TestString = Tests/TestString.c Sources/String/String.o
 TestTable = Tests/TestTable.c Sources/Table/HashTable.o
@@ -36,6 +36,9 @@ Sources/List/ArrayList.o: Sources/List/ArrayList.c Sources/List/ArrayList.h
 Sources/List/LinkedList.o: Sources/List/LinkedList.c Sources/List/LinkedList.h
 	gcc -Wall -c Sources/List/LinkedList.c -o Sources/List/LinkedList.o
 
+Sources/List/DoublyLinkedList.o: Sources/List/DoublyLinkedList.c Sources/List/DoublyLinkedList.h
+	gcc -Wall -c Sources/List/DoublyLinkedList.c -o Sources/List/DoublyLinkedList.o
+
 # Queue
 
 Sources/Queue/ArrayQueue.o: Sources/Queue/ArrayQueue.c Sources/Queue/ArrayQueue.h
@@ -43,6 +46,9 @@ Sources/Queue/ArrayQueue.o: Sources/Queue/ArrayQueue.c Sources/Queue/ArrayQueue.
 
 Sources/Queue/LinkedQueue.o: Sources/Queue/LinkedQueue.c Sources/Queue/LinkedQueue.h
 	gcc -Wall -c Sources/Queue/LinkedQueue.c -o Sources/Queue/LinkedQueue.o
+
+Sources/Queue/LinkedDeque.o: Sources/Queue/LinkedDeque.c Sources/Queue/LinkedDeque.h
+	gcc -Wall -c Sources/Queue/LinkedDeque.c -o Sources/Queue/LinkedDeque.o
 
 # Stack
 

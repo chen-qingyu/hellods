@@ -1,4 +1,5 @@
 #include "../Sources/Queue/ArrayQueue.h"
+#include "../Sources/Queue/LinkedDeque.h"
 #include "../Sources/Queue/LinkedQueue.h"
 
 #include <assert.h>
@@ -56,4 +57,45 @@ void TestLinkedQueue(void)
     LinkedQueue_Destroy(queue);
 
     printf("Linked Queue Test OK.\n");
+}
+
+void TestLinkedDeque(void)
+{
+    Deque* queue = LinkedDeque_Create();
+    assert(LinkedDeque_Size(queue) == 0);
+    assert(LinkedDeque_IsEmpty(queue) == true);
+
+    DequeItem arr[] = {1, 2, 3, 4};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    for (int i = 0; i < arr_size; i++)
+    {
+        LinkedDeque_PushBack(queue, arr[i]);
+    }
+    assert(LinkedDeque_Size(queue) == 4);
+    assert(LinkedDeque_IsEmpty(queue) == false);
+
+    for (int i = 0; i < arr_size; i++)
+    {
+        assert(LinkedDeque_PopFront(queue) == i + 1);
+    }
+    assert(LinkedDeque_Size(queue) == 0);
+    assert(LinkedDeque_IsEmpty(queue) == true);
+
+    for (int i = 0; i < arr_size; i++)
+    {
+        LinkedDeque_PushFront(queue, arr[i]);
+    }
+    assert(LinkedDeque_Size(queue) == 4);
+    assert(LinkedDeque_IsEmpty(queue) == false);
+
+    for (int i = 0; i < arr_size; i++)
+    {
+        assert(LinkedDeque_PopBack(queue) == i + 1);
+    }
+    assert(LinkedDeque_Size(queue) == 0);
+    assert(LinkedDeque_IsEmpty(queue) == true);
+
+    LinkedDeque_Destroy(queue);
+
+    printf("Linked Deque Test OK.\n");
 }

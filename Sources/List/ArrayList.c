@@ -65,7 +65,7 @@ bool ArrayList_IsEmpty(const List* self)
     return self->count == 0;
 }
 
-ListItem ArrayList_At(const List* self, int i) // self[i]
+ListItem ArrayList_At(const List* self, int i) // list[i]
 {
     check_bounds(i, -self->count, self->count);
 

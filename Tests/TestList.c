@@ -1,4 +1,5 @@
 #include "../Sources/List/ArrayList.h"
+#include "../Sources/List/DoublyLinkedList.h"
 #include "../Sources/List/LinkedList.h"
 
 #include <assert.h>
@@ -140,4 +141,68 @@ void TestLinkedList(void)
     LinkedList_Destroy(list2);
 
     printf("Linked List Test OK.\n");
+}
+
+void TestDoublyLinkedList(void)
+{
+    List* list1 = DoublyLinkedList_Create();
+    assert(DoublyLinkedList_Size(list1) == 0);
+    assert(DoublyLinkedList_IsEmpty(list1) == true);
+
+    ListItem arr[] = {1, 2, 3, 4};
+    int arr_size = sizeof(arr) / sizeof(arr[0]);
+    for (int i = 0; i < arr_size; i++)
+    {
+        DoublyLinkedList_Insert(list1, i, arr[i]);
+        assert(DoublyLinkedList_At(list1, i) == i + 1);
+    }
+    assert(DoublyLinkedList_Size(list1) == 4);
+    assert(DoublyLinkedList_IsEmpty(list1) == false);
+    assert(DoublyLinkedList_At(list1, -1) == 4);
+
+    DoublyLinkedList_Traverse(list1, Visit);
+    assert(strcmp(str, "1 2 3 4 ") == 0);
+    memset(str, 0, sizeof(str));
+
+    DoublyLinkedList_Reverse(list1);
+    DoublyLinkedList_Traverse(list1, Visit);
+    assert(strcmp(str, "4 3 2 1 ") == 0);
+    memset(str, 0, sizeof(str));
+
+    List* list2 = DoublyLinkedList_Create();
+    ListItem arr2[] = {233, 666, 888, 999};
+    int arr2Size = sizeof(arr2) / sizeof(arr2[0]);
+    for (int i = 0; i < arr2Size; i++)
+    {
+        DoublyLinkedList_Insert(list2, i, arr2[i]);
+    }
+
+    for (int i = 0; i < arr2Size; ++i)
+    {
+        DoublyLinkedList_Insert(list1, i, DoublyLinkedList_At(list2, i));
+    }
+    DoublyLinkedList_Traverse(list1, Visit);
+    assert(strcmp(str, "233 666 888 999 4 3 2 1 ") == 0);
+    memset(str, 0, sizeof(str));
+
+    assert(DoublyLinkedList_Size(list1) == 8);
+    assert(DoublyLinkedList_IsEmpty(list1) == false);
+
+    assert(DoublyLinkedList_Find(list1, 233) == 0);
+    assert(DoublyLinkedList_Find(list1, 999) == 3);
+    assert(DoublyLinkedList_Find(list1, 1) == 7);
+    assert(DoublyLinkedList_Find(list1, 0) == LIST_NOT_FOUND);
+
+    int length = DoublyLinkedList_Size(list1);
+    for (int i = 0; i < length; i++)
+    {
+        DoublyLinkedList_Delete(list1, 0);
+    }
+    assert(DoublyLinkedList_Size(list1) == 0);
+    assert(DoublyLinkedList_IsEmpty(list1) == true);
+
+    DoublyLinkedList_Destroy(list1);
+    DoublyLinkedList_Destroy(list2);
+
+    printf("Doubly Linked List Test OK.\n");
 }

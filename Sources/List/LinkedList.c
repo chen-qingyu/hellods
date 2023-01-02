@@ -1,7 +1,7 @@
 #include "LinkedList.h"
 
 #include <limits.h> // INT_MAX
-#include <stdlib.h> // malloc free
+#include <stdlib.h> // malloc free NULL
 
 #include "../common/check_bounds.h"
 #include "../common/check_empty.h"
@@ -68,7 +68,7 @@ bool LinkedList_IsEmpty(const List* self)
     return self->count == 0;
 }
 
-ListItem LinkedList_At(const List* self, int i) // self[i]
+ListItem LinkedList_At(const List* self, int i) // list[i]
 {
     check_bounds(i, -self->count, self->count);
 
@@ -95,7 +95,7 @@ int LinkedList_Find(const List* self, ListItem data)
         index++;
     }
 
-    return current ? index : LIST_NOT_FOUND;
+    return current != NULL ? index : LIST_NOT_FOUND;
 }
 
 void LinkedList_Insert(List* self, int i, ListItem data)

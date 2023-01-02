@@ -14,7 +14,7 @@
 
 #include <math.h>   // pow
 #include <stdio.h>  // fprintf stderr
-#include <stdlib.h> // malloc realloc free exit EXIT_FAILURE
+#include <stdlib.h> // malloc realloc free exit EXIT_FAILURE NULL
 
 #include "../common/check_bounds.h"
 #include "../common/check_empty.h"
@@ -541,9 +541,8 @@ void String_Upper(String* self)
 
 void String_Append(String* self, const String* str)
 {
-    check_full(self->count, INT_MAX);
+    check_full((self->count & str->count) + ((self->count ^ str->count) >> 1), INT_MAX / 2); // (self->count + str->count) / 2 with no overflow
 
-    // TODO: self->count + str->count maybe overflow
     if (self->count + str->count >= self->capacity) // need to expand capacity
     {
         while (self->count + str->count >= self->capacity)

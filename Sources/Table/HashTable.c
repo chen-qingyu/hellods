@@ -1,7 +1,7 @@
 #include "HashTable.h"
 
 #include <stdio.h>  // fprintf stderr
-#include <stdlib.h> // malloc free exit EXIT_FAILURE
+#include <stdlib.h> // malloc free exit EXIT_FAILURE NULL
 #include <string.h> // strcmp strlen strcpy
 
 #include "../common/check_pointer.h"

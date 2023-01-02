@@ -1,5 +1,5 @@
 1. 进一步学习理论
 2. Doxygen
 3. 进一步完善：
-    - 实现 DoublyLinkedList, MinHeap, AVLTree, ListGraph, ArrayDeque(参考Java的ArrayDeque源码), LinkedDeque(里面组合一个DoublyLinkedList) 等
+    - 实现 MinHeap, AVLTree, ListGraph, ArrayDeque(参考Java的ArrayDeque源码) 等
     - 重写 MatrixGraph 等
