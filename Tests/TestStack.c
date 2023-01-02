@@ -1,5 +1,5 @@
-#include "ArrayStack.h"
-#include "LinkedStack.h"
+#include "../Sources/Stack/ArrayStack.h"
+#include "../Sources/Stack/LinkedStack.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -66,12 +66,4 @@ void TestLinkedStack(void)
     LinkedStack_Destroy(stack);
 
     printf("Linked Stack Test OK.\n");
-}
-
-int main(void)
-{
-    TestArrayStack();
-    TestLinkedStack();
-
-    return 0;
 }

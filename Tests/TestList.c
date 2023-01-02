@@ -1,13 +1,13 @@
-#include "ArrayList.h"
-#include "LinkedList.h"
+#include "../Sources/List/ArrayList.h"
+#include "../Sources/List/LinkedList.h"
 
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
 
-char str[64] = {0};
+static char str[64] = {0};
 
-void Visit(ListItem n)
+static void Visit(ListItem n)
 {
     char tmp[8] = {0};
     sprintf(tmp, "%d ", n);
@@ -140,12 +140,4 @@ void TestLinkedList(void)
     LinkedList_Destroy(list2);
 
     printf("Linked List Test OK.\n");
-}
-
-int main(void)
-{
-    TestArrayList();
-    TestLinkedList();
-
-    return 0;
 }

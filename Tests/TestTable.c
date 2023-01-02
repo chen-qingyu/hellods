@@ -1,4 +1,4 @@
-#include "HashTable.h"
+#include "../Sources/Table/HashTable.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -26,11 +26,4 @@ void TestHashTable()
     HashTable_Destroy(table);
 
     printf("Hash Table Test OK.\n");
-}
-
-int main(void)
-{
-    TestHashTable();
-
-    return 0;
 }

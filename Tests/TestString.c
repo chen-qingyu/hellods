@@ -1,4 +1,4 @@
-#include "String.h"
+#include "../Sources/String/String.h"
 
 #include <assert.h>
 #include <float.h>
@@ -9,7 +9,7 @@ bool eq(const double a, const double b)
     return fabs(a - b) < DBL_EPSILON;
 }
 
-int main()
+void TestString(void)
 {
     // String_Create() String_Size() String_IsEmpty() String_Set()
 
@@ -462,21 +462,4 @@ int main()
     String_Destroy(s7);
 
     printf("String Test OK.\n");
-
-    return 0;
 }
-
-/*
-2022.11.04
-Test OK, and there is no memory leak:
-~~Dr.M~~
-~~Dr.M~~ NO ERRORS FOUND:
-~~Dr.M~~       0 unique,     0 total unaddressable access(es)
-~~Dr.M~~       0 unique,     0 total uninitialized access(es)
-~~Dr.M~~       0 unique,     0 total invalid heap argument(s)
-~~Dr.M~~       0 unique,     0 total GDI usage error(s)
-~~Dr.M~~       0 unique,     0 total handle leak(s)
-~~Dr.M~~       0 unique,     0 total warning(s)
-~~Dr.M~~       0 unique,     0 total,      0 byte(s) of leak(s)
-~~Dr.M~~       0 unique,     0 total,      0 byte(s) of possible leak(s)
-*/

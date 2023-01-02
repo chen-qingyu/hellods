@@ -1,4 +1,4 @@
-#include "MaxHeap.h"
+#include "../Sources/Heap/MaxHeap.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -31,11 +31,4 @@ void TestMaxHeap(void)
     MaxHeap_Destroy(heap);
 
     printf("Max Heap Test OK.\n");
-}
-
-int main(void)
-{
-    TestMaxHeap();
-
-    return 0;
 }

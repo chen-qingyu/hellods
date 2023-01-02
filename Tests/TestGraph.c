@@ -1,4 +1,4 @@
-#include "MatrixGraph.h"
+#include "../Sources/Graph/MatrixGraph.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -89,11 +89,4 @@ void TestMatrixGraph(void)
     MatrixGraph_Destroy(G);
 
     printf("Matrix Graph Test OK.\n");
-}
-
-int main(void)
-{
-    TestMatrixGraph();
-
-    return 0;
 }

@@ -1,12 +1,12 @@
-#include "BinarySearchTree.h"
+#include "../Sources/Tree/BinarySearchTree.h"
 
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
 
-char str[64] = {0};
+static char str[64] = {0};
 
-void Visit(TreeItem n)
+static void Visit(TreeItem n)
 {
     char tmp[8] = {0};
     sprintf(tmp, "%d ", n);
@@ -76,11 +76,4 @@ void TestBinarySearchTree()
     BinarySearchTree_Destroy(tree);
 
     printf("Binary Search Tree Test OK.\n");
-}
-
-int main(void)
-{
-    TestBinarySearchTree();
-
-    return 0;
 }

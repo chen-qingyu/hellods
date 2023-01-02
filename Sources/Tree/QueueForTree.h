@@ -9,7 +9,7 @@
  *
  * 学习数据结构用。
  * C语言不支持泛型，这里需要用到以树节点作为元素的队列。
- * 只是改了一下 typedef 。
+ * 只是改了一下 typedef 和函数名。
  */
 
 #ifndef QUEUEFORTREE_H
@@ -26,14 +26,14 @@ typedef struct queue Queue;
  *
  * @return 一个指向空队列的指针
  */
-Queue* ArrayQueue_Create(void);
+Queue* QueueForTree_Create(void);
 
 /**
  * @brief 销毁一个队列
  *
  * @param self 一个指向待销毁队列的指针
  */
-void ArrayQueue_Destroy(Queue* self);
+void QueueForTree_Destroy(Queue* self);
 
 /**
  * @brief 求队列的长度
@@ -41,7 +41,7 @@ void ArrayQueue_Destroy(Queue* self);
  * @param self 一个指向队列的指针
  * @return 队列长度
  */
-int ArrayQueue_Size(const Queue* self);
+int QueueForTree_Size(const Queue* self);
 
 /**
  * @brief 判断队列是否已空
@@ -49,7 +49,7 @@ int ArrayQueue_Size(const Queue* self);
  * @param self 一个指向队列的指针
  * @return 如果队列已空则返回 true ，否则返回 false
  */
-bool ArrayQueue_IsEmpty(const Queue* self);
+bool QueueForTree_IsEmpty(const Queue* self);
 
 /**
  * @brief 入队，将元素 data 插入到队列的尾部
@@ -57,7 +57,7 @@ bool ArrayQueue_IsEmpty(const Queue* self);
  * @param self 一个指向队列的指针
  * @param data 一个待入队的元素
  */
-void ArrayQueue_Enqueue(Queue* self, QueueItem data);
+void QueueForTree_Enqueue(Queue* self, QueueItem data);
 
 /**
  * @brief 出队，将队列的队首元素出队
@@ -65,6 +65,6 @@ void ArrayQueue_Enqueue(Queue* self, QueueItem data);
  * @param self 一个指向队列的指针
  * @return 队首元素
  */
-QueueItem ArrayQueue_Dequeue(Queue* self);
+QueueItem QueueForTree_Dequeue(Queue* self);
 
 #endif // QUEUEFORTREE_H

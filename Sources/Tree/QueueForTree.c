@@ -24,7 +24,7 @@ Helper functions implementation.
 Interface functions implementation.
 *******************************/
 
-Queue* ArrayQueue_Create(void)
+Queue* QueueForTree_Create(void)
 {
     Queue* queue = (Queue*)malloc(sizeof(Queue));
     check_pointer(queue);
@@ -35,32 +35,32 @@ Queue* ArrayQueue_Create(void)
     return queue;
 }
 
-void ArrayQueue_Destroy(Queue* self)
+void QueueForTree_Destroy(Queue* self)
 {
     free(self);
 }
 
-int ArrayQueue_Size(const Queue* self)
+int QueueForTree_Size(const Queue* self)
 {
     return (self->rear - self->front + (QUEUE_CAPACITY + 1)) % (QUEUE_CAPACITY + 1);
 }
 
-bool ArrayQueue_IsEmpty(const Queue* self)
+bool QueueForTree_IsEmpty(const Queue* self)
 {
-    return ArrayQueue_Size(self) == 0;
+    return QueueForTree_Size(self) == 0;
 }
 
-void ArrayQueue_Enqueue(Queue* self, QueueItem data)
+void QueueForTree_Enqueue(Queue* self, QueueItem data)
 {
-    check_full(ArrayQueue_Size(self), QUEUE_CAPACITY);
+    check_full(QueueForTree_Size(self), QUEUE_CAPACITY);
 
     self->rear = (self->rear + 1) % QUEUE_CAPACITY;
     self->data[self->rear] = data;
 }
 
-QueueItem ArrayQueue_Dequeue(Queue* self)
+QueueItem QueueForTree_Dequeue(Queue* self)
 {
-    check_empty(ArrayQueue_Size(self));
+    check_empty(QueueForTree_Size(self));
 
     self->front = (self->front + 1) % QUEUE_CAPACITY;
 

@@ -1,5 +1,5 @@
-#include "ArrayQueue.h"
-#include "LinkedQueue.h"
+#include "../Sources/Queue/ArrayQueue.h"
+#include "../Sources/Queue/LinkedQueue.h"
 
 #include <assert.h>
 #include <stdio.h>
@@ -56,12 +56,4 @@ void TestLinkedQueue(void)
     LinkedQueue_Destroy(queue);
 
     printf("Linked Queue Test OK.\n");
-}
-
-int main(void)
-{
-    TestArrayQueue();
-    TestLinkedQueue();
-
-    return 0;
 }

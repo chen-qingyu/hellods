@@ -73,22 +73,22 @@ static void traverse_node(struct node* node, traverse_t type, void (*p_trav)(Tre
 
             case LEVEL_ORDER:
             {
-                Queue* queue = ArrayQueue_Create();
-                ArrayQueue_Enqueue(queue, node);
-                while (!ArrayQueue_IsEmpty(queue))
+                Queue* queue = QueueForTree_Create();
+                QueueForTree_Enqueue(queue, node);
+                while (!QueueForTree_IsEmpty(queue))
                 {
-                    node = ArrayQueue_Dequeue(queue);
+                    node = QueueForTree_Dequeue(queue);
                     p_trav(node->data);
                     if (node->left)
                     {
-                        ArrayQueue_Enqueue(queue, node->left);
+                        QueueForTree_Enqueue(queue, node->left);
                     }
                     if (node->right)
                     {
-                        ArrayQueue_Enqueue(queue, node->right);
+                        QueueForTree_Enqueue(queue, node->right);
                     }
                 }
-                ArrayQueue_Destroy(queue);
+                QueueForTree_Destroy(queue);
                 break;
             }
 

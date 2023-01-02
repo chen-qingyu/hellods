@@ -1,7 +1,5 @@
 1. 进一步学习理论
-2. 上 GoogleTest（兼容C++：比如方法参数第一个是self，而不是this，不会和C++冲突）
-3. DrMemory
-4. Doxygen
-5. 进一步完善：
+2. Doxygen
+3. 进一步完善：
     - 实现 DoublyLinkedList, MinHeap, AVLTree, ListGraph, ArrayDeque(参考Java的ArrayDeque源码), LinkedDeque(里面组合一个DoublyLinkedList) 等
     - 重写 MatrixGraph 等

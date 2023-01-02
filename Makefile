@@ -1,108 +1,76 @@
 # Test all
 
-test: TestTree TestTable TestList TestHeap TestQueue TestStack TestGraph TestString
+test: Tests/MainTest.exe
+	./Tests/MainTest.exe
 
-# Tree
+# Tests
 
-TestTree: Tree/TestTree.exe
-	./Tree/TestTree.exe
+MainTest = Tests/MainTest.c
+TestGraph = Tests/TestGraph.c Sources/Graph/MatrixGraph.o
+TestHeap = Tests/TestHeap.c Sources/Heap/MaxHeap.o
+TestList = Tests/TestList.c Sources/List/ArrayList.o Sources/List/LinkedList.o
+TestQueue = Tests/TestQueue.c Sources/Queue/ArrayQueue.o Sources/Queue/LinkedQueue.o
+TestStack = Tests/TestStack.c Sources/Stack/ArrayStack.o Sources/Stack/LinkedStack.o
+TestString = Tests/TestString.c Sources/String/String.o
+TestTable = Tests/TestTable.c Sources/Table/HashTable.o
+TestTree = Tests/TestTree.c Sources/Tree/BinarySearchTree.o Sources/Tree/QueueForTree.o
 
-Tree/TestTree.exe: Tree/TestTree.c Tree/BinarySearchTree.o Tree/QueueForTree.o # need QueueForTree
-	gcc -Wall Tree/TestTree.c Tree/BinarySearchTree.o Tree/QueueForTree.o -o Tree/TestTree.exe
-
-Tree/BinarySearchTree.o: Tree/BinarySearchTree.c Tree/BinarySearchTree.h
-	gcc -Wall -c Tree/BinarySearchTree.c -o Tree/BinarySearchTree.o
-
-Tree/QueueForTree.o: Tree/QueueForTree.h Tree/QueueForTree.c
-	gcc -Wall -c Tree/QueueForTree.c -o Tree/QueueForTree.o
-
-# Table
-
-TestTable: Table/TestTable.exe
-	./Table/TestTable.exe
-
-Table/TestTable.exe: Table/TestTable.c Table/HashTable.o
-	gcc -Wall Table/TestTable.c Table/HashTable.o -o Table/TestTable.exe
-
-Table/HashTable.o: Table/HashTable.c Table/HashTable.h
-	gcc -Wall -c Table/HashTable.c -o Table/HashTable.o
-
-# List
-
-TestList: List/TestList.exe
-	./List/TestList.exe
-
-List/TestList.exe: List/TestList.c List/ArrayList.o List/LinkedList.o
-	gcc -Wall List/TestList.c List/ArrayList.o List/LinkedList.o -o List/TestList.exe
-
-List/ArrayList.o: List/ArrayList.c List/ArrayList.h
-	gcc -Wall -c List/ArrayList.c -o List/ArrayList.o
-
-List/LinkedList.o: List/LinkedList.c List/LinkedList.h
-	gcc -Wall -c List/LinkedList.c -o List/LinkedList.o
-
-# Heap
-
-TestHeap: Heap/TestHeap.exe
-	./Heap/TestHeap.exe
-
-Heap/TestHeap.exe: Heap/TestHeap.c Heap/MaxHeap.o
-	gcc -Wall Heap/TestHeap.c Heap/MaxHeap.o -o Heap/TestHeap.exe
-
-Heap/MaxHeap.o: Heap/MaxHeap.c Heap/MaxHeap.h
-	gcc -Wall -c Heap/MaxHeap.c -o Heap/MaxHeap.o
-
-# Queue
-
-TestQueue: Queue/TestQueue.exe
-	./Queue/TestQueue.exe
-
-Queue/TestQueue.exe: Queue/TestQueue.c Queue/ArrayQueue.o Queue/LinkedQueue.o
-	gcc -Wall Queue/TestQueue.c Queue/ArrayQueue.o Queue/LinkedQueue.o -o Queue/TestQueue.exe
-
-Queue/ArrayQueue.o: Queue/ArrayQueue.c Queue/ArrayQueue.h
-	gcc -Wall -c Queue/ArrayQueue.c -o Queue/ArrayQueue.o
-
-Queue/LinkedQueue.o: Queue/LinkedQueue.c Queue/LinkedQueue.h
-	gcc -Wall -c Queue/LinkedQueue.c -o Queue/LinkedQueue.o
-
-# Stack
-
-TestStack: Stack/TestStack.exe
-	./Stack/TestStack.exe
-
-Stack/TestStack.exe: Stack/TestStack.c Stack/ArrayStack.o Stack/LinkedStack.o
-	gcc -Wall Stack/TestStack.c Stack/ArrayStack.o Stack/LinkedStack.o -o Stack/TestStack.exe
-
-Stack/ArrayStack.o: Stack/ArrayStack.c Stack/ArrayStack.h
-	gcc -Wall -c Stack/ArrayStack.c -o Stack/ArrayStack.o
-
-Stack/LinkedStack.o: Stack/LinkedStack.c Stack/LinkedStack.h
-	gcc -Wall -c Stack/LinkedStack.c -o Stack/LinkedStack.o
+Tests/MainTest.exe: $(MainTest) $(TestGraph) $(TestHeap) $(TestList) $(TestQueue) $(TestStack) $(TestString) $(TestTable) $(TestTree)
+	gcc -Wall $(MainTest) $(TestGraph) $(TestHeap) $(TestList) $(TestQueue) $(TestStack) $(TestString) $(TestTable) $(TestTree) -o Tests/MainTest.exe
 
 # Graph
 
-TestGraph: Graph/TestGraph.exe
-	./Graph/TestGraph.exe
+Sources/Graph/MatrixGraph.o: Sources/Graph/MatrixGraph.c Sources/Graph/MatrixGraph.h
+	gcc -Wall -c Sources/Graph/MatrixGraph.c -o Sources/Graph/MatrixGraph.o
 
-Graph/TestGraph.exe: Graph/TestGraph.c Graph/MatrixGraph.o Queue/ArrayQueue.o # need Queue
-	gcc -Wall Graph/TestGraph.c Graph/MatrixGraph.o Queue/ArrayQueue.o -o Graph/TestGraph.exe
+# Heap
 
-Graph/MatrixGraph.o: Graph/MatrixGraph.c Graph/MatrixGraph.h
-	gcc -Wall -c Graph/MatrixGraph.c -o Graph/MatrixGraph.o
+Sources/Heap/MaxHeap.o: Sources/Heap/MaxHeap.c Sources/Heap/MaxHeap.h
+	gcc -Wall -c Sources/Heap/MaxHeap.c -o Sources/Heap/MaxHeap.o
+
+# List
+
+Sources/List/ArrayList.o: Sources/List/ArrayList.c Sources/List/ArrayList.h
+	gcc -Wall -c Sources/List/ArrayList.c -o Sources/List/ArrayList.o
+
+Sources/List/LinkedList.o: Sources/List/LinkedList.c Sources/List/LinkedList.h
+	gcc -Wall -c Sources/List/LinkedList.c -o Sources/List/LinkedList.o
+
+# Queue
+
+Sources/Queue/ArrayQueue.o: Sources/Queue/ArrayQueue.c Sources/Queue/ArrayQueue.h
+	gcc -Wall -c Sources/Queue/ArrayQueue.c -o Sources/Queue/ArrayQueue.o
+
+Sources/Queue/LinkedQueue.o: Sources/Queue/LinkedQueue.c Sources/Queue/LinkedQueue.h
+	gcc -Wall -c Sources/Queue/LinkedQueue.c -o Sources/Queue/LinkedQueue.o
+
+# Stack
+
+Sources/Stack/ArrayStack.o: Sources/Stack/ArrayStack.c Sources/Stack/ArrayStack.h
+	gcc -Wall -c Sources/Stack/ArrayStack.c -o Sources/Stack/ArrayStack.o
+
+Sources/Stack/LinkedStack.o: Sources/Stack/LinkedStack.c Sources/Stack/LinkedStack.h
+	gcc -Wall -c Sources/Stack/LinkedStack.c -o Sources/Stack/LinkedStack.o
 
 # String
 
-TestString: String/TestString.exe
-	./String/TestString.exe
+Sources/String/String.o: Sources/String/String.c Sources/String/String.h
+	gcc -Wall -c Sources/String/String.c -o Sources/String/String.o
 
-String/TestString.exe: String/TestString.c String/String.o
-	gcc -Wall String/TestString.c String/String.o -o String/TestString.exe
+# Table
 
-String/String.o: String/String.c String/String.h
-	gcc -Wall -c String/String.c -o String/String.o
+Sources/Table/HashTable.o: Sources/Table/HashTable.c Sources/Table/HashTable.h
+	gcc -Wall -c Sources/Table/HashTable.c -o Sources/Table/HashTable.o
+
+# Tree
+
+Sources/Tree/BinarySearchTree.o: Sources/Tree/BinarySearchTree.c Sources/Tree/BinarySearchTree.h
+	gcc -Wall -c Sources/Tree/BinarySearchTree.c -o Sources/Tree/BinarySearchTree.o
+
+Sources/Tree/QueueForTree.o: Sources/Tree/QueueForTree.h Sources/Tree/QueueForTree.c
+	gcc -Wall -c Sources/Tree/QueueForTree.c -o Sources/Tree/QueueForTree.o
 
 # Clean files
 
 clean:
-	rm -f */*.o */*.exe
+	rm -f Sources/*/*.o Tests/*.exe
