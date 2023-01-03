@@ -65,11 +65,11 @@ bool ArrayList_IsEmpty(const List* self)
     return self->count == 0;
 }
 
-ListItem ArrayList_At(const List* self, int i) // list[i]
+ListItem ArrayList_At(const List* self, int index) // list[index]
 {
-    check_bounds(i, -self->count, self->count);
+    check_bounds(index, -self->count, self->count);
 
-    return i >= 0 ? self->data[i] : self->data[i + self->count];
+    return index >= 0 ? self->data[index] : self->data[index + self->count];
 }
 
 int ArrayList_Find(const List* self, ListItem data)
@@ -84,36 +84,40 @@ int ArrayList_Find(const List* self, ListItem data)
     return index < self->count ? index : LIST_NOT_FOUND;
 }
 
-void ArrayList_Insert(List* self, int i, ListItem data)
+void ArrayList_Insert(List* self, int index, ListItem data)
 {
     check_full(self->count, INT_MAX);
 
-    check_bounds(i, 0, self->count + 1);
+    check_bounds(index, 0, self->count + 1);
 
     if (self->count == self->capacity) // need to expand capacity
     {
         expand_capacity(self);
     }
 
-    for (int j = self->count; j > i; j--)
+    for (int i = self->count; i > index; i--)
     {
-        self->data[j] = self->data[j - 1];
+        self->data[i] = self->data[i - 1];
     }
-    self->data[i] = data;
+    self->data[index] = data;
     ++self->count;
 }
 
-void ArrayList_Delete(List* self, int i)
+ListItem ArrayList_Delete(List* self, int index)
 {
     check_empty(self->count);
 
-    check_bounds(i, 0, self->count);
+    check_bounds(index, 0, self->count);
 
-    for (int j = i + 1; j < self->count; j++)
+    ListItem data = self->data[index];
+
+    for (int i = index + 1; i < self->count; i++)
     {
-        self->data[j - 1] = self->data[j];
+        self->data[i - 1] = self->data[i];
     }
     --self->count;
+
+    return data;
 }
 
 void ArrayList_Traverse(List* self, void (*p_trav)(ListItem data))

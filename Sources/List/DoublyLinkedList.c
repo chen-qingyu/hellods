@@ -31,7 +31,7 @@ struct list
     // Pointer to the trailer (rank = count).
     struct node* trailer;
 
-    // Rank of the latest accessed element. For DoublyLinkedList_At().
+    // Index of the latest accessed element. For DoublyLinkedList_At().
     int latest;
 
     // Pointer to the latest accessed element. For DoublyLinkedList_At().
@@ -89,33 +89,33 @@ bool DoublyLinkedList_IsEmpty(const List* self)
     return self->count == 0;
 }
 
-ListItem DoublyLinkedList_At(const List* self, int i) // list[i] for i in range 0 to count will be O(1) on each access
+ListItem DoublyLinkedList_At(const List* self, int index) // list[index] for index in range 0 to count will be O(1) on each access
 {
-    check_bounds(i, -self->count, self->count);
+    check_bounds(index, -self->count, self->count);
 
-    i = i >= 0 ? i : i + self->count;
+    index = index >= 0 ? index : index + self->count;
 
     List* list = (List*)self; // drop out const
 
     // too far from the last accessed element
-    if (abs(i - self->latest) > self->count / 2)
+    if (abs(index - self->latest) > self->count / 2)
     {
         // closer to the header or trailer
-        list->p_latest = (i < self->latest) ? self->header : self->trailer;
-        list->latest = (i < self->latest) ? -1 : self->count;
+        list->p_latest = (index < self->latest) ? self->header : self->trailer;
+        list->latest = (index < self->latest) ? -1 : self->count;
     }
 
-    if (i < self->latest)
+    if (index < self->latest)
     {
-        while (i < self->latest)
+        while (index < self->latest)
         {
             list->latest--;
             list->p_latest = list->p_latest->prev;
         }
     }
-    else if (i > self->latest)
+    else if (index > self->latest)
     {
-        while (i > self->latest)
+        while (index > self->latest)
         {
             list->latest++;
             list->p_latest = list->p_latest->next;
@@ -140,21 +140,34 @@ int DoublyLinkedList_Find(const List* self, ListItem data)
     return current != self->trailer ? index : LIST_NOT_FOUND;
 }
 
-void DoublyLinkedList_Insert(List* self, int i, ListItem data)
+void DoublyLinkedList_Insert(List* self, int index, ListItem data)
 {
     check_full(self->count, INT_MAX);
 
-    check_bounds(i, 0, self->count + 1);
+    check_bounds(index, 0, self->count + 1);
 
     struct node* node = (struct node*)malloc(sizeof(struct node));
     check_pointer(node);
     node->data = data;
 
-    struct node* current = self->header->next;
-    for (int j = 0; j < i; j++)
+    struct node* current = NULL;
+    if (index < self->count / 2)
     {
-        current = current->next;
+        current = self->header->next;
+        for (int i = 0; i < index; i++)
+        {
+            current = current->next;
+        }
     }
+    else
+    {
+        current = self->trailer; // be careful, index may be same as count
+        for (int i = self->count; i > index; i--)
+        {
+            current = current->prev;
+        }
+    }
+
     node->prev = current->prev;
     node->next = current;
 
@@ -164,16 +177,28 @@ void DoublyLinkedList_Insert(List* self, int i, ListItem data)
     ++self->count;
 }
 
-void DoublyLinkedList_Delete(List* self, int i)
+ListItem DoublyLinkedList_Delete(List* self, int index)
 {
     check_empty(self->count);
 
-    check_bounds(i, 0, self->count);
+    check_bounds(index, 0, self->count);
 
-    struct node* current = self->header->next;
-    for (int j = 0; j < i; j++)
+    struct node* current = NULL;
+    if (index < self->count / 2)
     {
-        current = current->next;
+        current = self->header->next;
+        for (int i = 0; i < index; i++)
+        {
+            current = current->next;
+        }
+    }
+    else
+    {
+        current = self->trailer->prev;
+        for (int i = self->count - 1; i > index; i--)
+        {
+            current = current->prev;
+        }
     }
 
     // keep p_latest pointing to the previous node.
@@ -183,11 +208,15 @@ void DoublyLinkedList_Delete(List* self, int i)
         self->p_latest = self->p_latest->prev;
     }
 
+    ListItem data = current->data;
+
     current->prev->next = current->next;
     current->next->prev = current->prev;
     free(current);
 
     --self->count;
+
+    return data;
 }
 
 void DoublyLinkedList_Traverse(List* self, void (*p_trav)(ListItem data))

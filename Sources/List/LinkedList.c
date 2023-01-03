@@ -68,15 +68,15 @@ bool LinkedList_IsEmpty(const List* self)
     return self->count == 0;
 }
 
-ListItem LinkedList_At(const List* self, int i) // list[i]
+ListItem LinkedList_At(const List* self, int index) // list[index]
 {
-    check_bounds(i, -self->count, self->count);
+    check_bounds(index, -self->count, self->count);
 
-    i = i >= 0 ? i : i + self->count;
+    index = index >= 0 ? index : index + self->count;
 
     struct node* current = self->header->next;
 
-    for (int j = 0; j < i; ++j)
+    for (int i = 0; i < index; ++i)
     {
         current = current->next;
     }
@@ -98,18 +98,18 @@ int LinkedList_Find(const List* self, ListItem data)
     return current != NULL ? index : LIST_NOT_FOUND;
 }
 
-void LinkedList_Insert(List* self, int i, ListItem data)
+void LinkedList_Insert(List* self, int index, ListItem data)
 {
     check_full(self->count, INT_MAX);
 
-    check_bounds(i, 0, self->count + 1);
+    check_bounds(index, 0, self->count + 1);
 
     struct node* node = (struct node*)malloc(sizeof(struct node));
     check_pointer(node);
     node->data = data;
 
     struct node* tmp = self->header;
-    for (int j = 0; j < i; j++)
+    for (int i = 0; i < index; i++)
     {
         tmp = tmp->next;
     }
@@ -119,23 +119,26 @@ void LinkedList_Insert(List* self, int i, ListItem data)
     ++self->count;
 }
 
-void LinkedList_Delete(List* self, int i)
+ListItem LinkedList_Delete(List* self, int index)
 {
     check_empty(self->count);
 
-    check_bounds(i, 0, self->count);
+    check_bounds(index, 0, self->count);
 
     struct node* tmp = self->header;
-    for (int j = 0; j < i; j++)
+    for (int i = 0; i < index; i++)
     {
         tmp = tmp->next;
     }
     struct node* node = tmp->next;
     tmp->next = node->next;
+
+    ListItem data = node->data;
     free(node);
-    node = NULL;
 
     --self->count;
+
+    return data;
 }
 
 void LinkedList_Traverse(List* self, void (*p_trav)(ListItem data))
