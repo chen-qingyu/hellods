@@ -13,7 +13,7 @@ typedef enum
 {
     EMPTY,
     FULL,
-    DELETED
+    REMOVED
 } TableState;
 
 struct item
@@ -126,7 +126,7 @@ void HashTable_Insert(Table* self, TableKey key, TableValue value)
 
     if (self[pos].state != FULL)
     {
-        if (self[pos].state == DELETED)
+        if (self[pos].state == REMOVED)
         {
             free(self[pos].key);
             self[pos].key = NULL;
@@ -145,13 +145,13 @@ void HashTable_Insert(Table* self, TableKey key, TableValue value)
     }
 }
 
-void HashTable_Delete(Table* self, TableKey key)
+void HashTable_Remove(Table* self, TableKey key)
 {
     int pos = find_pos(self, key);
 
     if (self[pos].state == FULL)
     {
-        self[pos].state = DELETED;
+        self[pos].state = REMOVED;
     }
     else
     {

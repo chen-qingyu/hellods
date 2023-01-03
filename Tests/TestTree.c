@@ -57,10 +57,10 @@ void TestBinarySearchTree()
     assert(BinarySearchTree_FindMin(tree) == 1);
     assert(BinarySearchTree_FindMax(tree) == 5);
 
-    BinarySearchTree_Delete(tree, 1);
+    BinarySearchTree_Remove(tree, 1);
     assert(BinarySearchTree_FindMin(tree) == 2);
 
-    BinarySearchTree_Delete(tree, 5);
+    BinarySearchTree_Remove(tree, 5);
     assert(BinarySearchTree_FindMax(tree) == 4);
 
     assert(BinarySearchTree_Size(tree) == 3);
@@ -69,7 +69,7 @@ void TestBinarySearchTree()
     BinarySearchTree_Insert(tree, -1);
     assert(BinarySearchTree_Size(tree) == 4);
     assert(BinarySearchTree_Find(tree, -1) == -1);
-    BinarySearchTree_Delete(tree, -1);
+    BinarySearchTree_Remove(tree, -1);
     assert(BinarySearchTree_Size(tree) == 3);
     assert(BinarySearchTree_Find(tree, -1) == TREE_NOT_FOUND);
 

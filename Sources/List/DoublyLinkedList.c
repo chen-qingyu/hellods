@@ -101,8 +101,8 @@ ListItem DoublyLinkedList_At(const List* self, int index) // list[index] for ind
     if (abs(index - self->latest) > self->count / 2)
     {
         // closer to the header or trailer
-        list->p_latest = (index < self->latest) ? self->header : self->trailer;
-        list->latest = (index < self->latest) ? -1 : self->count;
+        list->p_latest = (index < self->latest) ? self->header->next : self->trailer->prev;
+        list->latest = (index < self->latest) ? 0 : self->count - 1;
     }
 
     if (index < self->latest)
@@ -142,14 +142,12 @@ int DoublyLinkedList_Find(const List* self, ListItem data)
 
 void DoublyLinkedList_Insert(List* self, int index, ListItem data)
 {
+    // check
     check_full(self->count, INT_MAX);
 
     check_bounds(index, 0, self->count + 1);
 
-    struct node* node = (struct node*)malloc(sizeof(struct node));
-    check_pointer(node);
-    node->data = data;
-
+    // index
     struct node* current = NULL;
     if (index < self->count / 2)
     {
@@ -168,21 +166,28 @@ void DoublyLinkedList_Insert(List* self, int index, ListItem data)
         }
     }
 
+    // insert
+    struct node* node = (struct node*)malloc(sizeof(struct node));
+    check_pointer(node);
+    node->data = data;
     node->prev = current->prev;
     node->next = current;
 
     current->prev->next = node;
     current->prev = node;
 
+    // resize
     ++self->count;
 }
 
-ListItem DoublyLinkedList_Delete(List* self, int index)
+ListItem DoublyLinkedList_Remove(List* self, int index)
 {
+    // check
     check_empty(self->count);
 
     check_bounds(index, 0, self->count);
 
+    // index
     struct node* current = NULL;
     if (index < self->count / 2)
     {
@@ -201,21 +206,25 @@ ListItem DoublyLinkedList_Delete(List* self, int index)
         }
     }
 
-    // keep p_latest pointing to the previous node.
+    // keep p_latest pointing to the previous node
     if (current == self->p_latest)
     {
         self->latest--;
         self->p_latest = self->p_latest->prev;
     }
 
+    // get data
     ListItem data = current->data;
 
+    // remove
     current->prev->next = current->next;
     current->next->prev = current->prev;
     free(current);
 
+    // resize
     --self->count;
 
+    // return data
     return data;
 }
 

@@ -68,7 +68,7 @@ void TestArrayList(void)
     int length = ArrayList_Size(list1);
     for (int i = 0; i < length; i++)
     {
-        ArrayList_Delete(list1, 0);
+        ArrayList_Remove(list1, 0);
     }
     assert(ArrayList_Size(list1) == 0);
     assert(ArrayList_IsEmpty(list1) == true);
@@ -132,7 +132,7 @@ void TestLinkedList(void)
     int length = LinkedList_Size(list1);
     for (int i = 0; i < length; i++)
     {
-        LinkedList_Delete(list1, 0);
+        LinkedList_Remove(list1, 0);
     }
     assert(LinkedList_Size(list1) == 0);
     assert(LinkedList_IsEmpty(list1) == true);
@@ -196,7 +196,7 @@ void TestDoublyLinkedList(void)
     int length = DoublyLinkedList_Size(list1);
     for (int i = 0; i < length; i++)
     {
-        DoublyLinkedList_Delete(list1, 0);
+        DoublyLinkedList_Remove(list1, 0);
     }
     assert(DoublyLinkedList_Size(list1) == 0);
     assert(DoublyLinkedList_IsEmpty(list1) == true);

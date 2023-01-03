@@ -56,10 +56,10 @@ void LinkedDeque_PushBack(Deque* self, DequeItem data)
 
 DequeItem LinkedDeque_PopFront(Deque* self)
 {
-    return DoublyLinkedList_Delete(self->dlist, 0);
+    return DoublyLinkedList_Remove(self->dlist, 0);
 }
 
 DequeItem LinkedDeque_PopBack(Deque* self)
 {
-    return DoublyLinkedList_Delete(self->dlist, DoublyLinkedList_Size(self->dlist) - 1);
+    return DoublyLinkedList_Remove(self->dlist, DoublyLinkedList_Size(self->dlist) - 1);
 }

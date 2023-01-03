@@ -100,44 +100,56 @@ int LinkedList_Find(const List* self, ListItem data)
 
 void LinkedList_Insert(List* self, int index, ListItem data)
 {
+    // check
     check_full(self->count, INT_MAX);
 
     check_bounds(index, 0, self->count + 1);
 
+    // index
+    struct node* current = self->header;
+    for (int i = 0; i < index; i++)
+    {
+        current = current->next;
+    }
+
+    // insert
     struct node* node = (struct node*)malloc(sizeof(struct node));
     check_pointer(node);
     node->data = data;
+    node->next = current->next;
 
-    struct node* tmp = self->header;
-    for (int i = 0; i < index; i++)
-    {
-        tmp = tmp->next;
-    }
-    node->next = tmp->next;
-    tmp->next = node;
+    current->next = node;
 
+    // resize
     ++self->count;
 }
 
-ListItem LinkedList_Delete(List* self, int index)
+ListItem LinkedList_Remove(List* self, int index)
 {
+    // check
     check_empty(self->count);
 
     check_bounds(index, 0, self->count);
 
-    struct node* tmp = self->header;
+    // index
+    struct node* current = self->header;
     for (int i = 0; i < index; i++)
     {
-        tmp = tmp->next;
+        current = current->next;
     }
-    struct node* node = tmp->next;
-    tmp->next = node->next;
 
-    ListItem data = node->data;
+    // get data
+    ListItem data = current->next->data;
+
+    // remove
+    struct node* node = current->next;
+    current->next = node->next;
     free(node);
 
+    // resize
     --self->count;
 
+    // return data
     return data;
 }
 

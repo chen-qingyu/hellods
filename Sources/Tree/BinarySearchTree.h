@@ -113,6 +113,6 @@ void BinarySearchTree_Insert(Tree* self, TreeItem data);
  * @param self 一个指向二叉搜索树的指针
  * @param data 一个待删除元素
  */
-void BinarySearchTree_Delete(Tree* self, TreeItem data);
+void BinarySearchTree_Remove(Tree* self, TreeItem data);
 
 #endif // BINARYSEARCHTREE_H

@@ -139,17 +139,17 @@ static struct node* find_min_node(struct node* node)
     return node;
 }
 
-static struct node* delete_node(Tree* tree, struct node* node, TreeItem data)
+static struct node* remove_node(Tree* tree, struct node* node, TreeItem data)
 {
     if (node)
     {
         if (data < node->data)
         {
-            node->left = delete_node(tree, node->left, data);
+            node->left = remove_node(tree, node->left, data);
         }
         else if (data > node->data)
         {
-            node->right = delete_node(tree, node->right, data);
+            node->right = remove_node(tree, node->right, data);
         }
         else // data == node->data
         {
@@ -157,7 +157,7 @@ static struct node* delete_node(Tree* tree, struct node* node, TreeItem data)
             {
                 struct node* tmp = find_min_node(node->right); // node->right is not NULL
                 node->data = tmp->data;
-                node->right = delete_node(tree, node->right, tmp->data);
+                node->right = remove_node(tree, node->right, tmp->data);
             }
             else
             {
@@ -266,7 +266,7 @@ void BinarySearchTree_Insert(Tree* self, TreeItem data)
     self->root = insert_node(self, self->root, data);
 }
 
-void BinarySearchTree_Delete(Tree* self, TreeItem data)
+void BinarySearchTree_Remove(Tree* self, TreeItem data)
 {
-    self->root = delete_node(self, self->root, data);
+    self->root = remove_node(self, self->root, data);
 }

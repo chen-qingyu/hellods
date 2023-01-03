@@ -87,7 +87,7 @@ void ArrayList_Insert(List* self, int index, ListItem data);
  * @param index 下标 (0 <= index < Size(self))
  * @return 删除的元素
  */
-ListItem ArrayList_Delete(List* self, int index);
+ListItem ArrayList_Remove(List* self, int index);
 
 /**
  * @brief 遍历列表

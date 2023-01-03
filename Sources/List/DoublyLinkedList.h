@@ -87,7 +87,7 @@ void DoublyLinkedList_Insert(List* self, int index, ListItem data);
  * @param index 下标 (0 <= index < Size(self))
  * @return 删除的元素
  */
-ListItem DoublyLinkedList_Delete(List* self, int index);
+ListItem DoublyLinkedList_Remove(List* self, int index);
 
 /**
  * @brief 遍历列表

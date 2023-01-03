@@ -72,6 +72,6 @@ void HashTable_Insert(Table* self, TableKey key, TableValue value);
  * @param self 一个指向散列表的指针
  * @param key 待删除键值对的 key
  */
-void HashTable_Delete(Table* self, TableKey key);
+void HashTable_Remove(Table* self, TableKey key);
 
 #endif // HASHTABLE_H

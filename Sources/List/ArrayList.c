@@ -86,37 +86,50 @@ int ArrayList_Find(const List* self, ListItem data)
 
 void ArrayList_Insert(List* self, int index, ListItem data)
 {
+    // check
     check_full(self->count, INT_MAX);
 
     check_bounds(index, 0, self->count + 1);
 
-    if (self->count == self->capacity) // need to expand capacity
+    // expand capacity
+    if (self->count == self->capacity)
     {
         expand_capacity(self);
     }
 
+    // index
     for (int i = self->count; i > index; i--)
     {
         self->data[i] = self->data[i - 1];
     }
+
+    // insert
     self->data[index] = data;
+
+    // resize
     ++self->count;
 }
 
-ListItem ArrayList_Delete(List* self, int index)
+ListItem ArrayList_Remove(List* self, int index)
 {
+    // check
     check_empty(self->count);
 
     check_bounds(index, 0, self->count);
 
+    // get data
     ListItem data = self->data[index];
 
+    // index and remove
     for (int i = index + 1; i < self->count; i++)
     {
         self->data[i - 1] = self->data[i];
     }
+
+    // resize
     --self->count;
 
+    // return data
     return data;
 }
 
