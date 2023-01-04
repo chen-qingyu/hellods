@@ -4,7 +4,7 @@
 #include <float.h>
 #include <stdio.h>
 
-bool eq(const double a, const double b)
+static bool feq(const double a, const double b)
 {
     return fabs(a - b) < DBL_EPSILON;
 }
@@ -407,25 +407,25 @@ void TestString(void)
     assert(String_ToDecimal(s1) == 1.e+2);
 
     String_Set(s1, "1e-2");
-    assert(eq(String_ToDecimal(s1), 1e-2));
+    assert(feq(String_ToDecimal(s1), 1e-2));
     String_Set(s1, "-1e-2");
-    assert(eq(String_ToDecimal(s1), -1e-2));
+    assert(feq(String_ToDecimal(s1), -1e-2));
     String_Set(s1, "+1e-2");
-    assert(eq(String_ToDecimal(s1), 1e-2));
+    assert(feq(String_ToDecimal(s1), 1e-2));
     String_Set(s1, ".1e-2");
-    assert(eq(String_ToDecimal(s1), 0.1e-2));
+    assert(feq(String_ToDecimal(s1), 0.1e-2));
     String_Set(s1, "1.e-2");
-    assert(eq(String_ToDecimal(s1), 1.e-2));
+    assert(feq(String_ToDecimal(s1), 1.e-2));
 
     String_Set(s1, "0.0001");
-    assert(eq(String_ToDecimal(s1), 0.0001));
+    assert(feq(String_ToDecimal(s1), 0.0001));
     String_Set(s1, "0.000101");
-    assert(!eq(String_ToDecimal(s1), 0.0001));
+    assert(!feq(String_ToDecimal(s1), 0.0001));
 
     String_Set(s1, "0.123e10");
-    assert(eq(String_ToDecimal(s1), 0.123e10));
+    assert(feq(String_ToDecimal(s1), 0.123e10));
     String_Set(s1, "0.123e01");
-    assert(!eq(String_ToDecimal(s1), 0.123e10));
+    assert(!feq(String_ToDecimal(s1), 0.123e10));
 
     // String_From()
 

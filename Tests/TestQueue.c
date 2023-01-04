@@ -8,6 +8,11 @@
 void TestArrayQueue(void)
 {
     Queue* queue = ArrayQueue_Create();
+
+    ArrayQueue_Enqueue(queue, -1);
+    assert(ArrayQueue_Front(queue) == -1);
+    assert(ArrayQueue_Dequeue(queue) == -1);
+
     assert(ArrayQueue_Size(queue) == 0);
     assert(ArrayQueue_IsEmpty(queue) == true);
 
@@ -19,6 +24,8 @@ void TestArrayQueue(void)
     }
     assert(ArrayQueue_Size(queue) == 4);
     assert(ArrayQueue_IsEmpty(queue) == false);
+
+    assert(ArrayQueue_Front(queue) == 1);
 
     for (int i = 0; i < arr_size; i++)
     {
@@ -35,6 +42,11 @@ void TestArrayQueue(void)
 void TestLinkedQueue(void)
 {
     Queue* queue = LinkedQueue_Create();
+
+    LinkedQueue_Enqueue(queue, -1);
+    assert(LinkedQueue_Front(queue) == -1);
+    assert(LinkedQueue_Dequeue(queue) == -1);
+
     assert(LinkedQueue_Size(queue) == 0);
     assert(LinkedQueue_IsEmpty(queue) == true);
 
@@ -46,6 +58,8 @@ void TestLinkedQueue(void)
     }
     assert(LinkedQueue_Size(queue) == 4);
     assert(LinkedQueue_IsEmpty(queue) == false);
+
+    assert(LinkedQueue_Front(queue) == 1);
 
     for (int i = 0; i < arr_size; i++)
     {
@@ -62,6 +76,16 @@ void TestLinkedQueue(void)
 void TestLinkedDeque(void)
 {
     Deque* queue = LinkedDeque_Create();
+
+    LinkedDeque_PushBack(queue, -1);
+    assert(LinkedDeque_Front(queue) == -1);
+    assert(LinkedDeque_Back(queue) == -1);
+    assert(LinkedDeque_PopFront(queue) == -1);
+    LinkedDeque_PushFront(queue, -1);
+    assert(LinkedDeque_Front(queue) == -1);
+    assert(LinkedDeque_Back(queue) == -1);
+    assert(LinkedDeque_PopBack(queue) == -1);
+
     assert(LinkedDeque_Size(queue) == 0);
     assert(LinkedDeque_IsEmpty(queue) == true);
 
@@ -73,6 +97,9 @@ void TestLinkedDeque(void)
     }
     assert(LinkedDeque_Size(queue) == 4);
     assert(LinkedDeque_IsEmpty(queue) == false);
+
+    assert(LinkedDeque_Front(queue) == 1);
+    assert(LinkedDeque_Back(queue) == 4);
 
     for (int i = 0; i < arr_size; i++)
     {
@@ -87,6 +114,9 @@ void TestLinkedDeque(void)
     }
     assert(LinkedDeque_Size(queue) == 4);
     assert(LinkedDeque_IsEmpty(queue) == false);
+
+    assert(LinkedDeque_Front(queue) == 4);
+    assert(LinkedDeque_Back(queue) == 1);
 
     for (int i = 0; i < arr_size; i++)
     {

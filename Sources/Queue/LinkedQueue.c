@@ -84,6 +84,11 @@ QueueItem LinkedQueue_Dequeue(Queue* self)
 {
     check_empty(self->count);
 
+    if (self->rear == self->front->next)
+    {
+        self->rear = self->front;
+    }
+
     struct node* del = self->front->next;
     QueueItem data = del->data;
 
@@ -93,4 +98,11 @@ QueueItem LinkedQueue_Dequeue(Queue* self)
     --self->count;
 
     return data;
+}
+
+QueueItem LinkedQueue_Front(Queue* self)
+{
+    check_empty(self->count);
+
+    return self->front->next->data;
 }

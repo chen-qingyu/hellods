@@ -206,11 +206,11 @@ ListItem DoublyLinkedList_Remove(List* self, int index)
         }
     }
 
-    // keep p_latest pointing to the previous node
+    // reset state of the latest accessed element if it was removed
     if (current == self->p_latest)
     {
-        self->latest--;
-        self->p_latest = self->p_latest->prev;
+        self->latest = -1;
+        self->p_latest = self->header;
     }
 
     // get data

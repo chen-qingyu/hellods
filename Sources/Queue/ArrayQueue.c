@@ -66,3 +66,10 @@ QueueItem ArrayQueue_Dequeue(Queue* self)
 
     return self->data[self->front];
 }
+
+QueueItem ArrayQueue_Front(Queue* self)
+{
+    check_empty(ArrayQueue_Size(self));
+
+    return self->data[(self->front + 1) % QUEUE_CAPACITY];
+}

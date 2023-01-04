@@ -63,3 +63,13 @@ DequeItem LinkedDeque_PopBack(Deque* self)
 {
     return DoublyLinkedList_Remove(self->dlist, DoublyLinkedList_Size(self->dlist) - 1);
 }
+
+DequeItem LinkedDeque_Front(Deque* self)
+{
+    return DoublyLinkedList_At(self->dlist, 0);
+}
+
+DequeItem LinkedDeque_Back(Deque* self)
+{
+    return DoublyLinkedList_At(self->dlist, DoublyLinkedList_Size(self->dlist) - 1);
+}

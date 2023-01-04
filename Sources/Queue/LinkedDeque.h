@@ -83,4 +83,20 @@ DequeItem LinkedDeque_PopFront(Deque* self);
  */
 DequeItem LinkedDeque_PopBack(Deque* self);
 
+/**
+ * @brief 查看队首元素
+ *
+ * @param self 一个指向队列的指针
+ * @return 队首元素
+ */
+DequeItem LinkedDeque_Front(Deque* self);
+
+/**
+ * @brief 查看队尾元素
+ *
+ * @param self 一个指向队列的指针
+ * @return 队尾元素
+ */
+DequeItem LinkedDeque_Back(Deque* self);
+
 #endif // LINKEDDEQUE_H

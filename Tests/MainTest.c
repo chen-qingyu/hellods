@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 // TestGraph
 void TestMatrixGraph(void);
@@ -64,5 +65,5 @@ int main(void)
 
     printf("\n=== Test Finish ===\n");
 
-    return 0;
+    return EXIT_SUCCESS;
 }

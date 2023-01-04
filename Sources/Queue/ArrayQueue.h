@@ -67,4 +67,12 @@ void ArrayQueue_Enqueue(Queue* self, QueueItem data);
  */
 QueueItem ArrayQueue_Dequeue(Queue* self);
 
+/**
+ * @brief 查看队首元素
+ *
+ * @param self 一个指向队列的指针
+ * @return 队首元素
+ */
+QueueItem ArrayQueue_Front(Queue* self);
+
 #endif // ARRAYQUEUE_H

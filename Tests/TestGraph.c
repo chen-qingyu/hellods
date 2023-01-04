@@ -4,9 +4,9 @@
 #include <stdio.h>
 #include <string.h>
 
-char str[64] = {0};
+static char str[64] = {0};
 
-void Visit(GraphVertex V)
+static void Visit(GraphVertex V)
 {
     char tmp[8] = {0};
     sprintf(tmp, "%d ", V);

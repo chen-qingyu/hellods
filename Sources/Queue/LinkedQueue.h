@@ -67,4 +67,12 @@ void LinkedQueue_Enqueue(Queue* self, QueueItem data);
  */
 QueueItem LinkedQueue_Dequeue(Queue* self);
 
+/**
+ * @brief 查看队首元素
+ *
+ * @param self 一个指向队列的指针
+ * @return 队首元素
+ */
+QueueItem LinkedQueue_Front(Queue* self);
+
 #endif // LINKEDQUEUE_H
