@@ -104,4 +104,11 @@ void ArrayList_Traverse(List* self, void (*p_trav)(ListItem data));
  */
 void ArrayList_Reverse(List* self);
 
+/**
+ * @brief 清空列表的内容
+ *
+ * @param self 一个指向列表的指针
+ */
+void ArrayList_Clear(List* self);
+
 #endif // ARRAYLIST_H

@@ -8,6 +8,9 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
+// The default initial capacity.
+#define DEFAULT_CAPACITY 8
+
 struct list
 {
     // Number of elements.
@@ -42,7 +45,7 @@ List* ArrayList_Create(void)
     check_pointer(list);
 
     list->count = 0;
-    list->capacity = 8;
+    list->capacity = DEFAULT_CAPACITY;
     list->data = (ListItem*)malloc(sizeof(ListItem) * list->capacity);
     check_pointer(list->data);
 
@@ -149,4 +152,14 @@ void ArrayList_Reverse(List* self)
         self->data[i] = self->data[j];
         self->data[j] = tmp;
     }
+}
+
+void ArrayList_Clear(List* self)
+{
+    free(self->data);
+
+    self->count = 0;
+    self->capacity = DEFAULT_CAPACITY;
+    self->data = (ListItem*)malloc(sizeof(ListItem) * self->capacity);
+    check_pointer(self->data);
 }

@@ -42,6 +42,20 @@ struct list
 Helper functions implementation.
 *******************************/
 
+// Remove all of the elements from the list.
+static inline void clear(List* self)
+{
+    while (self->header)
+    {
+        struct node* next = self->header->next;
+        free(self->header);
+        self->header = next;
+    }
+    self->count = 0;
+    self->latest = -1;
+    self->p_latest = self->header;
+}
+
 /*******************************
 Interface functions implementation.
 *******************************/
@@ -70,12 +84,7 @@ List* DoublyLinkedList_Create(void)
 
 void DoublyLinkedList_Destroy(List* self)
 {
-    while (self->header)
-    {
-        struct node* next = self->header->next;
-        free(self->header);
-        self->header = next;
-    }
+    clear(self);
     free(self);
 }
 
@@ -248,4 +257,9 @@ void DoublyLinkedList_Reverse(List* self)
     struct node* tmp = self->header;
     self->header = self->trailer;
     self->trailer = tmp;
+}
+
+void DoublyLinkedList_Clear(List* self)
+{
+    clear(self);
 }

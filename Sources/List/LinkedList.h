@@ -104,4 +104,11 @@ void LinkedList_Traverse(List* self, void (*p_trav)(ListItem data));
  */
 void LinkedList_Reverse(List* self);
 
+/**
+ * @brief 清空列表的内容
+ *
+ * @param self 一个指向列表的指针
+ */
+void LinkedList_Clear(List* self);
+
 #endif // LINKEDLIST_H

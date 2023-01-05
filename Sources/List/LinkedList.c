@@ -30,6 +30,18 @@ struct list
 Helper functions implementation.
 *******************************/
 
+// Remove all of the elements from the list.
+static inline void clear(List* self)
+{
+    while (self->header)
+    {
+        struct node* next = self->header->next;
+        free(self->header);
+        self->header = next;
+    }
+    self->count = 0;
+}
+
 /*******************************
 Interface functions implementation.
 *******************************/
@@ -49,12 +61,7 @@ List* LinkedList_Create(void)
 
 void LinkedList_Destroy(List* self)
 {
-    while (self->header)
-    {
-        struct node* next = self->header->next;
-        free(self->header);
-        self->header = next;
-    }
+    clear(self);
     free(self);
 }
 
@@ -173,4 +180,9 @@ void LinkedList_Reverse(List* self)
         tmp->next = self->header->next;
         self->header->next = tmp;
     }
+}
+
+void LinkedList_Clear(List* self)
+{
+    clear(self);
 }
