@@ -92,7 +92,7 @@ void ArrayList_Insert(List* self, int index, ListItem data)
     // check
     check_full(self->count, INT_MAX);
 
-    check_bounds(index, 0, self->count + 1);
+    check_bounds(index, -self->count, self->count + 1);
 
     // expand capacity
     if (self->count == self->capacity)
@@ -101,6 +101,7 @@ void ArrayList_Insert(List* self, int index, ListItem data)
     }
 
     // index
+    index = index >= 0 ? index : index + self->count;
     for (int i = self->count; i > index; i--)
     {
         self->data[i] = self->data[i - 1];
@@ -118,9 +119,10 @@ ListItem ArrayList_Remove(List* self, int index)
     // check
     check_empty(self->count);
 
-    check_bounds(index, 0, self->count);
+    check_bounds(index, -self->count, self->count);
 
     // get data
+    index = index >= 0 ? index : index + self->count;
     ListItem data = self->data[index];
 
     // index and remove

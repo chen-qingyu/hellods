@@ -75,7 +75,7 @@ int ArrayList_Find(const List* self, ListItem data);
  * @brief 在列表的下标为 index 的位置上插入一个元素 data
  *
  * @param self 一个指向列表的指针
- * @param index 下标 (0 <= index <= Size(self))
+ * @param index 下标 (-Size(self) <= index <= Size(self))
  * @param data 待插入元素
  */
 void ArrayList_Insert(List* self, int index, ListItem data);
@@ -84,7 +84,7 @@ void ArrayList_Insert(List* self, int index, ListItem data);
  * @brief 从列表当中删除下标为 index 的元素
  *
  * @param self 一个指向列表的指针
- * @param index 下标 (0 <= index < Size(self))
+ * @param index 下标 (-Size(self) <= index < Size(self))
  * @return 删除的元素
  */
 ListItem ArrayList_Remove(List* self, int index);

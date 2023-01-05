@@ -154,9 +154,11 @@ void DoublyLinkedList_Insert(List* self, int index, ListItem data)
     // check
     check_full(self->count, INT_MAX);
 
-    check_bounds(index, 0, self->count + 1);
+    check_bounds(index, -self->count, self->count + 1);
 
     // index
+    index = index >= 0 ? index : index + self->count;
+
     struct node* current = NULL;
     if (index < self->count / 2)
     {
@@ -194,9 +196,11 @@ ListItem DoublyLinkedList_Remove(List* self, int index)
     // check
     check_empty(self->count);
 
-    check_bounds(index, 0, self->count);
+    check_bounds(index, -self->count, self->count);
 
     // index
+    index = index >= 0 ? index : index + self->count;
+
     struct node* current = NULL;
     if (index < self->count / 2)
     {
