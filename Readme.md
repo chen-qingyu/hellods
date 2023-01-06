@@ -2,7 +2,7 @@
 
 ### 1. 基本特性
 
-- 语言：采用标准C语言编写，最低兼容版本： C99 。
+- 语言：采用标准C语言编写，最低兼容版本： ISO C99 。
 - 目标：实现完整而标准的数据结构。
 - 模块：Graph, Heap, List, Queue, Stack, String, Table, Tree.
 - 简洁：Stay simple, stay young. 在保证好用和安全的前提下，尽量简洁，便于维护和阅读。

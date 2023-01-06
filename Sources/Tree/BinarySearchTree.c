@@ -21,7 +21,7 @@ struct node
 struct tree
 {
     // Number of elements.
-    int count;
+    int size;
 
     // A pointer to the root node.
     struct node* root;
@@ -112,7 +112,7 @@ static struct node* insert_node(Tree* tree, struct node* node, TreeItem data)
         node->data = data;
         node->left = NULL;
         node->right = NULL;
-        tree->count++;
+        tree->size++;
     }
     else
     {
@@ -164,7 +164,7 @@ static struct node* remove_node(Tree* tree, struct node* node, TreeItem data)
                 struct node* tmp = node;
                 node = node->left ? node->left : node->right;
                 free(tmp);
-                tree->count--;
+                tree->size--;
             }
         }
     }
@@ -182,7 +182,7 @@ Tree* BinarySearchTree_Create(void)
     check_pointer(tree);
 
     tree->root = NULL;
-    tree->count = 0;
+    tree->size = 0;
 
     return tree;
 }
@@ -195,12 +195,12 @@ void BinarySearchTree_Destroy(Tree* self)
 
 int BinarySearchTree_Size(const Tree* self)
 {
-    return self->count;
+    return self->size;
 }
 
 bool BinarySearchTree_IsEmpty(const Tree* self)
 {
-    return self->count == 0;
+    return self->size == 0;
 }
 
 void BinarySearchTree_Traverse(Tree* self, traverse_t type, void (*p_trav)(TreeItem data))

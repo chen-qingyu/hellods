@@ -17,7 +17,7 @@ struct queue
 {
     struct node* front;
     struct node* rear;
-    int count;
+    int size;
 };
 
 /*******************************
@@ -38,7 +38,7 @@ Queue* LinkedQueue_Create(void)
 
     queue->rear = queue->front;
     queue->front->next = NULL;
-    queue->count = 0;
+    queue->size = 0;
 
     return queue;
 }
@@ -56,17 +56,17 @@ void LinkedQueue_Destroy(Queue* self)
 
 int LinkedQueue_Size(const Queue* self)
 {
-    return self->count;
+    return self->size;
 }
 
 bool LinkedQueue_IsEmpty(const Queue* self)
 {
-    return self->count == 0;
+    return self->size == 0;
 }
 
 void LinkedQueue_Enqueue(Queue* self, QueueItem data)
 {
-    check_full(self->count, INT_MAX);
+    check_full(self->size, INT_MAX);
 
     struct node* add = (struct node*)malloc(sizeof(struct node));
     check_pointer(add);
@@ -77,12 +77,12 @@ void LinkedQueue_Enqueue(Queue* self, QueueItem data)
     self->rear->next = add;
     self->rear = add;
 
-    ++self->count;
+    ++self->size;
 }
 
 QueueItem LinkedQueue_Dequeue(Queue* self)
 {
-    check_empty(self->count);
+    check_empty(self->size);
 
     if (self->rear == self->front->next)
     {
@@ -95,14 +95,14 @@ QueueItem LinkedQueue_Dequeue(Queue* self)
     self->front->next = del->next;
     free(del);
 
-    --self->count;
+    --self->size;
 
     return data;
 }
 
 QueueItem LinkedQueue_Front(Queue* self)
 {
-    check_empty(self->count);
+    check_empty(self->size);
 
     return self->front->next->data;
 }

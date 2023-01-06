@@ -20,7 +20,7 @@ struct node
 struct list
 {
     // Number of elements.
-    int count;
+    int size;
 
     // Pointer to the header (rank = -1).
     struct node* header;
@@ -39,7 +39,7 @@ static inline void clear(List* self)
         free(self->header);
         self->header = next;
     }
-    self->count = 0;
+    self->size = 0;
 }
 
 /*******************************
@@ -51,7 +51,7 @@ List* LinkedList_Create(void)
     List* list = (List*)malloc(sizeof(List));
     check_pointer(list);
 
-    list->count = 0;
+    list->size = 0;
     list->header = (struct node*)malloc(sizeof(struct node));
     check_pointer(list->header);
     list->header->next = NULL;
@@ -67,19 +67,19 @@ void LinkedList_Destroy(List* self)
 
 int LinkedList_Size(const List* self)
 {
-    return self->count;
+    return self->size;
 }
 
 bool LinkedList_IsEmpty(const List* self)
 {
-    return self->count == 0;
+    return self->size == 0;
 }
 
 ListItem LinkedList_At(const List* self, int index) // list[index]
 {
-    check_bounds(index, -self->count, self->count);
+    check_bounds(index, -self->size, self->size);
 
-    index = index >= 0 ? index : index + self->count;
+    index = index >= 0 ? index : index + self->size;
 
     struct node* current = self->header->next;
 
@@ -108,12 +108,12 @@ int LinkedList_Find(const List* self, ListItem data)
 void LinkedList_Insert(List* self, int index, ListItem data)
 {
     // check
-    check_full(self->count, INT_MAX);
+    check_full(self->size, INT_MAX);
 
-    check_bounds(index, -self->count, self->count + 1);
+    check_bounds(index, -self->size, self->size + 1);
 
     // index
-    index = index >= 0 ? index : index + self->count;
+    index = index >= 0 ? index : index + self->size;
 
     struct node* current = self->header;
     for (int i = 0; i < index; i++)
@@ -130,18 +130,18 @@ void LinkedList_Insert(List* self, int index, ListItem data)
     current->next = node;
 
     // resize
-    ++self->count;
+    ++self->size;
 }
 
 ListItem LinkedList_Remove(List* self, int index)
 {
     // check
-    check_empty(self->count);
+    check_empty(self->size);
 
-    check_bounds(index, -self->count, self->count);
+    check_bounds(index, -self->size, self->size);
 
     // index
-    index = index >= 0 ? index : index + self->count;
+    index = index >= 0 ? index : index + self->size;
 
     struct node* current = self->header;
     for (int i = 0; i < index; i++)
@@ -158,7 +158,7 @@ ListItem LinkedList_Remove(List* self, int index)
     free(node);
 
     // resize
-    --self->count;
+    --self->size;
 
     // return data
     return data;

@@ -15,7 +15,7 @@ struct node
 
 struct stack
 {
-    int count;
+    int size;
     struct node* top;
 };
 
@@ -33,7 +33,7 @@ Stack* LinkedStack_Create(void)
     check_pointer(stack);
 
     stack->top = NULL;
-    stack->count = 0;
+    stack->size = 0;
 
     return stack;
 }
@@ -51,17 +51,17 @@ void LinkedStack_Destroy(Stack* self)
 
 int LinkedStack_Size(const Stack* self)
 {
-    return self->count;
+    return self->size;
 }
 
 bool LinkedStack_IsEmpty(const Stack* self)
 {
-    return self->count == 0;
+    return self->size == 0;
 }
 
 void LinkedStack_Push(Stack* self, StackItem data)
 {
-    check_full(self->count, INT_MAX);
+    check_full(self->size, INT_MAX);
 
     struct node* node = (struct node*)malloc(sizeof(struct node));
     check_pointer(node);
@@ -70,26 +70,26 @@ void LinkedStack_Push(Stack* self, StackItem data)
     node->next = self->top;
     self->top = node;
 
-    self->count++;
+    self->size++;
 }
 
 StackItem LinkedStack_Pop(Stack* self)
 {
-    check_empty(self->count);
+    check_empty(self->size);
 
     struct node* node = self->top;
     self->top = node->next;
     StackItem data = node->data;
     free(node);
 
-    self->count--;
+    self->size--;
 
     return data;
 }
 
 StackItem LinkedStack_Top(const Stack* self)
 {
-    check_empty(self->count);
+    check_empty(self->size);
 
     return self->top->data;
 }

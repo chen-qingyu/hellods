@@ -23,12 +23,12 @@ struct node
 struct list
 {
     // Number of elements.
-    int count;
+    int size;
 
     // Pointer to the header (rank = -1).
     struct node* header;
 
-    // Pointer to the trailer (rank = count).
+    // Pointer to the trailer (rank = size).
     struct node* trailer;
 
     // Index of the latest accessed element. For DoublyLinkedList_At().
@@ -51,7 +51,7 @@ static inline void clear(List* self)
         free(self->header);
         self->header = next;
     }
-    self->count = 0;
+    self->size = 0;
     self->latest = -1;
     self->p_latest = self->header;
 }
@@ -65,7 +65,7 @@ List* DoublyLinkedList_Create(void)
     List* list = (List*)malloc(sizeof(List));
     check_pointer(list);
 
-    list->count = 0;
+    list->size = 0;
     list->header = (struct node*)malloc(sizeof(struct node));
     check_pointer(list->header);
     list->trailer = (struct node*)malloc(sizeof(struct node));
@@ -90,28 +90,28 @@ void DoublyLinkedList_Destroy(List* self)
 
 int DoublyLinkedList_Size(const List* self)
 {
-    return self->count;
+    return self->size;
 }
 
 bool DoublyLinkedList_IsEmpty(const List* self)
 {
-    return self->count == 0;
+    return self->size == 0;
 }
 
-ListItem DoublyLinkedList_At(const List* self, int index) // list[index] for index in range 0 to count will be O(1) on each access
+ListItem DoublyLinkedList_At(const List* self, int index) // list[index] for index in range 0 to size will be O(1) on each access
 {
-    check_bounds(index, -self->count, self->count);
+    check_bounds(index, -self->size, self->size);
 
-    index = index >= 0 ? index : index + self->count;
+    index = index >= 0 ? index : index + self->size;
 
     List* list = (List*)self; // drop out const
 
     // too far from the last accessed element
-    if (abs(index - self->latest) > self->count / 2)
+    if (abs(index - self->latest) > self->size / 2)
     {
         // closer to the header or trailer
         list->p_latest = (index < self->latest) ? self->header->next : self->trailer->prev;
-        list->latest = (index < self->latest) ? 0 : self->count - 1;
+        list->latest = (index < self->latest) ? 0 : self->size - 1;
     }
 
     if (index < self->latest)
@@ -152,15 +152,15 @@ int DoublyLinkedList_Find(const List* self, ListItem data)
 void DoublyLinkedList_Insert(List* self, int index, ListItem data)
 {
     // check
-    check_full(self->count, INT_MAX);
+    check_full(self->size, INT_MAX);
 
-    check_bounds(index, -self->count, self->count + 1);
+    check_bounds(index, -self->size, self->size + 1);
 
     // index
-    index = index >= 0 ? index : index + self->count;
+    index = index >= 0 ? index : index + self->size;
 
     struct node* current = NULL;
-    if (index < self->count / 2)
+    if (index < self->size / 2)
     {
         current = self->header->next;
         for (int i = 0; i < index; i++)
@@ -170,8 +170,8 @@ void DoublyLinkedList_Insert(List* self, int index, ListItem data)
     }
     else
     {
-        current = self->trailer; // be careful, index may be same as count
-        for (int i = self->count; i > index; i--)
+        current = self->trailer; // be careful, index may be same as size
+        for (int i = self->size; i > index; i--)
         {
             current = current->prev;
         }
@@ -188,21 +188,21 @@ void DoublyLinkedList_Insert(List* self, int index, ListItem data)
     current->prev = node;
 
     // resize
-    ++self->count;
+    ++self->size;
 }
 
 ListItem DoublyLinkedList_Remove(List* self, int index)
 {
     // check
-    check_empty(self->count);
+    check_empty(self->size);
 
-    check_bounds(index, -self->count, self->count);
+    check_bounds(index, -self->size, self->size);
 
     // index
-    index = index >= 0 ? index : index + self->count;
+    index = index >= 0 ? index : index + self->size;
 
     struct node* current = NULL;
-    if (index < self->count / 2)
+    if (index < self->size / 2)
     {
         current = self->header->next;
         for (int i = 0; i < index; i++)
@@ -213,7 +213,7 @@ ListItem DoublyLinkedList_Remove(List* self, int index)
     else
     {
         current = self->trailer->prev;
-        for (int i = self->count - 1; i > index; i--)
+        for (int i = self->size - 1; i > index; i--)
         {
             current = current->prev;
         }
@@ -235,7 +235,7 @@ ListItem DoublyLinkedList_Remove(List* self, int index)
     free(current);
 
     // resize
-    --self->count;
+    --self->size;
 
     // return data
     return data;

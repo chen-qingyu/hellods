@@ -12,7 +12,7 @@
 struct heap
 {
     HeapItem* data;
-    int count;
+    int size;
     int capacity;
 };
 
@@ -37,7 +37,7 @@ Heap* MaxHeap_Create(void)
     Heap* heap = (Heap*)malloc(sizeof(Heap));
     check_pointer(heap);
 
-    heap->count = 0;
+    heap->size = 0;
     heap->capacity = 8;
     heap->data = (HeapItem*)malloc(heap->capacity * sizeof(HeapItem));
     check_pointer(heap->data);
@@ -55,25 +55,25 @@ void MaxHeap_Destroy(Heap* self)
 
 int MaxHeap_Size(const Heap* self)
 {
-    return self->count;
+    return self->size;
 }
 
 bool MaxHeap_IsEmpty(const Heap* self)
 {
-    return self->count == 0;
+    return self->size == 0;
 }
 
 void MaxHeap_Push(Heap* self, HeapItem data)
 {
-    check_full(self->count, INT_MAX);
+    check_full(self->size, INT_MAX);
 
-    if (self->count == self->capacity) // need to expand capacity
+    if (self->size == self->capacity) // need to expand capacity
     {
         expand_capacity(self);
     }
 
     int pos;
-    for (pos = ++self->count; self->data[pos / 2] < data; pos /= 2)
+    for (pos = ++self->size; self->data[pos / 2] < data; pos /= 2)
     {
         self->data[pos] = self->data[pos / 2];
     }
@@ -82,16 +82,16 @@ void MaxHeap_Push(Heap* self, HeapItem data)
 
 HeapItem MaxHeap_Pop(Heap* self)
 {
-    check_empty(self->count);
+    check_empty(self->size);
 
     HeapItem max_item = self->data[1];
-    HeapItem tmp = self->data[self->count--];
+    HeapItem tmp = self->data[self->size--];
 
     int parent, child;
-    for (parent = 1; parent * 2 <= self->count; parent = child)
+    for (parent = 1; parent * 2 <= self->size; parent = child)
     {
         child = parent * 2;
-        if ((child != self->count) && (self->data[child] < self->data[child + 1]))
+        if ((child != self->size) && (self->data[child] < self->data[child + 1]))
         {
             child++;
         }
@@ -112,7 +112,7 @@ HeapItem MaxHeap_Pop(Heap* self)
 
 HeapItem MaxHeap_Top(Heap* self)
 {
-    check_empty(self->count);
+    check_empty(self->size);
 
     return self->data[1];
 }
