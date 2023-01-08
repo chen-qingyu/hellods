@@ -687,14 +687,7 @@ static inline int find_pattern(const char* str, const char* pattern, int n, int 
         {
             i = match[i];
         }
-        if (pattern[i + 1] == pattern[j])
-        {
-            match[j] = i + 1;
-        }
-        else
-        {
-            match[j] = STRING_NOT_FOUND;
-        }
+        match[j] = (pattern[i + 1] == pattern[j]) ? i + 1 : STRING_NOT_FOUND;
     }
 
     int s = 0;

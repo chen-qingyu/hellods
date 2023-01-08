@@ -174,7 +174,7 @@ void String_MoveAssign(String* self, String* that);
  * Example: char *chars = String_Get(self);
  *
  * @param self A pointer to the string.
- * @param chars A null-terminated byte string.
+ * @return A pointer to a null-terminated byte string.
  */
 char* String_Get(const String* self);
 
