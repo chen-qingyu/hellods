@@ -179,15 +179,17 @@ static inline enum event get_event(char ch, int base)
 // Append a char.
 static inline void append_char(String* self, const char ch)
 {
-    char* tmp_arr = (char*)malloc(sizeof(char) * 2);
-    tmp_arr[0] = ch;
-    tmp_arr[1] = '\0';
-    String* tmp_str = String_From(tmp_arr);
+    check_full(self->size + 1, INT_MAX); // be careful: '\0'
 
-    String_Append(self, tmp_str);
+    if (self->size + 1 == self->capacity) // need to expand capacity
+    {
+        self->capacity = (self->capacity < INT_MAX / 2) ? self->capacity * 2 : INT_MAX; // double the capacity until INT_MAX
+        self->data = (char*)realloc(self->data, sizeof(char) * self->capacity);
+        check_pointer(self->data);
+    }
 
-    free(tmp_arr);
-    String_Destroy(tmp_str);
+    self->data[self->size++] = ch;
+    self->data[self->size] = '\0';
 }
 
 /*******************************
@@ -404,8 +406,8 @@ enum order String_Compare(const String* self, const String* that)
 
 int String_Find(const String* self, const String* pattern, int start, int stop)
 {
-    char* this_str = self->data + start;
-    char* patt_str = pattern->data;
+    const char* this_str = self->data + start;
+    const char* patt_str = pattern->data;
     int n = stop - start;
     int m = String_Size(pattern);
 
@@ -692,24 +694,10 @@ void String_Upper(String* self)
 
 void String_Append(String* self, const String* str)
 {
-    check_full((self->size & str->size) + ((self->size ^ str->size) >> 1), INT_MAX / 2); // (self->size + str->size) / 2 with no overflow
-
-    if (self->size + str->size >= self->capacity) // need to expand capacity
-    {
-        while (self->size + str->size >= self->capacity)
-        {
-            self->capacity = (self->capacity < INT_MAX / 2) ? self->capacity * 2 : INT_MAX; // double the capacity until INT_MAX
-        }
-        self->data = (char*)realloc(self->data, sizeof(char) * self->capacity);
-        check_pointer(self->data);
-    }
-
     for (int i = 0; i < str->size; i++)
     {
-        self->data[self->size + i] = str->data[i];
+        append_char(self, str->data[i]);
     }
-    self->size += str->size;
-    self->data[self->size] = '\0';
 }
 
 void String_Erase(String* self, int begin, int end)
