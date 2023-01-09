@@ -196,6 +196,10 @@ static inline void append_char(String* self, const char ch)
  * Interface functions definition.
  *******************************/
 
+/**
+ * Constructor / Destructor
+ */
+
 String* String_Create(void)
 {
     String* str = (String*)malloc(sizeof(String));
@@ -269,6 +273,10 @@ void String_Destroy(String* self)
     }
 }
 
+/**
+ * Assignment
+ */
+
 void String_CopyAssign(String* self, const String* that)
 {
     free(self->data);
@@ -299,9 +307,13 @@ void String_MoveAssign(String* self, String* that)
     that->data[0] = '\0';
 }
 
+/**
+ * Getter / Setter
+ */
+
 char* String_Get(const String* self)
 {
-    char* chars = (char*)malloc(sizeof(self->size) + 1);
+    char* chars = (char*)malloc(sizeof(char) * self->size + 1);
     check_pointer(chars);
     for (int i = 0; i < self->size; ++i)
     {
@@ -326,15 +338,9 @@ void String_Set(String* self, const char* chars)
     self->data[self->size] = '\0';
 }
 
-const char* String_Buffer(const String* self)
-{
-    return self->data;
-}
-
-void String_Print(const String* self)
-{
-    printf("%s\n", self->data);
-}
+/**
+ * Examination (will not change the object itself)
+ */
 
 int String_Size(const String* self)
 {
@@ -344,6 +350,11 @@ int String_Size(const String* self)
 bool String_IsEmpty(const String* self)
 {
     return self->size == 0;
+}
+
+void String_Print(const String* self)
+{
+    printf("%s\n", self->data);
 }
 
 char String_At(const String* self, int i)
@@ -414,47 +425,6 @@ int String_Find(const String* self, const String* pattern, int start, int stop)
     int pos = kmp(this_str, patt_str, n, m);
 
     return pos == -1 ? -1 : pos + start;
-}
-
-String** String_Split(const String* self, const String* sep)
-{
-    if (sep->size == 0)
-    {
-        fprintf(stderr, "ERROR: Empty separator.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    String** str_arr = (String**)malloc(sizeof(String*) * (self->size + 1));
-    check_pointer(str_arr);
-    int size = 0;
-
-    int this_start = 0;
-    for (int patt_start = 0; (patt_start = String_Find(self, sep, this_start, self->size)) != -1; this_start = patt_start + sep->size)
-    {
-        str_arr[size++] = String_Slice(self, this_start, patt_start, 1);
-    }
-    if (this_start != self->size)
-    {
-        str_arr[size++] = String_Slice(self, this_start, self->size, 1);
-    }
-    str_arr[size] = NULL;
-
-    // shrink to fit
-    str_arr = (String**)realloc(str_arr, sizeof(String*) * (size + 1)); // size + 1 <= self->size + 1, safe
-
-    return str_arr;
-}
-
-void String_DestroyArray(String** str_arr)
-{
-    if (str_arr)
-    {
-        for (int i = 0; str_arr[i] != NULL; ++i)
-        {
-            String_Destroy(str_arr[i]);
-        }
-        free(str_arr);
-    }
 }
 
 double String_ToDecimal(const String* self)
@@ -650,31 +620,9 @@ int String_Count(const String* self, char x)
     return cnt;
 }
 
-String* String_Slice(const String* self, int start, int stop, int step)
-{
-    // check
-    if (step == 0)
-    {
-        fprintf(stderr, "ERROR: Slice step cannot be zero.\n");
-        exit(EXIT_FAILURE);
-    }
-
-    check_bounds(start, -self->size, self->size);
-    check_bounds(stop, -self->size - 1, self->size + 1);
-
-    // convert
-    start = start < 0 ? start + self->size : start;
-    stop = stop < 0 ? stop + self->size : stop;
-
-    // copy
-    String* str = String_Create();
-    for (int i = start; (step > 0) ? (i < stop) : (i > stop); i += step)
-    {
-        append_char(str, self->data[i]);
-    }
-
-    return str;
-}
+/**
+ * Manipulation (will change the object itself)
+ */
 
 void String_Lower(String* self)
 {
@@ -694,7 +642,8 @@ void String_Upper(String* self)
 
 void String_Append(String* self, const String* str)
 {
-    for (int i = 0; i < str->size; i++)
+    int len = str->size; // save str->size, for valid when self == str
+    for (int i = 0; i < len; i++)
     {
         append_char(self, str->data[i]);
     }
@@ -702,8 +651,8 @@ void String_Append(String* self, const String* str)
 
 void String_Erase(String* self, int begin, int end)
 {
-    begin = (begin < 0 ? 0 : begin);
-    end = (end > self->size ? self->size : end);
+    check_bounds(begin, 0, self->size);
+    check_bounds(end, 0, self->size + 1);
 
     for (int i = end; i < self->size; i++)
     {
@@ -780,4 +729,79 @@ void String_Swap(String* self, String* that)
 void String_Clear(String* self)
 {
     String_Set(self, "");
+}
+
+/**
+ * Production (will produce new object)
+ */
+
+String** String_Split(const String* self, const String* sep)
+{
+    if (sep->size == 0)
+    {
+        fprintf(stderr, "ERROR: Empty separator.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    String** str_arr = (String**)malloc(sizeof(String*) * (self->size + 1));
+    check_pointer(str_arr);
+    int size = 0;
+
+    int this_start = 0;
+    for (int patt_start = 0; (patt_start = String_Find(self, sep, this_start, self->size)) != -1; this_start = patt_start + sep->size)
+    {
+        str_arr[size++] = String_Slice(self, this_start, patt_start, 1);
+    }
+    if (this_start != self->size)
+    {
+        str_arr[size++] = String_Slice(self, this_start, self->size, 1);
+    }
+    str_arr[size] = NULL;
+
+    // shrink to fit
+    str_arr = (String**)realloc(str_arr, sizeof(String*) * (size + 1)); // size + 1 <= self->size + 1, safe
+
+    return str_arr;
+}
+
+String* String_Slice(const String* self, int start, int stop, int step)
+{
+    // check
+    if (step == 0)
+    {
+        fprintf(stderr, "ERROR: Slice step cannot be zero.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    check_bounds(start, -self->size, self->size);
+    check_bounds(stop, -self->size - 1, self->size + 1);
+
+    // convert
+    start = start < 0 ? start + self->size : start;
+    stop = stop < 0 ? stop + self->size : stop;
+
+    // copy
+    String* str = String_Create();
+    for (int i = start; (step > 0) ? (i < stop) : (i > stop); i += step)
+    {
+        append_char(str, self->data[i]);
+    }
+
+    return str;
+}
+
+/**
+ * Auxiliary (helper functions)
+ */
+
+void String_DestroyArray(String** str_arr)
+{
+    if (str_arr)
+    {
+        for (int i = 0; str_arr[i] != NULL; ++i)
+        {
+            String_Destroy(str_arr[i]);
+        }
+        free(str_arr);
+    }
 }
