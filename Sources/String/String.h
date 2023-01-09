@@ -9,33 +9,30 @@
  * @copyright Copyright (c) 2022
  *
  * Functions:
- * - String construction/deconstruction:
+ * - Constructor / Destructor:
  *   - String_Create        Create an empty string.
  *   - String_From          Create a string from null-terminated byte string.
  *   - String_Copy          Copy constructor.
  *   - String_Move          Move constructor.
  *   - String_Destroy       Destroy a string.
- * - String assignment:
+ * - Assignment:
  *   - String_CopyAssign    Copy assignment operation.
  *   - String_MoveAssign    Move assignment operation.
- * - String getter/setter:
+ * - Getter / Setter:
  *   - String_Get           Get the copy of the contents of the string.
  *   - String_Set           Set the contents of the string using null-terminated byte string.
- * - String examination (will not change the string itself):
- *   - String_Print         Print the contents of the string.
+ * - Examination (will not change the object itself):
  *   - String_Size          Find the size of the string.
  *   - String_IsEmpty       Determine whether the string is empty.
+ *   - String_Print         Print the contents of the string.
  *   - String_At            Take the i-th character of the string.
  *   - String_Equal         Determine whether the two strings have the same contents.
  *   - String_Compare       Compare two strings lexicographically.
  *   - String_Find          Find the position of the pattern.
- *   - String_Split         Split string with separator.
- *   - String_DestroyArray  Destroy a string array. For String_Split().
  *   - String_ToDecimal     Convert the string to a double-precision floating-point decimal number.
  *   - String_ToInteger     Convert the string to an integer number based on 2-36 base.
  *   - String_Count         Count the number of occurrences of a specified character.
- *   - String_Slice         Return slice of the string from start to stop with certain step.
- * - String manipulation (will change the string itself):
+ * - Manipulation (will change the object itself):
  *   - String_Lower         Convert the string to lowercase.
  *   - String_Upper         Convert the string to uppercase.
  *   - String_Append        Append new string to the tail.
@@ -45,6 +42,11 @@
  *   - String_Strip         Remove leading and trailing blank characters of the string.
  *   - String_Swap          Swap the contents of two strings.
  *   - String_Clear         Clear the contents of the string.
+ *  - Production (will produce new object):
+ *   - String_Split         Split string with separator.
+ *   - String_Slice         Return slice of the string from start to stop with certain step.
+ *  - Auxiliary (helper functions):
+ *   - String_DestroyArray  Destroy a string array. For String_Split().
  */
 
 #ifndef STRING_H
@@ -85,6 +87,10 @@ enum order
 /*******************************
  * Interface function declaration.
  *******************************/
+
+/**
+ * Constructor / Destructor
+ */
 
 /**
  * @brief Create an empty string. Constructor. O(1)
@@ -145,6 +151,10 @@ String* String_Move(String* str);
 void String_Destroy(String* self);
 
 /**
+ * Assignment
+ */
+
+/**
  * @brief Copy assignment operation. O(N)
  *
  * Like `self = that;` in C++.
@@ -169,6 +179,10 @@ void String_CopyAssign(String* self, const String* that);
 void String_MoveAssign(String* self, String* that);
 
 /**
+ * Getter / Setter
+ */
+
+/**
  * @brief Get the copy of the contents of the string. O(N)
  *
  * Example: char *chars = String_Get(self);
@@ -189,19 +203,8 @@ char* String_Get(const String* self);
 void String_Set(String* self, const char* chars);
 
 /**
- * @brief Get the buffer of the contents of the string. O(1)
- *
- * @param self A pointer to the string.
- * @return The buffer of the contents of the string.
+ * Examination (will not change the object itself)
  */
-const char* String_Buffer(const String* self);
-
-/**
- * @brief Print the contents of the string. O(N)
- *
- * @param self A pointer to the string to be printed.
- */
-void String_Print(const String* self);
 
 /**
  * @brief Find the size of the string. O(1)
@@ -218,6 +221,13 @@ int String_Size(const String* self);
  * @return Returns true if the string is empty, false otherwise.
  */
 bool String_IsEmpty(const String* self);
+
+/**
+ * @brief Print the contents of the string. O(N)
+ *
+ * @param self A pointer to the string to be printed.
+ */
+void String_Print(const String* self);
 
 /**
  * @brief Take the i-th character of the string. O(1)
@@ -262,28 +272,6 @@ enum order String_Compare(const String* self, const String* that);
  * @return Returns the starting substring index or STRING_NOT_FOUND.
  */
 int String_Find(const String* self, const String* pattern, int start, int stop);
-
-/**
- * @brief Split string with separator. O(N)
- *
- * Example: string *str = String_From("one, two, three");
- *          string *sep = String_From(", ");
- *          string **str_arr = String_Split(str, sep); // => ["one", "two", "three", NULL]
- *
- * Don't forget use String_DestroyArray(return-value).
- *
- * @param self String to be split.
- * @param sep Separator string.
- * @return A null-terminated array of split string pointers.
- */
-String** String_Split(const String* self, const String* sep);
-
-/**
- * @brief Destroy a string array. For String_Split(). O(N)
- *
- * @param str_arr A pointer to the string array to be destroyed.
- */
-void String_DestroyArray(String** str_arr);
 
 /**
  * @brief Convert the string to a double-precision floating-point decimal number. O(N)
@@ -338,17 +326,8 @@ long long String_ToInteger(const String* self, int base);
 int String_Count(const String* self, char x);
 
 /**
- * @brief Return slice of the string from start to stop with certain step. O(N)
- *
- * Index and step length can be negative.
- *
- * @param self A pointer to the string.
- * @param start Start index (included).
- * @param stop Stop index (excluded).
- * @param step Step length.
- * @return The slice of the string.
+ * Manipulation (will change the object itself)
  */
-String* String_Slice(const String* self, int start, int stop, int step);
 
 /**
  * @brief Convert the string to lowercase. O(N)
@@ -418,5 +397,48 @@ void String_Swap(String* self, String* that);
  * @param self A pointer to the string.
  */
 void String_Clear(String* self);
+
+/**
+ * Production (will produce new object)
+ */
+
+/**
+ * @brief Split string with separator. O(N)
+ *
+ * Example: string *str = String_From("one, two, three");
+ *          string *sep = String_From(", ");
+ *          string **str_arr = String_Split(str, sep); // => ["one", "two", "three", NULL]
+ *
+ * Don't forget use String_DestroyArray(return-value).
+ *
+ * @param self String to be split.
+ * @param sep Separator string.
+ * @return A null-terminated array of split string pointers.
+ */
+String** String_Split(const String* self, const String* sep);
+
+/**
+ * @brief Return slice of the string from start to stop with certain step. O(N)
+ *
+ * Index and step length can be negative.
+ *
+ * @param self A pointer to the string.
+ * @param start Start index (included).
+ * @param stop Stop index (excluded).
+ * @param step Step length.
+ * @return The slice of the string.
+ */
+String* String_Slice(const String* self, int start, int stop, int step);
+
+/**
+ * Auxiliary (helper functions)
+ */
+
+/**
+ * @brief Destroy a string array. Helper function for String_Split(). O(N)
+ *
+ * @param str_arr A pointer to the string array to be destroyed.
+ */
+void String_DestroyArray(String** str_arr);
 
 #endif // STRING_H
