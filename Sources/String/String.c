@@ -12,7 +12,7 @@
 
 #include "String.h"
 
-#include <math.h>   // pow
+#include <math.h>   // pow INFINITY NAN
 #include <stdio.h>  // fprintf stderr
 #include <stdlib.h> // malloc realloc free exit EXIT_FAILURE NULL
 
@@ -69,26 +69,126 @@ enum event
 };
 
 /*******************************
- * Helper function declaration.
+ * Helper function definition.
  *******************************/
 
 // Use the KMP algorithm to find the position of the pattern.
-static inline int find_pattern(const char* str, const char* pattern, int n, int m);
+static inline int kmp(const char* str, const char* pattern, int n, int m)
+{
+    if (n < m)
+    {
+        return STRING_NOT_FOUND;
+    }
+
+    if (m == 0) // "" is in any string at index 0.
+    {
+        return 0;
+    }
+
+    int* match = (int*)malloc(sizeof(int) * m);
+    check_pointer(match);
+    match[0] = STRING_NOT_FOUND;
+
+    for (int j = 1; j < m; j++)
+    {
+        int i = match[j - 1];
+        while ((i >= 0) && (pattern[i + 1] != pattern[j]))
+        {
+            i = match[i];
+        }
+        match[j] = (pattern[i + 1] == pattern[j]) ? i + 1 : STRING_NOT_FOUND;
+    }
+
+    int s = 0;
+    int p = 0;
+    while (s < n && p < m)
+    {
+        if (str[s] == pattern[p])
+        {
+            s++;
+            p++;
+        }
+        else if (p > 0)
+        {
+            p = match[p - 1] + 1;
+        }
+        else
+        {
+            s++;
+        }
+    }
+
+    free(match);
+
+    return (p == m) ? (s - m) : STRING_NOT_FOUND;
+}
 
 // Calculate the length of null-terminated byte string (exclude '\0').
-static inline int length(const char* chars);
-
-// Copy a string range.
-static inline void copy_range(String* dst, const String* src, int begin, int end);
-
-// Check if the string represents infinity or nan. Return [+-]INFINITY or NAN if the string represents infinity or nan, zero otherwise.
-static inline double check_infinity_nan(const String* str);
+static inline int length(const char* chars)
+{
+    int len = 0;
+    while (*chars != '\0')
+    {
+        chars++;
+        len++;
+    }
+    return len;
+}
 
 // Try to transform a character to an integer based on 2-36 base.
-static inline int char_to_integer(char digit, int base);
+static inline int char_to_integer(char digit, int base) // 2 <= base <= 36
+{
+    static const char* upper_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    static const char* lower_digits = "0123456789abcdefghijklmnopqrstuvwxyz";
+    for (int i = 0; i < base; ++i)
+    {
+        if (digit == upper_digits[i] || digit == lower_digits[i])
+        {
+            return i;
+        }
+    }
+    return -1; // not an integer
+}
 
 // Try to transform a character to an event.
-static inline enum event get_event(char ch, int base);
+static inline enum event get_event(char ch, int base)
+{
+    if (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')
+    {
+        return E_BLANK;
+    }
+    else if (char_to_integer(ch, base) != -1)
+    {
+        return E_NUMBER;
+    }
+    else if (ch == '-' || ch == '+')
+    {
+        return E_SIGN;
+    }
+    else if (ch == '.')
+    {
+        return E_DEC_POINT;
+    }
+    else if (ch == 'e' || ch == 'E')
+    {
+        return E_EXP;
+    }
+    return E_OTHER;
+}
+
+// Append a char.
+static inline void append_char(String* self, const char ch)
+{
+    char* tmp_arr = (char*)malloc(sizeof(char) * 2);
+    tmp_arr[0] = ch;
+    tmp_arr[1] = '\0';
+    String* tmp_str = String_From(tmp_arr);
+
+    String_Append(self, tmp_str);
+
+    free(tmp_arr);
+    String_Destroy(tmp_str);
+}
 
 /*******************************
  * Interface functions definition.
@@ -302,14 +402,16 @@ enum order String_Compare(const String* self, const String* that)
     }
 }
 
-int String_Find(const String* self, const String* pattern)
+int String_Find(const String* self, const String* pattern, int start, int stop)
 {
-    const char* _str = self->data;
-    const char* _pattern = pattern->data;
-    int n = String_Size(self);
+    char* this_str = self->data + start;
+    char* patt_str = pattern->data;
+    int n = stop - start;
     int m = String_Size(pattern);
 
-    return find_pattern(_str, _pattern, n, m);
+    int pos = kmp(this_str, patt_str, n, m);
+
+    return pos == -1 ? -1 : pos + start;
 }
 
 String** String_Split(const String* self, const String* sep)
@@ -324,20 +426,14 @@ String** String_Split(const String* self, const String* sep)
     check_pointer(str_arr);
     int size = 0;
 
-    int pos_begin = 0;
-    int pos_sep = 0;
-    while ((pos_sep = find_pattern(self->data + pos_begin, sep->data, self->size - pos_begin, sep->size)) != STRING_NOT_FOUND)
+    int this_start = 0;
+    for (int patt_start = 0; (patt_start = String_Find(self, sep, this_start, self->size)) != -1; this_start = patt_start + sep->size)
     {
-        String* tmp = String_Create();
-        copy_range(tmp, self, pos_begin, pos_begin + pos_sep);
-        str_arr[size++] = tmp;
-        pos_begin += pos_sep + sep->size;
+        str_arr[size++] = String_Slice(self, this_start, patt_start, 1);
     }
-    if (pos_begin != self->size)
+    if (this_start != self->size)
     {
-        String* tmp = String_Create();
-        copy_range(tmp, self, pos_begin, self->size);
-        str_arr[size++] = tmp;
+        str_arr[size++] = String_Slice(self, this_start, self->size, 1);
     }
     str_arr[size] = NULL;
 
@@ -362,11 +458,40 @@ void String_DestroyArray(String** str_arr)
 double String_ToDecimal(const String* self)
 {
     // check infinity or nan
-    double inf_nan = check_infinity_nan(self);
-    if (inf_nan != 0)
+    String* inf_nan = String_Create();
+    static const char* pos_infs[12] = {"inf", "INF", "Inf", "+inf", "+INF", "+Inf", "infinity", "INFINITY", "Infinity", "+infinity", "+INFINITY", "+Infinity"};
+    static const char* neg_infs[6] = {"-inf", "-INF", "-Inf", "-infinity", "-INFINITY", "-Infinity"};
+    static const char* nans[9] = {"nan", "NaN", "NAN", "+nan", "+NaN", "+NAN", "-nan", "-NaN", "-NAN"};
+    for (int i = 0; i < 12; ++i)
     {
-        return inf_nan;
+        String_Set(inf_nan, pos_infs[i]);
+        if (String_Equal(self, inf_nan))
+        {
+            String_Destroy(inf_nan);
+            return INFINITY;
+        }
     }
+    for (int i = 0; i < 6; ++i)
+    {
+        String_Set(inf_nan, neg_infs[i]);
+        if (String_Equal(self, inf_nan))
+        {
+            String_Destroy(inf_nan);
+            return -INFINITY;
+        }
+    }
+    for (int i = 0; i < 9; ++i)
+    {
+        String_Set(inf_nan, nans[i]);
+        if (String_Equal(self, inf_nan))
+        {
+            String_Destroy(inf_nan);
+            return NAN;
+        }
+    }
+    String_Destroy(inf_nan);
+
+    // not infinity or nan
 
     double sign = 1; // default '+'
     double decimal_part = 0;
@@ -448,7 +573,7 @@ double String_ToDecimal(const String* self)
     }
     if (st != S_INT_PART && st != S_DEC_POINT_HAS_LEFT && st != S_DEC_PART && st != S_EXP_PART && st != S_END_BLANK)
     {
-        fprintf(stderr, "ERROR: Invalid literal for str_to_decimal(): '%s'\n", self->data);
+        fprintf(stderr, "ERROR: Invalid literal for String_ToDecimal(): '%s'\n", self->data);
         exit(EXIT_FAILURE);
     }
 
@@ -460,7 +585,7 @@ long long String_ToInteger(const String* self, int base)
     // check base
     if (base < 2 || base > 36)
     {
-        fprintf(stderr, "ERROR: Invalid base for str_to_integer(): %d\n", base);
+        fprintf(stderr, "ERROR: Invalid base for String_ToInteger(): %d\n", base);
         exit(EXIT_FAILURE);
     }
 
@@ -503,7 +628,7 @@ long long String_ToInteger(const String* self, int base)
     }
     if (st != S_INT_PART && st != S_END_BLANK)
     {
-        fprintf(stderr, "ERROR: Invalid literal for str_to_integer() with base %d: '%s'\n", base, self->data);
+        fprintf(stderr, "ERROR: Invalid literal for String_ToInteger() with base %d: '%s'\n", base, self->data);
         exit(EXIT_FAILURE);
     }
 
@@ -521,6 +646,32 @@ int String_Count(const String* self, char x)
         }
     }
     return cnt;
+}
+
+String* String_Slice(const String* self, int start, int stop, int step)
+{
+    // check
+    if (step == 0)
+    {
+        fprintf(stderr, "ERROR: Slice step cannot be zero.\n");
+        exit(EXIT_FAILURE);
+    }
+
+    check_bounds(start, -self->size, self->size);
+    check_bounds(stop, -self->size - 1, self->size + 1);
+
+    // convert
+    start = start < 0 ? start + self->size : start;
+    stop = stop < 0 ? stop + self->size : stop;
+
+    // copy
+    String* str = String_Create();
+    for (int i = start; (step > 0) ? (i < stop) : (i > stop); i += step)
+    {
+        append_char(str, self->data[i]);
+    }
+
+    return str;
 }
 
 void String_Lower(String* self)
@@ -584,44 +735,27 @@ void String_Reverse(String* self)
     }
 }
 
-void String_ReplaceChar(String* self, const char old_char, const char new_char)
-{
-    for (int i = 0; i < self->size; ++i)
-    {
-        if (self->data[i] == old_char)
-        {
-            self->data[i] = new_char;
-        }
-    }
-}
-
 void String_Replace(String* self, const String* old_str, const String* new_str)
 {
     String* buffer = String_Create();
-    String* tmp = String_Create();
 
-    int offset = 0;
-    int index = 0;
-    while ((index = find_pattern(self->data + offset, old_str->data, self->size - offset, old_str->size)) != STRING_NOT_FOUND)
+    int this_start = 0;
+    for (int patt_start = 0; (patt_start = String_Find(self, old_str, this_start, self->size)) != -1; this_start = patt_start + old_str->size)
     {
-        index += offset;
-        copy_range(tmp, self, offset, index);
+        String* tmp = String_Slice(self, this_start, patt_start, 1);
         String_Append(buffer, tmp);
         String_Append(buffer, new_str);
-        offset = index + old_str->size;
+        String_Destroy(tmp);
     }
-    if (offset != self->size)
+    if (this_start != self->size)
     {
-        copy_range(tmp, self, offset, self->size);
+        String* tmp = String_Slice(self, this_start, self->size, 1);
         String_Append(buffer, tmp);
+        String_Destroy(tmp);
     }
-    String_Destroy(tmp);
 
-    free(self->data);
-    self->data = buffer->data;
-    self->size = buffer->size;
-    self->capacity = buffer->capacity;
-    free(buffer);
+    String_MoveAssign(self, buffer);
+    String_Destroy(buffer);
 }
 
 void String_Strip(String* self)
@@ -658,163 +792,4 @@ void String_Swap(String* self, String* that)
 void String_Clear(String* self)
 {
     String_Set(self, "");
-}
-
-/*******************************
- * Helper function definition.
- *******************************/
-
-static inline int find_pattern(const char* str, const char* pattern, int n, int m)
-{
-    if (n < m)
-    {
-        return STRING_NOT_FOUND;
-    }
-
-    if (m == 0) // "" is in any string at index 0.
-    {
-        return 0;
-    }
-
-    int* match = (int*)malloc(sizeof(int) * m);
-    check_pointer(match);
-    match[0] = STRING_NOT_FOUND;
-
-    for (int j = 1; j < m; j++)
-    {
-        int i = match[j - 1];
-        while ((i >= 0) && (pattern[i + 1] != pattern[j]))
-        {
-            i = match[i];
-        }
-        match[j] = (pattern[i + 1] == pattern[j]) ? i + 1 : STRING_NOT_FOUND;
-    }
-
-    int s = 0;
-    int p = 0;
-    while (s < n && p < m)
-    {
-        if (str[s] == pattern[p])
-        {
-            s++;
-            p++;
-        }
-        else if (p > 0)
-        {
-            p = match[p - 1] + 1;
-        }
-        else
-        {
-            s++;
-        }
-    }
-
-    free(match);
-
-    return (p == m) ? (s - m) : STRING_NOT_FOUND;
-}
-
-static inline int length(const char* chars)
-{
-    int len = 0;
-    while (*chars != '\0')
-    {
-        chars++;
-        len++;
-    }
-    return len;
-}
-
-static inline void copy_range(String* dst, const String* src, int begin, int end)
-{
-    check_bounds(begin, 0, src->size);
-    check_bounds(end, 0, src->size + 1);
-
-    free(dst->data);
-
-    dst->size = end - begin;
-    dst->capacity = dst->size + 1; // '\0'
-    dst->data = (char*)malloc(sizeof(char) * dst->capacity);
-    check_pointer(dst->data);
-    for (int i = 0; i < dst->size; i++)
-    {
-        dst->data[i] = src->data[begin + i];
-    }
-    dst->data[dst->size] = '\0';
-}
-
-static inline double check_infinity_nan(const String* str)
-{
-    String* inf_nan = String_Create();
-    static const char* pos_infs[12] = {"inf", "INF", "Inf", "+inf", "+INF", "+Inf", "infinity", "INFINITY", "Infinity", "+infinity", "+INFINITY", "+Infinity"};
-    static const char* neg_infs[6] = {"-inf", "-INF", "-Inf", "-infinity", "-INFINITY", "-Infinity"};
-    static const char* nans[9] = {"nan", "NaN", "NAN", "+nan", "+NaN", "+NAN", "-nan", "-NaN", "-NAN"};
-    for (int i = 0; i < 12; ++i)
-    {
-        String_Set(inf_nan, pos_infs[i]);
-        if (String_Equal(str, inf_nan))
-        {
-            String_Destroy(inf_nan);
-            return INFINITY;
-        }
-    }
-    for (int i = 0; i < 6; ++i)
-    {
-        String_Set(inf_nan, neg_infs[i]);
-        if (String_Equal(str, inf_nan))
-        {
-            String_Destroy(inf_nan);
-            return -INFINITY;
-        }
-    }
-    for (int i = 0; i < 9; ++i)
-    {
-        String_Set(inf_nan, nans[i]);
-        if (String_Equal(str, inf_nan))
-        {
-            String_Destroy(inf_nan);
-            return NAN;
-        }
-    }
-    String_Destroy(inf_nan);
-    return 0; // not infinity or nan
-}
-
-static inline int char_to_integer(char digit, int base) // 2 <= base <= 36
-{
-    static const char* upper_digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    static const char* lower_digits = "0123456789abcdefghijklmnopqrstuvwxyz";
-    for (int i = 0; i < base; ++i)
-    {
-        if (digit == upper_digits[i] || digit == lower_digits[i])
-        {
-            return i;
-        }
-    }
-    return -1; // not an integer
-}
-
-static inline enum event get_event(char ch, int base)
-{
-    if (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')
-    {
-        return E_BLANK;
-    }
-    else if (char_to_integer(ch, base) != -1)
-    {
-        return E_NUMBER;
-    }
-    else if (ch == '-' || ch == '+')
-    {
-        return E_SIGN;
-    }
-    else if (ch == '.')
-    {
-        return E_DEC_POINT;
-    }
-    else if (ch == 'e' || ch == 'E')
-    {
-        return E_EXP;
-    }
-    return E_OTHER;
 }

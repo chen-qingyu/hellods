@@ -34,13 +34,13 @@
  *   - String_ToDecimal     Convert the string to a double-precision floating-point decimal number.
  *   - String_ToInteger     Convert the string to an integer number based on 2-36 base.
  *   - String_Count         Count the number of occurrences of a specified character.
+ *   - String_Slice         Return slice of the string from start to stop with certain step.
  * - String manipulation (will change the string itself):
  *   - String_Lower         Convert the string to lowercase.
  *   - String_Upper         Convert the string to uppercase.
  *   - String_Append        Append new string to the tail.
  *   - String_Erase         Erase the contents of a range of string.
  *   - String_Reverse       Reverse the string in place.
- *   - String_ReplaceChar   Replace character in the string.
  *   - String_Replace       Replace the string.
  *   - String_Strip         Remove leading and trailing blank characters of the string.
  *   - String_Swap          Swap the contents of two strings.
@@ -249,13 +249,19 @@ bool String_Equal(const String* self, const String* that);
 enum order String_Compare(const String* self, const String* that);
 
 /**
- * @brief Find the position of the pattern. O(N + M)
+ * @brief Return the index of the first occurrence of the specified pattern in the string (at or after index start and before index stop). O(N + M)
+ *
+ * Or STRING_NOT_FOUND if the string does not contain the pattern (in the specified range).
+ *
+ * Implemented by the KMP algorithm.
  *
  * @param self A pointer to the string.
  * @param pattern A pointer to the pattern string.
+ * @param start At or after index start.
+ * @param stop Before index stop.
  * @return Returns the starting substring index or STRING_NOT_FOUND.
  */
-int String_Find(const String* self, const String* pattern);
+int String_Find(const String* self, const String* pattern, int start, int stop);
 
 /**
  * @brief Split string with separator. O(N)
@@ -332,6 +338,19 @@ long long String_ToInteger(const String* self, int base);
 int String_Count(const String* self, char x);
 
 /**
+ * @brief Return slice of the string from start to stop with certain step. O(N)
+ *
+ * Index and step length can be negative.
+ *
+ * @param self A pointer to the string.
+ * @param start Start index (included).
+ * @param stop Stop index (excluded).
+ * @param step Step length.
+ * @return The slice of the string.
+ */
+String* String_Slice(const String* self, int start, int stop, int step);
+
+/**
  * @brief Convert the string to lowercase. O(N)
  *
  * @param self A pointer to the string.
@@ -368,15 +387,6 @@ void String_Erase(String* self, int begin, int end);
  * @param self A pointer to the string.
  */
 void String_Reverse(String* self);
-
-/**
- * @brief Replace character in the string. O(N)
- *
- * @param self A pointer to the string.
- * @param old_char The old character to be replaced.
- * @param new_char The new character to replace.
- */
-void String_ReplaceChar(String* self, const char old_char, const char new_char);
 
 /**
  * @brief Replace the string. O(N)

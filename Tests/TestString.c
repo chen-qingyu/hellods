@@ -51,13 +51,6 @@ void TestString(void)
     String_Reverse(s3);
     assert(String_Equal(s3, s4) == true);
 
-    // String_ReplaceChar()
-
-    String_Set(s3, "hahaha");
-    String_Set(s4, "lalala");
-    String_ReplaceChar(s3, 'h', 'l');
-    assert(String_Equal(s3, s4) == true);
-
     // String_Lower() String_Upper()
 
     String_Set(s3, "hahaha");
@@ -96,16 +89,16 @@ void TestString(void)
     String_Set(s3, "g");
     String_Set(s4, "cde");
     String_Set(s5, "abcdefg");
-    assert(String_Find(s1, s1) == 0);
-    assert(String_Find(s5, s1) == 0);
-    assert(String_Find(s5, s2) == 0);
-    assert(String_Find(s5, s3) == 6);
-    assert(String_Find(s5, s4) == 2);
-    assert(String_Find(s5, s5) == 0);
+    assert(String_Find(s1, s1, 0, 1) == 0);
+    assert(String_Find(s5, s1, 0, 7) == 0);
+    assert(String_Find(s5, s2, 0, 7) == 0);
+    assert(String_Find(s5, s3, 0, 7) == 6);
+    assert(String_Find(s5, s4, 0, 7) == 2);
+    assert(String_Find(s5, s5, 0, 7) == 0);
     String_Set(s1, " ");
-    assert(String_Find(s5, s1) == STRING_NOT_FOUND);
+    assert(String_Find(s5, s1, 0, 7) == STRING_NOT_FOUND);
     String_Set(s1, "ac");
-    assert(String_Find(s5, s1) == STRING_NOT_FOUND);
+    assert(String_Find(s5, s1, 0, 7) == STRING_NOT_FOUND);
 
     // String_Append()
 
