@@ -47,3 +47,27 @@ String* String_From(const char* chars);
 这个是C版本的数据结构库，目标是实现完整而标准的数据结构。
 
 我还写了C++版本的： [MDSPP (GitHub)](https://github.com/chen-qingyu/MDSPP) [MDSPP (Gitee)](https://gitee.com/ChobitsY/mdspp) （还在开发中），目标是像Python的内置类型一样好用又优雅。
+
+### 6. 内存安全
+
+使用 Dr. Memory 进行了内存检查：
+
+```
+Dr. Memory version 2.5.0
+
+FINAL SUMMARY:
+
+DUPLICATE ERROR COUNTS:
+
+SUPPRESSIONS USED:
+
+NO ERRORS FOUND:
+      0 unique,     0 total unaddressable access(es)
+      0 unique,     0 total uninitialized access(es)
+      0 unique,     0 total invalid heap argument(s)
+      0 unique,     0 total GDI usage error(s)
+      0 unique,     0 total handle leak(s)
+      0 unique,     0 total warning(s)
+      0 unique,     0 total,      0 byte(s) of leak(s)
+      0 unique,     0 total,      0 byte(s) of possible leak(s)
+```
