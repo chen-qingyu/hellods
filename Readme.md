@@ -1,12 +1,10 @@
 # MineDataStructure
 
-*名字灵感来源于我喜欢的游戏——Minecraft*
-
-*缩写为MDS*
-
+*——C语言写的完整而标准的数据结构*
 
 ### 1. 基本属性
 
+- 名称：MineDataStructure，缩写为MDS，灵感来源于我喜欢的游戏——Minecraft。
 - 语言：采用标准C语言编写，最低兼容版本： ISO C99 。
 - 目的：学习数据结构。
 - 目标：实现完整而标准的数据结构。
