@@ -1,3 +1,6 @@
+// Tested on Microsoft Visual Studio Community 2019: ALL PASSED
+// Tested on GCC 8.1.0: ALL PASSED
+
 #include <stdio.h>
 #include <stdlib.h>
 
