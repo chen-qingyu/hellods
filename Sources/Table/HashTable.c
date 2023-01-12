@@ -7,7 +7,7 @@
 #include "../common/check_pointer.h"
 
 // TODO 动态增长
-#define HASH_TABLE_CAPACITY 17
+#define MAX_CAPACITY 17
 
 enum HashTableState
 {
@@ -36,7 +36,7 @@ static int hash(HashTableKey key)
         index = (index << 5) + *key++;
     }
 
-    return index % HASH_TABLE_CAPACITY;
+    return index % MAX_CAPACITY;
 }
 
 static int find_pos(const HashTable* table, HashTableKey key)
@@ -50,9 +50,9 @@ static int find_pos(const HashTable* table, HashTableKey key)
         if (++conflict_cnt % 2)
         {
             new_pos = current_pos + (conflict_cnt + 1) * (conflict_cnt + 1) / 4;
-            if (new_pos >= HASH_TABLE_CAPACITY)
+            if (new_pos >= MAX_CAPACITY)
             {
-                new_pos = new_pos % HASH_TABLE_CAPACITY;
+                new_pos = new_pos % MAX_CAPACITY;
             }
         }
         else
@@ -60,7 +60,7 @@ static int find_pos(const HashTable* table, HashTableKey key)
             new_pos = current_pos - conflict_cnt * conflict_cnt / 4;
             while (new_pos < 0)
             {
-                new_pos += HASH_TABLE_CAPACITY;
+                new_pos += MAX_CAPACITY;
             }
         }
     }
@@ -74,10 +74,10 @@ Interface functions implementation.
 
 HashTable* HashTable_Create(void)
 {
-    HashTable* table = (HashTable*)malloc(sizeof(HashTable) * HASH_TABLE_CAPACITY);
+    HashTable* table = (HashTable*)malloc(sizeof(HashTable) * MAX_CAPACITY);
     check_pointer(table);
 
-    for (int i = 0; i < HASH_TABLE_CAPACITY; i++)
+    for (int i = 0; i < MAX_CAPACITY; i++)
     {
         table[i].key = NULL;
         table[i].state = EMPTY;
@@ -88,7 +88,7 @@ HashTable* HashTable_Create(void)
 
 void HashTable_Destroy(HashTable* self)
 {
-    for (int i = 0; i < HASH_TABLE_CAPACITY; ++i)
+    for (int i = 0; i < MAX_CAPACITY; ++i)
     {
         if (self[i].key)
         {

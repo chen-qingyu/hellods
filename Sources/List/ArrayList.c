@@ -8,7 +8,7 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-/// The default initial capacity.
+// The default initial capacity.
 #define DEFAULT_CAPACITY 8
 
 struct ArrayList

@@ -7,11 +7,11 @@
 #include "../common/check_pointer.h"
 
 // 为保证入栈是严格的 O(1) 时间复杂度，故这里采用固定的容量，而不是动态增长。
-#define ARRAYSTACK_CAPACITY 256
+#define MAX_CAPACITY 256
 
 struct ArrayStack
 {
-    ArrayStackItem data[ARRAYSTACK_CAPACITY];
+    ArrayStackItem data[MAX_CAPACITY];
     int top;
 };
 
@@ -50,7 +50,7 @@ bool ArrayStack_IsEmpty(const ArrayStack* self)
 
 void ArrayStack_Push(ArrayStack* self, ArrayStackItem data)
 {
-    check_full(ArrayStack_Size(self), ARRAYSTACK_CAPACITY);
+    check_full(ArrayStack_Size(self), MAX_CAPACITY);
 
     self->data[++(self->top)] = data;
 }

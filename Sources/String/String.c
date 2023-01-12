@@ -13,16 +13,16 @@
  * Type definition.
  *******************************/
 
-// String structure definition.
+/// String structure definition.
 struct String
 {
-    // Number of chars.
+    /// Number of chars.
     int size;
 
-    // Available capacity.
+    /// Available capacity.
     int capacity;
 
-    // Pointer to the data.
+    /// Pointer to the data.
     char* data;
 };
 
