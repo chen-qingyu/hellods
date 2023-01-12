@@ -1,5 +1,7 @@
 # Test all
 
+_dummy := $(shell mkdir -p Outputs)
+
 Test: Outputs/MainTest.exe
 	./Outputs/MainTest.exe
 
@@ -73,7 +75,7 @@ Outputs/HashTable.o: Sources/Table/HashTable.c Sources/Table/HashTable.h
 Outputs/BinarySearchTree.o: Sources/Tree/BinarySearchTree.c Sources/Tree/BinarySearchTree.h
 	gcc -Wall -c Sources/Tree/BinarySearchTree.c -o Outputs/BinarySearchTree.o
 
-# Clean files
+# Clean outputs
 
 clean:
-	rm -f Outputs/*
+	rm -rf Outputs/
