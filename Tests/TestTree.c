@@ -6,7 +6,7 @@
 
 static char str[64] = {0};
 
-static void Visit(TreeItem n)
+static void Visit(BinarySearchTreeItem n)
 {
     char tmp[8] = {0};
     sprintf(tmp, "%d ", n);
@@ -15,13 +15,13 @@ static void Visit(TreeItem n)
 
 void TestBinarySearchTree()
 {
-    Tree* tree = BinarySearchTree_Create();
+    BinarySearchTree* tree = BinarySearchTree_Create();
 
     assert(BinarySearchTree_Size(tree) == 0);
     assert(BinarySearchTree_IsEmpty(tree) == true);
-    assert(BinarySearchTree_Find(tree, 0) == TREE_NOT_FOUND);
-    assert(BinarySearchTree_FindMax(tree) == TREE_NOT_FOUND);
-    assert(BinarySearchTree_FindMin(tree) == TREE_NOT_FOUND);
+    assert(BinarySearchTree_Find(tree, 0) == BINARY_SEARCH_TREE_NOT_FOUND);
+    assert(BinarySearchTree_FindMax(tree) == BINARY_SEARCH_TREE_NOT_FOUND);
+    assert(BinarySearchTree_FindMin(tree) == BINARY_SEARCH_TREE_NOT_FOUND);
 
     BinarySearchTree_Insert(tree, 3);
     BinarySearchTree_Insert(tree, 1);
@@ -52,7 +52,7 @@ void TestBinarySearchTree()
     memset(str, 0, sizeof(str));
 
     assert(BinarySearchTree_Find(tree, 2) == 2);
-    assert(BinarySearchTree_Find(tree, 0) == TREE_NOT_FOUND);
+    assert(BinarySearchTree_Find(tree, 0) == BINARY_SEARCH_TREE_NOT_FOUND);
 
     assert(BinarySearchTree_FindMin(tree) == 1);
     assert(BinarySearchTree_FindMax(tree) == 5);
@@ -71,7 +71,7 @@ void TestBinarySearchTree()
     assert(BinarySearchTree_Find(tree, -1) == -1);
     BinarySearchTree_Remove(tree, -1);
     assert(BinarySearchTree_Size(tree) == 3);
-    assert(BinarySearchTree_Find(tree, -1) == TREE_NOT_FOUND);
+    assert(BinarySearchTree_Find(tree, -1) == BINARY_SEARCH_TREE_NOT_FOUND);
 
     BinarySearchTree_Destroy(tree);
 

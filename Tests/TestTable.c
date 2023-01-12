@@ -5,7 +5,7 @@
 
 void TestHashTable()
 {
-    Table* table = HashTable_Create();
+    HashTable* table = HashTable_Create();
 
     HashTable_Insert(table, (char*)"aaa", 1);
     HashTable_Insert(table, (char*)"bbb", 2);
@@ -21,7 +21,7 @@ void TestHashTable()
     assert(HashTable_Get(table, (char*)"aaa") == 233);
 
     HashTable_Remove(table, (char*)"aaa");
-    assert(HashTable_Get(table, (char*)"aaa") == TABLE_NOT_FOUND);
+    assert(HashTable_Get(table, (char*)"aaa") == HASH_TABLE_NOT_FOUND);
 
     HashTable_Destroy(table);
 

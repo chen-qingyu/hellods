@@ -6,11 +6,11 @@
 
 void TestArrayStack(void)
 {
-    Stack* stack = ArrayStack_Create();
+    ArrayStack* stack = ArrayStack_Create();
     assert(ArrayStack_Size(stack) == 0);
     assert(ArrayStack_IsEmpty(stack) == true);
 
-    StackItem arr[] = {1, 2, 3, 4, 5};
+    ArrayStackItem arr[] = {1, 2, 3, 4, 5};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
@@ -38,11 +38,11 @@ void TestArrayStack(void)
 
 void TestLinkedStack(void)
 {
-    Stack* stack = LinkedStack_Create();
+    LinkedStack* stack = LinkedStack_Create();
     assert(LinkedStack_Size(stack) == 0);
     assert(LinkedStack_IsEmpty(stack) == true);
 
-    StackItem arr[] = {1, 2, 3, 4, 5};
+    LinkedStackItem arr[] = {1, 2, 3, 4, 5};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {

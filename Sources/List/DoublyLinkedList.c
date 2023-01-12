@@ -8,34 +8,34 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-struct node
+struct DoublyLinkedListNode
 {
-    // Data stored in the node.
-    ListItem data;
+    /// Data stored in the node.
+    DoublyLinkedListItem data;
 
-    // Predecessor.
-    struct node* prev;
+    /// Predecessor.
+    struct DoublyLinkedListNode* prev;
 
-    // Successor.
-    struct node* next;
+    /// Successor.
+    struct DoublyLinkedListNode* next;
 };
 
-struct list
+struct DoublyLinkedList
 {
-    // Number of elements.
+    /// Number of elements.
     int size;
 
-    // Pointer to the header (rank = -1).
-    struct node* header;
+    /// Pointer to the header (rank = -1).
+    struct DoublyLinkedListNode* header;
 
-    // Pointer to the trailer (rank = size).
-    struct node* trailer;
+    /// Pointer to the trailer (rank = size).
+    struct DoublyLinkedListNode* trailer;
 
-    // Index of the latest accessed element. For DoublyLinkedList_At().
+    /// Index of the latest accessed element. For DoublyLinkedList_At().
     int latest;
 
-    // Pointer to the latest accessed element. For DoublyLinkedList_At().
-    struct node* p_latest;
+    /// Pointer to the latest accessed element. For DoublyLinkedList_At().
+    struct DoublyLinkedListNode* p_latest;
 };
 
 /*******************************
@@ -43,13 +43,13 @@ Helper functions implementation.
 *******************************/
 
 // Remove all of the elements from the list.
-static inline void clear(List* self)
+static inline void clear(DoublyLinkedList* self)
 {
-    while (self->header)
+    while (self->header->next != self->trailer)
     {
-        struct node* next = self->header->next;
-        free(self->header);
-        self->header = next;
+        struct DoublyLinkedListNode* node = self->header->next->next;
+        free(self->header->next);
+        self->header->next = node;
     }
     self->size = 0;
     self->latest = -1;
@@ -60,15 +60,15 @@ static inline void clear(List* self)
 Interface functions implementation.
 *******************************/
 
-List* DoublyLinkedList_Create(void)
+DoublyLinkedList* DoublyLinkedList_Create(void)
 {
-    List* list = (List*)malloc(sizeof(List));
+    DoublyLinkedList* list = (DoublyLinkedList*)malloc(sizeof(DoublyLinkedList));
     check_pointer(list);
 
     list->size = 0;
-    list->header = (struct node*)malloc(sizeof(struct node));
+    list->header = (struct DoublyLinkedListNode*)malloc(sizeof(struct DoublyLinkedListNode));
     check_pointer(list->header);
-    list->trailer = (struct node*)malloc(sizeof(struct node));
+    list->trailer = (struct DoublyLinkedListNode*)malloc(sizeof(struct DoublyLinkedListNode));
     check_pointer(list->trailer);
     list->latest = -1;
     list->p_latest = list->header;
@@ -82,29 +82,35 @@ List* DoublyLinkedList_Create(void)
     return list;
 }
 
-void DoublyLinkedList_Destroy(List* self)
+void DoublyLinkedList_Destroy(DoublyLinkedList* self)
 {
-    clear(self);
-    free(self);
+    if (self)
+    {
+        clear(self);
+
+        free(self->header);
+        free(self->trailer);
+        free(self);
+    }
 }
 
-int DoublyLinkedList_Size(const List* self)
+int DoublyLinkedList_Size(const DoublyLinkedList* self)
 {
     return self->size;
 }
 
-bool DoublyLinkedList_IsEmpty(const List* self)
+bool DoublyLinkedList_IsEmpty(const DoublyLinkedList* self)
 {
     return self->size == 0;
 }
 
-ListItem DoublyLinkedList_At(const List* self, int index) // list[index] for index in range 0 to size will be O(1) on each access
+DoublyLinkedListItem DoublyLinkedList_At(const DoublyLinkedList* self, int index) // list[index] for index in range 0 to size will be O(1) on each access
 {
     check_bounds(index, -self->size, self->size);
 
     index = index >= 0 ? index : index + self->size;
 
-    List* list = (List*)self; // drop out const
+    DoublyLinkedList* list = (DoublyLinkedList*)self; // drop out const
 
     // too far from the last accessed element
     if (abs(index - self->latest) > self->size / 2)
@@ -135,10 +141,10 @@ ListItem DoublyLinkedList_At(const List* self, int index) // list[index] for ind
     return self->p_latest->data;
 }
 
-int DoublyLinkedList_Find(const List* self, ListItem data)
+int DoublyLinkedList_Find(const DoublyLinkedList* self, DoublyLinkedListItem data)
 {
     int index = 0;
-    struct node* current = self->header->next;
+    struct DoublyLinkedListNode* current = self->header->next;
 
     while (current != self->trailer && current->data != data)
     {
@@ -146,10 +152,10 @@ int DoublyLinkedList_Find(const List* self, ListItem data)
         index++;
     }
 
-    return current != self->trailer ? index : LIST_NOT_FOUND;
+    return current != self->trailer ? index : -1;
 }
 
-void DoublyLinkedList_Insert(List* self, int index, ListItem data)
+void DoublyLinkedList_Insert(DoublyLinkedList* self, int index, DoublyLinkedListItem data)
 {
     // check
     check_full(self->size, INT_MAX);
@@ -159,7 +165,7 @@ void DoublyLinkedList_Insert(List* self, int index, ListItem data)
     // index
     index = index >= 0 ? index : index + self->size;
 
-    struct node* current = NULL;
+    struct DoublyLinkedListNode* current = NULL;
     if (index < self->size / 2)
     {
         current = self->header->next;
@@ -178,7 +184,7 @@ void DoublyLinkedList_Insert(List* self, int index, ListItem data)
     }
 
     // insert
-    struct node* node = (struct node*)malloc(sizeof(struct node));
+    struct DoublyLinkedListNode* node = (struct DoublyLinkedListNode*)malloc(sizeof(struct DoublyLinkedListNode));
     check_pointer(node);
     node->data = data;
     node->prev = current->prev;
@@ -191,7 +197,7 @@ void DoublyLinkedList_Insert(List* self, int index, ListItem data)
     ++self->size;
 }
 
-ListItem DoublyLinkedList_Remove(List* self, int index)
+DoublyLinkedListItem DoublyLinkedList_Remove(DoublyLinkedList* self, int index)
 {
     // check
     check_empty(self->size);
@@ -201,7 +207,7 @@ ListItem DoublyLinkedList_Remove(List* self, int index)
     // index
     index = index >= 0 ? index : index + self->size;
 
-    struct node* current = NULL;
+    struct DoublyLinkedListNode* current = NULL;
     if (index < self->size / 2)
     {
         current = self->header->next;
@@ -227,7 +233,7 @@ ListItem DoublyLinkedList_Remove(List* self, int index)
     }
 
     // get data
-    ListItem data = current->data;
+    DoublyLinkedListItem data = current->data;
 
     // remove
     current->prev->next = current->next;
@@ -241,29 +247,32 @@ ListItem DoublyLinkedList_Remove(List* self, int index)
     return data;
 }
 
-void DoublyLinkedList_Traverse(List* self, void (*p_trav)(ListItem data))
+void DoublyLinkedList_Traverse(DoublyLinkedList* self, void (*p_trav)(DoublyLinkedListItem data))
 {
-    for (struct node* cur = self->header->next; cur != self->trailer; cur = cur->next)
+    for (struct DoublyLinkedListNode* cur = self->header->next; cur != self->trailer; cur = cur->next)
     {
         p_trav(cur->data);
     }
 }
 
-void DoublyLinkedList_Reverse(List* self)
+void DoublyLinkedList_Reverse(DoublyLinkedList* self)
 {
-    for (struct node* cur = self->header; cur != NULL; cur = cur->prev)
+    for (struct DoublyLinkedListNode* cur = self->header; cur != NULL; cur = cur->prev)
     {
-        struct node* tmp = cur->prev;
+        struct DoublyLinkedListNode* tmp = cur->prev;
         cur->prev = cur->next;
         cur->next = tmp;
     }
 
-    struct node* tmp = self->header;
+    struct DoublyLinkedListNode* tmp = self->header;
     self->header = self->trailer;
     self->trailer = tmp;
 }
 
-void DoublyLinkedList_Clear(List* self)
+void DoublyLinkedList_Clear(DoublyLinkedList* self)
 {
-    clear(self);
+    if (self->size != 0)
+    {
+        clear(self);
+    }
 }

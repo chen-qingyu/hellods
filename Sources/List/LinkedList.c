@@ -8,22 +8,22 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-struct node
+struct LinkedListNode
 {
-    // Data stored in the node.
-    ListItem data;
+    /// Data stored in the node.
+    LinkedListItem data;
 
-    // Successor.
-    struct node* next;
+    /// Successor.
+    struct LinkedListNode* next;
 };
 
-struct list
+struct LinkedList
 {
-    // Number of elements.
+    /// Number of elements.
     int size;
 
-    // Pointer to the header (rank = -1).
-    struct node* header;
+    /// Pointer to the header (rank = -1).
+    struct LinkedListNode* header;
 };
 
 /*******************************
@@ -31,13 +31,13 @@ Helper functions implementation.
 *******************************/
 
 // Remove all of the elements from the list.
-static inline void clear(List* self)
+static inline void clear(LinkedList* self)
 {
-    while (self->header)
+    while (self->header->next != NULL)
     {
-        struct node* next = self->header->next;
-        free(self->header);
-        self->header = next;
+        struct LinkedListNode* node = self->header->next->next;
+        free(self->header->next);
+        self->header->next = node;
     }
     self->size = 0;
 }
@@ -46,42 +46,47 @@ static inline void clear(List* self)
 Interface functions implementation.
 *******************************/
 
-List* LinkedList_Create(void)
+LinkedList* LinkedList_Create(void)
 {
-    List* list = (List*)malloc(sizeof(List));
+    LinkedList* list = (LinkedList*)malloc(sizeof(LinkedList));
     check_pointer(list);
 
     list->size = 0;
-    list->header = (struct node*)malloc(sizeof(struct node));
+    list->header = (struct LinkedListNode*)malloc(sizeof(struct LinkedListNode));
     check_pointer(list->header);
     list->header->next = NULL;
 
     return list;
 }
 
-void LinkedList_Destroy(List* self)
+void LinkedList_Destroy(LinkedList* self)
 {
-    clear(self);
-    free(self);
+    if (self)
+    {
+        clear(self);
+
+        free(self->header);
+        free(self);
+    }
 }
 
-int LinkedList_Size(const List* self)
+int LinkedList_Size(const LinkedList* self)
 {
     return self->size;
 }
 
-bool LinkedList_IsEmpty(const List* self)
+bool LinkedList_IsEmpty(const LinkedList* self)
 {
     return self->size == 0;
 }
 
-ListItem LinkedList_At(const List* self, int index) // list[index]
+LinkedListItem LinkedList_At(const LinkedList* self, int index) // list[index]
 {
     check_bounds(index, -self->size, self->size);
 
     index = index >= 0 ? index : index + self->size;
 
-    struct node* current = self->header->next;
+    struct LinkedListNode* current = self->header->next;
 
     for (int i = 0; i < index; ++i)
     {
@@ -91,10 +96,10 @@ ListItem LinkedList_At(const List* self, int index) // list[index]
     return current->data;
 }
 
-int LinkedList_Find(const List* self, ListItem data)
+int LinkedList_Find(const LinkedList* self, LinkedListItem data)
 {
     int index = 0;
-    struct node* current = self->header->next;
+    struct LinkedListNode* current = self->header->next;
 
     while (current != NULL && current->data != data)
     {
@@ -102,10 +107,10 @@ int LinkedList_Find(const List* self, ListItem data)
         index++;
     }
 
-    return current != NULL ? index : LIST_NOT_FOUND;
+    return current != NULL ? index : -1;
 }
 
-void LinkedList_Insert(List* self, int index, ListItem data)
+void LinkedList_Insert(LinkedList* self, int index, LinkedListItem data)
 {
     // check
     check_full(self->size, INT_MAX);
@@ -115,14 +120,14 @@ void LinkedList_Insert(List* self, int index, ListItem data)
     // index
     index = index >= 0 ? index : index + self->size;
 
-    struct node* current = self->header;
+    struct LinkedListNode* current = self->header;
     for (int i = 0; i < index; i++)
     {
         current = current->next;
     }
 
     // insert
-    struct node* node = (struct node*)malloc(sizeof(struct node));
+    struct LinkedListNode* node = (struct LinkedListNode*)malloc(sizeof(struct LinkedListNode));
     check_pointer(node);
     node->data = data;
     node->next = current->next;
@@ -133,7 +138,7 @@ void LinkedList_Insert(List* self, int index, ListItem data)
     ++self->size;
 }
 
-ListItem LinkedList_Remove(List* self, int index)
+LinkedListItem LinkedList_Remove(LinkedList* self, int index)
 {
     // check
     check_empty(self->size);
@@ -143,17 +148,17 @@ ListItem LinkedList_Remove(List* self, int index)
     // index
     index = index >= 0 ? index : index + self->size;
 
-    struct node* current = self->header;
+    struct LinkedListNode* current = self->header;
     for (int i = 0; i < index; i++)
     {
         current = current->next;
     }
 
     // get data
-    ListItem data = current->next->data;
+    LinkedListItem data = current->next->data;
 
     // remove
-    struct node* node = current->next;
+    struct LinkedListNode* node = current->next;
     current->next = node->next;
     free(node);
 
@@ -164,29 +169,32 @@ ListItem LinkedList_Remove(List* self, int index)
     return data;
 }
 
-void LinkedList_Traverse(List* self, void (*p_trav)(ListItem data))
+void LinkedList_Traverse(LinkedList* self, void (*p_trav)(LinkedListItem data))
 {
-    for (struct node* cur = self->header->next; cur != NULL; cur = cur->next)
+    for (struct LinkedListNode* cur = self->header->next; cur != NULL; cur = cur->next)
     {
         p_trav(cur->data);
     }
 }
 
-void LinkedList_Reverse(List* self)
+void LinkedList_Reverse(LinkedList* self)
 {
-    struct node* pre = self->header->next;
+    struct LinkedListNode* pre = self->header->next;
     self->header->next = NULL;
 
     while (pre)
     {
-        struct node* tmp = pre;
+        struct LinkedListNode* tmp = pre;
         pre = pre->next;
         tmp->next = self->header->next;
         self->header->next = tmp;
     }
 }
 
-void LinkedList_Clear(List* self)
+void LinkedList_Clear(LinkedList* self)
 {
-    clear(self);
+    if (self->size != 0)
+    {
+        clear(self);
+    }
 }

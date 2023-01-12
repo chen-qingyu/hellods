@@ -8,7 +8,7 @@
 
 static char str[64] = {0};
 
-static void Visit(ListItem n)
+static void Visit(int n)
 {
     char tmp[8] = {0};
     sprintf(tmp, "%d ", n);
@@ -17,11 +17,11 @@ static void Visit(ListItem n)
 
 void TestArrayList(void)
 {
-    List* list1 = ArrayList_Create();
+    ArrayList* list1 = ArrayList_Create();
     assert(ArrayList_Size(list1) == 0);
     assert(ArrayList_IsEmpty(list1) == true);
 
-    ListItem arr[] = {1, 2, 3, 4};
+    ArrayListItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
@@ -41,8 +41,8 @@ void TestArrayList(void)
     assert(strcmp(str, "4 3 2 1 ") == 0);
     memset(str, 0, sizeof(str));
 
-    List* list2 = ArrayList_Create();
-    ListItem arr2[] = {233, 666, 888, 999};
+    ArrayList* list2 = ArrayList_Create();
+    ArrayListItem arr2[] = {233, 666, 888, 999};
     int arr2Size = sizeof(arr2) / sizeof(arr2[0]);
     for (int i = 0; i < arr2Size; i++)
     {
@@ -63,7 +63,7 @@ void TestArrayList(void)
     assert(ArrayList_Find(list1, 233) == 0);
     assert(ArrayList_Find(list1, 999) == 3);
     assert(ArrayList_Find(list1, 1) == 7);
-    assert(ArrayList_Find(list1, 0) == LIST_NOT_FOUND);
+    assert(ArrayList_Find(list1, 0) == -1);
 
     int length = ArrayList_Size(list1);
     for (int i = 0; i < length; i++)
@@ -81,11 +81,11 @@ void TestArrayList(void)
 
 void TestLinkedList(void)
 {
-    List* list1 = LinkedList_Create();
+    LinkedList* list1 = LinkedList_Create();
     assert(LinkedList_Size(list1) == 0);
     assert(LinkedList_IsEmpty(list1) == true);
 
-    ListItem arr[] = {1, 2, 3, 4};
+    LinkedListItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
@@ -105,8 +105,8 @@ void TestLinkedList(void)
     assert(strcmp(str, "4 3 2 1 ") == 0);
     memset(str, 0, sizeof(str));
 
-    List* list2 = LinkedList_Create();
-    ListItem arr2[] = {233, 666, 888, 999};
+    LinkedList* list2 = LinkedList_Create();
+    LinkedListItem arr2[] = {233, 666, 888, 999};
     int arr2Size = sizeof(arr2) / sizeof(arr2[0]);
     for (int i = 0; i < arr2Size; i++)
     {
@@ -127,7 +127,7 @@ void TestLinkedList(void)
     assert(LinkedList_Find(list1, 233) == 0);
     assert(LinkedList_Find(list1, 999) == 3);
     assert(LinkedList_Find(list1, 1) == 7);
-    assert(LinkedList_Find(list1, 0) == LIST_NOT_FOUND);
+    assert(LinkedList_Find(list1, 0) == -1);
 
     int length = LinkedList_Size(list1);
     for (int i = 0; i < length; i++)
@@ -145,11 +145,11 @@ void TestLinkedList(void)
 
 void TestDoublyLinkedList(void)
 {
-    List* list1 = DoublyLinkedList_Create();
+    DoublyLinkedList* list1 = DoublyLinkedList_Create();
     assert(DoublyLinkedList_Size(list1) == 0);
     assert(DoublyLinkedList_IsEmpty(list1) == true);
 
-    ListItem arr[] = {1, 2, 3, 4};
+    DoublyLinkedListItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
@@ -169,8 +169,8 @@ void TestDoublyLinkedList(void)
     assert(strcmp(str, "4 3 2 1 ") == 0);
     memset(str, 0, sizeof(str));
 
-    List* list2 = DoublyLinkedList_Create();
-    ListItem arr2[] = {233, 666, 888, 999};
+    DoublyLinkedList* list2 = DoublyLinkedList_Create();
+    DoublyLinkedListItem arr2[] = {233, 666, 888, 999};
     int arr2Size = sizeof(arr2) / sizeof(arr2[0]);
     for (int i = 0; i < arr2Size; i++)
     {
@@ -191,7 +191,7 @@ void TestDoublyLinkedList(void)
     assert(DoublyLinkedList_Find(list1, 233) == 0);
     assert(DoublyLinkedList_Find(list1, 999) == 3);
     assert(DoublyLinkedList_Find(list1, 1) == 7);
-    assert(DoublyLinkedList_Find(list1, 0) == LIST_NOT_FOUND);
+    assert(DoublyLinkedList_Find(list1, 0) == -1);
 
     int length = DoublyLinkedList_Size(list1);
     for (int i = 0; i < length; i++)

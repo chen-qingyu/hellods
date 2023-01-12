@@ -1,15 +1,11 @@
 /**
  * @file LinkedDeque.h
  * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief 双端队列 链表实现 (Linked Deque)
+ * @brief 双端队列 双链表实现 (Linked Deque)
  * @version 1.0
  * @date 2023.01.02
  *
  * @copyright Copyright (c) 2023
- *
- * 学习数据结构用。
- * 双端队列 deque 是一个有 n(n>=0) 个元素的有穷线性表。
- * 双端队列 deque 属于 Deque ，元素 data 属于 DequeItem 。
  */
 
 #ifndef LINKEDDEQUE_H
@@ -17,23 +13,24 @@
 
 #include <stdbool.h> // bool
 
-typedef int DequeItem; // must be same as ListItem
+/// Must be same as DoublyLinkedListItem.
+typedef int LinkedDequeItem;
 
-typedef struct deque Deque;
+typedef struct LinkedDeque LinkedDeque;
 
 /**
  * @brief 创建一个空队列
  *
  * @return 一个指向空队列的指针
  */
-Deque* LinkedDeque_Create(void);
+LinkedDeque* LinkedDeque_Create(void);
 
 /**
  * @brief 销毁一个队列
  *
  * @param self 一个指向待销毁队列的指针
  */
-void LinkedDeque_Destroy(Deque* self);
+void LinkedDeque_Destroy(LinkedDeque* self);
 
 /**
  * @brief 求队列的长度
@@ -41,7 +38,7 @@ void LinkedDeque_Destroy(Deque* self);
  * @param self 一个指向队列的指针
  * @return 队列长度
  */
-int LinkedDeque_Size(const Deque* self);
+int LinkedDeque_Size(const LinkedDeque* self);
 
 /**
  * @brief 判断队列是否已空
@@ -49,7 +46,7 @@ int LinkedDeque_Size(const Deque* self);
  * @param self 一个指向队列的指针
  * @return 如果队列已空则返回 true ，否则返回 false
  */
-bool LinkedDeque_IsEmpty(const Deque* self);
+bool LinkedDeque_IsEmpty(const LinkedDeque* self);
 
 /**
  * @brief 入队，将元素 data 插入到队列的首部
@@ -57,7 +54,7 @@ bool LinkedDeque_IsEmpty(const Deque* self);
  * @param self 一个指向队列的指针
  * @param data 一个待入队的元素
  */
-void LinkedDeque_PushFront(Deque* self, DequeItem data);
+void LinkedDeque_PushFront(LinkedDeque* self, LinkedDequeItem data);
 
 /**
  * @brief 入队，将元素 data 插入到队列的尾部
@@ -65,7 +62,7 @@ void LinkedDeque_PushFront(Deque* self, DequeItem data);
  * @param self 一个指向队列的指针
  * @param data 一个待入队的元素
  */
-void LinkedDeque_PushBack(Deque* self, DequeItem data);
+void LinkedDeque_PushBack(LinkedDeque* self, LinkedDequeItem data);
 
 /**
  * @brief 出队，将队列的队首元素出队
@@ -73,7 +70,7 @@ void LinkedDeque_PushBack(Deque* self, DequeItem data);
  * @param self 一个指向队列的指针
  * @return 队首元素
  */
-DequeItem LinkedDeque_PopFront(Deque* self);
+LinkedDequeItem LinkedDeque_PopFront(LinkedDeque* self);
 
 /**
  * @brief 出队，将队列的队尾元素出队
@@ -81,7 +78,7 @@ DequeItem LinkedDeque_PopFront(Deque* self);
  * @param self 一个指向队列的指针
  * @return 队尾元素
  */
-DequeItem LinkedDeque_PopBack(Deque* self);
+LinkedDequeItem LinkedDeque_PopBack(LinkedDeque* self);
 
 /**
  * @brief 查看队首元素
@@ -89,7 +86,7 @@ DequeItem LinkedDeque_PopBack(Deque* self);
  * @param self 一个指向队列的指针
  * @return 队首元素
  */
-DequeItem LinkedDeque_Front(Deque* self);
+LinkedDequeItem LinkedDeque_Front(LinkedDeque* self);
 
 /**
  * @brief 查看队尾元素
@@ -97,6 +94,6 @@ DequeItem LinkedDeque_Front(Deque* self);
  * @param self 一个指向队列的指针
  * @return 队尾元素
  */
-DequeItem LinkedDeque_Back(Deque* self);
+LinkedDequeItem LinkedDeque_Back(LinkedDeque* self);
 
 #endif // LINKEDDEQUE_H

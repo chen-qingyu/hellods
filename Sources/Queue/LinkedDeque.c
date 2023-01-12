@@ -5,9 +5,9 @@
 
 #include "../common/check_pointer.h"
 
-struct deque
+struct LinkedDeque
 {
-    List* dlist;
+    DoublyLinkedList* dlist;
 };
 
 /*******************************
@@ -18,9 +18,9 @@ Helper functions implementation.
 Interface functions implementation.
 *******************************/
 
-Deque* LinkedDeque_Create(void)
+LinkedDeque* LinkedDeque_Create(void)
 {
-    Deque* deque = (Deque*)malloc(sizeof(Deque));
+    LinkedDeque* deque = (LinkedDeque*)malloc(sizeof(LinkedDeque));
     check_pointer(deque);
 
     deque->dlist = DoublyLinkedList_Create();
@@ -28,48 +28,48 @@ Deque* LinkedDeque_Create(void)
     return deque;
 }
 
-void LinkedDeque_Destroy(Deque* self)
+void LinkedDeque_Destroy(LinkedDeque* self)
 {
     DoublyLinkedList_Destroy(self->dlist);
     free(self);
 }
 
-int LinkedDeque_Size(const Deque* self)
+int LinkedDeque_Size(const LinkedDeque* self)
 {
     return DoublyLinkedList_Size(self->dlist);
 }
 
-bool LinkedDeque_IsEmpty(const Deque* self)
+bool LinkedDeque_IsEmpty(const LinkedDeque* self)
 {
     return DoublyLinkedList_IsEmpty(self->dlist);
 }
 
-void LinkedDeque_PushFront(Deque* self, DequeItem data)
+void LinkedDeque_PushFront(LinkedDeque* self, LinkedDequeItem data)
 {
     DoublyLinkedList_Insert(self->dlist, 0, data);
 }
 
-void LinkedDeque_PushBack(Deque* self, DequeItem data)
+void LinkedDeque_PushBack(LinkedDeque* self, LinkedDequeItem data)
 {
     DoublyLinkedList_Insert(self->dlist, DoublyLinkedList_Size(self->dlist), data);
 }
 
-DequeItem LinkedDeque_PopFront(Deque* self)
+LinkedDequeItem LinkedDeque_PopFront(LinkedDeque* self)
 {
     return DoublyLinkedList_Remove(self->dlist, 0);
 }
 
-DequeItem LinkedDeque_PopBack(Deque* self)
+LinkedDequeItem LinkedDeque_PopBack(LinkedDeque* self)
 {
     return DoublyLinkedList_Remove(self->dlist, DoublyLinkedList_Size(self->dlist) - 1);
 }
 
-DequeItem LinkedDeque_Front(Deque* self)
+LinkedDequeItem LinkedDeque_Front(LinkedDeque* self)
 {
     return DoublyLinkedList_At(self->dlist, 0);
 }
 
-DequeItem LinkedDeque_Back(Deque* self)
+LinkedDequeItem LinkedDeque_Back(LinkedDeque* self)
 {
     return DoublyLinkedList_At(self->dlist, DoublyLinkedList_Size(self->dlist) - 1);
 }

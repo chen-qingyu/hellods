@@ -1,37 +1,94 @@
 #include "BinarySearchTree.h"
-#include "QueueForTree.h"
 
 #include <stdio.h>  // fprintf stderr
 #include <stdlib.h> // malloc free exit EXIT_FAILURE NULL
 
+#include "../common/check_empty.h"
+#include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-struct node
+struct BinarySearchTreeNode
 {
-    // The data stored in this node.
-    TreeItem data;
+    /// The data stored in this node.
+    BinarySearchTreeItem data;
 
-    // A pointer to the left child of the node.
-    struct node* left;
+    /// A pointer to the left child of the node.
+    struct BinarySearchTreeNode* left;
 
-    // A pointer to the right child of the node.
-    struct node* right;
+    /// A pointer to the right child of the node.
+    struct BinarySearchTreeNode* right;
 };
 
-struct tree
+struct BinarySearchTree
 {
-    // Number of elements.
+    /// Number of elements.
     int size;
 
-    // A pointer to the root node.
-    struct node* root;
+    /// A pointer to the root node.
+    struct BinarySearchTreeNode* root;
 };
 
 /*******************************
 Helper functions implementation.
 *******************************/
 
-static void destroy_node(struct node* node)
+typedef struct BinarySearchTreeNode* ArrayQueueItem;
+
+typedef struct ArrayQueue ArrayQueue;
+
+#define ARRAYQUEUE_CAPACITY 256
+
+struct ArrayQueue
+{
+    ArrayQueueItem data[ARRAYQUEUE_CAPACITY + 1]; // 循环队列，数组容量为队列有效容量加一
+    int front;
+    int rear;
+};
+
+static ArrayQueue* ArrayQueue_Create(void)
+{
+    ArrayQueue* queue = (ArrayQueue*)malloc(sizeof(ArrayQueue));
+    check_pointer(queue);
+
+    queue->front = -1;
+    queue->rear = -1;
+
+    return queue;
+}
+
+static void ArrayQueue_Destroy(ArrayQueue* self)
+{
+    free(self);
+}
+
+static int ArrayQueue_Size(const ArrayQueue* self)
+{
+    return (self->rear - self->front + (ARRAYQUEUE_CAPACITY + 1)) % (ARRAYQUEUE_CAPACITY + 1);
+}
+
+static bool ArrayQueue_IsEmpty(const ArrayQueue* self)
+{
+    return ArrayQueue_Size(self) == 0;
+}
+
+static void ArrayQueue_Enqueue(ArrayQueue* self, ArrayQueueItem data)
+{
+    check_full(ArrayQueue_Size(self), ARRAYQUEUE_CAPACITY);
+
+    self->rear = (self->rear + 1) % ARRAYQUEUE_CAPACITY;
+    self->data[self->rear] = data;
+}
+
+static ArrayQueueItem ArrayQueue_Dequeue(ArrayQueue* self)
+{
+    check_empty(ArrayQueue_Size(self));
+
+    self->front = (self->front + 1) % ARRAYQUEUE_CAPACITY;
+
+    return self->data[self->front];
+}
+
+static void destroy_node(struct BinarySearchTreeNode* node)
 {
     if (node)
     {
@@ -41,7 +98,7 @@ static void destroy_node(struct node* node)
     }
 }
 
-static void traverse_node(struct node* node, traverse_t type, void (*p_trav)(TreeItem data))
+static void traverse_node(struct BinarySearchTreeNode* node, traverse_t type, void (*p_trav)(BinarySearchTreeItem data))
 {
     if (node)
     {
@@ -73,22 +130,22 @@ static void traverse_node(struct node* node, traverse_t type, void (*p_trav)(Tre
 
             case LEVEL_ORDER:
             {
-                Queue* queue = QueueForTree_Create();
-                QueueForTree_Enqueue(queue, node);
-                while (!QueueForTree_IsEmpty(queue))
+                ArrayQueue* queue = ArrayQueue_Create();
+                ArrayQueue_Enqueue(queue, node);
+                while (!ArrayQueue_IsEmpty(queue))
                 {
-                    node = QueueForTree_Dequeue(queue);
+                    node = ArrayQueue_Dequeue(queue);
                     p_trav(node->data);
                     if (node->left)
                     {
-                        QueueForTree_Enqueue(queue, node->left);
+                        ArrayQueue_Enqueue(queue, node->left);
                     }
                     if (node->right)
                     {
-                        QueueForTree_Enqueue(queue, node->right);
+                        ArrayQueue_Enqueue(queue, node->right);
                     }
                 }
-                QueueForTree_Destroy(queue);
+                ArrayQueue_Destroy(queue);
                 break;
             }
 
@@ -102,11 +159,11 @@ static void traverse_node(struct node* node, traverse_t type, void (*p_trav)(Tre
     }
 }
 
-static struct node* insert_node(Tree* tree, struct node* node, TreeItem data)
+static struct BinarySearchTreeNode* insert_node(BinarySearchTree* tree, struct BinarySearchTreeNode* node, BinarySearchTreeItem data)
 {
     if (node == NULL)
     {
-        node = (struct node*)malloc(sizeof(struct node));
+        node = (struct BinarySearchTreeNode*)malloc(sizeof(struct BinarySearchTreeNode));
         check_pointer(node);
 
         node->data = data;
@@ -129,7 +186,7 @@ static struct node* insert_node(Tree* tree, struct node* node, TreeItem data)
     return node;
 }
 
-static struct node* find_min_node(struct node* node)
+static struct BinarySearchTreeNode* find_min_node(struct BinarySearchTreeNode* node)
 {
     while (node->left) // node is not NULL
     {
@@ -139,7 +196,7 @@ static struct node* find_min_node(struct node* node)
     return node;
 }
 
-static struct node* remove_node(Tree* tree, struct node* node, TreeItem data)
+static struct BinarySearchTreeNode* remove_node(BinarySearchTree* tree, struct BinarySearchTreeNode* node, BinarySearchTreeItem data)
 {
     if (node)
     {
@@ -155,13 +212,13 @@ static struct node* remove_node(Tree* tree, struct node* node, TreeItem data)
         {
             if (node->left && node->right)
             {
-                struct node* tmp = find_min_node(node->right); // node->right is not NULL
+                struct BinarySearchTreeNode* tmp = find_min_node(node->right); // node->right is not NULL
                 node->data = tmp->data;
                 node->right = remove_node(tree, node->right, tmp->data);
             }
             else
             {
-                struct node* tmp = node;
+                struct BinarySearchTreeNode* tmp = node;
                 node = node->left ? node->left : node->right;
                 free(tmp);
                 tree->size--;
@@ -176,9 +233,9 @@ static struct node* remove_node(Tree* tree, struct node* node, TreeItem data)
 Interface functions implementation.
 *******************************/
 
-Tree* BinarySearchTree_Create(void)
+BinarySearchTree* BinarySearchTree_Create(void)
 {
-    Tree* tree = (Tree*)malloc(sizeof(Tree));
+    BinarySearchTree* tree = (BinarySearchTree*)malloc(sizeof(BinarySearchTree));
     check_pointer(tree);
 
     tree->root = NULL;
@@ -187,30 +244,30 @@ Tree* BinarySearchTree_Create(void)
     return tree;
 }
 
-void BinarySearchTree_Destroy(Tree* self)
+void BinarySearchTree_Destroy(BinarySearchTree* self)
 {
     destroy_node(self->root);
     free(self);
 }
 
-int BinarySearchTree_Size(const Tree* self)
+int BinarySearchTree_Size(const BinarySearchTree* self)
 {
     return self->size;
 }
 
-bool BinarySearchTree_IsEmpty(const Tree* self)
+bool BinarySearchTree_IsEmpty(const BinarySearchTree* self)
 {
     return self->size == 0;
 }
 
-void BinarySearchTree_Traverse(Tree* self, traverse_t type, void (*p_trav)(TreeItem data))
+void BinarySearchTree_Traverse(BinarySearchTree* self, traverse_t type, void (*p_trav)(BinarySearchTreeItem data))
 {
     traverse_node(self->root, type, p_trav);
 }
 
-TreeItem BinarySearchTree_Find(const Tree* self, TreeItem data)
+BinarySearchTreeItem BinarySearchTree_Find(const BinarySearchTree* self, BinarySearchTreeItem data)
 {
-    struct node* current = self->root;
+    struct BinarySearchTreeNode* current = self->root;
 
     while (current)
     {
@@ -228,12 +285,12 @@ TreeItem BinarySearchTree_Find(const Tree* self, TreeItem data)
         }
     }
 
-    return TREE_NOT_FOUND;
+    return BINARY_SEARCH_TREE_NOT_FOUND;
 }
 
-TreeItem BinarySearchTree_FindMin(const Tree* self)
+BinarySearchTreeItem BinarySearchTree_FindMin(const BinarySearchTree* self)
 {
-    struct node* current = self->root;
+    struct BinarySearchTreeNode* current = self->root;
 
     if (current)
     {
@@ -243,12 +300,12 @@ TreeItem BinarySearchTree_FindMin(const Tree* self)
         }
     }
 
-    return current ? current->data : TREE_NOT_FOUND;
+    return current ? current->data : BINARY_SEARCH_TREE_NOT_FOUND;
 }
 
-TreeItem BinarySearchTree_FindMax(const Tree* self)
+BinarySearchTreeItem BinarySearchTree_FindMax(const BinarySearchTree* self)
 {
-    struct node* current = self->root;
+    struct BinarySearchTreeNode* current = self->root;
 
     if (current)
     {
@@ -258,15 +315,15 @@ TreeItem BinarySearchTree_FindMax(const Tree* self)
         }
     }
 
-    return current ? current->data : TREE_NOT_FOUND;
+    return current ? current->data : BINARY_SEARCH_TREE_NOT_FOUND;
 }
 
-void BinarySearchTree_Insert(Tree* self, TreeItem data)
+void BinarySearchTree_Insert(BinarySearchTree* self, BinarySearchTreeItem data)
 {
     self->root = insert_node(self, self->root, data);
 }
 
-void BinarySearchTree_Remove(Tree* self, TreeItem data)
+void BinarySearchTree_Remove(BinarySearchTree* self, BinarySearchTreeItem data)
 {
     self->root = remove_node(self, self->root, data);
 }

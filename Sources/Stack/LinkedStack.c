@@ -7,16 +7,16 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-struct node
+struct LinkedStackNode
 {
-    StackItem data;
-    struct node* next;
+    LinkedStackItem data;
+    struct LinkedStackNode* next;
 };
 
-struct stack
+struct LinkedStack
 {
     int size;
-    struct node* top;
+    struct LinkedStackNode* top;
 };
 
 /*******************************
@@ -27,9 +27,9 @@ Helper functions implementation.
 Interface functions implementation.
 *******************************/
 
-Stack* LinkedStack_Create(void)
+LinkedStack* LinkedStack_Create(void)
 {
-    Stack* stack = (Stack*)malloc(sizeof(Stack));
+    LinkedStack* stack = (LinkedStack*)malloc(sizeof(LinkedStack));
     check_pointer(stack);
 
     stack->top = NULL;
@@ -38,32 +38,32 @@ Stack* LinkedStack_Create(void)
     return stack;
 }
 
-void LinkedStack_Destroy(Stack* self)
+void LinkedStack_Destroy(LinkedStack* self)
 {
     while (self->top)
     {
-        struct node* current = self->top->next;
+        struct LinkedStackNode* current = self->top->next;
         free(self->top);
         self->top = current;
     }
     free(self);
 }
 
-int LinkedStack_Size(const Stack* self)
+int LinkedStack_Size(const LinkedStack* self)
 {
     return self->size;
 }
 
-bool LinkedStack_IsEmpty(const Stack* self)
+bool LinkedStack_IsEmpty(const LinkedStack* self)
 {
     return self->size == 0;
 }
 
-void LinkedStack_Push(Stack* self, StackItem data)
+void LinkedStack_Push(LinkedStack* self, LinkedStackItem data)
 {
     check_full(self->size, INT_MAX);
 
-    struct node* node = (struct node*)malloc(sizeof(struct node));
+    struct LinkedStackNode* node = (struct LinkedStackNode*)malloc(sizeof(struct LinkedStackNode));
     check_pointer(node);
 
     node->data = data;
@@ -73,13 +73,13 @@ void LinkedStack_Push(Stack* self, StackItem data)
     self->size++;
 }
 
-StackItem LinkedStack_Pop(Stack* self)
+LinkedStackItem LinkedStack_Pop(LinkedStack* self)
 {
     check_empty(self->size);
 
-    struct node* node = self->top;
+    struct LinkedStackNode* node = self->top;
     self->top = node->next;
-    StackItem data = node->data;
+    LinkedStackItem data = node->data;
     free(node);
 
     self->size--;
@@ -87,7 +87,7 @@ StackItem LinkedStack_Pop(Stack* self)
     return data;
 }
 
-StackItem LinkedStack_Top(const Stack* self)
+LinkedStackItem LinkedStack_Top(const LinkedStack* self)
 {
     check_empty(self->size);
 

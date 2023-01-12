@@ -7,11 +7,11 @@
 #include "../common/check_pointer.h"
 
 // 为保证入栈是严格的 O(1) 时间复杂度，故这里采用固定的容量，而不是动态增长。
-#define STACK_CAPACITY 256
+#define ARRAYSTACK_CAPACITY 256
 
-struct stack
+struct ArrayStack
 {
-    StackItem data[STACK_CAPACITY];
+    ArrayStackItem data[ARRAYSTACK_CAPACITY];
     int top;
 };
 
@@ -23,9 +23,9 @@ Helper functions implementation.
 Interface functions implementation.
 *******************************/
 
-Stack* ArrayStack_Create(void)
+ArrayStack* ArrayStack_Create(void)
 {
-    Stack* stack = (Stack*)malloc(sizeof(Stack));
+    ArrayStack* stack = (ArrayStack*)malloc(sizeof(ArrayStack));
     check_pointer(stack);
 
     stack->top = -1;
@@ -33,36 +33,36 @@ Stack* ArrayStack_Create(void)
     return stack;
 }
 
-void ArrayStack_Destroy(Stack* self)
+void ArrayStack_Destroy(ArrayStack* self)
 {
     free(self);
 }
 
-int ArrayStack_Size(const Stack* self)
+int ArrayStack_Size(const ArrayStack* self)
 {
     return self->top + 1;
 }
 
-bool ArrayStack_IsEmpty(const Stack* self)
+bool ArrayStack_IsEmpty(const ArrayStack* self)
 {
     return self->top + 1 == 0;
 }
 
-void ArrayStack_Push(Stack* self, StackItem data)
+void ArrayStack_Push(ArrayStack* self, ArrayStackItem data)
 {
-    check_full(ArrayStack_Size(self), STACK_CAPACITY);
+    check_full(ArrayStack_Size(self), ARRAYSTACK_CAPACITY);
 
     self->data[++(self->top)] = data;
 }
 
-StackItem ArrayStack_Pop(Stack* self)
+ArrayStackItem ArrayStack_Pop(ArrayStack* self)
 {
     check_empty(ArrayStack_Size(self));
 
     return self->data[(self->top)--];
 }
 
-StackItem ArrayStack_Top(const Stack* self)
+ArrayStackItem ArrayStack_Top(const ArrayStack* self)
 {
     check_empty(ArrayStack_Size(self));
 

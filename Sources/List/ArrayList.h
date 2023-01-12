@@ -6,10 +6,6 @@
  * @date 2022.01.28
  *
  * @copyright Copyright (c) 2022
- *
- * 学习数据结构用。
- * 列表 list 是由 n (n >= 0) 个元素构成的有序序列： a_1, a_2, a_3 ... a_n 。
- * 列表 list 属于 List ，整数 index 表示元素下标（从0开始），元素 data 属于 ListItem 。
  */
 
 #ifndef ARRAYLIST_H
@@ -17,25 +13,23 @@
 
 #include <stdbool.h> // bool
 
-#define LIST_NOT_FOUND (-1) // a value of ListItem that indicates not found
+typedef int ArrayListItem;
 
-typedef int ListItem;
-
-typedef struct list List;
+typedef struct ArrayList ArrayList;
 
 /**
  * @brief 创建一个空列表
  *
  * @return 一个指向空列表的指针
  */
-List* ArrayList_Create(void);
+ArrayList* ArrayList_Create(void);
 
 /**
  * @brief 销毁一个列表
  *
  * @param self 一个指向待销毁列表的指针
  */
-void ArrayList_Destroy(List* self);
+void ArrayList_Destroy(ArrayList* self);
 
 /**
  * @brief 求列表的长度
@@ -43,7 +37,7 @@ void ArrayList_Destroy(List* self);
  * @param self 一个指向列表的指针
  * @return 列表长度
  */
-int ArrayList_Size(const List* self);
+int ArrayList_Size(const ArrayList* self);
 
 /**
  * @brief 判断列表是否为空
@@ -51,7 +45,7 @@ int ArrayList_Size(const List* self);
  * @param self 一个指向列表的指针
  * @return 如果列表为空则返回 true ，否则返回 false
  */
-bool ArrayList_IsEmpty(const List* self);
+bool ArrayList_IsEmpty(const ArrayList* self);
 
 /**
  * @brief 取列表的第 index 个元素
@@ -60,16 +54,16 @@ bool ArrayList_IsEmpty(const List* self);
  * @param index 下标 (-Size(self) <= index < Size(self))
  * @return 第 index 个元素
  */
-ListItem ArrayList_At(const List* self, int index);
+ArrayListItem ArrayList_At(const ArrayList* self, int index);
 
 /**
  * @brief 求元素 data 在列表中的下标
  *
  * @param self 一个指向列表的指针
  * @param data 一个待寻找元素
- * @return 待寻找元素 data 的下标 index 或者 LIST_NOT_FOUND 代表没找到
+ * @return 待寻找元素 data 的下标 index 或者 -1 代表没找到
  */
-int ArrayList_Find(const List* self, ListItem data);
+int ArrayList_Find(const ArrayList* self, ArrayListItem data);
 
 /**
  * @brief 在列表的下标为 index 的位置上插入一个元素 data
@@ -78,7 +72,7 @@ int ArrayList_Find(const List* self, ListItem data);
  * @param index 下标 (-Size(self) <= index <= Size(self))
  * @param data 待插入元素
  */
-void ArrayList_Insert(List* self, int index, ListItem data);
+void ArrayList_Insert(ArrayList* self, int index, ArrayListItem data);
 
 /**
  * @brief 从列表当中删除下标为 index 的元素
@@ -87,7 +81,7 @@ void ArrayList_Insert(List* self, int index, ListItem data);
  * @param index 下标 (-Size(self) <= index < Size(self))
  * @return 删除的元素
  */
-ListItem ArrayList_Remove(List* self, int index);
+ArrayListItem ArrayList_Remove(ArrayList* self, int index);
 
 /**
  * @brief 遍历列表
@@ -95,20 +89,20 @@ ListItem ArrayList_Remove(List* self, int index);
  * @param self 一个指向列表的指针
  * @param p_trav 一个指向用以操作列表元素的函数的指针
  */
-void ArrayList_Traverse(List* self, void (*p_trav)(ListItem data));
+void ArrayList_Traverse(ArrayList* self, void (*p_trav)(ArrayListItem data));
 
 /**
  * @brief 就地逆置列表
  *
  * @param self 一个指向列表的指针
  */
-void ArrayList_Reverse(List* self);
+void ArrayList_Reverse(ArrayList* self);
 
 /**
  * @brief 清空列表的内容
  *
  * @param self 一个指向列表的指针
  */
-void ArrayList_Clear(List* self);
+void ArrayList_Clear(ArrayList* self);
 
 #endif // ARRAYLIST_H

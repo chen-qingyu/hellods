@@ -23,14 +23,14 @@
 `ClassName_MethodName(ObjectType* self, args...)` 是实例方法，比如
 
 ```C
-int ArrayList_Find(const List* self, ListItem data);
+void ArrayList_Insert(ArrayList* self, int index, ArrayListItem data);
 String** String_Split(const String* self, const String* sep);
 ```
 
 `ClassName_MethodName(args...)` 是静态方法，比如
 
 ```C
-List* ArrayList_Create(void);
+ArrayList* ArrayList_Create(void);
 String* String_From(const char* chars);
 ```
 

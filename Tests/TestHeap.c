@@ -5,7 +5,7 @@
 
 void TestMaxHeap(void)
 {
-    Heap* heap = MaxHeap_Create();
+    MaxHeap* heap = MaxHeap_Create();
     assert(MaxHeap_Size(heap) == 0);
     assert(MaxHeap_IsEmpty(heap) == true);
 

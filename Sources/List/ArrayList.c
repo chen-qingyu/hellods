@@ -8,19 +8,19 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-// The default initial capacity.
+/// The default initial capacity.
 #define DEFAULT_CAPACITY 8
 
-struct list
+struct ArrayList
 {
-    // Number of elements.
+    /// Number of elements.
     int size;
 
-    // Available capacity.
+    /// Available capacity.
     int capacity;
 
-    // Pointer to the data.
-    ListItem* data;
+    /// Pointer to the data.
+    ArrayListItem* data;
 };
 
 /*******************************
@@ -28,10 +28,10 @@ Helper functions implementation.
 *******************************/
 
 // Expand capacity safely.
-static inline void expand_capacity(List* self)
+static inline void expand_capacity(ArrayList* self)
 {
     self->capacity = (self->capacity < INT_MAX / 2) ? self->capacity * 2 : INT_MAX; // double the capacity until INT_MAX
-    self->data = (ListItem*)realloc(self->data, sizeof(ListItem) * self->capacity);
+    self->data = (ArrayListItem*)realloc(self->data, sizeof(ArrayListItem) * self->capacity);
     check_pointer(self->data);
 }
 
@@ -39,43 +39,46 @@ static inline void expand_capacity(List* self)
 Interface functions implementation.
 *******************************/
 
-List* ArrayList_Create(void)
+ArrayList* ArrayList_Create(void)
 {
-    List* list = (List*)malloc(sizeof(List));
+    ArrayList* list = (ArrayList*)malloc(sizeof(ArrayList));
     check_pointer(list);
 
     list->size = 0;
     list->capacity = DEFAULT_CAPACITY;
-    list->data = (ListItem*)malloc(sizeof(ListItem) * list->capacity);
+    list->data = (ArrayListItem*)malloc(sizeof(ArrayListItem) * list->capacity);
     check_pointer(list->data);
 
     return list;
 }
 
-void ArrayList_Destroy(List* self)
+void ArrayList_Destroy(ArrayList* self)
 {
-    free(self->data);
-    free(self);
+    if (self)
+    {
+        free(self->data);
+        free(self);
+    }
 }
 
-int ArrayList_Size(const List* self)
+int ArrayList_Size(const ArrayList* self)
 {
     return self->size;
 }
 
-bool ArrayList_IsEmpty(const List* self)
+bool ArrayList_IsEmpty(const ArrayList* self)
 {
     return self->size == 0;
 }
 
-ListItem ArrayList_At(const List* self, int index) // list[index]
+ArrayListItem ArrayList_At(const ArrayList* self, int index) // list[index]
 {
     check_bounds(index, -self->size, self->size);
 
     return index >= 0 ? self->data[index] : self->data[index + self->size];
 }
 
-int ArrayList_Find(const List* self, ListItem data)
+int ArrayList_Find(const ArrayList* self, ArrayListItem data)
 {
     int index = 0;
 
@@ -84,10 +87,10 @@ int ArrayList_Find(const List* self, ListItem data)
         index++;
     }
 
-    return index < self->size ? index : LIST_NOT_FOUND;
+    return index < self->size ? index : -1;
 }
 
-void ArrayList_Insert(List* self, int index, ListItem data)
+void ArrayList_Insert(ArrayList* self, int index, ArrayListItem data)
 {
     // check
     check_full(self->size, INT_MAX);
@@ -114,7 +117,7 @@ void ArrayList_Insert(List* self, int index, ListItem data)
     ++self->size;
 }
 
-ListItem ArrayList_Remove(List* self, int index)
+ArrayListItem ArrayList_Remove(ArrayList* self, int index)
 {
     // check
     check_empty(self->size);
@@ -123,7 +126,7 @@ ListItem ArrayList_Remove(List* self, int index)
 
     // get data
     index = index >= 0 ? index : index + self->size;
-    ListItem data = self->data[index];
+    ArrayListItem data = self->data[index];
 
     // index and remove
     for (int i = index + 1; i < self->size; i++)
@@ -138,7 +141,7 @@ ListItem ArrayList_Remove(List* self, int index)
     return data;
 }
 
-void ArrayList_Traverse(List* self, void (*p_trav)(ListItem data))
+void ArrayList_Traverse(ArrayList* self, void (*p_trav)(ArrayListItem data))
 {
     for (int i = 0; i < self->size; i++)
     {
@@ -146,22 +149,25 @@ void ArrayList_Traverse(List* self, void (*p_trav)(ListItem data))
     }
 }
 
-void ArrayList_Reverse(List* self)
+void ArrayList_Reverse(ArrayList* self)
 {
     for (int i = 0, j = self->size - 1; i < j; ++i, --j)
     {
-        ListItem tmp = self->data[i];
+        ArrayListItem tmp = self->data[i];
         self->data[i] = self->data[j];
         self->data[j] = tmp;
     }
 }
 
-void ArrayList_Clear(List* self)
+void ArrayList_Clear(ArrayList* self)
 {
-    free(self->data);
+    if (self->size != 0)
+    {
+        free(self->data);
 
-    self->size = 0;
-    self->capacity = DEFAULT_CAPACITY;
-    self->data = (ListItem*)malloc(sizeof(ListItem) * self->capacity);
-    check_pointer(self->data);
+        self->size = 0;
+        self->capacity = DEFAULT_CAPACITY;
+        self->data = (ArrayListItem*)malloc(sizeof(ArrayListItem) * self->capacity);
+        check_pointer(self->data);
+    }
 }

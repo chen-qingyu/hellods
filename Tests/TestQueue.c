@@ -7,7 +7,7 @@
 
 void TestArrayQueue(void)
 {
-    Queue* queue = ArrayQueue_Create();
+    ArrayQueue* queue = ArrayQueue_Create();
 
     ArrayQueue_Enqueue(queue, -1);
     assert(ArrayQueue_Front(queue) == -1);
@@ -16,7 +16,7 @@ void TestArrayQueue(void)
     assert(ArrayQueue_Size(queue) == 0);
     assert(ArrayQueue_IsEmpty(queue) == true);
 
-    QueueItem arr[] = {1, 2, 3, 4};
+    ArrayQueueItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
@@ -41,7 +41,7 @@ void TestArrayQueue(void)
 
 void TestLinkedQueue(void)
 {
-    Queue* queue = LinkedQueue_Create();
+    LinkedQueue* queue = LinkedQueue_Create();
 
     LinkedQueue_Enqueue(queue, -1);
     assert(LinkedQueue_Front(queue) == -1);
@@ -50,7 +50,7 @@ void TestLinkedQueue(void)
     assert(LinkedQueue_Size(queue) == 0);
     assert(LinkedQueue_IsEmpty(queue) == true);
 
-    QueueItem arr[] = {1, 2, 3, 4};
+    LinkedQueueItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
@@ -75,7 +75,7 @@ void TestLinkedQueue(void)
 
 void TestLinkedDeque(void)
 {
-    Deque* queue = LinkedDeque_Create();
+    LinkedDeque* queue = LinkedDeque_Create();
 
     LinkedDeque_PushBack(queue, -1);
     assert(LinkedDeque_Front(queue) == -1);
@@ -89,7 +89,7 @@ void TestLinkedDeque(void)
     assert(LinkedDeque_Size(queue) == 0);
     assert(LinkedDeque_IsEmpty(queue) == true);
 
-    DequeItem arr[] = {1, 2, 3, 4};
+    LinkedDequeItem arr[] = {1, 2, 3, 4};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {

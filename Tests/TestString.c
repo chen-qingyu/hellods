@@ -112,9 +112,9 @@ void TestString(void)
     assert(String_Find(s5, s4, 0, 7) == 2);
     assert(String_Find(s5, s5, 0, 7) == 0);
     String_Set(s1, " ");
-    assert(String_Find(s5, s1, 0, 7) == STRING_NOT_FOUND);
+    assert(String_Find(s5, s1, 0, 7) == -1);
     String_Set(s1, "ac");
-    assert(String_Find(s5, s1, 0, 7) == STRING_NOT_FOUND);
+    assert(String_Find(s5, s1, 0, 7) == -1);
 
     // String_ToDecimal()
 

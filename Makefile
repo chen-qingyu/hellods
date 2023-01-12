@@ -13,7 +13,7 @@ TestQueue = Tests/TestQueue.c Sources/Queue/ArrayQueue.o Sources/Queue/LinkedQue
 TestStack = Tests/TestStack.c Sources/Stack/ArrayStack.o Sources/Stack/LinkedStack.o
 TestString = Tests/TestString.c Sources/String/String.o
 TestTable = Tests/TestTable.c Sources/Table/HashTable.o
-TestTree = Tests/TestTree.c Sources/Tree/BinarySearchTree.o Sources/Tree/QueueForTree.o
+TestTree = Tests/TestTree.c Sources/Tree/BinarySearchTree.o
 
 Tests/MainTest.exe: $(MainTest) $(TestGraph) $(TestHeap) $(TestList) $(TestQueue) $(TestStack) $(TestString) $(TestTable) $(TestTree)
 	gcc -Wall $(MainTest) $(TestGraph) $(TestHeap) $(TestList) $(TestQueue) $(TestStack) $(TestString) $(TestTable) $(TestTree) -o Tests/MainTest.exe
@@ -72,9 +72,6 @@ Sources/Table/HashTable.o: Sources/Table/HashTable.c Sources/Table/HashTable.h
 
 Sources/Tree/BinarySearchTree.o: Sources/Tree/BinarySearchTree.c Sources/Tree/BinarySearchTree.h
 	gcc -Wall -c Sources/Tree/BinarySearchTree.c -o Sources/Tree/BinarySearchTree.o
-
-Sources/Tree/QueueForTree.o: Sources/Tree/QueueForTree.h Sources/Tree/QueueForTree.c
-	gcc -Wall -c Sources/Tree/QueueForTree.c -o Sources/Tree/QueueForTree.o
 
 # Clean files
 

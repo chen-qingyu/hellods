@@ -7,16 +7,16 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-struct node
+struct LinkedQueueNode
 {
-    QueueItem data;
-    struct node* next;
+    LinkedQueueItem data;
+    struct LinkedQueueNode* next;
 };
 
-struct queue
+struct LinkedQueue
 {
-    struct node* front;
-    struct node* rear;
+    struct LinkedQueueNode* front;
+    struct LinkedQueueNode* rear;
     int size;
 };
 
@@ -28,12 +28,12 @@ Helper functions implementation.
 Interface functions implementation.
 *******************************/
 
-Queue* LinkedQueue_Create(void)
+LinkedQueue* LinkedQueue_Create(void)
 {
-    Queue* queue = (Queue*)malloc(sizeof(Queue));
+    LinkedQueue* queue = (LinkedQueue*)malloc(sizeof(LinkedQueue));
     check_pointer(queue);
 
-    queue->front = (struct node*)malloc(sizeof(struct node));
+    queue->front = (struct LinkedQueueNode*)malloc(sizeof(struct LinkedQueueNode));
     check_pointer(queue->front);
 
     queue->rear = queue->front;
@@ -43,32 +43,32 @@ Queue* LinkedQueue_Create(void)
     return queue;
 }
 
-void LinkedQueue_Destroy(Queue* self)
+void LinkedQueue_Destroy(LinkedQueue* self)
 {
     while (self->front)
     {
-        struct node* current = self->front->next;
+        struct LinkedQueueNode* current = self->front->next;
         free(self->front);
         self->front = current;
     }
     free(self);
 }
 
-int LinkedQueue_Size(const Queue* self)
+int LinkedQueue_Size(const LinkedQueue* self)
 {
     return self->size;
 }
 
-bool LinkedQueue_IsEmpty(const Queue* self)
+bool LinkedQueue_IsEmpty(const LinkedQueue* self)
 {
     return self->size == 0;
 }
 
-void LinkedQueue_Enqueue(Queue* self, QueueItem data)
+void LinkedQueue_Enqueue(LinkedQueue* self, LinkedQueueItem data)
 {
     check_full(self->size, INT_MAX);
 
-    struct node* add = (struct node*)malloc(sizeof(struct node));
+    struct LinkedQueueNode* add = (struct LinkedQueueNode*)malloc(sizeof(struct LinkedQueueNode));
     check_pointer(add);
 
     add->data = data;
@@ -80,7 +80,7 @@ void LinkedQueue_Enqueue(Queue* self, QueueItem data)
     ++self->size;
 }
 
-QueueItem LinkedQueue_Dequeue(Queue* self)
+LinkedQueueItem LinkedQueue_Dequeue(LinkedQueue* self)
 {
     check_empty(self->size);
 
@@ -89,8 +89,8 @@ QueueItem LinkedQueue_Dequeue(Queue* self)
         self->rear = self->front;
     }
 
-    struct node* del = self->front->next;
-    QueueItem data = del->data;
+    struct LinkedQueueNode* del = self->front->next;
+    LinkedQueueItem data = del->data;
 
     self->front->next = del->next;
     free(del);
@@ -100,7 +100,7 @@ QueueItem LinkedQueue_Dequeue(Queue* self)
     return data;
 }
 
-QueueItem LinkedQueue_Front(Queue* self)
+LinkedQueueItem LinkedQueue_Front(LinkedQueue* self)
 {
     check_empty(self->size);
 

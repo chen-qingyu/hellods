@@ -6,10 +6,6 @@
  * @date 2022.01.29
  *
  * @copyright Copyright (c) 2022
- *
- * 学习数据结构用。
- * 二叉树 tree 是一个有穷的结点集合。若不为空，则由根结点和其左、右二叉子树组成。
- * 二叉树 tree 属于 Tree ，结点数据 data 属于 TreeItem 。
  */
 
 #ifndef BINARYSEARCHTREE_H
@@ -17,7 +13,8 @@
 
 #include <stdbool.h> // bool
 
-#define TREE_NOT_FOUND (-1) // a value of TreeItem that indicates not found
+/// A value of BinarySearchTreeItem that indicates not found.
+#define BINARY_SEARCH_TREE_NOT_FOUND (-1)
 
 typedef enum
 {
@@ -27,23 +24,23 @@ typedef enum
     LEVEL_ORDER
 } traverse_t;
 
-typedef int TreeItem;
+typedef int BinarySearchTreeItem;
 
-typedef struct tree Tree;
+typedef struct BinarySearchTree BinarySearchTree;
 
 /**
  * @brief 创建一个空二叉搜索树
  *
  * @return 一个指向空二叉搜索树的指针
  */
-Tree* BinarySearchTree_Create(void);
+BinarySearchTree* BinarySearchTree_Create(void);
 
 /**
  * @brief 销毁一个二叉搜索树
  *
  * @param self 一个指向待销毁二叉搜索树的指针
  */
-void BinarySearchTree_Destroy(Tree* self);
+void BinarySearchTree_Destroy(BinarySearchTree* self);
 
 /**
  * @brief 求二叉搜索树的元素个数
@@ -51,7 +48,7 @@ void BinarySearchTree_Destroy(Tree* self);
  * @param self 一个指向二叉搜索树的指针
  * @return 二叉搜索树的元素个数
  */
-int BinarySearchTree_Size(const Tree* self);
+int BinarySearchTree_Size(const BinarySearchTree* self);
 
 /**
  * @brief 判断二叉搜索树是否为空
@@ -59,7 +56,7 @@ int BinarySearchTree_Size(const Tree* self);
  * @param self 一个指向二叉搜索树的指针
  * @return 如果二叉搜索树为空则返回 true ，否则返回 false
  */
-bool BinarySearchTree_IsEmpty(const Tree* self);
+bool BinarySearchTree_IsEmpty(const BinarySearchTree* self);
 
 /**
  * @brief 遍历一个二叉搜索树
@@ -72,32 +69,32 @@ bool BinarySearchTree_IsEmpty(const Tree* self);
  *              - LEVEL_ORDER 层次遍历
  * @param p_trav 一个对遍历到的每个元素进行操作的函数的指针
  */
-void BinarySearchTree_Traverse(Tree* self, traverse_t type, void (*p_trav)(TreeItem data));
+void BinarySearchTree_Traverse(BinarySearchTree* self, traverse_t type, void (*p_trav)(BinarySearchTreeItem data));
 
 /**
  * @brief 在一个二叉搜索树中寻找元素 data
  *
  * @param self 一个指向二叉搜索树的指针
  * @param data 一个待寻找元素
- * @return 元素 data 或者 TREE_NOT_FOUND
+ * @return 元素 data 或者 BINARY_SEARCH_TREE_NOT_FOUND
  */
-TreeItem BinarySearchTree_Find(const Tree* self, TreeItem data);
+BinarySearchTreeItem BinarySearchTree_Find(const BinarySearchTree* self, BinarySearchTreeItem data);
 
 /**
  * @brief 在一个二叉搜索树中寻找最小元素
  *
  * @param self 一个指向二叉搜索树的指针
- * @return 最小的元素或者 TREE_NOT_FOUND
+ * @return 最小的元素或者 BINARY_SEARCH_TREE_NOT_FOUND
  */
-TreeItem BinarySearchTree_FindMin(const Tree* self);
+BinarySearchTreeItem BinarySearchTree_FindMin(const BinarySearchTree* self);
 
 /**
  * @brief 在一个二叉搜索树中寻找最大元素
  *
  * @param self 一个指向二叉搜索树的指针
- * @return 最大的元素或者 TREE_NOT_FOUND
+ * @return 最大的元素或者 BINARY_SEARCH_TREE_NOT_FOUND
  */
-TreeItem BinarySearchTree_FindMax(const Tree* self);
+BinarySearchTreeItem BinarySearchTree_FindMax(const BinarySearchTree* self);
 
 /**
  * @brief 在一个二叉搜索树中插入元素 data
@@ -105,7 +102,7 @@ TreeItem BinarySearchTree_FindMax(const Tree* self);
  * @param self 一个指向二叉搜索树的指针
  * @param data 一个待插入元素
  */
-void BinarySearchTree_Insert(Tree* self, TreeItem data);
+void BinarySearchTree_Insert(BinarySearchTree* self, BinarySearchTreeItem data);
 
 /**
  * @brief 在一个二叉搜索树中删除元素 data
@@ -113,6 +110,6 @@ void BinarySearchTree_Insert(Tree* self, TreeItem data);
  * @param self 一个指向二叉搜索树的指针
  * @param data 一个待删除元素
  */
-void BinarySearchTree_Remove(Tree* self, TreeItem data);
+void BinarySearchTree_Remove(BinarySearchTree* self, BinarySearchTreeItem data);
 
 #endif // BINARYSEARCHTREE_H

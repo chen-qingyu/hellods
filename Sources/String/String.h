@@ -1,8 +1,7 @@
 /**
  * @file String.h
  * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief My simple C string library.
- *        Because the <string.h> is too crude to use, so I wrote one myself.
+ * @brief 字符串 (String)
  * @version 1.0
  * @date 2022.11.03
  *
@@ -42,10 +41,10 @@
  *   - String_Strip         Remove leading and trailing blank characters of the string.
  *   - String_Swap          Swap the contents of two strings.
  *   - String_Clear         Clear the contents of the string.
- *  - Production (will produce new object):
+ * - Production (will produce new object):
  *   - String_Split         Split string with separator.
  *   - String_Slice         Return slice of the string from start to stop with certain step.
- *  - Auxiliary (helper functions):
+ * - Auxiliary (helper functions):
  *   - String_DestroyArray  Destroy a string array. For String_Split().
  */
 
@@ -65,14 +64,11 @@
 // INFINITY: Positive infinity.
 #include <math.h>
 
-// Indicates not found
-#define STRING_NOT_FOUND (-1)
-
 // String structure declaration.
-typedef struct string String;
+typedef struct String String;
 
 // Used for string comparison.
-enum order
+enum Order
 {
     // Less Than.
     LT = -1,
@@ -256,12 +252,12 @@ bool String_Equal(const String* self, const String* that);
  * @param that A pointer to the second string.
  * @return An enumeration value: order{LT, EQ, GT}.
  */
-enum order String_Compare(const String* self, const String* that);
+enum Order String_Compare(const String* self, const String* that);
 
 /**
  * @brief Return the index of the first occurrence of the specified pattern in the string (at or after index start and before index stop). O(N + M)
  *
- * Or STRING_NOT_FOUND if the string does not contain the pattern (in the specified range).
+ * Or -1 if the string does not contain the pattern (in the specified range).
  *
  * Implemented by the KMP algorithm.
  *
@@ -269,7 +265,7 @@ enum order String_Compare(const String* self, const String* that);
  * @param pattern A pointer to the pattern string.
  * @param start At or after index start.
  * @param stop Before index stop.
- * @return Returns the starting substring index or STRING_NOT_FOUND.
+ * @return Returns the starting substring index or -1 if the string does not contain the pattern.
  */
 int String_Find(const String* self, const String* pattern, int start, int stop);
 

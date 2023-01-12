@@ -7,11 +7,11 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-#define MAX_ITEM INT_MAX // max value of HeapItem
+#define MAX_ITEM INT_MAX // max value of MaxHeapItem
 
-struct heap
+struct MaxHeap
 {
-    HeapItem* data;
+    MaxHeapItem* data;
     int size;
     int capacity;
 };
@@ -21,10 +21,10 @@ Helper functions implementation.
 *******************************/
 
 // Expand capacity safely.
-static inline void expand_capacity(Heap* self)
+static inline void expand_capacity(MaxHeap* self)
 {
     self->capacity = (self->capacity < INT_MAX / 2) ? self->capacity * 2 : INT_MAX; // double the capacity until INT_MAX
-    self->data = (HeapItem*)realloc(self->data, sizeof(HeapItem) * self->capacity);
+    self->data = (MaxHeapItem*)realloc(self->data, sizeof(MaxHeapItem) * self->capacity);
     check_pointer(self->data);
 }
 
@@ -32,14 +32,14 @@ static inline void expand_capacity(Heap* self)
 Interface functions implementation.
 *******************************/
 
-Heap* MaxHeap_Create(void)
+MaxHeap* MaxHeap_Create(void)
 {
-    Heap* heap = (Heap*)malloc(sizeof(Heap));
+    MaxHeap* heap = (MaxHeap*)malloc(sizeof(MaxHeap));
     check_pointer(heap);
 
     heap->size = 0;
     heap->capacity = 8;
-    heap->data = (HeapItem*)malloc(heap->capacity * sizeof(HeapItem));
+    heap->data = (MaxHeapItem*)malloc(heap->capacity * sizeof(MaxHeapItem));
     check_pointer(heap->data);
 
     heap->data[0] = MAX_ITEM;
@@ -47,23 +47,23 @@ Heap* MaxHeap_Create(void)
     return heap;
 }
 
-void MaxHeap_Destroy(Heap* self)
+void MaxHeap_Destroy(MaxHeap* self)
 {
     free(self->data);
     free(self);
 }
 
-int MaxHeap_Size(const Heap* self)
+int MaxHeap_Size(const MaxHeap* self)
 {
     return self->size;
 }
 
-bool MaxHeap_IsEmpty(const Heap* self)
+bool MaxHeap_IsEmpty(const MaxHeap* self)
 {
     return self->size == 0;
 }
 
-void MaxHeap_Push(Heap* self, HeapItem data)
+void MaxHeap_Push(MaxHeap* self, MaxHeapItem data)
 {
     check_full(self->size, INT_MAX);
 
@@ -80,12 +80,12 @@ void MaxHeap_Push(Heap* self, HeapItem data)
     self->data[pos] = data;
 }
 
-HeapItem MaxHeap_Pop(Heap* self)
+MaxHeapItem MaxHeap_Pop(MaxHeap* self)
 {
     check_empty(self->size);
 
-    HeapItem max_item = self->data[1];
-    HeapItem tmp = self->data[self->size--];
+    MaxHeapItem max_item = self->data[1];
+    MaxHeapItem tmp = self->data[self->size--];
 
     int parent, child;
     for (parent = 1; parent * 2 <= self->size; parent = child)
@@ -110,7 +110,7 @@ HeapItem MaxHeap_Pop(Heap* self)
     return max_item;
 }
 
-HeapItem MaxHeap_Top(Heap* self)
+MaxHeapItem MaxHeap_Top(MaxHeap* self)
 {
     check_empty(self->size);
 

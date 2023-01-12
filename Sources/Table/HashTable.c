@@ -7,27 +7,27 @@
 #include "../common/check_pointer.h"
 
 // TODO 动态增长
-#define HASHTABLE_CAPACITY 17
+#define HASH_TABLE_CAPACITY 17
 
-typedef enum
+enum HashTableState
 {
     EMPTY,
     FULL,
     REMOVED
-} TableState;
+};
 
-struct item
+struct HashTable
 {
-    TableKey key;
-    TableValue value;
-    TableState state;
+    HashTableKey key;
+    HashTableValue value;
+    enum HashTableState state;
 };
 
 /*******************************
 Helper functions implementation.
 *******************************/
 
-static int hash(TableKey key)
+static int hash(HashTableKey key)
 {
     unsigned int index = 0;
 
@@ -36,10 +36,10 @@ static int hash(TableKey key)
         index = (index << 5) + *key++;
     }
 
-    return index % HASHTABLE_CAPACITY;
+    return index % HASH_TABLE_CAPACITY;
 }
 
-static int find_pos(const Table* table, TableKey key)
+static int find_pos(const HashTable* table, HashTableKey key)
 {
     int current_pos = hash(key);
     int new_pos = current_pos;
@@ -50,9 +50,9 @@ static int find_pos(const Table* table, TableKey key)
         if (++conflict_cnt % 2)
         {
             new_pos = current_pos + (conflict_cnt + 1) * (conflict_cnt + 1) / 4;
-            if (new_pos >= HASHTABLE_CAPACITY)
+            if (new_pos >= HASH_TABLE_CAPACITY)
             {
-                new_pos = new_pos % HASHTABLE_CAPACITY;
+                new_pos = new_pos % HASH_TABLE_CAPACITY;
             }
         }
         else
@@ -60,7 +60,7 @@ static int find_pos(const Table* table, TableKey key)
             new_pos = current_pos - conflict_cnt * conflict_cnt / 4;
             while (new_pos < 0)
             {
-                new_pos += HASHTABLE_CAPACITY;
+                new_pos += HASH_TABLE_CAPACITY;
             }
         }
     }
@@ -72,12 +72,12 @@ static int find_pos(const Table* table, TableKey key)
 Interface functions implementation.
 *******************************/
 
-Table* HashTable_Create(void)
+HashTable* HashTable_Create(void)
 {
-    Table* table = (Table*)malloc(sizeof(struct item) * HASHTABLE_CAPACITY);
+    HashTable* table = (HashTable*)malloc(sizeof(HashTable) * HASH_TABLE_CAPACITY);
     check_pointer(table);
 
-    for (int i = 0; i < HASHTABLE_CAPACITY; i++)
+    for (int i = 0; i < HASH_TABLE_CAPACITY; i++)
     {
         table[i].key = NULL;
         table[i].state = EMPTY;
@@ -86,9 +86,9 @@ Table* HashTable_Create(void)
     return table;
 }
 
-void HashTable_Destroy(Table* self)
+void HashTable_Destroy(HashTable* self)
 {
-    for (int i = 0; i < HASHTABLE_CAPACITY; ++i)
+    for (int i = 0; i < HASH_TABLE_CAPACITY; ++i)
     {
         if (self[i].key)
         {
@@ -98,14 +98,14 @@ void HashTable_Destroy(Table* self)
     free(self);
 }
 
-TableValue HashTable_Get(const Table* self, TableKey key)
+HashTableValue HashTable_Get(const HashTable* self, HashTableKey key)
 {
     int pos = find_pos(self, key);
 
-    return self[pos].state == FULL ? self[pos].value : TABLE_NOT_FOUND;
+    return self[pos].state == FULL ? self[pos].value : HASH_TABLE_NOT_FOUND;
 }
 
-void HashTable_Modify(Table* self, TableKey key, TableValue value)
+void HashTable_Modify(HashTable* self, HashTableKey key, HashTableValue value)
 {
     int pos = find_pos(self, key);
 
@@ -120,7 +120,7 @@ void HashTable_Modify(Table* self, TableKey key, TableValue value)
     }
 }
 
-void HashTable_Insert(Table* self, TableKey key, TableValue value)
+void HashTable_Insert(HashTable* self, HashTableKey key, HashTableValue value)
 {
     int pos = find_pos(self, key);
 
@@ -145,7 +145,7 @@ void HashTable_Insert(Table* self, TableKey key, TableValue value)
     }
 }
 
-void HashTable_Remove(Table* self, TableKey key)
+void HashTable_Remove(HashTable* self, HashTableKey key)
 {
     int pos = find_pos(self, key);
 

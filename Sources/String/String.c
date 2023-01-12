@@ -1,15 +1,3 @@
-/**
- * @file String.c
- * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief My simple C string library implementation.
- *        Because the <string.h> is too crude to use, so I wrote one myself.
- * @version 1.0
- * @date 2022.11.03
- *
- * @copyright Copyright (c) 2022
- *
- */
-
 #include "String.h"
 
 #include <math.h>   // pow INFINITY NAN
@@ -26,7 +14,7 @@
  *******************************/
 
 // String structure definition.
-struct string
+struct String
 {
     // Number of chars.
     int size;
@@ -42,7 +30,7 @@ struct string
 #define INIT_CAPACITY 8
 
 // Used for FSM
-enum state
+enum State
 {
     S_BEGIN_BLANK = 1 << 0,        // begin blank character
     S_SIGN = 1 << 1,               // positive or negative sign
@@ -58,7 +46,7 @@ enum state
 };
 
 // Used for FSM
-enum event
+enum Event
 {
     E_BLANK = 1 << 11,     // blank character: '\n', '\r', '\t', ' '
     E_SIGN = 1 << 12,      // positive or negative sign: '+', '-'
@@ -77,7 +65,7 @@ static inline int kmp(const char* str, const char* pattern, int n, int m)
 {
     if (n < m)
     {
-        return STRING_NOT_FOUND;
+        return -1;
     }
 
     if (m == 0) // "" is in any string at index 0.
@@ -87,7 +75,7 @@ static inline int kmp(const char* str, const char* pattern, int n, int m)
 
     int* match = (int*)malloc(sizeof(int) * m);
     check_pointer(match);
-    match[0] = STRING_NOT_FOUND;
+    match[0] = -1;
 
     for (int j = 1; j < m; j++)
     {
@@ -96,7 +84,7 @@ static inline int kmp(const char* str, const char* pattern, int n, int m)
         {
             i = match[i];
         }
-        match[j] = (pattern[i + 1] == pattern[j]) ? i + 1 : STRING_NOT_FOUND;
+        match[j] = (pattern[i + 1] == pattern[j]) ? i + 1 : -1;
     }
 
     int s = 0;
@@ -120,7 +108,7 @@ static inline int kmp(const char* str, const char* pattern, int n, int m)
 
     free(match);
 
-    return (p == m) ? (s - m) : STRING_NOT_FOUND;
+    return (p == m) ? (s - m) : -1;
 }
 
 // Calculate the length of null-terminated byte string (exclude '\0').
@@ -151,7 +139,7 @@ static inline int char_to_integer(char digit, int base) // 2 <= base <= 36
 }
 
 // Try to transform a character to an event.
-static inline enum event get_event(char ch, int base)
+static inline enum Event get_event(char ch, int base)
 {
     if (ch == ' ' || ch == '\n' || ch == '\r' || ch == '\t')
     {
@@ -382,7 +370,7 @@ bool String_Equal(const String* self, const String* that)
     return true;
 }
 
-enum order String_Compare(const String* self, const String* that)
+enum Order String_Compare(const String* self, const String* that)
 {
     int diff = 0;
     for (int i = 0; i < self->size && i < that->size && diff == 0; i++)
@@ -472,10 +460,10 @@ double String_ToDecimal(const String* self)
     int exp_part = 0;
 
     // FSM
-    enum state st = S_BEGIN_BLANK;
+    enum State st = S_BEGIN_BLANK;
     for (int i = 0; i < self->size; ++i)
     {
-        enum event ev = get_event(self->data[i], 10);
+        enum Event ev = get_event(self->data[i], 10);
         switch (st | ev)
         {
             case S_BEGIN_BLANK | E_BLANK:
@@ -565,10 +553,10 @@ long long String_ToInteger(const String* self, int base)
     long long integer_part = 0;
 
     // FSM
-    enum state st = S_BEGIN_BLANK;
+    enum State st = S_BEGIN_BLANK;
     for (int i = 0; i < self->size; ++i)
     {
-        enum event ev = get_event(self->data[i], base);
+        enum Event ev = get_event(self->data[i], base);
         switch (st | ev)
         {
             case S_BEGIN_BLANK | E_BLANK:
