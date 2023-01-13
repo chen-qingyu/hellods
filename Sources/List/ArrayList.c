@@ -8,8 +8,11 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-// The default initial capacity.
-#define DEFAULT_CAPACITY 8
+// Initial capacity.
+#define INIT_CAPACITY 8
+
+// Maximum capacity.
+#define MAX_CAPACITY (INT_MAX - 1) // - 1 to prevent boundary subscript overflow
 
 struct ArrayList
 {
@@ -30,7 +33,7 @@ Helper functions implementation.
 // Expand capacity safely.
 static inline void expand_capacity(ArrayList* self)
 {
-    self->capacity = (self->capacity < INT_MAX / 2) ? self->capacity * 2 : INT_MAX; // double the capacity until INT_MAX
+    self->capacity = (self->capacity < MAX_CAPACITY / 2) ? self->capacity * 2 : MAX_CAPACITY; // double the capacity until MAX_CAPACITY
     self->data = (ArrayListItem*)realloc(self->data, sizeof(ArrayListItem) * self->capacity);
     check_pointer(self->data);
 }
@@ -45,7 +48,7 @@ ArrayList* ArrayList_Create(void)
     check_pointer(list);
 
     list->size = 0;
-    list->capacity = DEFAULT_CAPACITY;
+    list->capacity = INIT_CAPACITY;
     list->data = (ArrayListItem*)malloc(sizeof(ArrayListItem) * list->capacity);
     check_pointer(list->data);
 
@@ -93,7 +96,7 @@ int ArrayList_Find(const ArrayList* self, ArrayListItem data)
 void ArrayList_Insert(ArrayList* self, int index, ArrayListItem data)
 {
     // check
-    check_full(self->size, INT_MAX);
+    check_full(self->size, MAX_CAPACITY);
 
     check_bounds(index, -self->size, self->size + 1);
 
@@ -164,7 +167,7 @@ void ArrayList_Clear(ArrayList* self)
     if (self->size != 0)
     {
         self->size = 0;
-        self->capacity = DEFAULT_CAPACITY;
+        self->capacity = INIT_CAPACITY;
         free(self->data);
         self->data = (ArrayListItem*)malloc(sizeof(ArrayListItem) * self->capacity);
         check_pointer(self->data);
