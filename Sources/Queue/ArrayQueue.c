@@ -11,8 +11,13 @@
 
 struct ArrayQueue
 {
+    /// Pointer to the data.
     ArrayQueueItem data[MAX_CAPACITY + 1]; // 循环队列，数组容量为队列有效容量加一
+
+    /// Index before the front element.
     int front;
+
+    /// Index of the rear element.
     int rear;
 };
 

@@ -163,10 +163,9 @@ void ArrayList_Clear(ArrayList* self)
 {
     if (self->size != 0)
     {
-        free(self->data);
-
         self->size = 0;
         self->capacity = DEFAULT_CAPACITY;
+        free(self->data);
         self->data = (ArrayListItem*)malloc(sizeof(ArrayListItem) * self->capacity);
         check_pointer(self->data);
     }

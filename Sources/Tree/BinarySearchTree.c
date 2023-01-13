@@ -9,13 +9,13 @@
 
 struct BinarySearchTreeNode
 {
-    /// The data stored in this node.
+    /// Data stored in the node.
     BinarySearchTreeItem data;
 
-    /// A pointer to the left child of the node.
+    /// Pointer to the left child.
     struct BinarySearchTreeNode* left;
 
-    /// A pointer to the right child of the node.
+    /// Pointer to the right child.
     struct BinarySearchTreeNode* right;
 };
 
@@ -24,7 +24,7 @@ struct BinarySearchTree
     /// Number of elements.
     int size;
 
-    /// A pointer to the root node.
+    /// Pointer to the root.
     struct BinarySearchTreeNode* root;
 };
 

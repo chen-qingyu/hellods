@@ -7,6 +7,7 @@
 
 struct LinkedDeque
 {
+    /// A doubly linked list.
     DoublyLinkedList* dlist;
 };
 

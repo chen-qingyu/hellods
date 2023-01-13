@@ -13,10 +13,10 @@
  * Type definition.
  *******************************/
 
-/// String structure definition.
+// String structure definition.
 struct String
 {
-    /// Number of chars.
+    /// Number of characters.
     int size;
 
     /// Available capacity.

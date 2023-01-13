@@ -18,8 +18,13 @@ enum HashTableState
 
 struct HashTable
 {
+    /// Key of the key-value pair.
     HashTableKey key;
+
+    /// Value of the key-value pair.
     HashTableValue value;
+
+    /// State of the key-value pair.
     enum HashTableState state;
 };
 

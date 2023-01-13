@@ -12,8 +12,13 @@
 
 struct MatrixGraph
 {
+    /// Number of vertices.
     int vertex_num;
+
+    /// Number of edges.
     int edge_num;
+
+    /// Adjacency matrix.
     MatrixGraphEdge matrix[VERTEX_NUMBER][VERTEX_NUMBER]; // 邻接矩阵
 };
 

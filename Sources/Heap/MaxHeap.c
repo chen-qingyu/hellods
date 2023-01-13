@@ -11,9 +11,14 @@
 
 struct MaxHeap
 {
-    MaxHeapItem* data;
+    /// Number of elements.
     int size;
+
+    /// Available capacity.
     int capacity;
+
+    /// Pointer to the data.
+    MaxHeapItem* data;
 };
 
 /*******************************

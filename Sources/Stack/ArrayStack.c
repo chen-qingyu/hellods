@@ -11,7 +11,10 @@
 
 struct ArrayStack
 {
+    /// Pointer to the data.
     ArrayStackItem data[MAX_CAPACITY];
+
+    /// Index of the top element.
     int top;
 };
 

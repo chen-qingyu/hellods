@@ -9,15 +9,23 @@
 
 struct LinkedQueueNode
 {
+    /// Data stored in the node.
     LinkedQueueItem data;
+
+    /// Successor.
     struct LinkedQueueNode* next;
 };
 
 struct LinkedQueue
 {
-    struct LinkedQueueNode* front;
-    struct LinkedQueueNode* rear;
+    /// Number of elements.
     int size;
+
+    /// Pointer to the front element.
+    struct LinkedQueueNode* front;
+
+    /// Pointer to the rear element.
+    struct LinkedQueueNode* rear;
 };
 
 /*******************************

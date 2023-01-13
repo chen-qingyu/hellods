@@ -9,13 +9,19 @@
 
 struct LinkedStackNode
 {
+    /// Data stored in the node.
     LinkedStackItem data;
+
+    /// Successor.
     struct LinkedStackNode* next;
 };
 
 struct LinkedStack
 {
+    /// Number of elements.
     int size;
+
+    /// Pointer to the top element.
     struct LinkedStackNode* top;
 };
 
