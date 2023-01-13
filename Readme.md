@@ -16,7 +16,7 @@
 - 风格：大部分遵循 [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) ，小部分基于项目规模和源码简洁性的考虑采用自己的风格。
 - 测试：使用 assert 宏函数自己编写的简单测试，所有测试代码同样符合 ISO C99 标准。
 - 安全：使用 [Dr. Memory](https://drmemory.org/) 进行了检查，确保没有安全问题（比如内存泄漏）。
-- 文档：使用 [Doxygen](https://www.doxygen.nl/) 制作了[文档](./Documents/html/index.html)。
+- 文档：使用 [Doxygen](https://www.doxygen.nl/) 制作了文档。
 
 ### 2. 面向对象
 
