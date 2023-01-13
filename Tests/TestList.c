@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
+// for test traverse
 static char str[64] = {0};
 
 static void Visit(int n)
@@ -17,192 +18,189 @@ static void Visit(int n)
 
 void TestArrayList(void)
 {
-    ArrayList* list1 = ArrayList_Create();
-    assert(ArrayList_Size(list1) == 0);
-    assert(ArrayList_IsEmpty(list1) == true);
+    // ArrayList_Create ArrayList_Size ArrayList_IsEmpty
+    ArrayList* list = ArrayList_Create();
+    assert(ArrayList_Size(list) == 0);
+    assert(ArrayList_IsEmpty(list) == true);
 
-    ArrayListItem arr[] = {1, 2, 3, 4};
+    // ArrayList_Insert
+    ArrayListItem arr[] = {1, 2, 3, 4, 5};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
-        ArrayList_Insert(list1, i, arr[i]);
-        assert(ArrayList_At(list1, i) == i + 1);
+        ArrayList_Insert(list, i, arr[i]);
     }
-    assert(ArrayList_Size(list1) == 4);
-    assert(ArrayList_IsEmpty(list1) == false);
-    assert(ArrayList_At(list1, -1) == 4);
+    assert(ArrayList_Size(list) == arr_size);
 
-    ArrayList_Traverse(list1, Visit);
-    assert(strcmp(str, "1 2 3 4 ") == 0);
+    // ArrayList_At
+    for (int i = 0; i < arr_size; ++i) // forward
+    {
+        assert(ArrayList_At(list, i) == i + 1);
+    }
+    for (int i = -1; i >= -arr_size; --i) // backward
+    {
+        assert(ArrayList_At(list, i) == i + 6);
+    }
+
+    // ArrayList_Find
+    assert(ArrayList_Find(list, 1) == 0);
+    assert(ArrayList_Find(list, 5) == 4);
+    assert(ArrayList_Find(list, 0) == -1);
+
+    // ArrayList_Traverse
+    ArrayList_Traverse(list, Visit);
+    assert(strcmp(str, "1 2 3 4 5 ") == 0);
     memset(str, 0, sizeof(str));
 
-    ArrayList_Reverse(list1);
-    ArrayList_Traverse(list1, Visit);
-    assert(strcmp(str, "4 3 2 1 ") == 0);
+    // ArrayList_Reverse
+    ArrayList_Reverse(list);
+    ArrayList_Traverse(list, Visit);
+    assert(strcmp(str, "5 4 3 2 1 ") == 0);
     memset(str, 0, sizeof(str));
 
-    ArrayList* list2 = ArrayList_Create();
-    ArrayListItem arr2[] = {233, 666, 888, 999};
-    int arr2Size = sizeof(arr2) / sizeof(arr2[0]);
-    for (int i = 0; i < arr2Size; i++)
+    // ArrayList_Remove
+    for (int i = 0; i < arr_size; i++)
     {
-        ArrayList_Insert(list2, i, arr2[i]);
+        assert(ArrayList_Remove(list, 0) == arr_size - i);
     }
+    assert(ArrayList_Size(list) == 0);
 
-    for (int i = 0; i < arr2Size; ++i)
-    {
-        ArrayList_Insert(list1, i, ArrayList_At(list2, i));
-    }
-    ArrayList_Traverse(list1, Visit);
-    assert(strcmp(str, "233 666 888 999 4 3 2 1 ") == 0);
-    memset(str, 0, sizeof(str));
+    // ArrayList_Clear
+    ArrayList_Insert(list, 0, 233);
+    assert(ArrayList_Size(list) == 1);
+    ArrayList_Clear(list);
+    assert(ArrayList_Size(list) == 0);
+    ArrayList_Clear(list); // double clear
+    assert(ArrayList_Size(list) == 0);
 
-    assert(ArrayList_Size(list1) == 8);
-    assert(ArrayList_IsEmpty(list1) == false);
-
-    assert(ArrayList_Find(list1, 233) == 0);
-    assert(ArrayList_Find(list1, 999) == 3);
-    assert(ArrayList_Find(list1, 1) == 7);
-    assert(ArrayList_Find(list1, 0) == -1);
-
-    int length = ArrayList_Size(list1);
-    for (int i = 0; i < length; i++)
-    {
-        ArrayList_Remove(list1, 0);
-    }
-    assert(ArrayList_Size(list1) == 0);
-    assert(ArrayList_IsEmpty(list1) == true);
-
-    ArrayList_Destroy(list1);
-    ArrayList_Destroy(list2);
+    // ArrayList_Destroy
+    ArrayList_Destroy(list);
 
     printf("Array List Test OK.\n");
 }
 
 void TestLinkedList(void)
 {
-    LinkedList* list1 = LinkedList_Create();
-    assert(LinkedList_Size(list1) == 0);
-    assert(LinkedList_IsEmpty(list1) == true);
+    // LinkedList_Create LinkedList_Size LinkedList_IsEmpty
+    LinkedList* list = LinkedList_Create();
+    assert(LinkedList_Size(list) == 0);
+    assert(LinkedList_IsEmpty(list) == true);
 
-    LinkedListItem arr[] = {1, 2, 3, 4};
+    // LinkedList_Insert
+    LinkedListItem arr[] = {1, 2, 3, 4, 5};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
-        LinkedList_Insert(list1, i, arr[i]);
-        assert(LinkedList_At(list1, i) == i + 1);
+        LinkedList_Insert(list, i, arr[i]);
     }
-    assert(LinkedList_Size(list1) == 4);
-    assert(LinkedList_IsEmpty(list1) == false);
-    assert(LinkedList_At(list1, -1) == 4);
+    assert(LinkedList_Size(list) == arr_size);
 
-    LinkedList_Traverse(list1, Visit);
-    assert(strcmp(str, "1 2 3 4 ") == 0);
+    // LinkedList_At
+    for (int i = 0; i < arr_size; ++i) // forward
+    {
+        assert(LinkedList_At(list, i) == i + 1);
+    }
+    for (int i = -1; i >= -arr_size; --i) // backward
+    {
+        assert(LinkedList_At(list, i) == i + 6);
+    }
+
+    // LinkedList_Find
+    assert(LinkedList_Find(list, 1) == 0);
+    assert(LinkedList_Find(list, 5) == 4);
+    assert(LinkedList_Find(list, 0) == -1);
+
+    // LinkedList_Traverse
+    LinkedList_Traverse(list, Visit);
+    assert(strcmp(str, "1 2 3 4 5 ") == 0);
     memset(str, 0, sizeof(str));
 
-    LinkedList_Reverse(list1);
-    LinkedList_Traverse(list1, Visit);
-    assert(strcmp(str, "4 3 2 1 ") == 0);
+    // LinkedList_Reverse
+    LinkedList_Reverse(list);
+    LinkedList_Traverse(list, Visit);
+    assert(strcmp(str, "5 4 3 2 1 ") == 0);
     memset(str, 0, sizeof(str));
 
-    LinkedList* list2 = LinkedList_Create();
-    LinkedListItem arr2[] = {233, 666, 888, 999};
-    int arr2Size = sizeof(arr2) / sizeof(arr2[0]);
-    for (int i = 0; i < arr2Size; i++)
+    // LinkedList_Remove
+    for (int i = 0; i < arr_size; i++)
     {
-        LinkedList_Insert(list2, i, arr2[i]);
+        assert(LinkedList_Remove(list, 0) == arr_size - i);
     }
+    assert(LinkedList_Size(list) == 0);
 
-    for (int i = 0; i < arr2Size; ++i)
-    {
-        LinkedList_Insert(list1, i, LinkedList_At(list2, i));
-    }
-    LinkedList_Traverse(list1, Visit);
-    assert(strcmp(str, "233 666 888 999 4 3 2 1 ") == 0);
-    memset(str, 0, sizeof(str));
+    // LinkedList_Clear
+    LinkedList_Insert(list, 0, 233);
+    assert(LinkedList_Size(list) == 1);
+    LinkedList_Clear(list);
+    assert(LinkedList_Size(list) == 0);
+    LinkedList_Clear(list); // double clear
+    assert(LinkedList_Size(list) == 0);
 
-    assert(LinkedList_Size(list1) == 8);
-    assert(LinkedList_IsEmpty(list1) == false);
-
-    assert(LinkedList_Find(list1, 233) == 0);
-    assert(LinkedList_Find(list1, 999) == 3);
-    assert(LinkedList_Find(list1, 1) == 7);
-    assert(LinkedList_Find(list1, 0) == -1);
-
-    int length = LinkedList_Size(list1);
-    for (int i = 0; i < length; i++)
-    {
-        LinkedList_Remove(list1, 0);
-    }
-    assert(LinkedList_Size(list1) == 0);
-    assert(LinkedList_IsEmpty(list1) == true);
-
-    LinkedList_Destroy(list1);
-    LinkedList_Destroy(list2);
+    // LinkedList_Destroy
+    LinkedList_Destroy(list);
 
     printf("Linked List Test OK.\n");
 }
 
 void TestDoublyLinkedList(void)
 {
-    DoublyLinkedList* list1 = DoublyLinkedList_Create();
-    assert(DoublyLinkedList_Size(list1) == 0);
-    assert(DoublyLinkedList_IsEmpty(list1) == true);
+    // DoublyLinkedList_Create DoublyLinkedList_Size DoublyLinkedList_IsEmpty
+    DoublyLinkedList* list = DoublyLinkedList_Create();
+    assert(DoublyLinkedList_Size(list) == 0);
+    assert(DoublyLinkedList_IsEmpty(list) == true);
 
-    DoublyLinkedListItem arr[] = {1, 2, 3, 4};
+    // DoublyLinkedList_Insert
+    DoublyLinkedListItem arr[] = {1, 2, 3, 4, 5};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
     for (int i = 0; i < arr_size; i++)
     {
-        DoublyLinkedList_Insert(list1, i, arr[i]);
-        assert(DoublyLinkedList_At(list1, i) == i + 1);
+        DoublyLinkedList_Insert(list, i, arr[i]);
     }
-    assert(DoublyLinkedList_Size(list1) == 4);
-    assert(DoublyLinkedList_IsEmpty(list1) == false);
-    assert(DoublyLinkedList_At(list1, -1) == 4);
+    assert(DoublyLinkedList_Size(list) == arr_size);
 
-    DoublyLinkedList_Traverse(list1, Visit);
-    assert(strcmp(str, "1 2 3 4 ") == 0);
+    // DoublyLinkedList_At
+    for (int i = 0; i < arr_size; ++i) // forward
+    {
+        assert(DoublyLinkedList_At(list, i) == i + 1);
+    }
+    for (int i = -1; i >= -arr_size; --i) // backward
+    {
+        assert(DoublyLinkedList_At(list, i) == i + 6);
+    }
+
+    // DoublyLinkedList_Find
+    assert(DoublyLinkedList_Find(list, 1) == 0);
+    assert(DoublyLinkedList_Find(list, 5) == 4);
+    assert(DoublyLinkedList_Find(list, 0) == -1);
+
+    // DoublyLinkedList_Traverse
+    DoublyLinkedList_Traverse(list, Visit);
+    assert(strcmp(str, "1 2 3 4 5 ") == 0);
     memset(str, 0, sizeof(str));
 
-    DoublyLinkedList_Reverse(list1);
-    DoublyLinkedList_Traverse(list1, Visit);
-    assert(strcmp(str, "4 3 2 1 ") == 0);
+    // DoublyLinkedList_Reverse
+    DoublyLinkedList_Reverse(list);
+    DoublyLinkedList_Traverse(list, Visit);
+    assert(strcmp(str, "5 4 3 2 1 ") == 0);
     memset(str, 0, sizeof(str));
 
-    DoublyLinkedList* list2 = DoublyLinkedList_Create();
-    DoublyLinkedListItem arr2[] = {233, 666, 888, 999};
-    int arr2Size = sizeof(arr2) / sizeof(arr2[0]);
-    for (int i = 0; i < arr2Size; i++)
+    // DoublyLinkedList_Remove
+    for (int i = 0; i < arr_size; i++)
     {
-        DoublyLinkedList_Insert(list2, i, arr2[i]);
+        assert(DoublyLinkedList_Remove(list, 0) == arr_size - i);
     }
+    assert(DoublyLinkedList_Size(list) == 0);
 
-    for (int i = 0; i < arr2Size; ++i)
-    {
-        DoublyLinkedList_Insert(list1, i, DoublyLinkedList_At(list2, i));
-    }
-    DoublyLinkedList_Traverse(list1, Visit);
-    assert(strcmp(str, "233 666 888 999 4 3 2 1 ") == 0);
-    memset(str, 0, sizeof(str));
+    // DoublyLinkedList_Clear
+    DoublyLinkedList_Insert(list, 0, 233);
+    assert(DoublyLinkedList_Size(list) == 1);
+    DoublyLinkedList_Clear(list);
+    assert(DoublyLinkedList_Size(list) == 0);
+    DoublyLinkedList_Clear(list); // double clear
+    assert(DoublyLinkedList_Size(list) == 0);
 
-    assert(DoublyLinkedList_Size(list1) == 8);
-    assert(DoublyLinkedList_IsEmpty(list1) == false);
-
-    assert(DoublyLinkedList_Find(list1, 233) == 0);
-    assert(DoublyLinkedList_Find(list1, 999) == 3);
-    assert(DoublyLinkedList_Find(list1, 1) == 7);
-    assert(DoublyLinkedList_Find(list1, 0) == -1);
-
-    int length = DoublyLinkedList_Size(list1);
-    for (int i = 0; i < length; i++)
-    {
-        DoublyLinkedList_Remove(list1, 0);
-    }
-    assert(DoublyLinkedList_Size(list1) == 0);
-    assert(DoublyLinkedList_IsEmpty(list1) == true);
-
-    DoublyLinkedList_Destroy(list1);
-    DoublyLinkedList_Destroy(list2);
+    // DoublyLinkedList_Destroy
+    DoublyLinkedList_Destroy(list);
 
     printf("Doubly Linked List Test OK.\n");
 }

@@ -14,7 +14,7 @@ void TestString(void)
 {
     String *s1, *s2, *s3, *s4, *s5;
 
-    // Constructor String_Size() String_IsEmpty()
+    // Constructor String_Size String_IsEmpty
 
     s1 = String_Create();
     assert(String_Size(s1) == 0);
@@ -38,14 +38,14 @@ void TestString(void)
     assert(String_Size(s5) == 0);
     assert(String_IsEmpty(s5) == true);
 
-    // String_CopyAssign()
+    // String_CopyAssign
 
     String_Set(s1, "Hello");
     String_Set(s2, "World");
     String_CopyAssign(s1, s2);
     assert(String_Equal(s1, s2));
 
-    // String_MoveAssign()
+    // String_MoveAssign
 
     String_Set(s1, "Hello");
     String_Set(s2, "World");
@@ -55,7 +55,7 @@ void TestString(void)
     assert(String_Equal(s1, s3));
     assert(String_Equal(s2, s4));
 
-    // String_Get() String_Set()
+    // String_Get String_Set
 
     String_Set(s1, "");
     String_Set(s2, "Hello World!");
@@ -66,7 +66,7 @@ void TestString(void)
     assert(String_Equal(s1, s3));
     free(str);
 
-    // String_At()
+    // String_At
 
     String_Set(s1, "Hello World!");
     assert(String_At(s1, 0) == 'H');
@@ -75,7 +75,7 @@ void TestString(void)
     assert(String_At(s1, -1) == '!');
     assert(String_At(s1, -12) == 'H');
 
-    // String_Equal()
+    // String_Equal
 
     String_Set(s1, "new string");
     String_Set(s2, "new string");
@@ -83,7 +83,7 @@ void TestString(void)
     String_Set(s2, "new string!");
     assert(String_Equal(s1, s2) == false);
 
-    // String_Compare()
+    // String_Compare
 
     String_Set(s1, "ab");
     String_Set(s2, "abc");
@@ -98,7 +98,7 @@ void TestString(void)
     String_Set(s2, "cbc");
     assert(String_Compare(s2, s3) == GT);
 
-    // String_Find()
+    // String_Find
 
     String_Set(s1, "");
     String_Set(s2, "a");
@@ -116,7 +116,7 @@ void TestString(void)
     String_Set(s1, "ac");
     assert(String_Find(s5, s1, 0, 7) == -1);
 
-    // String_ToDecimal()
+    // String_ToDecimal
 
     String_Set(s1, "233.33");
     assert(String_ToDecimal(s1) == 233.33);
@@ -182,7 +182,7 @@ void TestString(void)
     String_Set(s1, "1.e-2");
     assert(feq(String_ToDecimal(s1), 1.e-2));
 
-    // String_ToInteger()
+    // String_ToInteger
 
     String_Set(s1, "233");
     assert(String_ToInteger(s1, 10) == 233);
@@ -244,7 +244,7 @@ void TestString(void)
     String_Set(s1, "Hello World!!!");
     assert(String_Count(s1, '!') == 3);
 
-    // String_Lower() String_Upper()
+    // String_Lower String_Upper
 
     String_Set(s1, "hahaha");
     String_Set(s2, "HAHAHA");
@@ -255,7 +255,7 @@ void TestString(void)
     String_Upper(s2);
     assert(String_Equal(s1, s2) == true);
 
-    // String_Append()
+    // String_Append
 
     String_Set(s1, "");
     String_Set(s2, "");
@@ -268,7 +268,7 @@ void TestString(void)
     String_Append(s1, s1);
     assert(String_Equal(s1, s4) == true);
 
-    // String_Erase()
+    // String_Erase
 
     String_Set(s1, "abcdefg");
     String_Erase(s1, 0, 1);
@@ -290,7 +290,7 @@ void TestString(void)
     String_Set(s2, "");
     assert(String_Equal(s1, s2) == true);
 
-    // String_Reverse()
+    // String_Reverse
 
     String_Set(s1, "wooooow");
     String_Reverse(s1);
@@ -301,7 +301,7 @@ void TestString(void)
     String_Reverse(s2);
     assert(String_Equal(s2, s3) == true);
 
-    // String_Replace()
+    // String_Replace
 
     String_Set(s1, "abcdefg");
     String_Set(s2, "a");
@@ -366,7 +366,7 @@ void TestString(void)
     String_Set(s4, "how~ how~ how~ ");
     assert(String_Equal(s1, s4) == true);
 
-    // String_Strip()
+    // String_Strip
 
     String_Set(s1, "hello");
 
@@ -382,7 +382,7 @@ void TestString(void)
     String_Strip(s2);
     assert(String_Equal(s2, s1) == true);
 
-    // String_Swap()
+    // String_Swap
 
     String_Set(s1, "hello");
     String_Set(s2, "world");
@@ -392,7 +392,7 @@ void TestString(void)
     assert(String_Equal(s1, s4) == true);
     assert(String_Equal(s2, s3) == true);
 
-    // String_Clear()
+    // String_Clear
 
     String_Set(s1, "hello");
     String_Clear(s1);
@@ -401,7 +401,7 @@ void TestString(void)
     String_Clear(s1); // double clear
     assert(String_Equal(s1, s2) == true);
 
-    // String_Split() String_DestroyArray()
+    // String_Split String_DestroyArray
 
     String** str_arr = NULL;
 
@@ -471,7 +471,7 @@ void TestString(void)
     assert(str_arr[3] == NULL);
     String_DestroyArray(str_arr);
 
-    // String_Slice()
+    // String_Slice
 
     String_Set(s1, "12345");
     String* slice;
@@ -556,7 +556,7 @@ void TestString(void)
     assert(String_Equal(slice, s2) == true);
     String_Destroy(slice);
 
-    // String_Destroy()
+    // String_Destroy
 
     String_Destroy(s1);
     String_Destroy(s2);

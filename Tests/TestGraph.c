@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
+// for test traverse
 static char str[64] = {0};
 
 static void Visit(MatrixGraphVertex V)
@@ -15,8 +16,10 @@ static void Visit(MatrixGraphVertex V)
 
 void TestMatrixGraph(void)
 {
+    // MatrixGraph_Create
     MatrixGraph* G = MatrixGraph_Create();
 
+    // MatrixGraph_Link
     MatrixGraph_Link(G, 0, 1, 2);
     MatrixGraph_Link(G, 0, 3, 1);
     MatrixGraph_Link(G, 1, 4, 10);
@@ -43,6 +46,7 @@ void TestMatrixGraph(void)
     //       |V5|<-------|V6|
     //       +--+        +--+
 
+    // MatrixGraph_IsAdjacent
     assert(MatrixGraph_IsAdjacent(G, 0, 1) == true);
     assert(MatrixGraph_IsAdjacent(G, 0, 6) == false);
     assert(MatrixGraph_IsAdjacent(G, 6, 0) == false);
@@ -55,17 +59,21 @@ void TestMatrixGraph(void)
     assert(MatrixGraph_IsAdjacent(G, 6, 0) == true);
 #endif
 
+    // MatrixGraph_Unlink
     MatrixGraph_Unlink(G, 0, 6);
     assert(MatrixGraph_IsAdjacent(G, 0, 6) == false);
 
+    // MatrixGraph_DFS
     MatrixGraph_DFS(G, 0, Visit);
     assert(strcmp(str, "0 1 3 2 5 4 6 ") == 0);
     memset(str, 0, sizeof(str));
 
+    // MatrixGraph_BFS
     MatrixGraph_BFS(G, 0, Visit);
     assert(strcmp(str, "0 1 3 4 2 5 6 ") == 0);
     memset(str, 0, sizeof(str));
 
+    // MatrixGraph_Dijkstra
     int dist[VERTEX_NUMBER];
     int path[VERTEX_NUMBER];
     MatrixGraph_Dijkstra(G, dist, path, 0);
@@ -86,6 +94,7 @@ void TestMatrixGraph(void)
     assert(path[5] == 6);
     assert(path[6] == 3);
 
+    // MatrixGraph_Destroy
     MatrixGraph_Destroy(G);
 
     printf("Matrix Graph Test OK.\n");
