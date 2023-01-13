@@ -9,12 +9,13 @@
 - 目的：学习数据结构。
 - 目标：实现完整而标准的数据结构。
 - 模块：Graph, Heap, List, Queue, Stack, String, Table, Tree.
-- 简洁：Stay simple, stay young. 在保证好用和安全的前提下，尽量简洁，便于维护和阅读。
-- 好用：提供了许多方便的函数，比如String类提供了像Python的str那样的替换、分割、查找等操作，比如List类和String类都支持像Python那样的负数下标等等。当然，功能与标准库重合的部分的性能肯定比不上标准库，但是简单用用是完全没问题的。唯一的缺点，就是不支持泛型，所以我还写了C++版本的，目标是像Python的内置类型一样好用又优雅。
-- 安全：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查。这么多检查，肯定会对性能有一定影响，但是这个库追求的并不是性能，而是简洁，好用和安全。
-- 优雅：经过我的精心设计，使用者无法通过主函数访问或修改到对象（结构体）的内部变量，几乎可以说等同于实现了 private 的效果。
+- 简洁：Stay simple, stay young. 在保证好用和健壮的前提下，尽量简洁，便于维护和阅读。
+- 好用：提供了许多方便的函数，比如String类提供了像Python的str那样的替换、分割、查找等操作，比如List类和String类都支持像Python那样的负数下标等等。
+- 健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查。这么多检查，肯定会对性能有一定影响，但是这个库追求的并不是性能，而是简洁，好用和健壮。
+- 优雅：经过我的精心设计，使用者无法直接访问到对象（结构体）的内部变量，几乎可以说等同于实现了 private 的效果。
 - 风格：大部分遵循 [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) ，小部分基于项目规模和源码简洁性的考虑采用自己的风格。
-- 测试：用 assert 宏函数编写的简单测试，所有测试代码同样符合 ISO C99 标准。
+- 测试：使用 assert 宏函数自己编写的简单测试，所有测试代码同样符合 ISO C99 标准。
+- 安全：使用 [Dr. Memory](https://drmemory.org/) 进行了检查，确保没有安全问题（比如内存泄漏）。
 
 ### 2. 面向对象
 
@@ -45,34 +46,10 @@ String* String_From(const char* chars);
 ### 4. 开源目的
 
 - 为开源世界做一点微小的贡献。里面的代码对于许多初学数据结构的新手来说，能有一定的帮助。
-- 期待有大佬加入，或者提出改进意见，一起把库进一步完善。
+- 期待有更多人加入，或者提出改进意见，一起把库进一步完善。
 
 ### 5. C++版本
 
-这个是C版本的数据结构库，目标是实现完整而标准的数据结构。
+这个是C版本的，目标是实现完整而标准的数据结构。但是有一个缺点，就是不支持真正的泛型编程。
 
-我还写了C++版本的： [MDSPP (GitHub)](https://github.com/chen-qingyu/MDSPP) [MDSPP (Gitee)](https://gitee.com/ChobitsY/mdspp) （还在开发中），目标是像Python的内置类型一样好用又优雅。
-
-### 6. 内存安全
-
-使用 Dr. Memory 进行了内存检查：
-
-```
-Dr. Memory version 2.5.0
-
-FINAL SUMMARY:
-
-DUPLICATE ERROR COUNTS:
-
-SUPPRESSIONS USED:
-
-NO ERRORS FOUND:
-      0 unique,     0 total unaddressable access(es)
-      0 unique,     0 total uninitialized access(es)
-      0 unique,     0 total invalid heap argument(s)
-      0 unique,     0 total GDI usage error(s)
-      0 unique,     0 total handle leak(s)
-      0 unique,     0 total warning(s)
-      0 unique,     0 total,      0 byte(s) of leak(s)
-      0 unique,     0 total,      0 byte(s) of possible leak(s)
-```
+我还写了C++版本的： [MDSPP (GitHub)](https://github.com/chen-qingyu/MDSPP) [MDSPP (Gitee)](https://gitee.com/ChobitsY/mdspp) ，目标是像Python的内置类型一样好用又优雅。
