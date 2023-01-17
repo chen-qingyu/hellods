@@ -38,6 +38,8 @@ ArrayStack* ArrayStack_Create(void)
 
 void ArrayStack_Destroy(ArrayStack* self)
 {
+    // let it crush if self is invalid
+
     free(self);
 }
 

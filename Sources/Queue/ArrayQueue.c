@@ -42,6 +42,8 @@ ArrayQueue* ArrayQueue_Create(void)
 
 void ArrayQueue_Destroy(ArrayQueue* self)
 {
+    // let it crush if self is invalid
+
     free(self);
 }
 

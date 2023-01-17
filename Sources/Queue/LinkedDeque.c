@@ -31,6 +31,8 @@ LinkedDeque* LinkedDeque_Create(void)
 
 void LinkedDeque_Destroy(LinkedDeque* self)
 {
+    // let it crush if self is invalid
+
     DoublyLinkedList_Destroy(self->dlist);
     free(self);
 }

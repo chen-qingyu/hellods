@@ -148,6 +148,8 @@ MatrixGraph* MatrixGraph_Create(void)
 
 void MatrixGraph_Destroy(MatrixGraph* self)
 {
+    // let it crush if self is invalid
+
     free(self);
 }
 

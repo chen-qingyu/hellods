@@ -61,13 +61,12 @@ LinkedList* LinkedList_Create(void)
 
 void LinkedList_Destroy(LinkedList* self)
 {
-    if (self)
-    {
-        clear(self);
+    // let it crush if self is invalid
 
-        free(self->header);
-        free(self);
-    }
+    clear(self);
+
+    free(self->header);
+    free(self);
 }
 
 int LinkedList_Size(const LinkedList* self)

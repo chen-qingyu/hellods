@@ -54,6 +54,8 @@ MaxHeap* MaxHeap_Create(void)
 
 void MaxHeap_Destroy(MaxHeap* self)
 {
+    // let it crush if self is invalid
+
     free(self->data);
     free(self);
 }

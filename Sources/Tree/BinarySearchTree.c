@@ -32,7 +32,7 @@ struct BinarySearchTree
 Helper functions implementation.
 *******************************/
 
-typedef struct BinarySearchTreeNode* ArrayQueueItem;
+typedef const struct BinarySearchTreeNode* ArrayQueueItem;
 
 typedef struct ArrayQueue ArrayQueue;
 
@@ -88,42 +88,44 @@ static ArrayQueueItem ArrayQueue_Dequeue(ArrayQueue* self)
     return self->data[self->front];
 }
 
-static void destroy_node(struct BinarySearchTreeNode* node)
+// Destroy the subtree rooted at that node recursively.
+static void destroy(struct BinarySearchTreeNode* node)
 {
     if (node)
     {
-        destroy_node(node->left);
-        destroy_node(node->right);
+        destroy(node->left);
+        destroy(node->right);
         free(node);
     }
 }
 
-static void traverse_node(struct BinarySearchTreeNode* node, traverse_t type, void (*p_trav)(BinarySearchTreeItem data))
+// Traverse the tree in specified order.
+static void traverse(const struct BinarySearchTreeNode* node, enum TraverseOption order, void (*p_trav)(const BinarySearchTreeItem data))
 {
     if (node)
     {
-        switch (type)
+        switch (order)
         {
             case PRE_ORDER:
             {
                 p_trav(node->data);
-                traverse_node(node->left, PRE_ORDER, p_trav);
-                traverse_node(node->right, PRE_ORDER, p_trav);
+                traverse(node->left, PRE_ORDER, p_trav);
+                traverse(node->right, PRE_ORDER, p_trav);
                 break;
             }
 
             case IN_ORDER:
             {
-                traverse_node(node->left, IN_ORDER, p_trav);
+                traverse(node->left, IN_ORDER, p_trav);
                 p_trav(node->data);
-                traverse_node(node->right, IN_ORDER, p_trav);
+                traverse(node->right, IN_ORDER, p_trav);
                 break;
             }
 
             case POST_ORDER:
             {
-                traverse_node(node->left, POST_ORDER, p_trav);
-                traverse_node(node->right, POST_ORDER, p_trav);
+                traverse(node->left, POST_ORDER, p_trav);
+                traverse(node->right, POST_ORDER, p_trav);
                 p_trav(node->data);
                 break;
             }
@@ -151,7 +153,7 @@ static void traverse_node(struct BinarySearchTreeNode* node, traverse_t type, vo
 
             default:
             {
-                fprintf(stderr, "ERROR: Invalid type for traverse.\n");
+                fprintf(stderr, "ERROR: Invalid order for traverse.\n");
                 exit(EXIT_FAILURE);
                 break;
             }
@@ -159,6 +161,7 @@ static void traverse_node(struct BinarySearchTreeNode* node, traverse_t type, vo
     }
 }
 
+// Insert node recursively.
 static struct BinarySearchTreeNode* insert_node(BinarySearchTree* tree, struct BinarySearchTreeNode* node, BinarySearchTreeItem data)
 {
     if (node == NULL)
@@ -186,7 +189,8 @@ static struct BinarySearchTreeNode* insert_node(BinarySearchTree* tree, struct B
     return node;
 }
 
-static struct BinarySearchTreeNode* find_min_node(struct BinarySearchTreeNode* node)
+// Find subtree minimum node.
+static struct BinarySearchTreeNode* find_min(struct BinarySearchTreeNode* node)
 {
     while (node->left) // node is not NULL
     {
@@ -196,6 +200,7 @@ static struct BinarySearchTreeNode* find_min_node(struct BinarySearchTreeNode* n
     return node;
 }
 
+// Remove node recursively.
 static struct BinarySearchTreeNode* remove_node(BinarySearchTree* tree, struct BinarySearchTreeNode* node, BinarySearchTreeItem data)
 {
     if (node)
@@ -212,7 +217,7 @@ static struct BinarySearchTreeNode* remove_node(BinarySearchTree* tree, struct B
         {
             if (node->left && node->right)
             {
-                struct BinarySearchTreeNode* tmp = find_min_node(node->right); // node->right is not NULL
+                struct BinarySearchTreeNode* tmp = find_min(node->right); // node->right is not NULL
                 node->data = tmp->data;
                 node->right = remove_node(tree, node->right, tmp->data);
             }
@@ -229,6 +234,14 @@ static struct BinarySearchTreeNode* remove_node(BinarySearchTree* tree, struct B
     return node;
 }
 
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+// Returns the maximum depth of the subtree rooted at the node.
+static inline int depth(const struct BinarySearchTreeNode* node)
+{
+    return node == NULL ? 0 : 1 + MAX(depth(node->left), depth(node->right));
+}
+
 /*******************************
 Interface functions implementation.
 *******************************/
@@ -238,15 +251,17 @@ BinarySearchTree* BinarySearchTree_Create(void)
     BinarySearchTree* tree = (BinarySearchTree*)malloc(sizeof(BinarySearchTree));
     check_pointer(tree);
 
-    tree->root = NULL;
     tree->size = 0;
+    tree->root = NULL;
 
     return tree;
 }
 
 void BinarySearchTree_Destroy(BinarySearchTree* self)
 {
-    destroy_node(self->root);
+    // let it crush if self is invalid
+
+    destroy(self->root);
     free(self);
 }
 
@@ -260,9 +275,9 @@ bool BinarySearchTree_IsEmpty(const BinarySearchTree* self)
     return self->size == 0;
 }
 
-void BinarySearchTree_Traverse(BinarySearchTree* self, traverse_t type, void (*p_trav)(BinarySearchTreeItem data))
+void BinarySearchTree_Traverse(BinarySearchTree* self, enum TraverseOption order, void (*p_trav)(BinarySearchTreeItem data))
 {
-    traverse_node(self->root, type, p_trav);
+    traverse(self->root, order, p_trav);
 }
 
 BinarySearchTreeItem BinarySearchTree_Find(const BinarySearchTree* self, BinarySearchTreeItem data)
@@ -326,4 +341,19 @@ void BinarySearchTree_Insert(BinarySearchTree* self, BinarySearchTreeItem data)
 void BinarySearchTree_Remove(BinarySearchTree* self, BinarySearchTreeItem data)
 {
     self->root = remove_node(self, self->root, data);
+}
+
+int BinarySearchTree_Depth(const BinarySearchTree* self)
+{
+    return depth(self->root);
+}
+
+void BinarySearchTree_Clear(BinarySearchTree* self)
+{
+    if (self->size != 0)
+    {
+        self->size = 0;
+        destroy(self->root);
+        self->root = NULL;
+    }
 }

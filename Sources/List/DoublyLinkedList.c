@@ -84,14 +84,13 @@ DoublyLinkedList* DoublyLinkedList_Create(void)
 
 void DoublyLinkedList_Destroy(DoublyLinkedList* self)
 {
-    if (self)
-    {
-        clear(self);
+    // let it crush if self is invalid
 
-        free(self->header);
-        free(self->trailer);
-        free(self);
-    }
+    clear(self);
+
+    free(self->header);
+    free(self->trailer);
+    free(self);
 }
 
 int DoublyLinkedList_Size(const DoublyLinkedList* self)

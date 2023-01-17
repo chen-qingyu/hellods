@@ -53,6 +53,8 @@ LinkedQueue* LinkedQueue_Create(void)
 
 void LinkedQueue_Destroy(LinkedQueue* self)
 {
+    // let it crush if self is invalid
+
     while (self->front)
     {
         struct LinkedQueueNode* current = self->front->next;

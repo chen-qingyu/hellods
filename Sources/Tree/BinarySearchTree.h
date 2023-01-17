@@ -16,13 +16,13 @@
 /// A value of BinarySearchTreeItem that indicates not found.
 #define BINARY_SEARCH_TREE_NOT_FOUND (-1)
 
-typedef enum
+enum TraverseOption
 {
     PRE_ORDER,
     IN_ORDER,
     POST_ORDER,
     LEVEL_ORDER
-} traverse_t;
+};
 
 typedef int BinarySearchTreeItem;
 
@@ -62,14 +62,14 @@ bool BinarySearchTree_IsEmpty(const BinarySearchTree* self);
  * @brief 遍历一个二叉搜索树
  *
  * @param self 一个指向二叉搜索树的指针
- * @param type 一个枚举遍历类型
+ * @param order 一个枚举遍历类型
  *              - PRE_ORDER   先序遍历
  *              - IN_ORDER    中序遍历
  *              - POST_ORDER  后序遍历
  *              - LEVEL_ORDER 层次遍历
  * @param p_trav 一个对遍历到的每个元素进行操作的函数的指针
  */
-void BinarySearchTree_Traverse(BinarySearchTree* self, traverse_t type, void (*p_trav)(BinarySearchTreeItem data));
+void BinarySearchTree_Traverse(BinarySearchTree* self, enum TraverseOption order, void (*p_trav)(const BinarySearchTreeItem data));
 
 /**
  * @brief 在一个二叉搜索树中寻找元素 data
@@ -111,5 +111,20 @@ void BinarySearchTree_Insert(BinarySearchTree* self, BinarySearchTreeItem data);
  * @param data 一个待删除元素
  */
 void BinarySearchTree_Remove(BinarySearchTree* self, BinarySearchTreeItem data);
+
+/**
+ * @brief 求二叉搜索树的最大深度，空树深度为0
+ *
+ * @param self 一个指向二叉搜索树的指针
+ * @return 二叉搜索树的最大深度
+ */
+int BinarySearchTree_Depth(const BinarySearchTree* self);
+
+/**
+ * @brief 清空二叉搜索树的内容
+ *
+ * @param self 一个指向二叉搜索树的指针
+ */
+void BinarySearchTree_Clear(BinarySearchTree* self);
 
 #endif // BINARYSEARCHTREE_H

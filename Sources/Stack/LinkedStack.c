@@ -46,6 +46,8 @@ LinkedStack* LinkedStack_Create(void)
 
 void LinkedStack_Destroy(LinkedStack* self)
 {
+    // let it crush if self is invalid
+
     while (self->top)
     {
         struct LinkedStackNode* current = self->top->next;

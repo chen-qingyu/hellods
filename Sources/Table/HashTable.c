@@ -93,6 +93,8 @@ HashTable* HashTable_Create(void)
 
 void HashTable_Destroy(HashTable* self)
 {
+    // let it crush if self is invalid
+
     for (int i = 0; i < MAX_CAPACITY; ++i)
     {
         if (self[i].key)

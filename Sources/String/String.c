@@ -254,11 +254,10 @@ String* String_Move(String* str)
 
 void String_Destroy(String* self)
 {
-    if (self != NULL)
-    {
-        free(self->data);
-        free(self);
-    }
+    // let it crush if self is invalid
+
+    free(self->data);
+    free(self);
 }
 
 /**

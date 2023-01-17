@@ -7,7 +7,7 @@
 // for test traverse
 static char str[64] = {0};
 
-static void Visit(BinarySearchTreeItem n)
+static void Visit(const BinarySearchTreeItem n)
 {
     char tmp[8] = {0};
     sprintf(tmp, "%d ", n);
@@ -62,12 +62,26 @@ void TestBinarySearchTree()
     assert(BinarySearchTree_FindMin(tree) == 1);
     assert(BinarySearchTree_FindMax(tree) == 5);
 
+    // BinarySearchTree_Depth
+    assert(BinarySearchTree_Depth(tree) == 3);
+
     // BinarySearchTree_Remove
     BinarySearchTree_Remove(tree, 1);
     assert(BinarySearchTree_FindMin(tree) == 2);
     BinarySearchTree_Remove(tree, 5);
     assert(BinarySearchTree_FindMax(tree) == 4);
     assert(BinarySearchTree_Size(tree) == 3);
+
+    // BinarySearchTree_Depth
+    assert(BinarySearchTree_Depth(tree) == 2);
+
+    // BinarySearchTree_Clear
+    BinarySearchTree_Clear(tree);
+    assert(BinarySearchTree_Size(tree) == 0);
+    assert(BinarySearchTree_Depth(tree) == 0);
+    BinarySearchTree_Clear(tree); // double clear
+    assert(BinarySearchTree_Size(tree) == 0);
+    assert(BinarySearchTree_Depth(tree) == 0);
 
     // BinarySearchTree_Destroy
     BinarySearchTree_Destroy(tree);

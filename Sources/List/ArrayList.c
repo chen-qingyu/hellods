@@ -57,11 +57,10 @@ ArrayList* ArrayList_Create(void)
 
 void ArrayList_Destroy(ArrayList* self)
 {
-    if (self)
-    {
-        free(self->data);
-        free(self);
-    }
+    // let it crush if self is invalid
+
+    free(self->data);
+    free(self);
 }
 
 int ArrayList_Size(const ArrayList* self)
