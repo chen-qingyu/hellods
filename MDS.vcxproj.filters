@@ -81,9 +81,6 @@
     <ClCompile Include="Sources\Tree\BinarySearchTree.c">
       <Filter>Sources\Tree</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Tree\QueueForTree.c">
-      <Filter>Sources\Tree</Filter>
-    </ClCompile>
     <ClCompile Include="Sources\Table\HashTable.c">
       <Filter>Sources\Table</Filter>
     </ClCompile>
@@ -135,9 +132,6 @@
       <Filter>Sources\List</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Tree\BinarySearchTree.h">
-      <Filter>Sources\Tree</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Tree\QueueForTree.h">
       <Filter>Sources\Tree</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Table\HashTable.h">

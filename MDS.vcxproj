@@ -116,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions>/utf-8</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,7 +153,6 @@
     <ClCompile Include="Sources\String\String.c" />
     <ClCompile Include="Sources\Table\HashTable.c" />
     <ClCompile Include="Sources\Tree\BinarySearchTree.c" />
-    <ClCompile Include="Sources\Tree\QueueForTree.c" />
     <ClCompile Include="Tests\MainTest.c" />
     <ClCompile Include="Tests\TestGraph.c" />
     <ClCompile Include="Tests\TestHeap.c" />
@@ -181,7 +181,6 @@
     <ClInclude Include="Sources\String\String.h" />
     <ClInclude Include="Sources\Table\HashTable.h" />
     <ClInclude Include="Sources\Tree\BinarySearchTree.h" />
-    <ClInclude Include="Sources\Tree\QueueForTree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
