@@ -715,7 +715,10 @@ void String_Swap(String* self, String* that)
 
 void String_Clear(String* self)
 {
-    String_Set(self, "");
+    if (self->size != 0)
+    {
+        String_Set(self, "");
+    }
 }
 
 /**
