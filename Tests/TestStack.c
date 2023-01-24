@@ -11,6 +11,14 @@ void TestArrayStack(void)
     assert(ArrayStack_Size(stack) == 0);
     assert(ArrayStack_IsEmpty(stack) == true);
 
+    // ArrayStack_Clear
+    ArrayStack_Push(stack, 233);
+    assert(ArrayStack_Size(stack) == 1);
+    ArrayStack_Clear(stack);
+    assert(ArrayStack_Size(stack) == 0);
+    ArrayStack_Clear(stack); // double clear
+    assert(ArrayStack_Size(stack) == 0);
+
     // ArrayStack_Push
     ArrayStackItem arr[] = {1, 2, 3, 4, 5};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
@@ -30,14 +38,6 @@ void TestArrayStack(void)
     }
     assert(ArrayStack_Size(stack) == 0);
 
-    // ArrayStack_Clear
-    ArrayStack_Push(stack, 233);
-    assert(ArrayStack_Size(stack) == 1);
-    ArrayStack_Clear(stack);
-    assert(ArrayStack_Size(stack) == 0);
-    ArrayStack_Clear(stack); // double clear
-    assert(ArrayStack_Size(stack) == 0);
-
     // ArrayStack_Destroy
     ArrayStack_Destroy(stack);
 
@@ -50,6 +50,14 @@ void TestLinkedStack(void)
     LinkedStack* stack = LinkedStack_Create();
     assert(LinkedStack_Size(stack) == 0);
     assert(LinkedStack_IsEmpty(stack) == true);
+
+    // LinkedStack_Clear
+    LinkedStack_Push(stack, 233);
+    assert(LinkedStack_Size(stack) == 1);
+    LinkedStack_Clear(stack);
+    assert(LinkedStack_Size(stack) == 0);
+    LinkedStack_Clear(stack); // double clear
+    assert(LinkedStack_Size(stack) == 0);
 
     // LinkedStack_Push
     LinkedStackItem arr[] = {1, 2, 3, 4, 5};
@@ -68,14 +76,6 @@ void TestLinkedStack(void)
     {
         assert(LinkedStack_Pop(stack) == 5 - i);
     }
-    assert(LinkedStack_Size(stack) == 0);
-
-    // LinkedStack_Clear
-    LinkedStack_Push(stack, 233);
-    assert(LinkedStack_Size(stack) == 1);
-    LinkedStack_Clear(stack);
-    assert(LinkedStack_Size(stack) == 0);
-    LinkedStack_Clear(stack); // double clear
     assert(LinkedStack_Size(stack) == 0);
 
     // LinkedStack_Destroy

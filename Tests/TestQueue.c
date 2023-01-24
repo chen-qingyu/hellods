@@ -12,6 +12,14 @@ void TestArrayQueue(void)
     assert(ArrayQueue_Size(queue) == 0);
     assert(ArrayQueue_IsEmpty(queue) == true);
 
+    // ArrayQueue_Clear
+    ArrayQueue_Enqueue(queue, 233);
+    assert(ArrayQueue_Size(queue) == 1);
+    ArrayQueue_Clear(queue);
+    assert(ArrayQueue_Size(queue) == 0);
+    ArrayQueue_Clear(queue); // double clear
+    assert(ArrayQueue_Size(queue) == 0);
+
     // ArrayQueue_Enqueue ArrayQueue_Dequeue ArrayQueue_Front
     ArrayQueue_Enqueue(queue, -1);
     assert(ArrayQueue_Front(queue) == -1);
@@ -37,14 +45,6 @@ void TestArrayQueue(void)
     }
     assert(ArrayQueue_Size(queue) == 0);
 
-    // ArrayQueue_Clear
-    ArrayQueue_Enqueue(queue, 233);
-    assert(ArrayQueue_Size(queue) == 1);
-    ArrayQueue_Clear(queue);
-    assert(ArrayQueue_Size(queue) == 0);
-    ArrayQueue_Clear(queue); // double clear
-    assert(ArrayQueue_Size(queue) == 0);
-
     // ArrayQueue_Destroy
     ArrayQueue_Destroy(queue);
 
@@ -57,6 +57,14 @@ void TestLinkedQueue(void)
     LinkedQueue* queue = LinkedQueue_Create();
     assert(LinkedQueue_Size(queue) == 0);
     assert(LinkedQueue_IsEmpty(queue) == true);
+
+    // LinkedQueue_Clear
+    LinkedQueue_Enqueue(queue, 233);
+    assert(LinkedQueue_Size(queue) == 1);
+    LinkedQueue_Clear(queue);
+    assert(LinkedQueue_Size(queue) == 0);
+    LinkedQueue_Clear(queue); // double clear
+    assert(LinkedQueue_Size(queue) == 0);
 
     // LinkedQueue_Enqueue LinkedQueue_Dequeue LinkedQueue_Front
     LinkedQueue_Enqueue(queue, -1);
@@ -83,14 +91,6 @@ void TestLinkedQueue(void)
     }
     assert(LinkedQueue_Size(queue) == 0);
 
-    // LinkedQueue_Clear
-    LinkedQueue_Enqueue(queue, 233);
-    assert(LinkedQueue_Size(queue) == 1);
-    LinkedQueue_Clear(queue);
-    assert(LinkedQueue_Size(queue) == 0);
-    LinkedQueue_Clear(queue); // double clear
-    assert(LinkedQueue_Size(queue) == 0);
-
     // LinkedQueue_Destroy
     LinkedQueue_Destroy(queue);
 
@@ -103,6 +103,14 @@ void TestLinkedDeque(void)
     LinkedDeque* queue = LinkedDeque_Create();
     assert(LinkedDeque_Size(queue) == 0);
     assert(LinkedDeque_IsEmpty(queue) == true);
+
+    // LinkedDeque_Clear
+    LinkedDeque_PushBack(queue, 233);
+    assert(LinkedDeque_Size(queue) == 1);
+    LinkedDeque_Clear(queue);
+    assert(LinkedDeque_Size(queue) == 0);
+    LinkedDeque_Clear(queue); // double clear
+    assert(LinkedDeque_Size(queue) == 0);
 
     // LinkedDeque_PushBack LinkedDeque_PushFront
     // LinkedDeque_PopBack LinkedDeque_PopFront
@@ -152,14 +160,6 @@ void TestLinkedDeque(void)
     {
         assert(LinkedDeque_PopBack(queue) == i + 1);
     }
-    assert(LinkedDeque_Size(queue) == 0);
-
-    // LinkedDeque_Clear
-    LinkedDeque_PushBack(queue, 233);
-    assert(LinkedDeque_Size(queue) == 1);
-    LinkedDeque_Clear(queue);
-    assert(LinkedDeque_Size(queue) == 0);
-    LinkedDeque_Clear(queue); // double clear
     assert(LinkedDeque_Size(queue) == 0);
 
     // LinkedDeque_Destroy

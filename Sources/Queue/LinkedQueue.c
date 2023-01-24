@@ -41,6 +41,9 @@ static inline void clear(LinkedQueue* self)
         free(self->front->next);
         self->front->next = node;
     }
+
+    self->rear = self->front;
+    self->front->next = NULL;
     self->size = 0;
 }
 

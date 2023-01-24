@@ -39,7 +39,9 @@ static inline void clear(LinkedList* self)
         free(self->header->next);
         self->header->next = node;
     }
+
     self->size = 0;
+    self->header->next = NULL;
 }
 
 /*******************************

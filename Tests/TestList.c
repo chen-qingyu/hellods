@@ -23,6 +23,14 @@ void TestArrayList(void)
     assert(ArrayList_Size(list) == 0);
     assert(ArrayList_IsEmpty(list) == true);
 
+    // ArrayList_Clear
+    ArrayList_Insert(list, 0, 233);
+    assert(ArrayList_Size(list) == 1);
+    ArrayList_Clear(list);
+    assert(ArrayList_Size(list) == 0);
+    ArrayList_Clear(list); // double clear
+    assert(ArrayList_Size(list) == 0);
+
     // ArrayList_Insert
     ArrayListItem arr[] = {1, 2, 3, 4, 5};
     int arr_size = sizeof(arr) / sizeof(arr[0]);
@@ -65,14 +73,6 @@ void TestArrayList(void)
     }
     assert(ArrayList_Size(list) == 0);
 
-    // ArrayList_Clear
-    ArrayList_Insert(list, 0, 233);
-    assert(ArrayList_Size(list) == 1);
-    ArrayList_Clear(list);
-    assert(ArrayList_Size(list) == 0);
-    ArrayList_Clear(list); // double clear
-    assert(ArrayList_Size(list) == 0);
-
     // ArrayList_Destroy
     ArrayList_Destroy(list);
 
@@ -85,6 +85,14 @@ void TestLinkedList(void)
     LinkedList* list = LinkedList_Create();
     assert(LinkedList_Size(list) == 0);
     assert(LinkedList_IsEmpty(list) == true);
+
+    // LinkedList_Clear
+    LinkedList_Insert(list, 0, 233);
+    assert(LinkedList_Size(list) == 1);
+    LinkedList_Clear(list);
+    assert(LinkedList_Size(list) == 0);
+    LinkedList_Clear(list); // double clear
+    assert(LinkedList_Size(list) == 0);
 
     // LinkedList_Insert
     LinkedListItem arr[] = {1, 2, 3, 4, 5};
@@ -128,14 +136,6 @@ void TestLinkedList(void)
     }
     assert(LinkedList_Size(list) == 0);
 
-    // LinkedList_Clear
-    LinkedList_Insert(list, 0, 233);
-    assert(LinkedList_Size(list) == 1);
-    LinkedList_Clear(list);
-    assert(LinkedList_Size(list) == 0);
-    LinkedList_Clear(list); // double clear
-    assert(LinkedList_Size(list) == 0);
-
     // LinkedList_Destroy
     LinkedList_Destroy(list);
 
@@ -148,6 +148,14 @@ void TestDoublyLinkedList(void)
     DoublyLinkedList* list = DoublyLinkedList_Create();
     assert(DoublyLinkedList_Size(list) == 0);
     assert(DoublyLinkedList_IsEmpty(list) == true);
+
+    // DoublyLinkedList_Clear
+    DoublyLinkedList_Insert(list, 0, 233);
+    assert(DoublyLinkedList_Size(list) == 1);
+    DoublyLinkedList_Clear(list);
+    assert(DoublyLinkedList_Size(list) == 0);
+    DoublyLinkedList_Clear(list); // double clear
+    assert(DoublyLinkedList_Size(list) == 0);
 
     // DoublyLinkedList_Insert
     DoublyLinkedListItem arr[] = {1, 2, 3, 4, 5};
@@ -189,14 +197,6 @@ void TestDoublyLinkedList(void)
     {
         assert(DoublyLinkedList_Remove(list, 0) == arr_size - i);
     }
-    assert(DoublyLinkedList_Size(list) == 0);
-
-    // DoublyLinkedList_Clear
-    DoublyLinkedList_Insert(list, 0, 233);
-    assert(DoublyLinkedList_Size(list) == 1);
-    DoublyLinkedList_Clear(list);
-    assert(DoublyLinkedList_Size(list) == 0);
-    DoublyLinkedList_Clear(list); // double clear
     assert(DoublyLinkedList_Size(list) == 0);
 
     // DoublyLinkedList_Destroy

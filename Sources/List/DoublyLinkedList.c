@@ -51,9 +51,12 @@ static inline void clear(DoublyLinkedList* self)
         free(self->header->next);
         self->header->next = node;
     }
+
     self->size = 0;
     self->latest = -1;
     self->p_latest = self->header;
+    self->header->next = self->trailer;
+    self->trailer->prev = self->header;
 }
 
 /*******************************

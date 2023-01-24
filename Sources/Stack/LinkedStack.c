@@ -38,6 +38,8 @@ static inline void clear(LinkedStack* self)
         free(self->top);
         self->top = current;
     }
+
+    self->top = NULL;
     self->size = 0;
 }
 
