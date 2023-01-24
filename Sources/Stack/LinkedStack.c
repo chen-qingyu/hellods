@@ -29,6 +29,18 @@ struct LinkedStack
 Helper functions implementation.
 *******************************/
 
+// Remove all of the elements from the queue.
+static inline void clear(LinkedStack* self)
+{
+    while (self->top)
+    {
+        struct LinkedStackNode* current = self->top->next;
+        free(self->top);
+        self->top = current;
+    }
+    self->size = 0;
+}
+
 /*******************************
 Interface functions implementation.
 *******************************/
@@ -48,12 +60,8 @@ void LinkedStack_Destroy(LinkedStack* self)
 {
     // let it crush if self is invalid
 
-    while (self->top)
-    {
-        struct LinkedStackNode* current = self->top->next;
-        free(self->top);
-        self->top = current;
-    }
+    clear(self);
+
     free(self);
 }
 
@@ -100,4 +108,12 @@ LinkedStackItem LinkedStack_Top(const LinkedStack* self)
     check_empty(self->size);
 
     return self->top->data;
+}
+
+void LinkedStack_Clear(LinkedStack* self)
+{
+    if (self->size != 0)
+    {
+        clear(self);
+    }
 }

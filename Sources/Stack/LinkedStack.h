@@ -71,4 +71,11 @@ LinkedStackItem LinkedStack_Pop(LinkedStack* self);
  */
 LinkedStackItem LinkedStack_Top(const LinkedStack* self);
 
+/**
+ * @brief 清空栈的内容
+ *
+ * @param self 一个指向栈的指针
+ */
+void LinkedStack_Clear(LinkedStack* self);
+
 #endif // LINKEDSTACK_H

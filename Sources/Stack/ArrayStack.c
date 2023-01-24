@@ -73,3 +73,8 @@ ArrayStackItem ArrayStack_Top(const ArrayStack* self)
 
     return self->data[self->top];
 }
+
+void ArrayStack_Clear(ArrayStack* self)
+{
+    self->top = -1; // plain old data
+}

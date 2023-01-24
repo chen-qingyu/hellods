@@ -71,4 +71,11 @@ LinkedQueueItem LinkedQueue_Dequeue(LinkedQueue* self);
  */
 LinkedQueueItem LinkedQueue_Front(LinkedQueue* self);
 
+/**
+ * @brief 清空队列的内容
+ *
+ * @param self 一个指向队列的指针
+ */
+void LinkedQueue_Clear(LinkedQueue* self);
+
 #endif // LINKEDQUEUE_H

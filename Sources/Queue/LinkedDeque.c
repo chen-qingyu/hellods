@@ -76,3 +76,8 @@ LinkedDequeItem LinkedDeque_Back(LinkedDeque* self)
 {
     return DoublyLinkedList_At(self->dlist, DoublyLinkedList_Size(self->dlist) - 1);
 }
+
+void LinkedDeque_Clear(LinkedDeque* self)
+{
+    DoublyLinkedList_Clear(self->dlist);
+}

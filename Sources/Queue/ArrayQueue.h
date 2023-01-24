@@ -71,4 +71,11 @@ ArrayQueueItem ArrayQueue_Dequeue(ArrayQueue* self);
  */
 ArrayQueueItem ArrayQueue_Front(ArrayQueue* self);
 
+/**
+ * @brief 清空队列的内容
+ *
+ * @param self 一个指向队列的指针
+ */
+void ArrayQueue_Clear(ArrayQueue* self);
+
 #endif // ARRAYQUEUE_H

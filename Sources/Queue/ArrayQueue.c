@@ -80,3 +80,10 @@ ArrayQueueItem ArrayQueue_Front(ArrayQueue* self)
 
     return self->data[(self->front + 1) % MAX_CAPACITY];
 }
+
+void ArrayQueue_Clear(ArrayQueue* self)
+{
+    // plain old data
+    self->front = -1;
+    self->rear = -1;
+}

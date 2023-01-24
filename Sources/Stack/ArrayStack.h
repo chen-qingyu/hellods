@@ -71,4 +71,11 @@ ArrayStackItem ArrayStack_Pop(ArrayStack* self);
  */
 ArrayStackItem ArrayStack_Top(const ArrayStack* self);
 
+/**
+ * @brief 清空栈的内容
+ *
+ * @param self 一个指向栈的指针
+ */
+void ArrayStack_Clear(ArrayStack* self);
+
 #endif // ARRAYSTACK_H

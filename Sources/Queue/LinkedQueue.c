@@ -32,6 +32,18 @@ struct LinkedQueue
 Helper functions implementation.
 *******************************/
 
+// Remove all of the elements from the queue.
+static inline void clear(LinkedQueue* self)
+{
+    while (self->front->next != NULL)
+    {
+        struct LinkedQueueNode* node = self->front->next->next;
+        free(self->front->next);
+        self->front->next = node;
+    }
+    self->size = 0;
+}
+
 /*******************************
 Interface functions implementation.
 *******************************/
@@ -55,12 +67,9 @@ void LinkedQueue_Destroy(LinkedQueue* self)
 {
     // let it crush if self is invalid
 
-    while (self->front)
-    {
-        struct LinkedQueueNode* current = self->front->next;
-        free(self->front);
-        self->front = current;
-    }
+    clear(self);
+
+    free(self->front);
     free(self);
 }
 
@@ -115,4 +124,12 @@ LinkedQueueItem LinkedQueue_Front(LinkedQueue* self)
     check_empty(self->size);
 
     return self->front->next->data;
+}
+
+void LinkedQueue_Clear(LinkedQueue* self)
+{
+    if (self->size != 0)
+    {
+        clear(self);
+    }
 }
