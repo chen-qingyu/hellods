@@ -32,7 +32,7 @@ struct LinkedQueue
 Helper functions implementation.
 *******************************/
 
-// Remove all of the elements from the queue.
+// Remove all of the elements.
 static inline void clear(LinkedQueue* self)
 {
     while (self->front->next != NULL)

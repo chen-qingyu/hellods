@@ -5,28 +5,38 @@
 
 void TestHashTable()
 {
-    // HashTable_Create
+    // HashTable_Create HashTable_Size HashTable_IsEmpty
     HashTable* table = HashTable_Create();
+    assert(HashTable_Size(table) == 0);
+    assert(HashTable_IsEmpty(table) == true);
+
+    // HashTable_Clear
+    HashTable_Insert(table, "233", 233);
+    assert(HashTable_Size(table) == 1);
+    HashTable_Clear(table);
+    assert(HashTable_Size(table) == 0);
+    HashTable_Clear(table); // double clear
+    assert(HashTable_Size(table) == 0);
 
     // HashTable_Insert
-    HashTable_Insert(table, (char*)"aaa", 1);
-    HashTable_Insert(table, (char*)"bbb", 2);
-    HashTable_Insert(table, (char*)"ccc", 3);
-    HashTable_Insert(table, (char*)"ddd", 4);
+    HashTable_Insert(table, "aaa", 1);
+    HashTable_Insert(table, "bbb", 2);
+    HashTable_Insert(table, "ccc", 3);
+    HashTable_Insert(table, "ddd", 4);
 
     // HashTable_Get
-    assert(HashTable_Get(table, (char*)"aaa") == 1);
-    assert(HashTable_Get(table, (char*)"bbb") == 2);
-    assert(HashTable_Get(table, (char*)"ccc") == 3);
-    assert(HashTable_Get(table, (char*)"ddd") == 4);
+    assert(HashTable_Get(table, "aaa") == 1);
+    assert(HashTable_Get(table, "bbb") == 2);
+    assert(HashTable_Get(table, "ccc") == 3);
+    assert(HashTable_Get(table, "ddd") == 4);
 
     // HashTable_Modify
-    HashTable_Modify(table, (char*)"aaa", 233);
-    assert(HashTable_Get(table, (char*)"aaa") == 233);
+    HashTable_Modify(table, "aaa", 233);
+    assert(HashTable_Get(table, "aaa") == 233);
 
     // HashTable_Remove
-    HashTable_Remove(table, (char*)"aaa");
-    assert(HashTable_Get(table, (char*)"aaa") == HASH_TABLE_NOT_FOUND);
+    HashTable_Remove(table, "aaa");
+    assert(HashTable_Get(table, "aaa") == HASH_TABLE_NOT_FOUND);
 
     // HashTable_Destroy
     HashTable_Destroy(table);

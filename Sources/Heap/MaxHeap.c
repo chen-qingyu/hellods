@@ -9,6 +9,12 @@
 
 #define MAX_ITEM INT_MAX // max value of MaxHeapItem
 
+// Initial capacity.
+#define INIT_CAPACITY 8
+
+// Maximum capacity.
+#define MAX_CAPACITY (INT_MAX - 1) // - 1 to prevent boundary subscript overflow
+
 struct MaxHeap
 {
     /// Number of elements.
@@ -28,7 +34,7 @@ Helper functions implementation.
 // Expand capacity safely.
 static inline void expand_capacity(MaxHeap* self)
 {
-    self->capacity = (self->capacity < INT_MAX / 2) ? self->capacity * 2 : INT_MAX; // double the capacity until INT_MAX
+    self->capacity = (self->capacity < MAX_CAPACITY / 2) ? self->capacity * 2 : MAX_CAPACITY; // double the capacity until MAX_CAPACITY
     self->data = (MaxHeapItem*)realloc(self->data, sizeof(MaxHeapItem) * self->capacity);
     check_pointer(self->data);
 }
@@ -43,7 +49,7 @@ MaxHeap* MaxHeap_Create(void)
     check_pointer(heap);
 
     heap->size = 0;
-    heap->capacity = 8;
+    heap->capacity = INIT_CAPACITY;
     heap->data = (MaxHeapItem*)malloc(heap->capacity * sizeof(MaxHeapItem));
     check_pointer(heap->data);
 
@@ -72,7 +78,7 @@ bool MaxHeap_IsEmpty(const MaxHeap* self)
 
 void MaxHeap_Push(MaxHeap* self, MaxHeapItem data)
 {
-    check_full(self->size, INT_MAX);
+    check_full(self->size, MAX_CAPACITY);
 
     if (self->size == self->capacity) // need to expand capacity
     {
@@ -122,4 +128,9 @@ MaxHeapItem MaxHeap_Top(MaxHeap* self)
     check_empty(self->size);
 
     return self->data[1];
+}
+
+void MaxHeap_Clear(MaxHeap* self)
+{
+    self->size = 0; // plain old data
 }

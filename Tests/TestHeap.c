@@ -10,6 +10,14 @@ void TestMaxHeap(void)
     assert(MaxHeap_Size(heap) == 0);
     assert(MaxHeap_IsEmpty(heap) == true);
 
+    // MaxHeap_Clear
+    MaxHeap_Push(heap, 233);
+    assert(MaxHeap_Size(heap) == 1);
+    MaxHeap_Clear(heap);
+    assert(MaxHeap_Size(heap) == 0);
+    MaxHeap_Clear(heap); // double clear
+    assert(MaxHeap_Size(heap) == 0);
+
     // MaxHeap_Push
     MaxHeap_Push(heap, 1);
     MaxHeap_Push(heap, 2);

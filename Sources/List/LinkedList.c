@@ -30,7 +30,7 @@ struct LinkedList
 Helper functions implementation.
 *******************************/
 
-// Remove all of the elements from the list.
+// Remove all of the elements.
 static inline void clear(LinkedList* self)
 {
     while (self->header->next != NULL)

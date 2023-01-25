@@ -42,7 +42,7 @@ struct DoublyLinkedList
 Helper functions implementation.
 *******************************/
 
-// Remove all of the elements from the list.
+// Remove all of the elements.
 static inline void clear(DoublyLinkedList* self)
 {
     while (self->header->next != self->trailer)
@@ -112,30 +112,29 @@ DoublyLinkedListItem DoublyLinkedList_At(const DoublyLinkedList* self, int index
 
     index = index >= 0 ? index : index + self->size;
 
-    DoublyLinkedList* list = (DoublyLinkedList*)self; // drop out const
-
     // too far from the last accessed element
     if (abs(index - self->latest) > self->size / 2)
     {
         // closer to the header or trailer
-        list->p_latest = (index < self->latest) ? self->header->next : self->trailer->prev;
-        list->latest = (index < self->latest) ? 0 : self->size - 1;
+        // drop out const
+        ((DoublyLinkedList*)self)->p_latest = (index < self->latest) ? self->header->next : self->trailer->prev;
+        ((DoublyLinkedList*)self)->latest = (index < self->latest) ? 0 : self->size - 1;
     }
 
     if (index < self->latest)
     {
         while (index < self->latest)
         {
-            list->latest--;
-            list->p_latest = list->p_latest->prev;
+            ((DoublyLinkedList*)self)->latest--;
+            ((DoublyLinkedList*)self)->p_latest = ((DoublyLinkedList*)self)->p_latest->prev;
         }
     }
     else if (index > self->latest)
     {
         while (index > self->latest)
         {
-            list->latest++;
-            list->p_latest = list->p_latest->next;
+            ((DoublyLinkedList*)self)->latest++;
+            ((DoublyLinkedList*)self)->p_latest = ((DoublyLinkedList*)self)->p_latest->next;
         }
     }
     // else the element accessed this time is the same as the last time

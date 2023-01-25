@@ -163,12 +163,5 @@ void ArrayList_Reverse(ArrayList* self)
 
 void ArrayList_Clear(ArrayList* self)
 {
-    if (self->size != 0)
-    {
-        self->size = 0;
-        self->capacity = INIT_CAPACITY;
-        free(self->data);
-        self->data = (ArrayListItem*)malloc(sizeof(ArrayListItem) * self->capacity);
-        check_pointer(self->data);
-    }
+    self->size = 0; // plain old data
 }

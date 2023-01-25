@@ -71,4 +71,11 @@ MaxHeapItem MaxHeap_Pop(MaxHeap* self);
  */
 MaxHeapItem MaxHeap_Top(MaxHeap* self);
 
+/**
+ * @brief 清空堆的内容
+ *
+ * @param self 一个指向堆的指针
+ */
+void MaxHeap_Clear(MaxHeap* self);
+
 #endif // MAXHEAP_H

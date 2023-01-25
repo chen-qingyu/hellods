@@ -16,7 +16,7 @@
 /// A value of HashTableValue that indicates not found.
 #define HASH_TABLE_NOT_FOUND (-1)
 
-typedef char* HashTableKey;
+typedef const char* HashTableKey;
 
 typedef int HashTableValue;
 
@@ -35,6 +35,22 @@ HashTable* HashTable_Create(void);
  * @param self 一个指向待销毁散列表的指针
  */
 void HashTable_Destroy(HashTable* self);
+
+/**
+ * @brief 求散列表的元素个数
+ *
+ * @param self 一个指向散列表的指针
+ * @return 散列表的元素个数
+ */
+int HashTable_Size(const HashTable* self);
+
+/**
+ * @brief 判断散列表是否为空
+ *
+ * @param self 一个指向散列表的指针
+ * @return 如果散列表为空则返回 true ，否则返回 false
+ */
+bool HashTable_IsEmpty(const HashTable* self);
 
 /**
  * @brief 在散列表中取 key 对应的 value
@@ -70,5 +86,12 @@ void HashTable_Insert(HashTable* self, HashTableKey key, HashTableValue value);
  * @param key 待删除键值对的 key
  */
 void HashTable_Remove(HashTable* self, HashTableKey key);
+
+/**
+ * @brief 清空散列表的内容
+ *
+ * @param self 一个指向散列表的指针
+ */
+void HashTable_Clear(HashTable* self);
 
 #endif // HASHTABLE_H

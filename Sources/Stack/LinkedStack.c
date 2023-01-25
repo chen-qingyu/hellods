@@ -29,7 +29,7 @@ struct LinkedStack
 Helper functions implementation.
 *******************************/
 
-// Remove all of the elements from the queue.
+// Remove all of the elements.
 static inline void clear(LinkedStack* self)
 {
     while (self->top)
