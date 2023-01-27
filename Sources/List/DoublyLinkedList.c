@@ -106,7 +106,8 @@ bool DoublyLinkedList_IsEmpty(const DoublyLinkedList* self)
     return self->size == 0;
 }
 
-DoublyLinkedListItem DoublyLinkedList_At(const DoublyLinkedList* self, int index) // list[index] for index in range 0 to size will be O(1) on each access
+// list[index] for index in range 0 to size will be O(1) on each access
+DoublyLinkedListItem DoublyLinkedList_At(const DoublyLinkedList* self, int index)
 {
     check_bounds(index, -self->size, self->size);
 
@@ -126,7 +127,7 @@ DoublyLinkedListItem DoublyLinkedList_At(const DoublyLinkedList* self, int index
         while (index < self->latest)
         {
             ((DoublyLinkedList*)self)->latest--;
-            ((DoublyLinkedList*)self)->p_latest = ((DoublyLinkedList*)self)->p_latest->prev;
+            ((DoublyLinkedList*)self)->p_latest = self->p_latest->prev;
         }
     }
     else if (index > self->latest)
@@ -134,7 +135,7 @@ DoublyLinkedListItem DoublyLinkedList_At(const DoublyLinkedList* self, int index
         while (index > self->latest)
         {
             ((DoublyLinkedList*)self)->latest++;
-            ((DoublyLinkedList*)self)->p_latest = ((DoublyLinkedList*)self)->p_latest->next;
+            ((DoublyLinkedList*)self)->p_latest = self->p_latest->next;
         }
     }
     // else the element accessed this time is the same as the last time

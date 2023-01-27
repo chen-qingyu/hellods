@@ -69,7 +69,7 @@ static int find_pos(const HashTable* table, HashTableKey key)
             new_pos = current_pos + (conflict_cnt + 1) * (conflict_cnt + 1) / 4;
             if (new_pos >= table->capacity)
             {
-                new_pos = new_pos % table->capacity;
+                new_pos %= table->capacity;
             }
         }
         else
