@@ -218,6 +218,19 @@ String* String_From(const char* chars)
     return str;
 }
 
+String* String_Input(void)
+{
+    String* str = String_Create();
+
+    int ch;
+    while ((ch = getchar()) != '\n')
+    {
+        append_char(str, ch);
+    }
+
+    return str;
+}
+
 String* String_Copy(const String* str)
 {
     String* copy = (String*)malloc(sizeof(String));

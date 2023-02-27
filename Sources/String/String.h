@@ -112,6 +112,13 @@ String* String_Create(void);
 String* String_From(const char* chars);
 
 /**
+ * @brief Create a line of string from standard input. O(N)
+ *
+ * @return A pointer to the new string.
+ */
+String* String_Input(void);
+
+/**
  * @brief Copy constructor. O(N)
  *
  * Like `string new_str(str);` in C++.
