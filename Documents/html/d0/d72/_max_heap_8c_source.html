@@ -88,120 +88,133 @@ $(function() {
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#define MAX_ITEM INT_MAX </span><span class="comment">// max value of MaxHeapItem</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="../../d9/d4e/struct_max_heap.html">   12</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">   15</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">   18</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a>;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">   21</a></span>    MaxHeapItem* <a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>};</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="comment">/*******************************</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">Helper functions implementation.</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="comment">*******************************/</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">// Expand capacity safely.</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> expand_capacity(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>{</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> = (self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> &lt; INT_MAX / 2) ? self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> * 2 : INT_MAX; <span class="comment">// double the capacity until INT_MAX</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a> = (MaxHeapItem*)realloc(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>, <span class="keyword">sizeof</span>(MaxHeapItem) * self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a>);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    check_pointer(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>}</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">/*******************************</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="comment">Interface functions implementation.</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="comment">*******************************/</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#afe26f0dc100458ab855d56cca3ff6cd3">   40</a></span><a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* MaxHeap_Create(<span class="keywordtype">void</span>)</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>{</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* heap = (<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>*)malloc(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>));</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    check_pointer(heap);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a> = 0;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> = 8;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a> = (MaxHeapItem*)malloc(heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> * <span class="keyword">sizeof</span>(MaxHeapItem));</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    check_pointer(heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[0] = MAX_ITEM;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> heap;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#a7a379e7423af5d712459eed02878fd72">   55</a></span><span class="keywordtype">void</span> MaxHeap_Destroy(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>{</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    free(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>);</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    free(self);</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// Initial capacity.</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#define INIT_CAPACITY 8</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">// Maximum capacity.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#define MAX_CAPACITY (INT_MAX - 1) </span><span class="comment">// - 1 to prevent boundary subscript overflow</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="../../d9/d4e/struct_max_heap.html">   18</a></span><span class="keyword">struct </span><a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>{</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">   21</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">   24</a></span>    <span class="keywordtype">int</span> <a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a>;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">   27</a></span>    MaxHeapItem* <a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>};</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="comment">/*******************************</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">Helper functions implementation.</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment">*******************************/</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment">// Expand capacity safely.</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> expand_capacity(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>{</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> = (self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> &lt; MAX_CAPACITY / 2) ? self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> * 2 : MAX_CAPACITY; <span class="comment">// double the capacity until MAX_CAPACITY</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a> = (MaxHeapItem*)realloc(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>, <span class="keyword">sizeof</span>(MaxHeapItem) * self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a>);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    check_pointer(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>}</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment">/*******************************</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment">Interface functions implementation.</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment">*******************************/</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#afe26f0dc100458ab855d56cca3ff6cd3">   46</a></span><a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* MaxHeap_Create(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>{</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* heap = (<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>*)malloc(<span class="keyword">sizeof</span>(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>));</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    check_pointer(heap);</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a> = 0;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> = INIT_CAPACITY;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a> = (MaxHeapItem*)malloc(heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a> * <span class="keyword">sizeof</span>(MaxHeapItem));</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    check_pointer(heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    heap-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[0] = MAX_ITEM;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">return</span> heap;</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#a5d9a13a36ec290d552dcde809efa0e6f">   61</a></span><span class="keywordtype">int</span> MaxHeap_Size(<span class="keyword">const</span> <a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#a7a379e7423af5d712459eed02878fd72">   61</a></span><span class="keywordtype">void</span> MaxHeap_Destroy(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>{</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#a92c03528b1d719cd460addfc492d80c6">   66</a></span><span class="keywordtype">bool</span> MaxHeap_IsEmpty(<span class="keyword">const</span> <a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>{</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a> == 0;</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#aaf9cd65dbdc993a10bfc28f033f61bb2">   71</a></span><span class="keywordtype">void</span> MaxHeap_Push(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self, MaxHeapItem data)</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>{</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    check_full(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>, INT_MAX);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordflow">if</span> (self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a> == self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a>) <span class="comment">// need to expand capacity</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        expand_capacity(self);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordtype">int</span> pos;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordflow">for</span> (pos = ++self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>; self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[pos / 2] &lt; data; pos /= 2)</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    {</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[pos] = self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[pos / 2];</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    }</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[pos] = data;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>}</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="comment">// let it crush if self is invalid</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    free(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>);</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    free(self);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>}</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#a5d9a13a36ec290d552dcde809efa0e6f">   69</a></span><span class="keywordtype">int</span> MaxHeap_Size(<span class="keyword">const</span> <a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>{</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>}</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#a92c03528b1d719cd460addfc492d80c6">   74</a></span><span class="keywordtype">bool</span> MaxHeap_IsEmpty(<span class="keyword">const</span> <a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>{</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a> == 0;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>}</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#aaf9cd65dbdc993a10bfc28f033f61bb2">   79</a></span><span class="keywordtype">void</span> MaxHeap_Push(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self, MaxHeapItem data)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>{</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    check_full(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>, MAX_CAPACITY);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordflow">if</span> (self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a> == self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">capacity</a>) <span class="comment">// need to expand capacity</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        expand_capacity(self);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    }</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#a50bcacfd43726ec2e9b304f038eb48e4">   88</a></span>MaxHeapItem MaxHeap_Pop(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>{</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    check_empty(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>);</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    MaxHeapItem max_item = self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[1];</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    MaxHeapItem tmp = self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>--];</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordtype">int</span> parent, child;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordflow">for</span> (parent = 1; parent * 2 &lt;= self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>; parent = child)</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    {</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        child = parent * 2;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keywordflow">if</span> ((child != self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>) &amp;&amp; (self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[child] &lt; self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[child + 1]))</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        {</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            child++;</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        }</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="keywordflow">if</span> (tmp &gt;= self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[child])</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        {</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        }</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        {</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[parent] = self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[child];</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        }</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    }</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[parent] = tmp;</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordflow">return</span> max_item;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>}</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#affdb68361e44ecede72d43d30e8cfb1c">  118</a></span>MaxHeapItem MaxHeap_Top(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>{</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    check_empty(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>);</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[1];</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>}</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordtype">int</span> pos;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordflow">for</span> (pos = ++self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>; self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[pos / 2] &lt; data; pos /= 2)</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[pos] = self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[pos / 2];</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    }</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[pos] = data;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#a50bcacfd43726ec2e9b304f038eb48e4">   96</a></span>MaxHeapItem MaxHeap_Pop(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>{</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    check_empty(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    MaxHeapItem max_item = self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[1];</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    MaxHeapItem tmp = self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>--];</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordtype">int</span> parent, child;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordflow">for</span> (parent = 1; parent * 2 &lt;= self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>; parent = child)</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        child = parent * 2;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordflow">if</span> ((child != self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>) &amp;&amp; (self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[child] &lt; self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[child + 1]))</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            child++;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        }</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">if</span> (tmp &gt;= self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[child])</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        {</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        {</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[parent] = self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[child];</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        }</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    }</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[parent] = tmp;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keywordflow">return</span> max_item;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>}</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#affdb68361e44ecede72d43d30e8cfb1c">  126</a></span>MaxHeapItem MaxHeap_Top(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>{</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    check_empty(self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a>);</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">data</a>[1];</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>}</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno"><a class="line" href="../../dc/dff/_max_heap_8h.html#a2a85bc693a31c8caad2fc949f3d969fd">  133</a></span><span class="keywordtype">void</span> MaxHeap_Clear(<a class="code hl_struct" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>* self)</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>{</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    self-&gt;<a class="code hl_variable" href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">size</a> = 0; <span class="comment">// plain old data</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>}</div>
 <div class="ttc" id="a_max_heap_8h_html"><div class="ttname"><a href="../../dc/dff/_max_heap_8h.html">MaxHeap.h</a></div><div class="ttdoc">最大堆 (Max Heap)</div></div>
-<div class="ttc" id="astruct_max_heap_html"><div class="ttname"><a href="../../d9/d4e/struct_max_heap.html">MaxHeap</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d72/_max_heap_8c_source.html#l00012">MaxHeap.c:13</a></div></div>
-<div class="ttc" id="astruct_max_heap_html_a439227feff9d7f55384e8780cfc2eb82"><div class="ttname"><a href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">MaxHeap::size</a></div><div class="ttdeci">int size</div><div class="ttdoc">Number of elements.</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d72/_max_heap_8c_source.html#l00015">MaxHeap.c:15</a></div></div>
-<div class="ttc" id="astruct_max_heap_html_adbe66a087ac3fd4a5b0566f64ca2d12b"><div class="ttname"><a href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">MaxHeap::capacity</a></div><div class="ttdeci">int capacity</div><div class="ttdoc">Available capacity.</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d72/_max_heap_8c_source.html#l00018">MaxHeap.c:18</a></div></div>
-<div class="ttc" id="astruct_max_heap_html_ae39eaebb4bb2c8b10e06db35c7c3778e"><div class="ttname"><a href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">MaxHeap::data</a></div><div class="ttdeci">MaxHeapItem * data</div><div class="ttdoc">Pointer to the data.</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d72/_max_heap_8c_source.html#l00021">MaxHeap.c:21</a></div></div>
+<div class="ttc" id="astruct_max_heap_html"><div class="ttname"><a href="../../d9/d4e/struct_max_heap.html">MaxHeap</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d72/_max_heap_8c_source.html#l00018">MaxHeap.c:19</a></div></div>
+<div class="ttc" id="astruct_max_heap_html_a439227feff9d7f55384e8780cfc2eb82"><div class="ttname"><a href="../../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82">MaxHeap::size</a></div><div class="ttdeci">int size</div><div class="ttdoc">Number of elements.</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d72/_max_heap_8c_source.html#l00021">MaxHeap.c:21</a></div></div>
+<div class="ttc" id="astruct_max_heap_html_adbe66a087ac3fd4a5b0566f64ca2d12b"><div class="ttname"><a href="../../d9/d4e/struct_max_heap.html#adbe66a087ac3fd4a5b0566f64ca2d12b">MaxHeap::capacity</a></div><div class="ttdeci">int capacity</div><div class="ttdoc">Available capacity.</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d72/_max_heap_8c_source.html#l00024">MaxHeap.c:24</a></div></div>
+<div class="ttc" id="astruct_max_heap_html_ae39eaebb4bb2c8b10e06db35c7c3778e"><div class="ttname"><a href="../../d9/d4e/struct_max_heap.html#ae39eaebb4bb2c8b10e06db35c7c3778e">MaxHeap::data</a></div><div class="ttdeci">MaxHeapItem * data</div><div class="ttdoc">Pointer to the data.</div><div class="ttdef"><b>Definition:</b> <a href="../../d0/d72/_max_heap_8c_source.html#l00027">MaxHeap.c:27</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

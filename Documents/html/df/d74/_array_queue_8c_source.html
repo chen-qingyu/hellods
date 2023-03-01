@@ -118,42 +118,51 @@ $(function() {
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#ae91f5a085f19696d85b4f89f4afc4d6e">   43</a></span><span class="keywordtype">void</span> ArrayQueue_Destroy(<a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>{</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    free(self);</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>}</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#ac5c2b45ef79eb84fd309d34c7ec64291">   48</a></span><span class="keywordtype">int</span> ArrayQueue_Size(<span class="keyword">const</span> <a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>{</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keywordflow">return</span> (self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6">rear</a> - self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a> + (MAX_CAPACITY + 1)) % (MAX_CAPACITY + 1);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#a6552eac9638afa47ed1543f130d57c0d">   53</a></span><span class="keywordtype">bool</span> ArrayQueue_IsEmpty(<span class="keyword">const</span> <a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>{</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keywordflow">return</span> ArrayQueue_Size(self) == 0;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>}</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#aa0eae7f21a3092b8fa3a1f4f81fef3b3">   58</a></span><span class="keywordtype">void</span> ArrayQueue_Enqueue(<a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self, ArrayQueueItem data)</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>{</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    check_full(ArrayQueue_Size(self), MAX_CAPACITY);</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6">rear</a> = (self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6">rear</a> + 1) % MAX_CAPACITY;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#a9a768bf350d28ede3e18e8465a23aed6">data</a>[self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6">rear</a>] = data;</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>}</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#a34fd438f56d1f8389550b85eab60709b">   66</a></span>ArrayQueueItem ArrayQueue_Dequeue(<a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>{</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    check_empty(ArrayQueue_Size(self));</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a> = (self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a> + 1) % MAX_CAPACITY;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="comment">// let it crush if self is invalid</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    free(self);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#ac5c2b45ef79eb84fd309d34c7ec64291">   50</a></span><span class="keywordtype">int</span> ArrayQueue_Size(<span class="keyword">const</span> <a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>{</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> (self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6">rear</a> - self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a> + (MAX_CAPACITY + 1)) % (MAX_CAPACITY + 1);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#a6552eac9638afa47ed1543f130d57c0d">   55</a></span><span class="keywordtype">bool</span> ArrayQueue_IsEmpty(<span class="keyword">const</span> <a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>{</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> ArrayQueue_Size(self) == 0;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>}</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#aa0eae7f21a3092b8fa3a1f4f81fef3b3">   60</a></span><span class="keywordtype">void</span> ArrayQueue_Enqueue(<a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self, ArrayQueueItem data)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>{</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    check_full(ArrayQueue_Size(self), MAX_CAPACITY);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6">rear</a> = (self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6">rear</a> + 1) % MAX_CAPACITY;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#a9a768bf350d28ede3e18e8465a23aed6">data</a>[self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6">rear</a>] = data;</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>}</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#a34fd438f56d1f8389550b85eab60709b">   68</a></span>ArrayQueueItem ArrayQueue_Dequeue(<a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>{</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    check_empty(ArrayQueue_Size(self));</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#a9a768bf350d28ede3e18e8465a23aed6">data</a>[self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a>];</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#a46128223065c50b393d69a6224ff044c">   75</a></span>ArrayQueueItem ArrayQueue_Front(<a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>{</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    check_empty(ArrayQueue_Size(self));</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#a9a768bf350d28ede3e18e8465a23aed6">data</a>[(self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a> + 1) % MAX_CAPACITY];</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>}</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a> = (self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a> + 1) % MAX_CAPACITY;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#a9a768bf350d28ede3e18e8465a23aed6">data</a>[self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a>];</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#a46128223065c50b393d69a6224ff044c">   77</a></span>ArrayQueueItem ArrayQueue_Front(<a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>{</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    check_empty(ArrayQueue_Size(self));</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#a9a768bf350d28ede3e18e8465a23aed6">data</a>[(self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a> + 1) % MAX_CAPACITY];</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>}</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="../../da/dc5/_array_queue_8h.html#a5fc0194e3475ea928907c5c1f6fcd032">   84</a></span><span class="keywordtype">void</span> ArrayQueue_Clear(<a class="code hl_struct" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a>* self)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>{</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="comment">// plain old data</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#ac261b45b6346e633de22d510c9f6a770">front</a> = -1;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    self-&gt;<a class="code hl_variable" href="../../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6">rear</a> = -1;</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>}</div>
 <div class="ttc" id="a_array_queue_8h_html"><div class="ttname"><a href="../../da/dc5/_array_queue_8h.html">ArrayQueue.h</a></div><div class="ttdoc">队列 数组实现 (Array Queue)</div></div>
 <div class="ttc" id="astruct_array_queue_html"><div class="ttname"><a href="../../d7/df5/struct_array_queue.html">ArrayQueue</a></div><div class="ttdef"><b>Definition:</b> <a href="../../d7/d8d/_matrix_graph_8c_source.html#l00037">MatrixGraph.c:38</a></div></div>
 <div class="ttc" id="astruct_array_queue_html_a9a768bf350d28ede3e18e8465a23aed6"><div class="ttname"><a href="../../d7/df5/struct_array_queue.html#a9a768bf350d28ede3e18e8465a23aed6">ArrayQueue::data</a></div><div class="ttdeci">ArrayQueueItem data[ARRAYQUEUE_CAPACITY+1]</div><div class="ttdoc">Pointer to the data.</div><div class="ttdef"><b>Definition:</b> <a href="../../d7/d8d/_matrix_graph_8c_source.html#l00039">MatrixGraph.c:39</a></div></div>

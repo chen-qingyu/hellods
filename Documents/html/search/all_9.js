@@ -14,12 +14,13 @@ var searchData=
   ['matrixgraph_5funlink_11',['MatrixGraph_Unlink',['../d4/dd9/_matrix_graph_8h.html#afacf190e40cefeabe0591b1367d8f1f3',1,'MatrixGraph.c']]],
   ['maxheap_12',['MaxHeap',['../d9/d4e/struct_max_heap.html',1,'']]],
   ['maxheap_2eh_13',['MaxHeap.h',['../dc/dff/_max_heap_8h.html',1,'']]],
-  ['maxheap_5fcreate_14',['MaxHeap_Create',['../dc/dff/_max_heap_8h.html#afe26f0dc100458ab855d56cca3ff6cd3',1,'MaxHeap.c']]],
-  ['maxheap_5fdestroy_15',['MaxHeap_Destroy',['../dc/dff/_max_heap_8h.html#a7a379e7423af5d712459eed02878fd72',1,'MaxHeap.c']]],
-  ['maxheap_5fisempty_16',['MaxHeap_IsEmpty',['../dc/dff/_max_heap_8h.html#a92c03528b1d719cd460addfc492d80c6',1,'MaxHeap.c']]],
-  ['maxheap_5fpop_17',['MaxHeap_Pop',['../dc/dff/_max_heap_8h.html#a50bcacfd43726ec2e9b304f038eb48e4',1,'MaxHeap.c']]],
-  ['maxheap_5fpush_18',['MaxHeap_Push',['../dc/dff/_max_heap_8h.html#aaf9cd65dbdc993a10bfc28f033f61bb2',1,'MaxHeap.c']]],
-  ['maxheap_5fsize_19',['MaxHeap_Size',['../dc/dff/_max_heap_8h.html#a5d9a13a36ec290d552dcde809efa0e6f',1,'MaxHeap.c']]],
-  ['maxheap_5ftop_20',['MaxHeap_Top',['../dc/dff/_max_heap_8h.html#affdb68361e44ecede72d43d30e8cfb1c',1,'MaxHeap.c']]],
-  ['minedatastructure_21',['MineDataStructure',['../index.html',1,'']]]
+  ['maxheap_5fclear_14',['MaxHeap_Clear',['../dc/dff/_max_heap_8h.html#a2a85bc693a31c8caad2fc949f3d969fd',1,'MaxHeap.c']]],
+  ['maxheap_5fcreate_15',['MaxHeap_Create',['../dc/dff/_max_heap_8h.html#afe26f0dc100458ab855d56cca3ff6cd3',1,'MaxHeap.c']]],
+  ['maxheap_5fdestroy_16',['MaxHeap_Destroy',['../dc/dff/_max_heap_8h.html#a7a379e7423af5d712459eed02878fd72',1,'MaxHeap.c']]],
+  ['maxheap_5fisempty_17',['MaxHeap_IsEmpty',['../dc/dff/_max_heap_8h.html#a92c03528b1d719cd460addfc492d80c6',1,'MaxHeap.c']]],
+  ['maxheap_5fpop_18',['MaxHeap_Pop',['../dc/dff/_max_heap_8h.html#a50bcacfd43726ec2e9b304f038eb48e4',1,'MaxHeap.c']]],
+  ['maxheap_5fpush_19',['MaxHeap_Push',['../dc/dff/_max_heap_8h.html#aaf9cd65dbdc993a10bfc28f033f61bb2',1,'MaxHeap.c']]],
+  ['maxheap_5fsize_20',['MaxHeap_Size',['../dc/dff/_max_heap_8h.html#a5d9a13a36ec290d552dcde809efa0e6f',1,'MaxHeap.c']]],
+  ['maxheap_5ftop_21',['MaxHeap_Top',['../dc/dff/_max_heap_8h.html#affdb68361e44ecede72d43d30e8cfb1c',1,'MaxHeap.c']]],
+  ['minedatastructure_22',['MineDataStructure',['../index.html',1,'']]]
 ];

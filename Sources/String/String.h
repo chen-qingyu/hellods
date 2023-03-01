@@ -324,9 +324,10 @@ long long String_ToInteger(const String* self, int base);
  * @brief Count the number of occurrences of a specified character. O(N)
  *
  * @param self A pointer to the string.
- * @return The total number of occurrences of x in the string.
+ * @param ch Character.
+ * @return The total number of occurrences of ch in the string.
  */
-int String_Count(const String* self, char x);
+int String_Count(const String* self, char ch);
 
 /**
  * Manipulation (will change the object itself)

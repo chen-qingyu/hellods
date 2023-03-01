@@ -16,7 +16,7 @@ enum HashTableState
     REMOVED
 };
 
-struct Pair
+struct HashTablePair
 {
     /// Key of the key-value pair.
     HashTableKey key;
@@ -37,7 +37,7 @@ struct HashTable
     int capacity;
 
     /// Pointer to the pairs.
-    struct Pair* pairs;
+    struct HashTablePair* pairs;
 };
 
 /*******************************
@@ -112,7 +112,7 @@ HashTable* HashTable_Create(void)
 
     table->size = 0;
     table->capacity = INIT_CAPACITY;
-    table->pairs = (struct Pair*)malloc(sizeof(struct Pair) * table->capacity);
+    table->pairs = (struct HashTablePair*)malloc(sizeof(struct HashTablePair) * table->capacity);
     check_pointer(table->pairs);
     for (int i = 0; i < table->capacity; i++)
     {

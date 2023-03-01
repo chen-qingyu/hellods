@@ -96,8 +96,8 @@ Macros</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:aac85a17358df63ac9007695a09343c0c"><td class="memItemLeft" align="right" valign="top">typedef char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#aac85a17358df63ac9007695a09343c0c">HashTableKey</a></td></tr>
-<tr class="separator:aac85a17358df63ac9007695a09343c0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a0911b229013a429a68dd6187594758"><td class="memItemLeft" align="right" valign="top">typedef const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#a8a0911b229013a429a68dd6187594758">HashTableKey</a></td></tr>
+<tr class="separator:a8a0911b229013a429a68dd6187594758"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a524693c214b8c21a4390e6cf0eda8631"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#a524693c214b8c21a4390e6cf0eda8631">HashTableValue</a></td></tr>
 <tr class="separator:a524693c214b8c21a4390e6cf0eda8631"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dea4341d1b1662a30ec89ea38da0c0c"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#a8dea4341d1b1662a30ec89ea38da0c0c">HashTable</a></td></tr>
@@ -111,6 +111,12 @@ Functions</h2></td></tr>
 <tr class="memitem:a3a058776e8371ba89a6185f0d7a66281"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#a3a058776e8371ba89a6185f0d7a66281">HashTable_Destroy</a> (<a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a> *self)</td></tr>
 <tr class="memdesc:a3a058776e8371ba89a6185f0d7a66281"><td class="mdescLeft">&#160;</td><td class="mdescRight">销毁一个散列表  <br /></td></tr>
 <tr class="separator:a3a058776e8371ba89a6185f0d7a66281"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a727e7d93aa97820176df4e4265c8fccd"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#a727e7d93aa97820176df4e4265c8fccd">HashTable_Size</a> (const <a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a> *self)</td></tr>
+<tr class="memdesc:a727e7d93aa97820176df4e4265c8fccd"><td class="mdescLeft">&#160;</td><td class="mdescRight">求散列表的元素个数  <br /></td></tr>
+<tr class="separator:a727e7d93aa97820176df4e4265c8fccd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af28aa91a8fc4829760c4c5e70ce14fe5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#af28aa91a8fc4829760c4c5e70ce14fe5">HashTable_IsEmpty</a> (const <a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a> *self)</td></tr>
+<tr class="memdesc:af28aa91a8fc4829760c4c5e70ce14fe5"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断散列表是否为空  <br /></td></tr>
+<tr class="separator:af28aa91a8fc4829760c4c5e70ce14fe5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a121e8054aafdd6820d85d172afc4899a"><td class="memItemLeft" align="right" valign="top">HashTableValue&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#a121e8054aafdd6820d85d172afc4899a">HashTable_Get</a> (const <a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a> *self, HashTableKey key)</td></tr>
 <tr class="memdesc:a121e8054aafdd6820d85d172afc4899a"><td class="mdescLeft">&#160;</td><td class="mdescRight">在散列表中取 key 对应的 value  <br /></td></tr>
 <tr class="separator:a121e8054aafdd6820d85d172afc4899a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,6 +129,9 @@ Functions</h2></td></tr>
 <tr class="memitem:aa2dd0b3f4da218cc255e606ef42de8d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#aa2dd0b3f4da218cc255e606ef42de8d8">HashTable_Remove</a> (<a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a> *self, HashTableKey key)</td></tr>
 <tr class="memdesc:aa2dd0b3f4da218cc255e606ef42de8d8"><td class="mdescLeft">&#160;</td><td class="mdescRight">在散列表中删除 key 对应的键值对  <br /></td></tr>
 <tr class="separator:aa2dd0b3f4da218cc255e606ef42de8d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a265556a14802b439b753c4f068911e57"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/def/_hash_table_8h.html#a265556a14802b439b753c4f068911e57">HashTable_Clear</a> (<a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a> *self)</td></tr>
+<tr class="memdesc:a265556a14802b439b753c4f068911e57"><td class="mdescLeft">&#160;</td><td class="mdescRight">清空散列表的内容  <br /></td></tr>
+<tr class="separator:a265556a14802b439b753c4f068911e57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>散列表 (Hash Table) </p>
@@ -152,14 +161,14 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="aac85a17358df63ac9007695a09343c0c" name="aac85a17358df63ac9007695a09343c0c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aac85a17358df63ac9007695a09343c0c">&#9670;&#160;</a></span>HashTableKey</h2>
+<a id="a8a0911b229013a429a68dd6187594758" name="a8a0911b229013a429a68dd6187594758"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a0911b229013a429a68dd6187594758">&#9670;&#160;</a></span>HashTableKey</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef char* HashTableKey</td>
+          <td class="memname">typedef const char* HashTableKey</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -220,7 +229,7 @@ Functions</h2></td></tr>
 <p>创建一个空散列表 </p>
 <dl class="section return"><dt>Returns</dt><dd>一个指向空散列表的指针 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00080">80</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00108">108</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
 
 </div>
 </div>
@@ -248,7 +257,65 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00094">94</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00126">126</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
+
+</div>
+</div>
+<a id="a727e7d93aa97820176df4e4265c8fccd" name="a727e7d93aa97820176df4e4265c8fccd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a727e7d93aa97820176df4e4265c8fccd">&#9670;&#160;</a></span>HashTable_Size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int HashTable_Size </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a> *&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>求散列表的元素个数 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">self</td><td>一个指向散列表的指针 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>散列表的元素个数 </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00136">136</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
+
+</div>
+</div>
+<a id="af28aa91a8fc4829760c4c5e70ce14fe5" name="af28aa91a8fc4829760c4c5e70ce14fe5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af28aa91a8fc4829760c4c5e70ce14fe5">&#9670;&#160;</a></span>HashTable_IsEmpty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool HashTable_IsEmpty </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a> *&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>判断散列表是否为空 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">self</td><td>一个指向散列表的指针 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>如果散列表为空则返回 true ，否则返回 false </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00141">141</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
 
 </div>
 </div>
@@ -288,7 +355,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>key 对应的 value 或者 HASH_TABLE_NOT_FOUND </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00106">106</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00146">146</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
 
 </div>
 </div>
@@ -334,7 +401,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00113">113</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00153">153</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
 
 </div>
 </div>
@@ -380,7 +447,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00128">128</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00168">168</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
 
 </div>
 </div>
@@ -419,7 +486,35 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00153">153</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00195">195</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
+
+</div>
+</div>
+<a id="a265556a14802b439b753c4f068911e57" name="a265556a14802b439b753c4f068911e57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a265556a14802b439b753c4f068911e57">&#9670;&#160;</a></span>HashTable_Clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void HashTable_Clear </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d8/d82/struct_hash_table.html">HashTable</a> *&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>清空散列表的内容 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">self</td><td>一个指向散列表的指针 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../db/d90/_hash_table_8c_source.html#l00212">212</a> of file <a class="el" href="../../db/d90/_hash_table_8c_source.html">HashTable.c</a>.</p>
 
 </div>
 </div>

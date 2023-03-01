@@ -115,39 +115,46 @@ $(function() {
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a3c45965ae001d93e342a5966b6efe6e8">   39</a></span><span class="keywordtype">void</span> ArrayStack_Destroy(<a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>{</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    free(self);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>}</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a3e446cc8c39ea8fde2efda823753a827">   44</a></span><span class="keywordtype">int</span> ArrayStack_Size(<span class="keyword">const</span> <a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>{</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a> + 1;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>}</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a6f310e742c612dcc2d6ff1d1c4b18e0c">   49</a></span><span class="keywordtype">bool</span> ArrayStack_IsEmpty(<span class="keyword">const</span> <a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>{</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a> + 1 == 0;</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a016d827ef722c13ce676ee5ac8e658eb">   54</a></span><span class="keywordtype">void</span> ArrayStack_Push(<a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self, ArrayStackItem data)</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>{</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    check_full(ArrayStack_Size(self), MAX_CAPACITY);</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#a2c51618de7e19e5ded6dbf0a72ba35d7">data</a>[++(self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a>)] = data;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>}</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a111c65da2db28ce5bdd2cc29ed221fd9">   61</a></span>ArrayStackItem ArrayStack_Pop(<a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>{</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    check_empty(ArrayStack_Size(self));</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#a2c51618de7e19e5ded6dbf0a72ba35d7">data</a>[(self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a>)--];</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>}</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a6322bd8a1440bee3ac0e9b54a8505d2c">   68</a></span>ArrayStackItem ArrayStack_Top(<span class="keyword">const</span> <a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>{</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    check_empty(ArrayStack_Size(self));</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#a2c51618de7e19e5ded6dbf0a72ba35d7">data</a>[self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a>];</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="comment">// let it crush if self is invalid</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    free(self);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>}</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a3e446cc8c39ea8fde2efda823753a827">   46</a></span><span class="keywordtype">int</span> ArrayStack_Size(<span class="keyword">const</span> <a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>{</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a> + 1;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>}</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a6f310e742c612dcc2d6ff1d1c4b18e0c">   51</a></span><span class="keywordtype">bool</span> ArrayStack_IsEmpty(<span class="keyword">const</span> <a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>{</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a> + 1 == 0;</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>}</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a016d827ef722c13ce676ee5ac8e658eb">   56</a></span><span class="keywordtype">void</span> ArrayStack_Push(<a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self, ArrayStackItem data)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>{</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    check_full(ArrayStack_Size(self), MAX_CAPACITY);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#a2c51618de7e19e5ded6dbf0a72ba35d7">data</a>[++(self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a>)] = data;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>}</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a111c65da2db28ce5bdd2cc29ed221fd9">   63</a></span>ArrayStackItem ArrayStack_Pop(<a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>{</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    check_empty(ArrayStack_Size(self));</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#a2c51618de7e19e5ded6dbf0a72ba35d7">data</a>[(self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a>)--];</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>}</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a6322bd8a1440bee3ac0e9b54a8505d2c">   70</a></span>ArrayStackItem ArrayStack_Top(<span class="keyword">const</span> <a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>{</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    check_empty(ArrayStack_Size(self));</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keywordflow">return</span> self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#a2c51618de7e19e5ded6dbf0a72ba35d7">data</a>[self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a>];</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>}</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="../../d4/d76/_array_stack_8h.html#a2450c10000219c3f8c5c9782d7175428">   77</a></span><span class="keywordtype">void</span> ArrayStack_Clear(<a class="code hl_struct" href="../../de/de8/struct_array_stack.html">ArrayStack</a>* self)</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>{</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    self-&gt;<a class="code hl_variable" href="../../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c">top</a> = -1; <span class="comment">// plain old data</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>}</div>
 <div class="ttc" id="a_array_stack_8h_html"><div class="ttname"><a href="../../d4/d76/_array_stack_8h.html">ArrayStack.h</a></div><div class="ttdoc">栈 数组实现 (Array Stack)</div></div>
 <div class="ttc" id="astruct_array_stack_html"><div class="ttname"><a href="../../de/de8/struct_array_stack.html">ArrayStack</a></div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d60/_array_stack_8c_source.html#l00012">ArrayStack.c:13</a></div></div>
 <div class="ttc" id="astruct_array_stack_html_a2c51618de7e19e5ded6dbf0a72ba35d7"><div class="ttname"><a href="../../de/de8/struct_array_stack.html#a2c51618de7e19e5ded6dbf0a72ba35d7">ArrayStack::data</a></div><div class="ttdeci">ArrayStackItem data[MAX_CAPACITY]</div><div class="ttdoc">Pointer to the data.</div><div class="ttdef"><b>Definition:</b> <a href="../../dc/d60/_array_stack_8c_source.html#l00015">ArrayStack.c:15</a></div></div>

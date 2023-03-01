@@ -607,12 +607,12 @@ long long String_ToInteger(const String* self, int base)
     return sign * integer_part;
 }
 
-int String_Count(const String* self, char x)
+int String_Count(const String* self, char ch)
 {
     int cnt = 0;
     for (int i = 0; i < self->size; i++)
     {
-        if (self->data[i] == x)
+        if (self->data[i] == ch)
         {
             cnt++;
         }

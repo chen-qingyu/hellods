@@ -117,6 +117,9 @@ Functions</h2></td></tr>
 <tr class="memitem:a46128223065c50b393d69a6224ff044c"><td class="memItemLeft" align="right" valign="top">ArrayQueueItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dc5/_array_queue_8h.html#a46128223065c50b393d69a6224ff044c">ArrayQueue_Front</a> (<a class="el" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a> *self)</td></tr>
 <tr class="memdesc:a46128223065c50b393d69a6224ff044c"><td class="mdescLeft">&#160;</td><td class="mdescRight">查看队首元素  <br /></td></tr>
 <tr class="separator:a46128223065c50b393d69a6224ff044c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fc0194e3475ea928907c5c1f6fcd032"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../da/dc5/_array_queue_8h.html#a5fc0194e3475ea928907c5c1f6fcd032">ArrayQueue_Clear</a> (<a class="el" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a> *self)</td></tr>
+<tr class="memdesc:a5fc0194e3475ea928907c5c1f6fcd032"><td class="mdescLeft">&#160;</td><td class="mdescRight">清空队列的内容  <br /></td></tr>
+<tr class="separator:a5fc0194e3475ea928907c5c1f6fcd032"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>队列 数组实现 (Array Queue) </p>
@@ -236,7 +239,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队列长度 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00048">48</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00050">50</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
 
 </div>
 </div>
@@ -265,7 +268,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>如果队列已空则返回 true ，否则返回 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00053">53</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00055">55</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
 
 </div>
 </div>
@@ -304,7 +307,7 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00058">58</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00060">60</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
 
 </div>
 </div>
@@ -333,7 +336,7 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队首元素 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00066">66</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00068">68</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
 
 </div>
 </div>
@@ -362,7 +365,35 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队首元素 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00075">75</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00077">77</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
+
+</div>
+</div>
+<a id="a5fc0194e3475ea928907c5c1f6fcd032" name="a5fc0194e3475ea928907c5c1f6fcd032"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fc0194e3475ea928907c5c1f6fcd032">&#9670;&#160;</a></span>ArrayQueue_Clear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void ArrayQueue_Clear </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d7/df5/struct_array_queue.html">ArrayQueue</a> *&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>清空队列的内容 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">self</td><td>一个指向队列的指针 </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="../../df/d74/_array_queue_8c_source.html#l00084">84</a> of file <a class="el" href="../../df/d74/_array_queue_8c_source.html">ArrayQueue.c</a>.</p>
 
 </div>
 </div>

@@ -9,11 +9,12 @@ var searchData=
   ['matrixgraph_5fisadjacent_6',['MatrixGraph_IsAdjacent',['../d4/dd9/_matrix_graph_8h.html#a1d0c16dc3350be2d67af2656617c0484',1,'MatrixGraph.c']]],
   ['matrixgraph_5flink_7',['MatrixGraph_Link',['../d4/dd9/_matrix_graph_8h.html#ab2109fd353419f14ca752413abb00bed',1,'MatrixGraph.c']]],
   ['matrixgraph_5funlink_8',['MatrixGraph_Unlink',['../d4/dd9/_matrix_graph_8h.html#afacf190e40cefeabe0591b1367d8f1f3',1,'MatrixGraph.c']]],
-  ['maxheap_5fcreate_9',['MaxHeap_Create',['../dc/dff/_max_heap_8h.html#afe26f0dc100458ab855d56cca3ff6cd3',1,'MaxHeap.c']]],
-  ['maxheap_5fdestroy_10',['MaxHeap_Destroy',['../dc/dff/_max_heap_8h.html#a7a379e7423af5d712459eed02878fd72',1,'MaxHeap.c']]],
-  ['maxheap_5fisempty_11',['MaxHeap_IsEmpty',['../dc/dff/_max_heap_8h.html#a92c03528b1d719cd460addfc492d80c6',1,'MaxHeap.c']]],
-  ['maxheap_5fpop_12',['MaxHeap_Pop',['../dc/dff/_max_heap_8h.html#a50bcacfd43726ec2e9b304f038eb48e4',1,'MaxHeap.c']]],
-  ['maxheap_5fpush_13',['MaxHeap_Push',['../dc/dff/_max_heap_8h.html#aaf9cd65dbdc993a10bfc28f033f61bb2',1,'MaxHeap.c']]],
-  ['maxheap_5fsize_14',['MaxHeap_Size',['../dc/dff/_max_heap_8h.html#a5d9a13a36ec290d552dcde809efa0e6f',1,'MaxHeap.c']]],
-  ['maxheap_5ftop_15',['MaxHeap_Top',['../dc/dff/_max_heap_8h.html#affdb68361e44ecede72d43d30e8cfb1c',1,'MaxHeap.c']]]
+  ['maxheap_5fclear_9',['MaxHeap_Clear',['../dc/dff/_max_heap_8h.html#a2a85bc693a31c8caad2fc949f3d969fd',1,'MaxHeap.c']]],
+  ['maxheap_5fcreate_10',['MaxHeap_Create',['../dc/dff/_max_heap_8h.html#afe26f0dc100458ab855d56cca3ff6cd3',1,'MaxHeap.c']]],
+  ['maxheap_5fdestroy_11',['MaxHeap_Destroy',['../dc/dff/_max_heap_8h.html#a7a379e7423af5d712459eed02878fd72',1,'MaxHeap.c']]],
+  ['maxheap_5fisempty_12',['MaxHeap_IsEmpty',['../dc/dff/_max_heap_8h.html#a92c03528b1d719cd460addfc492d80c6',1,'MaxHeap.c']]],
+  ['maxheap_5fpop_13',['MaxHeap_Pop',['../dc/dff/_max_heap_8h.html#a50bcacfd43726ec2e9b304f038eb48e4',1,'MaxHeap.c']]],
+  ['maxheap_5fpush_14',['MaxHeap_Push',['../dc/dff/_max_heap_8h.html#aaf9cd65dbdc993a10bfc28f033f61bb2',1,'MaxHeap.c']]],
+  ['maxheap_5fsize_15',['MaxHeap_Size',['../dc/dff/_max_heap_8h.html#a5d9a13a36ec290d552dcde809efa0e6f',1,'MaxHeap.c']]],
+  ['maxheap_5ftop_16',['MaxHeap_Top',['../dc/dff/_max_heap_8h.html#affdb68361e44ecede72d43d30e8cfb1c',1,'MaxHeap.c']]]
 ];
