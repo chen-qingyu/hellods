@@ -18,7 +18,9 @@
 - 安全：使用 [Dr. Memory](https://drmemory.org/) 进行了检查，确保没有安全问题（比如内存泄漏）。
 - 文档：使用 [Doxygen](https://www.doxygen.nl/) 制作了文档。
 
-### 2. 面向对象
+### 2. 使用说明
+
+最大的用处是用源码来学习/收藏/展示数据结构。
 
 采用面向对象的设计理念：
 
@@ -35,6 +37,19 @@ String** String_Split(const String* self, const String* sep);
 ArrayList* ArrayList_Create(void);
 String* String_From(const char* chars);
 ```
+
+一些简单的例子：
+
+```C
+String_At("Hello World!", -1); // '!' 取下标
+String_ToDecimal(".1e-2"); // 0.1e-2 解析浮点数（支持inf和nan）
+String_ToInteger("cafebabe", 16); // 3405691582LL 解析整数（支持2-36进制）
+String_Replace("hahaha", "a", "ooow~ "); // "hooow~ hooow~ hooow~ " 替换
+String_Split("one, two, three", ", "); // String** -> ["one", "two", "three"] 分割
+String_Slice("12345", 0, 5, 2); // "135" 切片
+```
+
+几乎都是基础数据结构，没什么太大的亮点，中规中矩，因为这个项目的目的不是提供可使用的库，而是学习/收藏/展示数据结构。
 
 ### 3. 开发历史
 
