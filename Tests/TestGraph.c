@@ -19,6 +19,9 @@ void TestMatrixGraph(void)
     // MatrixGraph_Create
     MatrixGraph* G = MatrixGraph_Create();
 
+    // MatrixGraph_SetVertexNumber
+    MatrixGraph_SetVertexNumber(G, 7);
+
     // MatrixGraph_Link
     MatrixGraph_Link(G, 0, 1, 2);
     MatrixGraph_Link(G, 0, 3, 1);
@@ -74,8 +77,8 @@ void TestMatrixGraph(void)
     memset(str, 0, sizeof(str));
 
     // MatrixGraph_Dijkstra
-    int dist[VERTEX_NUMBER];
-    int path[VERTEX_NUMBER];
+    int dist[7];
+    int path[7];
     MatrixGraph_Dijkstra(G, dist, path, 0);
 
     assert(dist[0] == 0);

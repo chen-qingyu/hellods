@@ -13,19 +13,17 @@
 
 #include <stdbool.h> // bool
 
-#define VERTEX_NUMBER 7
+/// 顶点的编号
+typedef int MatrixGraphVertex;
 
-/* 注释掉此行变成无向图 */
-// #define UNDIRECTED
+/// 边的权重
+typedef int MatrixGraphEdge;
 
-typedef int MatrixGraphVertex; // 顶点的编号
-
-typedef int MatrixGraphEdge; // 边的权重
-
-typedef struct MatrixGraph MatrixGraph; // 图
+/// 加权有向图
+typedef struct MatrixGraph MatrixGraph;
 
 /**
- * @brief 创建一个空图
+ * @brief 创建一个空图（零个节点的加权有向图）
  *
  * @return 一个指向空图的指针
  */
@@ -37,6 +35,14 @@ MatrixGraph* MatrixGraph_Create(void);
  * @param self 一个指向待销毁图的指针
  */
 void MatrixGraph_Destroy(MatrixGraph* self);
+
+/**
+ * @brief 设置图的顶点数量
+ *
+ * @param self 一个指向图的指针
+ * @param vertex_number 顶点数量
+ */
+void MatrixGraph_SetVertexNumber(MatrixGraph* self, int vertex_number);
 
 /**
  * @brief 以权重 E 链接图的两个顶点 V1 和 V2
@@ -104,6 +110,6 @@ bool MatrixGraph_Dijkstra(const MatrixGraph* self, MatrixGraphEdge dist[], Matri
  * @param path 路径数组
  * @return 如果执行成功返回 true ，否则返回 false
  */
-bool MatrixGraph_Floyd(const MatrixGraph* self, MatrixGraphEdge dist[][VERTEX_NUMBER], MatrixGraphVertex path[][VERTEX_NUMBER]);
+bool MatrixGraph_Floyd(const MatrixGraph* self, MatrixGraphEdge** dist, MatrixGraphVertex** path);
 
 #endif // MATRIXGRAPH_H
