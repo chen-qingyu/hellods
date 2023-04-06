@@ -82,24 +82,20 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>字符串 (<a class="el" href="../../d1/d18/struct_string.html">String</a>)  
+<p>字符串 (<a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a>)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
-<code>#include &lt;math.h&gt;</code><br />
-</div>
-<p><a href="../../db/db5/_string_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a54ad19f2d17915dbf4eb4c2fa2fa8680"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="../../d1/d18/struct_string.html">String</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db5/_string_8h.html#a54ad19f2d17915dbf4eb4c2fa2fa8680">String</a></td></tr>
+<tr class="memitem:a54ad19f2d17915dbf4eb4c2fa2fa8680"><td class="memItemLeft" align="right" valign="top"><a id="a54ad19f2d17915dbf4eb4c2fa2fa8680" name="a54ad19f2d17915dbf4eb4c2fa2fa8680"></a>
+typedef struct <a class="el" href="../../d1/d18/struct_string.html">String</a>&#160;</td><td class="memItemRight" valign="bottom"><b>String</b></td></tr>
+<tr class="memdesc:a54ad19f2d17915dbf4eb4c2fa2fa8680"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a>. <br /></td></tr>
 <tr class="separator:a54ad19f2d17915dbf4eb4c2fa2fa8680"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:afbb7a18945a0832b5189bbe768dd0c51"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>Order</b> { <b>LT</b> = -1
-, <b>EQ</b> = 0
-, <b>GT</b> = 1
- }</td></tr>
+<tr class="memitem:afbb7a18945a0832b5189bbe768dd0c51"><td class="memItemLeft" align="right" valign="top"><a id="afbb7a18945a0832b5189bbe768dd0c51" name="afbb7a18945a0832b5189bbe768dd0c51"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db5/_string_8h.html#afbb7a18945a0832b5189bbe768dd0c51">Order</a> </td></tr>
+<tr class="memdesc:afbb7a18945a0832b5189bbe768dd0c51"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used for string comparison. <br /></td></tr>
 <tr class="separator:afbb7a18945a0832b5189bbe768dd0c51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -149,7 +145,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ab13c111da34b6711aa065f388ef614d4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db5/_string_8h.html#ab13c111da34b6711aa065f388ef614d4">String_Equal</a> (const <a class="el" href="../../d1/d18/struct_string.html">String</a> *self, const <a class="el" href="../../d1/d18/struct_string.html">String</a> *that)</td></tr>
 <tr class="memdesc:ab13c111da34b6711aa065f388ef614d4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Determine whether the two strings have the same contents. O(N)  <br /></td></tr>
 <tr class="separator:ab13c111da34b6711aa065f388ef614d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac1d26f4caec9aa62a50efc7c59ef42f1"><td class="memItemLeft" align="right" valign="top">enum Order&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db5/_string_8h.html#ac1d26f4caec9aa62a50efc7c59ef42f1">String_Compare</a> (const <a class="el" href="../../d1/d18/struct_string.html">String</a> *self, const <a class="el" href="../../d1/d18/struct_string.html">String</a> *that)</td></tr>
+<tr class="memitem:ac1d26f4caec9aa62a50efc7c59ef42f1"><td class="memItemLeft" align="right" valign="top">enum <a class="el" href="../../db/db5/_string_8h.html#afbb7a18945a0832b5189bbe768dd0c51">Order</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db5/_string_8h.html#ac1d26f4caec9aa62a50efc7c59ef42f1">String_Compare</a> (const <a class="el" href="../../d1/d18/struct_string.html">String</a> *self, const <a class="el" href="../../d1/d18/struct_string.html">String</a> *that)</td></tr>
 <tr class="memdesc:ac1d26f4caec9aa62a50efc7c59ef42f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare two strings lexicographically. O(N)  <br /></td></tr>
 <tr class="separator:ac1d26f4caec9aa62a50efc7c59ef42f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2312df0531e03a34260e8ee2fc13cc6e"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/db5/_string_8h.html#a2312df0531e03a34260e8ee2fc13cc6e">String_Find</a> (const <a class="el" href="../../d1/d18/struct_string.html">String</a> *self, const <a class="el" href="../../d1/d18/struct_string.html">String</a> *pattern, int start, int stop)</td></tr>
@@ -202,7 +198,7 @@ Functions</h2></td></tr>
 <tr class="separator:ad2d8cda0a156f00c6b81deaa8bd190e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>字符串 (<a class="el" href="../../d1/d18/struct_string.html">String</a>) </p>
+<div class="textblock"><p>字符串 (<a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a>) </p>
 <dl class="section author"><dt>Author</dt><dd>青羽 (<a href="#" onclick="location.href='mai'+'lto:'+'che'+'n_'+'qin'+'gy'+'u@q'+'q.'+'com'; return false;">chen_<span class="obfuscator">.nosp@m.</span>qing<span class="obfuscator">.nosp@m.</span>yu@qq<span class="obfuscator">.nosp@m.</span>.com</a>, <a href="https://chen-qingyu.github.io/">https://chen-qingyu.github.io/</a>) </dd></dl>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2022.11.03</dd></dl>
@@ -261,43 +257,7 @@ Functions</h2></td></tr>
 </ul>
 </li>
 </ul>
-
-<p class="definition">Definition in file <a class="el" href="../../db/db5/_string_8h_source.html">String.h</a>.</p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a54ad19f2d17915dbf4eb4c2fa2fa8680" name="a54ad19f2d17915dbf4eb4c2fa2fa8680"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a54ad19f2d17915dbf4eb4c2fa2fa8680">&#9670;&#160;</a></span>String</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="../../d1/d18/struct_string.html">String</a> <a class="el" href="../../d1/d18/struct_string.html">String</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../db/db5/_string_8h_source.html#l00068">68</a> of file <a class="el" href="../../db/db5/_string_8h_source.html">String.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="afbb7a18945a0832b5189bbe768dd0c51" name="afbb7a18945a0832b5189bbe768dd0c51"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afbb7a18945a0832b5189bbe768dd0c51">&#9670;&#160;</a></span>Order</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum Order</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../db/db5/_string_8h_source.html#l00071">71</a> of file <a class="el" href="../../db/db5/_string_8h_source.html">String.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a624d70a0010383532577409fedef39d5" name="a624d70a0010383532577409fedef39d5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a624d70a0010383532577409fedef39d5">&#9670;&#160;</a></span>String_Create()</h2>
 
@@ -315,13 +275,9 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Create an empty string. Constructor. O(1) </p>
-<p>Constructor / Destructor </p>
 <p>Like <code>string new_str();</code> in C++.</p>
-<p>Example: string *new_str = String_Create();</p>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the empty string.</dd></dl>
-<p>Constructor / Destructor </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00191">191</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
+<p>Example: string *new_str = <a class="el" href="../../db/db5/_string_8h.html#a624d70a0010383532577409fedef39d5" title="Create an empty string. Constructor. O(1)">String_Create()</a>;</p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the empty string. </dd></dl>
 
 </div>
 </div>
@@ -352,8 +308,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the new string. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00204">204</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="af629ca917af2c72344adbd2e917cb9dd" name="af629ca917af2c72344adbd2e917cb9dd"></a>
@@ -374,8 +328,6 @@ Functions</h2></td></tr>
 
 <p>Create a line of string from standard input. O(N) </p>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the new string. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00221">221</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -406,8 +358,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the copied string. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00234">234</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="a95513a3fff80bf354596148466237751" name="a95513a3fff80bf354596148466237751"></a>
@@ -437,8 +387,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the moved string. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00251">251</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="a2aa0cc7a23512b3e34fe9e4a0b08d58d" name="a2aa0cc7a23512b3e34fe9e4a0b08d58d"></a>
@@ -466,8 +414,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00268">268</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -498,19 +444,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Copy assignment operation. O(N) </p>
-<p>Assignment </p>
 <p>Like <code>self = that;</code> in C++.</p>
 <p>Example: String_CopyAssign(self, that);</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>A pointer to the left hand side string. </td></tr>
-    <tr><td class="paramname">that</td><td>A pointer to the right hand side string.</td></tr>
+    <tr><td class="paramname">that</td><td>A pointer to the right hand side string. </td></tr>
   </table>
   </dd>
 </dl>
-<p>Assignment </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00280">280</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -551,8 +493,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00295">295</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="a3cf3ee7c536bdf7d0100ea5049aa5d80" name="a3cf3ee7c536bdf7d0100ea5049aa5d80"></a>
@@ -572,7 +512,6 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the copy of the contents of the string. O(N) </p>
-<p>Getter / Setter </p>
 <p>Example: char *chars = String_Get(self);</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -580,10 +519,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to a null-terminated byte string.</dd></dl>
-<p>Getter / Setter </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00314">314</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to a null-terminated byte string. </dd></dl>
 
 </div>
 </div>
@@ -623,8 +559,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00326">326</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="a2390abda5ace7554d0d39bb80af7caeb" name="a2390abda5ace7554d0d39bb80af7caeb"></a>
@@ -644,17 +578,13 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Find the size of the string. O(1) </p>
-<p>Examination (will not change the object itself) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>A pointer to the string. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The size of the string.</dd></dl>
-<p>Examination (will not change the object itself) </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00345">345</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>The size of the string. </dd></dl>
 
 </div>
 </div>
@@ -683,8 +613,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns true if the string is empty, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00350">350</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="ac2d91ea91fabf2552c2acaa436e5589a" name="ac2d91ea91fabf2552c2acaa436e5589a"></a>
@@ -710,8 +638,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00355">355</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -752,8 +678,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The i-th character. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00360">360</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="ab13c111da34b6711aa065f388ef614d4" name="ab13c111da34b6711aa065f388ef614d4"></a>
@@ -792,8 +716,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns true if the contents of the two strings are the same, false otherwise. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00367">367</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="ac1d26f4caec9aa62a50efc7c59ef42f1" name="ac1d26f4caec9aa62a50efc7c59ef42f1"></a>
@@ -803,7 +725,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum Order String_Compare </td>
+          <td class="memname">enum <a class="el" href="../../db/db5/_string_8h.html#afbb7a18945a0832b5189bbe768dd0c51">Order</a> String_Compare </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../d1/d18/struct_string.html">String</a> *&#160;</td>
           <td class="paramname"><em>self</em>, </td>
@@ -831,8 +753,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An enumeration value: order{LT, EQ, GT}. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00385">385</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -888,8 +808,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>Returns the starting substring index or -1 if the string does not contain the pattern. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00418">418</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="a0020e093bb74c4621cf33b453a34699c" name="a0020e093bb74c4621cf33b453a34699c"></a>
@@ -916,13 +834,11 @@ Functions</h2></td></tr>
 <p>string *str4 = String_From("inf"); double number4 = String_ToDecimal(str4); // =&gt; INFINITY</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">self</td><td><a class="el" href="../../d1/d18/struct_string.html">String</a> to be parsed. </td></tr>
+    <tr><td class="paramname">self</td><td><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> to be parsed. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A number that can represent the string or HUGE_VAL or NAN or [+-]?INFINITY. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00430">430</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -959,14 +875,12 @@ Functions</h2></td></tr>
 <p>string *str3 = String_From("z"); long long number3 = String_ToInteger(str3, 36); // =&gt; 35</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">self</td><td><a class="el" href="../../d1/d18/struct_string.html">String</a> to be parsed. </td></tr>
+    <tr><td class="paramname">self</td><td><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> to be parsed. </td></tr>
     <tr><td class="paramname">base</td><td>The base of an integer (2 &lt;= base &lt;= 36). </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>An integer number that can represent the string. </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00555">555</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -1006,8 +920,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The total number of occurrences of ch in the string. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00610">610</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="a13873510fb22257d4d9744c9257d13bf" name="a13873510fb22257d4d9744c9257d13bf"></a>
@@ -1027,16 +939,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Convert the string to lowercase. O(N) </p>
-<p>Manipulation (will change the object itself) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">self</td><td>A pointer to the string.</td></tr>
+    <tr><td class="paramname">self</td><td>A pointer to the string. </td></tr>
   </table>
   </dd>
 </dl>
-<p>Manipulation (will change the object itself) </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00627">627</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -1063,8 +971,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00635">635</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -1102,8 +1008,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00643">643</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -1149,8 +1053,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00652">652</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="a37afe3d2814b04c72238ed8f8b31f7a8" name="a37afe3d2814b04c72238ed8f8b31f7a8"></a>
@@ -1176,8 +1078,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00665">665</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -1223,8 +1123,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00675">675</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="ae6f6aae703bf81bc5cafaa4627758ba7" name="ae6f6aae703bf81bc5cafaa4627758ba7"></a>
@@ -1250,8 +1148,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00698">698</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -1290,8 +1186,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00714">714</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="a0fd6e7fe011af92fa90420d7e4518ddd" name="a0fd6e7fe011af92fa90420d7e4518ddd"></a>
@@ -1317,8 +1211,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00729">729</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>
@@ -1349,20 +1241,16 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Split string with separator. O(N) </p>
-<p>Production (will produce new object) </p>
 <p>Example: string *str = String_From("one, two, three"); string *sep = String_From(", "); string **str_arr = String_Split(str, sep); // =&gt; ["one", "two", "three", NULL]</p>
 <p>Don't forget use String_DestroyArray(return-value).</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">self</td><td><a class="el" href="../../d1/d18/struct_string.html">String</a> to be split. </td></tr>
+    <tr><td class="paramname">self</td><td><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> to be split. </td></tr>
     <tr><td class="paramname">sep</td><td>Separator string. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A null-terminated array of split string pointers.</dd></dl>
-<p>Production (will produce new object) </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00741">741</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
+<dl class="section return"><dt>Returns</dt><dd>A null-terminated array of split string pointers. </dd></dl>
 
 </div>
 </div>
@@ -1417,8 +1305,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The slice of the string. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00770">770</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
-
 </div>
 </div>
 <a id="ad2d8cda0a156f00c6b81deaa8bd190e7" name="ad2d8cda0a156f00c6b81deaa8bd190e7"></a>
@@ -1438,16 +1324,12 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Destroy a string array. Helper function for <a class="el" href="../../db/db5/_string_8h.html#a176bd3e46720885960bd94262b8eef14" title="Split string with separator. O(N)">String_Split()</a>. O(N) </p>
-<p>Auxiliary (helper functions) </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str_arr</td><td>A pointer to the string array to be destroyed.</td></tr>
+    <tr><td class="paramname">str_arr</td><td>A pointer to the string array to be destroyed. </td></tr>
   </table>
   </dd>
 </dl>
-<p>Auxiliary (helper functions) </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d9/d42/_string_8c_source.html#l00800">800</a> of file <a class="el" href="../../d9/d42/_string_8c_source.html">String.c</a>.</p>
 
 </div>
 </div>

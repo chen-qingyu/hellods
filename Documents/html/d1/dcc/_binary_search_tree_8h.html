@@ -85,30 +85,29 @@ $(function() {
 
 <p>二叉搜索树 (Binary Search Tree)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
-</div>
-<p><a href="../../d1/dcc/_binary_search_tree_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:a98dc3c7437e74b9f6e3d17763d849008"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a98dc3c7437e74b9f6e3d17763d849008">BINARY_SEARCH_TREE_NOT_FOUND</a>&#160;&#160;&#160;(-1)</td></tr>
-<tr class="memdesc:a98dc3c7437e74b9f6e3d17763d849008"><td class="mdescLeft">&#160;</td><td class="mdescRight">A value of BinarySearchTreeItem that indicates not found.  <br /></td></tr>
+<tr class="memitem:a98dc3c7437e74b9f6e3d17763d849008"><td class="memItemLeft" align="right" valign="top"><a id="a98dc3c7437e74b9f6e3d17763d849008" name="a98dc3c7437e74b9f6e3d17763d849008"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BINARY_SEARCH_TREE_NOT_FOUND</b>&#160;&#160;&#160;(-1)</td></tr>
+<tr class="memdesc:a98dc3c7437e74b9f6e3d17763d849008"><td class="mdescLeft">&#160;</td><td class="mdescRight">A value of BinarySearchTreeItem that indicates not found. <br /></td></tr>
 <tr class="separator:a98dc3c7437e74b9f6e3d17763d849008"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ac2f80afb0bbba136d7c9ee72137bb4a1"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a></td></tr>
+<tr class="memitem:ac2f80afb0bbba136d7c9ee72137bb4a1"><td class="memItemLeft" align="right" valign="top"><a id="ac2f80afb0bbba136d7c9ee72137bb4a1" name="ac2f80afb0bbba136d7c9ee72137bb4a1"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>BinarySearchTreeItem</b></td></tr>
+<tr class="memdesc:ac2f80afb0bbba136d7c9ee72137bb4a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary Search Tree Item. <br /></td></tr>
 <tr class="separator:ac2f80afb0bbba136d7c9ee72137bb4a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad2e7945e6d409fc656cab451de1df226"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ad2e7945e6d409fc656cab451de1df226">BinarySearchTree</a></td></tr>
+<tr class="memitem:ad2e7945e6d409fc656cab451de1df226"><td class="memItemLeft" align="right" valign="top"><a id="ad2e7945e6d409fc656cab451de1df226" name="ad2e7945e6d409fc656cab451de1df226"></a>
+typedef struct <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a>&#160;</td><td class="memItemRight" valign="bottom"><b>BinarySearchTree</b></td></tr>
+<tr class="memdesc:ad2e7945e6d409fc656cab451de1df226"><td class="mdescLeft">&#160;</td><td class="mdescRight">Binary Search Tree. <br /></td></tr>
 <tr class="separator:ad2e7945e6d409fc656cab451de1df226"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a498193eb9ecc832b5dc184d6943540da"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><b>TraverseOption</b> { <b>PRE_ORDER</b>
-, <b>IN_ORDER</b>
-, <b>POST_ORDER</b>
-, <b>LEVEL_ORDER</b>
- }</td></tr>
+<tr class="memitem:a498193eb9ecc832b5dc184d6943540da"><td class="memItemLeft" align="right" valign="top"><a id="a498193eb9ecc832b5dc184d6943540da" name="a498193eb9ecc832b5dc184d6943540da"></a>enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a498193eb9ecc832b5dc184d6943540da">TraverseOption</a> </td></tr>
+<tr class="memdesc:a498193eb9ecc832b5dc184d6943540da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Traverse Option. <br /></td></tr>
 <tr class="separator:a498193eb9ecc832b5dc184d6943540da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -125,22 +124,22 @@ Functions</h2></td></tr>
 <tr class="memitem:a172f46e4a5855b7975c1c7a14cc444f6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a172f46e4a5855b7975c1c7a14cc444f6">BinarySearchTree_IsEmpty</a> (const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self)</td></tr>
 <tr class="memdesc:a172f46e4a5855b7975c1c7a14cc444f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断二叉搜索树是否为空  <br /></td></tr>
 <tr class="separator:a172f46e4a5855b7975c1c7a14cc444f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a246c47c693145034b27413b7c74ecd55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a246c47c693145034b27413b7c74ecd55">BinarySearchTree_Traverse</a> (<a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self, enum TraverseOption order, void(*p_trav)(const BinarySearchTreeItem data))</td></tr>
+<tr class="memitem:a246c47c693145034b27413b7c74ecd55"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a246c47c693145034b27413b7c74ecd55">BinarySearchTree_Traverse</a> (<a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self, enum <a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a498193eb9ecc832b5dc184d6943540da">TraverseOption</a> order, void(*p_trav)(const <a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a> data))</td></tr>
 <tr class="memdesc:a246c47c693145034b27413b7c74ecd55"><td class="mdescLeft">&#160;</td><td class="mdescRight">遍历一个二叉搜索树  <br /></td></tr>
 <tr class="separator:a246c47c693145034b27413b7c74ecd55"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada0a7fc72eb15693887ae5aa9cf89aff"><td class="memItemLeft" align="right" valign="top">BinarySearchTreeItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ada0a7fc72eb15693887ae5aa9cf89aff">BinarySearchTree_Find</a> (const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self, BinarySearchTreeItem data)</td></tr>
+<tr class="memitem:ada0a7fc72eb15693887ae5aa9cf89aff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ada0a7fc72eb15693887ae5aa9cf89aff">BinarySearchTree_Find</a> (const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self, <a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a> data)</td></tr>
 <tr class="memdesc:ada0a7fc72eb15693887ae5aa9cf89aff"><td class="mdescLeft">&#160;</td><td class="mdescRight">在一个二叉搜索树中寻找元素 data  <br /></td></tr>
 <tr class="separator:ada0a7fc72eb15693887ae5aa9cf89aff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45779a8902ba85656054c06e5e9aedcb"><td class="memItemLeft" align="right" valign="top">BinarySearchTreeItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a45779a8902ba85656054c06e5e9aedcb">BinarySearchTree_FindMin</a> (const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self)</td></tr>
+<tr class="memitem:a45779a8902ba85656054c06e5e9aedcb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a45779a8902ba85656054c06e5e9aedcb">BinarySearchTree_FindMin</a> (const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self)</td></tr>
 <tr class="memdesc:a45779a8902ba85656054c06e5e9aedcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">在一个二叉搜索树中寻找最小元素  <br /></td></tr>
 <tr class="separator:a45779a8902ba85656054c06e5e9aedcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a132cb4b0d83c4c75e83e0492deed7ed1"><td class="memItemLeft" align="right" valign="top">BinarySearchTreeItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a132cb4b0d83c4c75e83e0492deed7ed1">BinarySearchTree_FindMax</a> (const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self)</td></tr>
+<tr class="memitem:a132cb4b0d83c4c75e83e0492deed7ed1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a132cb4b0d83c4c75e83e0492deed7ed1">BinarySearchTree_FindMax</a> (const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self)</td></tr>
 <tr class="memdesc:a132cb4b0d83c4c75e83e0492deed7ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">在一个二叉搜索树中寻找最大元素  <br /></td></tr>
 <tr class="separator:a132cb4b0d83c4c75e83e0492deed7ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51b91135a4f604202da6c4b7c52b61b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a51b91135a4f604202da6c4b7c52b61b3">BinarySearchTree_Insert</a> (<a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self, BinarySearchTreeItem data)</td></tr>
+<tr class="memitem:a51b91135a4f604202da6c4b7c52b61b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a51b91135a4f604202da6c4b7c52b61b3">BinarySearchTree_Insert</a> (<a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self, <a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a> data)</td></tr>
 <tr class="memdesc:a51b91135a4f604202da6c4b7c52b61b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">在一个二叉搜索树中插入元素 data  <br /></td></tr>
 <tr class="separator:a51b91135a4f604202da6c4b7c52b61b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1497276b2d4bac012cd1e243d4a56398"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a1497276b2d4bac012cd1e243d4a56398">BinarySearchTree_Remove</a> (<a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self, BinarySearchTreeItem data)</td></tr>
+<tr class="memitem:a1497276b2d4bac012cd1e243d4a56398"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a1497276b2d4bac012cd1e243d4a56398">BinarySearchTree_Remove</a> (<a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self, <a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a> data)</td></tr>
 <tr class="memdesc:a1497276b2d4bac012cd1e243d4a56398"><td class="mdescLeft">&#160;</td><td class="mdescRight">在一个二叉搜索树中删除元素 data  <br /></td></tr>
 <tr class="separator:a1497276b2d4bac012cd1e243d4a56398"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a22988f8fd00c212c26d40f13377d53c6"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a22988f8fd00c212c26d40f13377d53c6">BinarySearchTree_Depth</a> (const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *self)</td></tr>
@@ -156,78 +155,7 @@ Functions</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2022.01.29</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022 </dd></dl>
-
-<p class="definition">Definition in file <a class="el" href="../../d1/dcc/_binary_search_tree_8h_source.html">BinarySearchTree.h</a>.</p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a98dc3c7437e74b9f6e3d17763d849008" name="a98dc3c7437e74b9f6e3d17763d849008"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a98dc3c7437e74b9f6e3d17763d849008">&#9670;&#160;</a></span>BINARY_SEARCH_TREE_NOT_FOUND</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define BINARY_SEARCH_TREE_NOT_FOUND&#160;&#160;&#160;(-1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>A value of BinarySearchTreeItem that indicates not found. </p>
-
-<p class="definition">Definition at line <a class="el" href="../../d1/dcc/_binary_search_tree_8h_source.html#l00017">17</a> of file <a class="el" href="../../d1/dcc/_binary_search_tree_8h_source.html">BinarySearchTree.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="ac2f80afb0bbba136d7c9ee72137bb4a1" name="ac2f80afb0bbba136d7c9ee72137bb4a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac2f80afb0bbba136d7c9ee72137bb4a1">&#9670;&#160;</a></span>BinarySearchTreeItem</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int BinarySearchTreeItem</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d1/dcc/_binary_search_tree_8h_source.html#l00027">27</a> of file <a class="el" href="../../d1/dcc/_binary_search_tree_8h_source.html">BinarySearchTree.h</a>.</p>
-
-</div>
-</div>
-<a id="ad2e7945e6d409fc656cab451de1df226" name="ad2e7945e6d409fc656cab451de1df226"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad2e7945e6d409fc656cab451de1df226">&#9670;&#160;</a></span>BinarySearchTree</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d1/dcc/_binary_search_tree_8h_source.html#l00029">29</a> of file <a class="el" href="../../d1/dcc/_binary_search_tree_8h_source.html">BinarySearchTree.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a498193eb9ecc832b5dc184d6943540da" name="a498193eb9ecc832b5dc184d6943540da"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a498193eb9ecc832b5dc184d6943540da">&#9670;&#160;</a></span>TraverseOption</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">enum TraverseOption</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d1/dcc/_binary_search_tree_8h_source.html#l00019">19</a> of file <a class="el" href="../../d1/dcc/_binary_search_tree_8h_source.html">BinarySearchTree.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="a8ae22fff52558c701507106768b06617" name="a8ae22fff52558c701507106768b06617"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8ae22fff52558c701507106768b06617">&#9670;&#160;</a></span>BinarySearchTree_Create()</h2>
 
@@ -246,8 +174,6 @@ Functions</h2></td></tr>
 
 <p>创建一个空二叉搜索树 </p>
 <dl class="section return"><dt>Returns</dt><dd>一个指向空二叉搜索树的指针 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00249">249</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
 
 </div>
 </div>
@@ -274,8 +200,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00260">260</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
 
 </div>
 </div>
@@ -304,8 +228,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>二叉搜索树的元素个数 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00268">268</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
-
 </div>
 </div>
 <a id="a172f46e4a5855b7975c1c7a14cc444f6" name="a172f46e4a5855b7975c1c7a14cc444f6"></a>
@@ -333,8 +255,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>如果二叉搜索树为空则返回 true ，否则返回 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00273">273</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
-
 </div>
 </div>
 <a id="a246c47c693145034b27413b7c74ecd55" name="a246c47c693145034b27413b7c74ecd55"></a>
@@ -352,13 +272,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">enum TraverseOption&#160;</td>
+          <td class="paramtype">enum <a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#a498193eb9ecc832b5dc184d6943540da">TraverseOption</a>&#160;</td>
           <td class="paramname"><em>order</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)(const BinarySearchTreeItem data)&#160;</td>
+          <td class="paramtype">void(*)(const <a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a> data)&#160;</td>
           <td class="paramname"><em>p_trav</em>&#160;</td>
         </tr>
         <tr>
@@ -385,8 +305,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00278">278</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
-
 </div>
 </div>
 <a id="ada0a7fc72eb15693887ae5aa9cf89aff" name="ada0a7fc72eb15693887ae5aa9cf89aff"></a>
@@ -396,7 +314,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">BinarySearchTreeItem BinarySearchTree_Find </td>
+          <td class="memname"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a> BinarySearchTree_Find </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *&#160;</td>
           <td class="paramname"><em>self</em>, </td>
@@ -404,7 +322,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">BinarySearchTreeItem&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a>&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -425,8 +343,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>元素 data 或者 BINARY_SEARCH_TREE_NOT_FOUND </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00283">283</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
-
 </div>
 </div>
 <a id="a45779a8902ba85656054c06e5e9aedcb" name="a45779a8902ba85656054c06e5e9aedcb"></a>
@@ -436,7 +352,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">BinarySearchTreeItem BinarySearchTree_FindMin </td>
+          <td class="memname"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a> BinarySearchTree_FindMin </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -454,8 +370,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>最小的元素或者 BINARY_SEARCH_TREE_NOT_FOUND </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00306">306</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
-
 </div>
 </div>
 <a id="a132cb4b0d83c4c75e83e0492deed7ed1" name="a132cb4b0d83c4c75e83e0492deed7ed1"></a>
@@ -465,7 +379,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">BinarySearchTreeItem BinarySearchTree_FindMax </td>
+          <td class="memname"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a> BinarySearchTree_FindMax </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../de/d22/struct_binary_search_tree.html">BinarySearchTree</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -482,8 +396,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>最大的元素或者 BINARY_SEARCH_TREE_NOT_FOUND </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00321">321</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
 
 </div>
 </div>
@@ -502,7 +414,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">BinarySearchTreeItem&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a>&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -522,8 +434,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00336">336</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
-
 </div>
 </div>
 <a id="a1497276b2d4bac012cd1e243d4a56398" name="a1497276b2d4bac012cd1e243d4a56398"></a>
@@ -541,7 +451,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">BinarySearchTreeItem&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d1/dcc/_binary_search_tree_8h.html#ac2f80afb0bbba136d7c9ee72137bb4a1">BinarySearchTreeItem</a>&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -560,8 +470,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00341">341</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
 
 </div>
 </div>
@@ -590,8 +498,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>二叉搜索树的最大深度 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00346">346</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
-
 </div>
 </div>
 <a id="a713d26bbcd67a84c3b44cd56330fff13" name="a713d26bbcd67a84c3b44cd56330fff13"></a>
@@ -617,8 +523,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html#l00351">351</a> of file <a class="el" href="../../d0/d21/_binary_search_tree_8c_source.html">BinarySearchTree.c</a>.</p>
 
 </div>
 </div>

@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['next_0',['next',['../d9/d1f/struct_doubly_linked_list_node.html#a46c992eae47c025b0b6479d9bfda1804',1,'DoublyLinkedListNode::next()'],['../db/dc6/struct_linked_list_node.html#ab858b9e7a165df91c1095ccf86f316e9',1,'LinkedListNode::next()'],['../d1/d65/struct_linked_queue_node.html#a9031b91748c211f551352c0ec757581e',1,'LinkedQueueNode::next()'],['../d3/d4a/struct_linked_stack_node.html#a2365b3ae996947f77d509e24170ebec5',1,'LinkedStackNode::next()']]]
+  ['p_5flatest_0',['p_latest',['../d6/db6/struct_doubly_linked_list.html#a5fa4a4b7bc3b61cd224be7be336b04b9',1,'DoublyLinkedList']]],
+  ['pairs_1',['pairs',['../d8/d82/struct_hash_table.html#ab970bbe17910709d182d6df82dfc2532',1,'HashTable']]],
+  ['prev_2',['prev',['../d9/d1f/struct_doubly_linked_list_node.html#a6a1cd98a18a7c62cbd0480f1e8d0a617',1,'DoublyLinkedListNode']]]
 ];

@@ -2,7 +2,7 @@ var searchData=
 [
   ['size_0',['size',['../db/d2a/struct_linked_list.html#a439227feff9d7f55384e8780cfc2eb82',1,'LinkedList::size()'],['../d9/d4e/struct_max_heap.html#a439227feff9d7f55384e8780cfc2eb82',1,'MaxHeap::size()'],['../d3/df0/struct_array_list.html#a439227feff9d7f55384e8780cfc2eb82',1,'ArrayList::size()'],['../d6/db6/struct_doubly_linked_list.html#a439227feff9d7f55384e8780cfc2eb82',1,'DoublyLinkedList::size()'],['../de/d22/struct_binary_search_tree.html#a439227feff9d7f55384e8780cfc2eb82',1,'BinarySearchTree::size()'],['../dc/d5d/struct_linked_queue.html#a439227feff9d7f55384e8780cfc2eb82',1,'LinkedQueue::size()'],['../dc/d89/struct_linked_stack.html#a439227feff9d7f55384e8780cfc2eb82',1,'LinkedStack::size()'],['../d1/d18/struct_string.html#a439227feff9d7f55384e8780cfc2eb82',1,'String::size()'],['../d8/d82/struct_hash_table.html#a439227feff9d7f55384e8780cfc2eb82',1,'HashTable::size()']]],
   ['state_1',['state',['../d5/d0b/struct_hash_table_pair.html#a7c986c40fc42fb216d746a6aff92a58f',1,'HashTablePair']]],
-  ['string_2',['String',['../d1/d18/struct_string.html',1,'']]],
+  ['string_2',['String',['../d1/d18/struct_string.html',1,'String'],['../db/db5/_string_8h.html#a54ad19f2d17915dbf4eb4c2fa2fa8680',1,'String():&#160;String.h']]],
   ['string_2eh_3',['String.h',['../db/db5/_string_8h.html',1,'']]],
   ['string_5fappend_4',['String_Append',['../db/db5/_string_8h.html#aa4640d909c59d10b0e401a3ab539865f',1,'String.c']]],
   ['string_5fat_5',['String_At',['../db/db5/_string_8h.html#a8b85184705c3bf3f3a261d36cf783eb7',1,'String.c']]],

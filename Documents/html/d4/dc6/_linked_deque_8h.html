@@ -83,15 +83,16 @@ $(function() {
 
 <p>双端队列 双链表实现 (Linked Deque)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
-</div>
-<p><a href="../../d4/dc6/_linked_deque_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a81cb0d7e94790f145751fce4fd111906"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a></td></tr>
+<tr class="memitem:a81cb0d7e94790f145751fce4fd111906"><td class="memItemLeft" align="right" valign="top"><a id="a81cb0d7e94790f145751fce4fd111906" name="a81cb0d7e94790f145751fce4fd111906"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>LinkedDequeItem</b></td></tr>
+<tr class="memdesc:a81cb0d7e94790f145751fce4fd111906"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linked Deque Item. <br /></td></tr>
 <tr class="separator:a81cb0d7e94790f145751fce4fd111906"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2926d58fa0ee0a4217c4381ef8807326"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a2926d58fa0ee0a4217c4381ef8807326">LinkedDeque</a></td></tr>
+<tr class="memitem:a2926d58fa0ee0a4217c4381ef8807326"><td class="memItemLeft" align="right" valign="top"><a id="a2926d58fa0ee0a4217c4381ef8807326" name="a2926d58fa0ee0a4217c4381ef8807326"></a>
+typedef struct <a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a>&#160;</td><td class="memItemRight" valign="bottom"><b>LinkedDeque</b></td></tr>
+<tr class="memdesc:a2926d58fa0ee0a4217c4381ef8807326"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linked Deque. <br /></td></tr>
 <tr class="separator:a2926d58fa0ee0a4217c4381ef8807326"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -108,22 +109,22 @@ Functions</h2></td></tr>
 <tr class="memitem:ae3fd369cab6ff9956d064bd4812365b5"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#ae3fd369cab6ff9956d064bd4812365b5">LinkedDeque_IsEmpty</a> (const <a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
 <tr class="memdesc:ae3fd369cab6ff9956d064bd4812365b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断队列是否已空  <br /></td></tr>
 <tr class="separator:ae3fd369cab6ff9956d064bd4812365b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af71195824f923ab1e4b5d890fceacc0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#af71195824f923ab1e4b5d890fceacc0b">LinkedDeque_PushFront</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self, LinkedDequeItem data)</td></tr>
+<tr class="memitem:af71195824f923ab1e4b5d890fceacc0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#af71195824f923ab1e4b5d890fceacc0b">LinkedDeque_PushFront</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self, <a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a> data)</td></tr>
 <tr class="memdesc:af71195824f923ab1e4b5d890fceacc0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">入队，将元素 data 插入到队列的首部  <br /></td></tr>
 <tr class="separator:af71195824f923ab1e4b5d890fceacc0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6b62e92e5794c4c6ed7a279c1872b0c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a6b62e92e5794c4c6ed7a279c1872b0c2">LinkedDeque_PushBack</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self, LinkedDequeItem data)</td></tr>
+<tr class="memitem:a6b62e92e5794c4c6ed7a279c1872b0c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a6b62e92e5794c4c6ed7a279c1872b0c2">LinkedDeque_PushBack</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self, <a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a> data)</td></tr>
 <tr class="memdesc:a6b62e92e5794c4c6ed7a279c1872b0c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">入队，将元素 data 插入到队列的尾部  <br /></td></tr>
 <tr class="separator:a6b62e92e5794c4c6ed7a279c1872b0c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a257a520d3c1e9eb671d18de6283eb725"><td class="memItemLeft" align="right" valign="top">LinkedDequeItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a257a520d3c1e9eb671d18de6283eb725">LinkedDeque_PopFront</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
+<tr class="memitem:a257a520d3c1e9eb671d18de6283eb725"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a257a520d3c1e9eb671d18de6283eb725">LinkedDeque_PopFront</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
 <tr class="memdesc:a257a520d3c1e9eb671d18de6283eb725"><td class="mdescLeft">&#160;</td><td class="mdescRight">出队，将队列的队首元素出队  <br /></td></tr>
 <tr class="separator:a257a520d3c1e9eb671d18de6283eb725"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54fa74cb570a20f4e6319e984c46d1a8"><td class="memItemLeft" align="right" valign="top">LinkedDequeItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a54fa74cb570a20f4e6319e984c46d1a8">LinkedDeque_PopBack</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
+<tr class="memitem:a54fa74cb570a20f4e6319e984c46d1a8"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a54fa74cb570a20f4e6319e984c46d1a8">LinkedDeque_PopBack</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
 <tr class="memdesc:a54fa74cb570a20f4e6319e984c46d1a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">出队，将队列的队尾元素出队  <br /></td></tr>
 <tr class="separator:a54fa74cb570a20f4e6319e984c46d1a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5574d479683a08d93f72b34a1920ba4d"><td class="memItemLeft" align="right" valign="top">LinkedDequeItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a5574d479683a08d93f72b34a1920ba4d">LinkedDeque_Front</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
+<tr class="memitem:a5574d479683a08d93f72b34a1920ba4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a5574d479683a08d93f72b34a1920ba4d">LinkedDeque_Front</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
 <tr class="memdesc:a5574d479683a08d93f72b34a1920ba4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">查看队首元素  <br /></td></tr>
 <tr class="separator:a5574d479683a08d93f72b34a1920ba4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad511f57f03928731f935af84cec0d088"><td class="memItemLeft" align="right" valign="top">LinkedDequeItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#ad511f57f03928731f935af84cec0d088">LinkedDeque_Back</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
+<tr class="memitem:ad511f57f03928731f935af84cec0d088"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#ad511f57f03928731f935af84cec0d088">LinkedDeque_Back</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
 <tr class="memdesc:ad511f57f03928731f935af84cec0d088"><td class="mdescLeft">&#160;</td><td class="mdescRight">查看队尾元素  <br /></td></tr>
 <tr class="separator:ad511f57f03928731f935af84cec0d088"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a532eddc01661687cc98f3a6efb600ab6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a532eddc01661687cc98f3a6efb600ab6">LinkedDeque_Clear</a> (<a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *self)</td></tr>
@@ -136,42 +137,7 @@ Functions</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2023.01.02</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2023 </dd></dl>
-
-<p class="definition">Definition in file <a class="el" href="../../d4/dc6/_linked_deque_8h_source.html">LinkedDeque.h</a>.</p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a81cb0d7e94790f145751fce4fd111906" name="a81cb0d7e94790f145751fce4fd111906"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a81cb0d7e94790f145751fce4fd111906">&#9670;&#160;</a></span>LinkedDequeItem</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int LinkedDequeItem</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/dc6/_linked_deque_8h_source.html#l00016">16</a> of file <a class="el" href="../../d4/dc6/_linked_deque_8h_source.html">LinkedDeque.h</a>.</p>
-
-</div>
-</div>
-<a id="a2926d58fa0ee0a4217c4381ef8807326" name="a2926d58fa0ee0a4217c4381ef8807326"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2926d58fa0ee0a4217c4381ef8807326">&#9670;&#160;</a></span>LinkedDeque</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> <a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/dc6/_linked_deque_8h_source.html#l00018">18</a> of file <a class="el" href="../../d4/dc6/_linked_deque_8h_source.html">LinkedDeque.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="aca7a8b50aebbfda001ecb5363525c331" name="aca7a8b50aebbfda001ecb5363525c331"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aca7a8b50aebbfda001ecb5363525c331">&#9670;&#160;</a></span>LinkedDeque_Create()</h2>
 
@@ -190,8 +156,6 @@ Functions</h2></td></tr>
 
 <p>创建一个空队列 </p>
 <dl class="section return"><dt>Returns</dt><dd>一个指向空队列的指针 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00022">22</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
 
 </div>
 </div>
@@ -218,8 +182,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00032">32</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
 
 </div>
 </div>
@@ -248,8 +210,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队列长度 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00040">40</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
-
 </div>
 </div>
 <a id="ae3fd369cab6ff9956d064bd4812365b5" name="ae3fd369cab6ff9956d064bd4812365b5"></a>
@@ -277,8 +237,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>如果队列已空则返回 true ，否则返回 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00045">45</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
-
 </div>
 </div>
 <a id="af71195824f923ab1e4b5d890fceacc0b" name="af71195824f923ab1e4b5d890fceacc0b"></a>
@@ -296,7 +254,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">LinkedDequeItem&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a>&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -316,8 +274,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00050">50</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
-
 </div>
 </div>
 <a id="a6b62e92e5794c4c6ed7a279c1872b0c2" name="a6b62e92e5794c4c6ed7a279c1872b0c2"></a>
@@ -335,7 +291,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">LinkedDequeItem&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a>&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -355,8 +311,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00055">55</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
-
 </div>
 </div>
 <a id="a257a520d3c1e9eb671d18de6283eb725" name="a257a520d3c1e9eb671d18de6283eb725"></a>
@@ -366,7 +320,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">LinkedDequeItem LinkedDeque_PopFront </td>
+          <td class="memname"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a> LinkedDeque_PopFront </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -384,8 +338,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队首元素 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00060">60</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
-
 </div>
 </div>
 <a id="a54fa74cb570a20f4e6319e984c46d1a8" name="a54fa74cb570a20f4e6319e984c46d1a8"></a>
@@ -395,7 +347,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">LinkedDequeItem LinkedDeque_PopBack </td>
+          <td class="memname"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a> LinkedDeque_PopBack </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -413,8 +365,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队尾元素 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00065">65</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
-
 </div>
 </div>
 <a id="a5574d479683a08d93f72b34a1920ba4d" name="a5574d479683a08d93f72b34a1920ba4d"></a>
@@ -424,7 +374,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">LinkedDequeItem LinkedDeque_Front </td>
+          <td class="memname"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a> LinkedDeque_Front </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -442,8 +392,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队首元素 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00070">70</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
-
 </div>
 </div>
 <a id="ad511f57f03928731f935af84cec0d088" name="ad511f57f03928731f935af84cec0d088"></a>
@@ -453,7 +401,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">LinkedDequeItem LinkedDeque_Back </td>
+          <td class="memname"><a class="el" href="../../d4/dc6/_linked_deque_8h.html#a81cb0d7e94790f145751fce4fd111906">LinkedDequeItem</a> LinkedDeque_Back </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d1/d4f/struct_linked_deque.html">LinkedDeque</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -470,8 +418,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队尾元素 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00075">75</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
 
 </div>
 </div>
@@ -498,8 +444,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d7/dac/_linked_deque_8c_source.html#l00080">80</a> of file <a class="el" href="../../d7/dac/_linked_deque_8c_source.html">LinkedDeque.c</a>.</p>
 
 </div>
 </div>

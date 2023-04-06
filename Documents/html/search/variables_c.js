@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['top_0',['top',['../de/de8/struct_array_stack.html#af93f4f37fc2ad9c37af4a715423b110c',1,'ArrayStack::top()'],['../dc/d89/struct_linked_stack.html#af28e7e68724c6c1ef29be8c7ff1fecd8',1,'LinkedStack::top()']]],
-  ['trailer_1',['trailer',['../d6/db6/struct_doubly_linked_list.html#a49079cf0a3d96000306af983f3b95232',1,'DoublyLinkedList']]]
+  ['value_0',['value',['../d5/d0b/struct_hash_table_pair.html#a0a053393b79d7b987b5944fa2980974c',1,'HashTablePair']]],
+  ['vertex_5fnum_1',['vertex_num',['../d1/d51/struct_matrix_graph.html#aa832de633dde4bdec2663d898e57c5c2',1,'MatrixGraph']]]
 ];

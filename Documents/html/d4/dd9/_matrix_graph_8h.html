@@ -75,7 +75,6 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#define-members">Macros</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">MatrixGraph.h File Reference</div></div>
@@ -84,53 +83,54 @@ $(function() {
 
 <p>图 邻接矩阵实现 (Matrix Graph)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
-</div>
-<p><a href="../../d4/dd9/_matrix_graph_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
-Macros</h2></td></tr>
-<tr class="memitem:a381aad5729bea8705bdb9e4631d51aae"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a381aad5729bea8705bdb9e4631d51aae">VERTEX_NUMBER</a>&#160;&#160;&#160;7</td></tr>
-<tr class="separator:a381aad5729bea8705bdb9e4631d51aae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a63de785c7da44086e237e68b678c628a"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a></td></tr>
+<tr class="memitem:a63de785c7da44086e237e68b678c628a"><td class="memItemLeft" align="right" valign="top"><a id="a63de785c7da44086e237e68b678c628a" name="a63de785c7da44086e237e68b678c628a"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>MatrixGraphVertex</b></td></tr>
+<tr class="memdesc:a63de785c7da44086e237e68b678c628a"><td class="mdescLeft">&#160;</td><td class="mdescRight">顶点的编号 <br /></td></tr>
 <tr class="separator:a63de785c7da44086e237e68b678c628a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae595e1a6c96ad1d639ca6174e413b073"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ae595e1a6c96ad1d639ca6174e413b073">MatrixGraphEdge</a></td></tr>
+<tr class="memitem:ae595e1a6c96ad1d639ca6174e413b073"><td class="memItemLeft" align="right" valign="top"><a id="ae595e1a6c96ad1d639ca6174e413b073" name="ae595e1a6c96ad1d639ca6174e413b073"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>MatrixGraphEdge</b></td></tr>
+<tr class="memdesc:ae595e1a6c96ad1d639ca6174e413b073"><td class="mdescLeft">&#160;</td><td class="mdescRight">边的权重 <br /></td></tr>
 <tr class="separator:ae595e1a6c96ad1d639ca6174e413b073"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8f0fd0a9632cd9923525c2c162ed7532"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a8f0fd0a9632cd9923525c2c162ed7532">MatrixGraph</a></td></tr>
+<tr class="memitem:a8f0fd0a9632cd9923525c2c162ed7532"><td class="memItemLeft" align="right" valign="top"><a id="a8f0fd0a9632cd9923525c2c162ed7532" name="a8f0fd0a9632cd9923525c2c162ed7532"></a>
+typedef struct <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a>&#160;</td><td class="memItemRight" valign="bottom"><b>MatrixGraph</b></td></tr>
+<tr class="memdesc:a8f0fd0a9632cd9923525c2c162ed7532"><td class="mdescLeft">&#160;</td><td class="mdescRight">加权有向图 <br /></td></tr>
 <tr class="separator:a8f0fd0a9632cd9923525c2c162ed7532"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad0eaf246146e351e5cf11bec2ce87370"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ad0eaf246146e351e5cf11bec2ce87370">MatrixGraph_Create</a> (void)</td></tr>
-<tr class="memdesc:ad0eaf246146e351e5cf11bec2ce87370"><td class="mdescLeft">&#160;</td><td class="mdescRight">创建一个空图  <br /></td></tr>
+<tr class="memdesc:ad0eaf246146e351e5cf11bec2ce87370"><td class="mdescLeft">&#160;</td><td class="mdescRight">创建一个空图（零个节点的加权有向图）  <br /></td></tr>
 <tr class="separator:ad0eaf246146e351e5cf11bec2ce87370"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4c18380c7690d6fafaba75d00bb1a21"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ad4c18380c7690d6fafaba75d00bb1a21">MatrixGraph_Destroy</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self)</td></tr>
 <tr class="memdesc:ad4c18380c7690d6fafaba75d00bb1a21"><td class="mdescLeft">&#160;</td><td class="mdescRight">销毁一个图  <br /></td></tr>
 <tr class="separator:ad4c18380c7690d6fafaba75d00bb1a21"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab2109fd353419f14ca752413abb00bed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ab2109fd353419f14ca752413abb00bed">MatrixGraph_Link</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, MatrixGraphVertex V1, MatrixGraphVertex V2, MatrixGraphEdge E)</td></tr>
+<tr class="memitem:aee2feffaa7922fa31adec41524289949"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#aee2feffaa7922fa31adec41524289949">MatrixGraph_SetVertexNumber</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, int vertex_number)</td></tr>
+<tr class="memdesc:aee2feffaa7922fa31adec41524289949"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置图的顶点数量  <br /></td></tr>
+<tr class="separator:aee2feffaa7922fa31adec41524289949"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2109fd353419f14ca752413abb00bed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ab2109fd353419f14ca752413abb00bed">MatrixGraph_Link</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V1, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V2, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ae595e1a6c96ad1d639ca6174e413b073">MatrixGraphEdge</a> E)</td></tr>
 <tr class="memdesc:ab2109fd353419f14ca752413abb00bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">以权重 E 链接图的两个顶点 V1 和 V2  <br /></td></tr>
 <tr class="separator:ab2109fd353419f14ca752413abb00bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afacf190e40cefeabe0591b1367d8f1f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#afacf190e40cefeabe0591b1367d8f1f3">MatrixGraph_Unlink</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, MatrixGraphVertex V1, MatrixGraphVertex V2)</td></tr>
+<tr class="memitem:afacf190e40cefeabe0591b1367d8f1f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#afacf190e40cefeabe0591b1367d8f1f3">MatrixGraph_Unlink</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V1, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V2)</td></tr>
 <tr class="memdesc:afacf190e40cefeabe0591b1367d8f1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">断开图的两个顶点 V1 和 V2  <br /></td></tr>
 <tr class="separator:afacf190e40cefeabe0591b1367d8f1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1d0c16dc3350be2d67af2656617c0484"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a1d0c16dc3350be2d67af2656617c0484">MatrixGraph_IsAdjacent</a> (const <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, MatrixGraphVertex V1, MatrixGraphVertex V2)</td></tr>
+<tr class="memitem:a1d0c16dc3350be2d67af2656617c0484"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a1d0c16dc3350be2d67af2656617c0484">MatrixGraph_IsAdjacent</a> (const <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V1, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V2)</td></tr>
 <tr class="memdesc:a1d0c16dc3350be2d67af2656617c0484"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断图的两个顶点 V1 和 V2 之间是否链接  <br /></td></tr>
 <tr class="separator:a1d0c16dc3350be2d67af2656617c0484"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a08994f5d75438a26bbfc387d35e3d231"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a08994f5d75438a26bbfc387d35e3d231">MatrixGraph_DFS</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, MatrixGraphVertex startV, void(*p_visit)(MatrixGraphVertex V))</td></tr>
+<tr class="memitem:a08994f5d75438a26bbfc387d35e3d231"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a08994f5d75438a26bbfc387d35e3d231">MatrixGraph_DFS</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> startV, void(*p_visit)(<a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V))</td></tr>
 <tr class="memdesc:a08994f5d75438a26bbfc387d35e3d231"><td class="mdescLeft">&#160;</td><td class="mdescRight">深度优先遍历图  <br /></td></tr>
 <tr class="separator:a08994f5d75438a26bbfc387d35e3d231"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad92b6e323588c89b7c59a6f16ca4fcc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ad92b6e323588c89b7c59a6f16ca4fcc2">MatrixGraph_BFS</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, MatrixGraphVertex startV, void(*p_visit)(MatrixGraphVertex V))</td></tr>
+<tr class="memitem:ad92b6e323588c89b7c59a6f16ca4fcc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ad92b6e323588c89b7c59a6f16ca4fcc2">MatrixGraph_BFS</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> startV, void(*p_visit)(<a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V))</td></tr>
 <tr class="memdesc:ad92b6e323588c89b7c59a6f16ca4fcc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">广度优先遍历图  <br /></td></tr>
 <tr class="separator:ad92b6e323588c89b7c59a6f16ca4fcc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8bc9302105fbd9f55d56da08f766ab2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#aa8bc9302105fbd9f55d56da08f766ab2">MatrixGraph_Dijkstra</a> (const <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, MatrixGraphEdge dist[], MatrixGraphVertex path[], MatrixGraphVertex startV)</td></tr>
+<tr class="memitem:aa8bc9302105fbd9f55d56da08f766ab2"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#aa8bc9302105fbd9f55d56da08f766ab2">MatrixGraph_Dijkstra</a> (const <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ae595e1a6c96ad1d639ca6174e413b073">MatrixGraphEdge</a> dist[], <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> path[], <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> startV)</td></tr>
 <tr class="memdesc:aa8bc9302105fbd9f55d56da08f766ab2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dijkstra 算法遍历图  <br /></td></tr>
 <tr class="separator:aa8bc9302105fbd9f55d56da08f766ab2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31c6b5e2ec9720d9b7e4dfe9b4900eda"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a31c6b5e2ec9720d9b7e4dfe9b4900eda">MatrixGraph_Floyd</a> (const <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, MatrixGraphEdge dist[][VERTEX_NUMBER], MatrixGraphVertex path[][VERTEX_NUMBER])</td></tr>
-<tr class="memdesc:a31c6b5e2ec9720d9b7e4dfe9b4900eda"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floyd 算法遍历图  <br /></td></tr>
-<tr class="separator:a31c6b5e2ec9720d9b7e4dfe9b4900eda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f294742660e7e582204488f86e1fbd9"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a9f294742660e7e582204488f86e1fbd9">MatrixGraph_Floyd</a> (const <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ae595e1a6c96ad1d639ca6174e413b073">MatrixGraphEdge</a> **dist, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> **path)</td></tr>
+<tr class="memdesc:a9f294742660e7e582204488f86e1fbd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Floyd 算法遍历图  <br /></td></tr>
+<tr class="separator:a9f294742660e7e582204488f86e1fbd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>图 邻接矩阵实现 (Matrix Graph) </p>
@@ -138,75 +138,7 @@ Functions</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2022.01.29</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022 </dd></dl>
-
-<p class="definition">Definition in file <a class="el" href="../../d4/dd9/_matrix_graph_8h_source.html">MatrixGraph.h</a>.</p>
-</div><h2 class="groupheader">Macro Definition Documentation</h2>
-<a id="a381aad5729bea8705bdb9e4631d51aae" name="a381aad5729bea8705bdb9e4631d51aae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a381aad5729bea8705bdb9e4631d51aae">&#9670;&#160;</a></span>VERTEX_NUMBER</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define VERTEX_NUMBER&#160;&#160;&#160;7</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/dd9/_matrix_graph_8h_source.html#l00016">16</a> of file <a class="el" href="../../d4/dd9/_matrix_graph_8h_source.html">MatrixGraph.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a63de785c7da44086e237e68b678c628a" name="a63de785c7da44086e237e68b678c628a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a63de785c7da44086e237e68b678c628a">&#9670;&#160;</a></span>MatrixGraphVertex</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int MatrixGraphVertex</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/dd9/_matrix_graph_8h_source.html#l00021">21</a> of file <a class="el" href="../../d4/dd9/_matrix_graph_8h_source.html">MatrixGraph.h</a>.</p>
-
-</div>
-</div>
-<a id="ae595e1a6c96ad1d639ca6174e413b073" name="ae595e1a6c96ad1d639ca6174e413b073"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae595e1a6c96ad1d639ca6174e413b073">&#9670;&#160;</a></span>MatrixGraphEdge</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int MatrixGraphEdge</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/dd9/_matrix_graph_8h_source.html#l00023">23</a> of file <a class="el" href="../../d4/dd9/_matrix_graph_8h_source.html">MatrixGraph.h</a>.</p>
-
-</div>
-</div>
-<a id="a8f0fd0a9632cd9923525c2c162ed7532" name="a8f0fd0a9632cd9923525c2c162ed7532"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8f0fd0a9632cd9923525c2c162ed7532">&#9670;&#160;</a></span>MatrixGraph</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/dd9/_matrix_graph_8h_source.html#l00025">25</a> of file <a class="el" href="../../d4/dd9/_matrix_graph_8h_source.html">MatrixGraph.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="ad0eaf246146e351e5cf11bec2ce87370" name="ad0eaf246146e351e5cf11bec2ce87370"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad0eaf246146e351e5cf11bec2ce87370">&#9670;&#160;</a></span>MatrixGraph_Create()</h2>
 
@@ -223,10 +155,8 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>创建一个空图 </p>
+<p>创建一个空图（零个节点的加权有向图） </p>
 <dl class="section return"><dt>Returns</dt><dd>一个指向空图的指针 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html#l00130">130</a> of file <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html">MatrixGraph.c</a>.</p>
 
 </div>
 </div>
@@ -254,7 +184,42 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html#l00149">149</a> of file <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html">MatrixGraph.c</a>.</p>
+</div>
+</div>
+<a id="aee2feffaa7922fa31adec41524289949" name="aee2feffaa7922fa31adec41524289949"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee2feffaa7922fa31adec41524289949">&#9670;&#160;</a></span>MatrixGraph_SetVertexNumber()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MatrixGraph_SetVertexNumber </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>vertex_number</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>设置图的顶点数量 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">self</td><td>一个指向图的指针 </td></tr>
+    <tr><td class="paramname">vertex_number</td><td>顶点数量 </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -273,19 +238,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>V1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>V2</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphEdge&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ae595e1a6c96ad1d639ca6174e413b073">MatrixGraphEdge</a>&#160;</td>
           <td class="paramname"><em>E</em>&#160;</td>
         </tr>
         <tr>
@@ -307,8 +272,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html#l00156">156</a> of file <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html">MatrixGraph.c</a>.</p>
-
 </div>
 </div>
 <a id="afacf190e40cefeabe0591b1367d8f1f3" name="afacf190e40cefeabe0591b1367d8f1f3"></a>
@@ -326,13 +289,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>V1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>V2</em>&#160;</td>
         </tr>
         <tr>
@@ -353,8 +316,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html#l00164">164</a> of file <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html">MatrixGraph.c</a>.</p>
-
 </div>
 </div>
 <a id="a1d0c16dc3350be2d67af2656617c0484" name="a1d0c16dc3350be2d67af2656617c0484"></a>
@@ -372,13 +333,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>V1</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>V2</em>&#160;</td>
         </tr>
         <tr>
@@ -400,8 +361,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>如果两个顶点已链接则返回 true ，否则返回 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html#l00172">172</a> of file <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html">MatrixGraph.c</a>.</p>
-
 </div>
 </div>
 <a id="a08994f5d75438a26bbfc387d35e3d231" name="a08994f5d75438a26bbfc387d35e3d231"></a>
@@ -419,13 +378,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>startV</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)(MatrixGraphVertex V)&#160;</td>
+          <td class="paramtype">void(*)(<a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V)&#160;</td>
           <td class="paramname"><em>p_visit</em>&#160;</td>
         </tr>
         <tr>
@@ -446,8 +405,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html#l00177">177</a> of file <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html">MatrixGraph.c</a>.</p>
-
 </div>
 </div>
 <a id="ad92b6e323588c89b7c59a6f16ca4fcc2" name="ad92b6e323588c89b7c59a6f16ca4fcc2"></a>
@@ -465,13 +422,13 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>startV</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">void(*)(MatrixGraphVertex V)&#160;</td>
+          <td class="paramtype">void(*)(<a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V)&#160;</td>
           <td class="paramname"><em>p_visit</em>&#160;</td>
         </tr>
         <tr>
@@ -492,8 +449,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html#l00184">184</a> of file <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html">MatrixGraph.c</a>.</p>
-
 </div>
 </div>
 <a id="aa8bc9302105fbd9f55d56da08f766ab2" name="aa8bc9302105fbd9f55d56da08f766ab2"></a>
@@ -511,19 +466,19 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphEdge&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ae595e1a6c96ad1d639ca6174e413b073">MatrixGraphEdge</a>&#160;</td>
           <td class="paramname"><em>dist</em>[], </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>path</em>[], </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a>&#160;</td>
           <td class="paramname"><em>startV</em>&#160;</td>
         </tr>
         <tr>
@@ -546,12 +501,10 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>如果执行成功返回 true ，否则返回 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html#l00209">209</a> of file <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html">MatrixGraph.c</a>.</p>
-
 </div>
 </div>
-<a id="a31c6b5e2ec9720d9b7e4dfe9b4900eda" name="a31c6b5e2ec9720d9b7e4dfe9b4900eda"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31c6b5e2ec9720d9b7e4dfe9b4900eda">&#9670;&#160;</a></span>MatrixGraph_Floyd()</h2>
+<a id="a9f294742660e7e582204488f86e1fbd9" name="a9f294742660e7e582204488f86e1fbd9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f294742660e7e582204488f86e1fbd9">&#9670;&#160;</a></span>MatrixGraph_Floyd()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -565,14 +518,14 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphEdge&#160;</td>
-          <td class="paramname"><em>dist</em>[][VERTEX_NUMBER], </td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ae595e1a6c96ad1d639ca6174e413b073">MatrixGraphEdge</a> **&#160;</td>
+          <td class="paramname"><em>dist</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MatrixGraphVertex&#160;</td>
-          <td class="paramname"><em>path</em>[][VERTEX_NUMBER]&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> **&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -592,8 +545,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>如果执行成功返回 true ，否则返回 false </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html#l00251">251</a> of file <a class="el" href="../../d7/d8d/_matrix_graph_8c_source.html">MatrixGraph.c</a>.</p>
 
 </div>
 </div>

@@ -81,7 +81,7 @@ $(function() {
 <li>语言：采用标准C语言编写，最低兼容版本： ISO C99 。</li>
 <li>目的：学习数据结构。</li>
 <li>目标：实现完整而标准的数据结构。</li>
-<li>模块：Graph, Heap, List, Queue, Stack, <a class="el" href="d1/d18/struct_string.html">String</a>, Table, Tree.</li>
+<li>模块：Graph, Heap, List, Queue, Stack, <a class="el" href="d1/d18/struct_string.html" title="String.">String</a>, Table, Tree.</li>
 <li>简洁：Stay simple, stay young. 在保证好用和健壮的前提下，尽量简洁，便于维护和阅读。</li>
 <li>好用：提供了许多方便的函数，比如String类提供了像Python的str那样的替换、分割、查找等操作，比如List类和String类都支持像Python那样的负数下标等等。</li>
 <li>健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查。这么多检查，肯定会对性能有一定影响，但是这个库追求的并不是性能，而是简洁，好用和健壮。</li>
@@ -92,17 +92,27 @@ $(function() {
 <li>文档：使用 <a href="https://www.doxygen.nl/">Doxygen</a> 制作了文档。</li>
 </ul>
 <h2><a class="anchor" id="autotoc_md2"></a>
-2. 面向对象</h2>
+2. 使用说明</h2>
+<p>最大的用处是用源码来学习/收藏/展示数据结构。</p>
 <p>采用面向对象的设计理念：</p>
 <p><code>ClassName_MethodName(ObjectType* self, args...)</code> 是实例方法，比如</p>
-<div class="fragment"><div class="line"><span class="keywordtype">void</span> ArrayList_Insert(<a class="code hl_struct" href="d3/df0/struct_array_list.html">ArrayList</a>* self, <span class="keywordtype">int</span> index, ArrayListItem data);</div>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> ArrayList_Insert(<a class="code hl_struct" href="d3/df0/struct_array_list.html">ArrayList</a>* self, <span class="keywordtype">int</span> index, <a class="code hl_typedef" href="d2/db9/_array_list_8h.html#a069e72370460efc2ee004226ee17f923">ArrayListItem</a> data);</div>
 <div class="line"><a class="code hl_struct" href="d1/d18/struct_string.html">String</a>** String_Split(<span class="keyword">const</span> <a class="code hl_struct" href="d1/d18/struct_string.html">String</a>* self, <span class="keyword">const</span> <a class="code hl_struct" href="d1/d18/struct_string.html">String</a>* sep);</div>
-<div class="ttc" id="astruct_array_list_html"><div class="ttname"><a href="d3/df0/struct_array_list.html">ArrayList</a></div><div class="ttdef"><b>Definition:</b> <a href="dc/d9c/_array_list_8c_source.html#l00017">ArrayList.c:18</a></div></div>
-<div class="ttc" id="astruct_string_html"><div class="ttname"><a href="d1/d18/struct_string.html">String</a></div><div class="ttdef"><b>Definition:</b> <a href="d9/d42/_string_8c_source.html#l00017">String.c:18</a></div></div>
+<div class="ttc" id="a_array_list_8h_html_a069e72370460efc2ee004226ee17f923"><div class="ttname"><a href="d2/db9/_array_list_8h.html#a069e72370460efc2ee004226ee17f923">ArrayListItem</a></div><div class="ttdeci">int ArrayListItem</div><div class="ttdoc">Array List Item.</div><div class="ttdef"><b>Definition:</b> ArrayList.h:17</div></div>
+<div class="ttc" id="astruct_array_list_html"><div class="ttname"><a href="d3/df0/struct_array_list.html">ArrayList</a></div><div class="ttdoc">Array List.</div><div class="ttdef"><b>Definition:</b> ArrayList.c:19</div></div>
+<div class="ttc" id="astruct_string_html"><div class="ttname"><a href="d1/d18/struct_string.html">String</a></div><div class="ttdoc">String.</div><div class="ttdef"><b>Definition:</b> String.c:18</div></div>
 </div><!-- fragment --><p><code>ClassName_MethodName(args...)</code> 是静态方法，比如</p>
 <div class="fragment"><div class="line"><a class="code hl_struct" href="d3/df0/struct_array_list.html">ArrayList</a>* ArrayList_Create(<span class="keywordtype">void</span>);</div>
 <div class="line"><a class="code hl_struct" href="d1/d18/struct_string.html">String</a>* String_From(<span class="keyword">const</span> <span class="keywordtype">char</span>* chars);</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md3"></a>
+</div><!-- fragment --><p>一些简单的例子：</p>
+<div class="fragment"><div class="line">String_At(<span class="stringliteral">&quot;Hello World!&quot;</span>, -1); <span class="comment">// &#39;!&#39; 取下标</span></div>
+<div class="line">String_ToDecimal(<span class="stringliteral">&quot;.1e-2&quot;</span>); <span class="comment">// 0.1e-2 解析浮点数（支持inf和nan）</span></div>
+<div class="line">String_ToInteger(<span class="stringliteral">&quot;cafebabe&quot;</span>, 16); <span class="comment">// 3405691582LL 解析整数（支持2-36进制）</span></div>
+<div class="line">String_Replace(<span class="stringliteral">&quot;hahaha&quot;</span>, <span class="stringliteral">&quot;a&quot;</span>, <span class="stringliteral">&quot;ooow~ &quot;</span>); <span class="comment">// &quot;hooow~ hooow~ hooow~ &quot; 替换</span></div>
+<div class="line">String_Split(<span class="stringliteral">&quot;one, two, three&quot;</span>, <span class="stringliteral">&quot;, &quot;</span>); <span class="comment">// String** -&gt; [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;] 分割</span></div>
+<div class="line">String_Slice(<span class="stringliteral">&quot;12345&quot;</span>, 0, 5, 2); <span class="comment">// &quot;135&quot; 切片</span></div>
+</div><!-- fragment --><p>几乎都是基础数据结构，没什么太大的亮点，中规中矩，因为这个项目的目的不是提供可使用的库，而是学习/收藏/展示数据结构。</p>
+<h2><a class="anchor" id="autotoc_md3"></a>
 3. 开发历史</h2>
 <p>这个库经过了五年的发展（2018-2023）。</p>
 <p>最开始是我在大二自学数据结构时边学边写的，当做练手项目。起源详情请见： <a href="https://zhuanlan.zhihu.com/p/92786307">https://zhuanlan.zhihu.com/p/92786307</a> 。因为本科专业并不是计算机，所以当时没有学软件工程，写出来的代码只是能用，但是非常不优雅。后来大三大四接触到了面向对象思想和软件工程实践，我把整个库推翻重写了好几次，毕业后也时不时更新一下。</p>

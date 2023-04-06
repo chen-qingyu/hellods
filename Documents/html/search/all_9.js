@@ -1,26 +1,4 @@
 var searchData=
 [
-  ['matrix_0',['matrix',['../d1/d51/struct_matrix_graph.html#a150146b88a37910ef9396cbc3514b8eb',1,'MatrixGraph']]],
-  ['matrixgraph_1',['MatrixGraph',['../d1/d51/struct_matrix_graph.html',1,'']]],
-  ['matrixgraph_2eh_2',['MatrixGraph.h',['../d4/dd9/_matrix_graph_8h.html',1,'']]],
-  ['matrixgraph_5fbfs_3',['MatrixGraph_BFS',['../d4/dd9/_matrix_graph_8h.html#ad92b6e323588c89b7c59a6f16ca4fcc2',1,'MatrixGraph.c']]],
-  ['matrixgraph_5fcreate_4',['MatrixGraph_Create',['../d4/dd9/_matrix_graph_8h.html#ad0eaf246146e351e5cf11bec2ce87370',1,'MatrixGraph.c']]],
-  ['matrixgraph_5fdestroy_5',['MatrixGraph_Destroy',['../d4/dd9/_matrix_graph_8h.html#ad4c18380c7690d6fafaba75d00bb1a21',1,'MatrixGraph.c']]],
-  ['matrixgraph_5fdfs_6',['MatrixGraph_DFS',['../d4/dd9/_matrix_graph_8h.html#a08994f5d75438a26bbfc387d35e3d231',1,'MatrixGraph.c']]],
-  ['matrixgraph_5fdijkstra_7',['MatrixGraph_Dijkstra',['../d4/dd9/_matrix_graph_8h.html#aa8bc9302105fbd9f55d56da08f766ab2',1,'MatrixGraph.c']]],
-  ['matrixgraph_5ffloyd_8',['MatrixGraph_Floyd',['../d4/dd9/_matrix_graph_8h.html#a31c6b5e2ec9720d9b7e4dfe9b4900eda',1,'MatrixGraph.c']]],
-  ['matrixgraph_5fisadjacent_9',['MatrixGraph_IsAdjacent',['../d4/dd9/_matrix_graph_8h.html#a1d0c16dc3350be2d67af2656617c0484',1,'MatrixGraph.c']]],
-  ['matrixgraph_5flink_10',['MatrixGraph_Link',['../d4/dd9/_matrix_graph_8h.html#ab2109fd353419f14ca752413abb00bed',1,'MatrixGraph.c']]],
-  ['matrixgraph_5funlink_11',['MatrixGraph_Unlink',['../d4/dd9/_matrix_graph_8h.html#afacf190e40cefeabe0591b1367d8f1f3',1,'MatrixGraph.c']]],
-  ['maxheap_12',['MaxHeap',['../d9/d4e/struct_max_heap.html',1,'']]],
-  ['maxheap_2eh_13',['MaxHeap.h',['../dc/dff/_max_heap_8h.html',1,'']]],
-  ['maxheap_5fclear_14',['MaxHeap_Clear',['../dc/dff/_max_heap_8h.html#a2a85bc693a31c8caad2fc949f3d969fd',1,'MaxHeap.c']]],
-  ['maxheap_5fcreate_15',['MaxHeap_Create',['../dc/dff/_max_heap_8h.html#afe26f0dc100458ab855d56cca3ff6cd3',1,'MaxHeap.c']]],
-  ['maxheap_5fdestroy_16',['MaxHeap_Destroy',['../dc/dff/_max_heap_8h.html#a7a379e7423af5d712459eed02878fd72',1,'MaxHeap.c']]],
-  ['maxheap_5fisempty_17',['MaxHeap_IsEmpty',['../dc/dff/_max_heap_8h.html#a92c03528b1d719cd460addfc492d80c6',1,'MaxHeap.c']]],
-  ['maxheap_5fpop_18',['MaxHeap_Pop',['../dc/dff/_max_heap_8h.html#a50bcacfd43726ec2e9b304f038eb48e4',1,'MaxHeap.c']]],
-  ['maxheap_5fpush_19',['MaxHeap_Push',['../dc/dff/_max_heap_8h.html#aaf9cd65dbdc993a10bfc28f033f61bb2',1,'MaxHeap.c']]],
-  ['maxheap_5fsize_20',['MaxHeap_Size',['../dc/dff/_max_heap_8h.html#a5d9a13a36ec290d552dcde809efa0e6f',1,'MaxHeap.c']]],
-  ['maxheap_5ftop_21',['MaxHeap_Top',['../dc/dff/_max_heap_8h.html#affdb68361e44ecede72d43d30e8cfb1c',1,'MaxHeap.c']]],
-  ['minedatastructure_22',['MineDataStructure',['../index.html',1,'']]]
+  ['next_0',['next',['../d9/d1f/struct_doubly_linked_list_node.html#a46c992eae47c025b0b6479d9bfda1804',1,'DoublyLinkedListNode::next()'],['../db/dc6/struct_linked_list_node.html#ab858b9e7a165df91c1095ccf86f316e9',1,'LinkedListNode::next()'],['../d1/d65/struct_linked_queue_node.html#a9031b91748c211f551352c0ec757581e',1,'LinkedQueueNode::next()'],['../d3/d4a/struct_linked_stack_node.html#a2365b3ae996947f77d509e24170ebec5',1,'LinkedStackNode::next()']]]
 ];

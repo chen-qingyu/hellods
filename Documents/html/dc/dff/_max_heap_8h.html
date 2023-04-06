@@ -83,15 +83,16 @@ $(function() {
 
 <p>最大堆 (Max Heap)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
-</div>
-<p><a href="../../dc/dff/_max_heap_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a2d28b6e77f658cd5b51675fac7f33ffe"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#a2d28b6e77f658cd5b51675fac7f33ffe">MaxHeapItem</a></td></tr>
+<tr class="memitem:a2d28b6e77f658cd5b51675fac7f33ffe"><td class="memItemLeft" align="right" valign="top"><a id="a2d28b6e77f658cd5b51675fac7f33ffe" name="a2d28b6e77f658cd5b51675fac7f33ffe"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>MaxHeapItem</b></td></tr>
+<tr class="memdesc:a2d28b6e77f658cd5b51675fac7f33ffe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max Heap Item. <br /></td></tr>
 <tr class="separator:a2d28b6e77f658cd5b51675fac7f33ffe"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae345d1a06ba7bc444f175a7920a0da09"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#ae345d1a06ba7bc444f175a7920a0da09">MaxHeap</a></td></tr>
+<tr class="memitem:ae345d1a06ba7bc444f175a7920a0da09"><td class="memItemLeft" align="right" valign="top"><a id="ae345d1a06ba7bc444f175a7920a0da09" name="ae345d1a06ba7bc444f175a7920a0da09"></a>
+typedef struct <a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a>&#160;</td><td class="memItemRight" valign="bottom"><b>MaxHeap</b></td></tr>
+<tr class="memdesc:ae345d1a06ba7bc444f175a7920a0da09"><td class="mdescLeft">&#160;</td><td class="mdescRight">Max Heap. <br /></td></tr>
 <tr class="separator:ae345d1a06ba7bc444f175a7920a0da09"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -108,13 +109,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a92c03528b1d719cd460addfc492d80c6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#a92c03528b1d719cd460addfc492d80c6">MaxHeap_IsEmpty</a> (const <a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *self)</td></tr>
 <tr class="memdesc:a92c03528b1d719cd460addfc492d80c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断堆是否已空  <br /></td></tr>
 <tr class="separator:a92c03528b1d719cd460addfc492d80c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf9cd65dbdc993a10bfc28f033f61bb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#aaf9cd65dbdc993a10bfc28f033f61bb2">MaxHeap_Push</a> (<a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *self, MaxHeapItem data)</td></tr>
+<tr class="memitem:aaf9cd65dbdc993a10bfc28f033f61bb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#aaf9cd65dbdc993a10bfc28f033f61bb2">MaxHeap_Push</a> (<a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *self, <a class="el" href="../../dc/dff/_max_heap_8h.html#a2d28b6e77f658cd5b51675fac7f33ffe">MaxHeapItem</a> data)</td></tr>
 <tr class="memdesc:aaf9cd65dbdc993a10bfc28f033f61bb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">在堆中插入一个元素 data  <br /></td></tr>
 <tr class="separator:aaf9cd65dbdc993a10bfc28f033f61bb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a50bcacfd43726ec2e9b304f038eb48e4"><td class="memItemLeft" align="right" valign="top">MaxHeapItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#a50bcacfd43726ec2e9b304f038eb48e4">MaxHeap_Pop</a> (<a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *self)</td></tr>
+<tr class="memitem:a50bcacfd43726ec2e9b304f038eb48e4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/dff/_max_heap_8h.html#a2d28b6e77f658cd5b51675fac7f33ffe">MaxHeapItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#a50bcacfd43726ec2e9b304f038eb48e4">MaxHeap_Pop</a> (<a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *self)</td></tr>
 <tr class="memdesc:a50bcacfd43726ec2e9b304f038eb48e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">在堆中删除堆顶元素  <br /></td></tr>
 <tr class="separator:a50bcacfd43726ec2e9b304f038eb48e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affdb68361e44ecede72d43d30e8cfb1c"><td class="memItemLeft" align="right" valign="top">MaxHeapItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#affdb68361e44ecede72d43d30e8cfb1c">MaxHeap_Top</a> (<a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *self)</td></tr>
+<tr class="memitem:affdb68361e44ecede72d43d30e8cfb1c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dc/dff/_max_heap_8h.html#a2d28b6e77f658cd5b51675fac7f33ffe">MaxHeapItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#affdb68361e44ecede72d43d30e8cfb1c">MaxHeap_Top</a> (<a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *self)</td></tr>
 <tr class="memdesc:affdb68361e44ecede72d43d30e8cfb1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">查看堆的堆顶元素  <br /></td></tr>
 <tr class="separator:affdb68361e44ecede72d43d30e8cfb1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a85bc693a31c8caad2fc949f3d969fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/dff/_max_heap_8h.html#a2a85bc693a31c8caad2fc949f3d969fd">MaxHeap_Clear</a> (<a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *self)</td></tr>
@@ -127,42 +128,7 @@ Functions</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2022.01.29</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022 </dd></dl>
-
-<p class="definition">Definition in file <a class="el" href="../../dc/dff/_max_heap_8h_source.html">MaxHeap.h</a>.</p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a2d28b6e77f658cd5b51675fac7f33ffe" name="a2d28b6e77f658cd5b51675fac7f33ffe"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d28b6e77f658cd5b51675fac7f33ffe">&#9670;&#160;</a></span>MaxHeapItem</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int MaxHeapItem</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../dc/dff/_max_heap_8h_source.html#l00016">16</a> of file <a class="el" href="../../dc/dff/_max_heap_8h_source.html">MaxHeap.h</a>.</p>
-
-</div>
-</div>
-<a id="ae345d1a06ba7bc444f175a7920a0da09" name="ae345d1a06ba7bc444f175a7920a0da09"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae345d1a06ba7bc444f175a7920a0da09">&#9670;&#160;</a></span>MaxHeap</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> <a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../dc/dff/_max_heap_8h_source.html#l00018">18</a> of file <a class="el" href="../../dc/dff/_max_heap_8h_source.html">MaxHeap.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="afe26f0dc100458ab855d56cca3ff6cd3" name="afe26f0dc100458ab855d56cca3ff6cd3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afe26f0dc100458ab855d56cca3ff6cd3">&#9670;&#160;</a></span>MaxHeap_Create()</h2>
 
@@ -181,8 +147,6 @@ Functions</h2></td></tr>
 
 <p>创建一个空堆 </p>
 <dl class="section return"><dt>Returns</dt><dd>MaxHeap* 一个指向空堆的指针 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d72/_max_heap_8c_source.html#l00046">46</a> of file <a class="el" href="../../d0/d72/_max_heap_8c_source.html">MaxHeap.c</a>.</p>
 
 </div>
 </div>
@@ -209,8 +173,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d72/_max_heap_8c_source.html#l00061">61</a> of file <a class="el" href="../../d0/d72/_max_heap_8c_source.html">MaxHeap.c</a>.</p>
 
 </div>
 </div>
@@ -239,8 +201,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>堆的元素个数 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d72/_max_heap_8c_source.html#l00069">69</a> of file <a class="el" href="../../d0/d72/_max_heap_8c_source.html">MaxHeap.c</a>.</p>
-
 </div>
 </div>
 <a id="a92c03528b1d719cd460addfc492d80c6" name="a92c03528b1d719cd460addfc492d80c6"></a>
@@ -268,8 +228,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>如果堆已空则返回 true ，否则返回 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d72/_max_heap_8c_source.html#l00074">74</a> of file <a class="el" href="../../d0/d72/_max_heap_8c_source.html">MaxHeap.c</a>.</p>
-
 </div>
 </div>
 <a id="aaf9cd65dbdc993a10bfc28f033f61bb2" name="aaf9cd65dbdc993a10bfc28f033f61bb2"></a>
@@ -287,7 +245,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">MaxHeapItem&#160;</td>
+          <td class="paramtype"><a class="el" href="../../dc/dff/_max_heap_8h.html#a2d28b6e77f658cd5b51675fac7f33ffe">MaxHeapItem</a>&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -307,8 +265,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d72/_max_heap_8c_source.html#l00079">79</a> of file <a class="el" href="../../d0/d72/_max_heap_8c_source.html">MaxHeap.c</a>.</p>
-
 </div>
 </div>
 <a id="a50bcacfd43726ec2e9b304f038eb48e4" name="a50bcacfd43726ec2e9b304f038eb48e4"></a>
@@ -318,7 +274,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">MaxHeapItem MaxHeap_Pop </td>
+          <td class="memname"><a class="el" href="../../dc/dff/_max_heap_8h.html#a2d28b6e77f658cd5b51675fac7f33ffe">MaxHeapItem</a> MaxHeap_Pop </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -336,8 +292,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>堆顶元素 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d0/d72/_max_heap_8c_source.html#l00096">96</a> of file <a class="el" href="../../d0/d72/_max_heap_8c_source.html">MaxHeap.c</a>.</p>
-
 </div>
 </div>
 <a id="affdb68361e44ecede72d43d30e8cfb1c" name="affdb68361e44ecede72d43d30e8cfb1c"></a>
@@ -347,7 +301,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">MaxHeapItem MaxHeap_Top </td>
+          <td class="memname"><a class="el" href="../../dc/dff/_max_heap_8h.html#a2d28b6e77f658cd5b51675fac7f33ffe">MaxHeapItem</a> MaxHeap_Top </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../d9/d4e/struct_max_heap.html">MaxHeap</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -364,8 +318,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>堆顶元素 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d72/_max_heap_8c_source.html#l00126">126</a> of file <a class="el" href="../../d0/d72/_max_heap_8c_source.html">MaxHeap.c</a>.</p>
 
 </div>
 </div>
@@ -392,8 +344,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../d0/d72/_max_heap_8c_source.html#l00133">133</a> of file <a class="el" href="../../d0/d72/_max_heap_8c_source.html">MaxHeap.c</a>.</p>
 
 </div>
 </div>

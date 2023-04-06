@@ -83,15 +83,16 @@ $(function() {
 
 <p>栈 数组实现 (Array Stack)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
-</div>
-<p><a href="../../d4/d76/_array_stack_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:ad196e5eb43f459241857e2850b64d681"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#ad196e5eb43f459241857e2850b64d681">ArrayStackItem</a></td></tr>
+<tr class="memitem:ad196e5eb43f459241857e2850b64d681"><td class="memItemLeft" align="right" valign="top"><a id="ad196e5eb43f459241857e2850b64d681" name="ad196e5eb43f459241857e2850b64d681"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>ArrayStackItem</b></td></tr>
+<tr class="memdesc:ad196e5eb43f459241857e2850b64d681"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array Stack Item. <br /></td></tr>
 <tr class="separator:ad196e5eb43f459241857e2850b64d681"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac9f1c339562d58cbc3ffb511162a683c"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#ac9f1c339562d58cbc3ffb511162a683c">ArrayStack</a></td></tr>
+<tr class="memitem:ac9f1c339562d58cbc3ffb511162a683c"><td class="memItemLeft" align="right" valign="top"><a id="ac9f1c339562d58cbc3ffb511162a683c" name="ac9f1c339562d58cbc3ffb511162a683c"></a>
+typedef struct <a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a>&#160;</td><td class="memItemRight" valign="bottom"><b>ArrayStack</b></td></tr>
+<tr class="memdesc:ac9f1c339562d58cbc3ffb511162a683c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Array Stack. <br /></td></tr>
 <tr class="separator:ac9f1c339562d58cbc3ffb511162a683c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -108,13 +109,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a6f310e742c612dcc2d6ff1d1c4b18e0c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#a6f310e742c612dcc2d6ff1d1c4b18e0c">ArrayStack_IsEmpty</a> (const <a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *self)</td></tr>
 <tr class="memdesc:a6f310e742c612dcc2d6ff1d1c4b18e0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断栈是否已空  <br /></td></tr>
 <tr class="separator:a6f310e742c612dcc2d6ff1d1c4b18e0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a016d827ef722c13ce676ee5ac8e658eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#a016d827ef722c13ce676ee5ac8e658eb">ArrayStack_Push</a> (<a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *self, ArrayStackItem data)</td></tr>
+<tr class="memitem:a016d827ef722c13ce676ee5ac8e658eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#a016d827ef722c13ce676ee5ac8e658eb">ArrayStack_Push</a> (<a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *self, <a class="el" href="../../d4/d76/_array_stack_8h.html#ad196e5eb43f459241857e2850b64d681">ArrayStackItem</a> data)</td></tr>
 <tr class="memdesc:a016d827ef722c13ce676ee5ac8e658eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">入栈，将元素 data 压入到栈的顶部  <br /></td></tr>
 <tr class="separator:a016d827ef722c13ce676ee5ac8e658eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a111c65da2db28ce5bdd2cc29ed221fd9"><td class="memItemLeft" align="right" valign="top">ArrayStackItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#a111c65da2db28ce5bdd2cc29ed221fd9">ArrayStack_Pop</a> (<a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *self)</td></tr>
+<tr class="memitem:a111c65da2db28ce5bdd2cc29ed221fd9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d76/_array_stack_8h.html#ad196e5eb43f459241857e2850b64d681">ArrayStackItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#a111c65da2db28ce5bdd2cc29ed221fd9">ArrayStack_Pop</a> (<a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *self)</td></tr>
 <tr class="memdesc:a111c65da2db28ce5bdd2cc29ed221fd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">出栈，将栈的顶部的元素弹出来  <br /></td></tr>
 <tr class="separator:a111c65da2db28ce5bdd2cc29ed221fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6322bd8a1440bee3ac0e9b54a8505d2c"><td class="memItemLeft" align="right" valign="top">ArrayStackItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#a6322bd8a1440bee3ac0e9b54a8505d2c">ArrayStack_Top</a> (const <a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *self)</td></tr>
+<tr class="memitem:a6322bd8a1440bee3ac0e9b54a8505d2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d4/d76/_array_stack_8h.html#ad196e5eb43f459241857e2850b64d681">ArrayStackItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#a6322bd8a1440bee3ac0e9b54a8505d2c">ArrayStack_Top</a> (const <a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *self)</td></tr>
 <tr class="memdesc:a6322bd8a1440bee3ac0e9b54a8505d2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">检查栈的顶部元素，不改变栈  <br /></td></tr>
 <tr class="separator:a6322bd8a1440bee3ac0e9b54a8505d2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2450c10000219c3f8c5c9782d7175428"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/d76/_array_stack_8h.html#a2450c10000219c3f8c5c9782d7175428">ArrayStack_Clear</a> (<a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *self)</td></tr>
@@ -127,42 +128,7 @@ Functions</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2022.01.28</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022 </dd></dl>
-
-<p class="definition">Definition in file <a class="el" href="../../d4/d76/_array_stack_8h_source.html">ArrayStack.h</a>.</p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="ad196e5eb43f459241857e2850b64d681" name="ad196e5eb43f459241857e2850b64d681"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad196e5eb43f459241857e2850b64d681">&#9670;&#160;</a></span>ArrayStackItem</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int ArrayStackItem</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/d76/_array_stack_8h_source.html#l00016">16</a> of file <a class="el" href="../../d4/d76/_array_stack_8h_source.html">ArrayStack.h</a>.</p>
-
-</div>
-</div>
-<a id="ac9f1c339562d58cbc3ffb511162a683c" name="ac9f1c339562d58cbc3ffb511162a683c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac9f1c339562d58cbc3ffb511162a683c">&#9670;&#160;</a></span>ArrayStack</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> <a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d4/d76/_array_stack_8h_source.html#l00018">18</a> of file <a class="el" href="../../d4/d76/_array_stack_8h_source.html">ArrayStack.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="aa58a558c3531d046927d4b7e21623706" name="aa58a558c3531d046927d4b7e21623706"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa58a558c3531d046927d4b7e21623706">&#9670;&#160;</a></span>ArrayStack_Create()</h2>
 
@@ -181,8 +147,6 @@ Functions</h2></td></tr>
 
 <p>创建一个空栈 </p>
 <dl class="section return"><dt>Returns</dt><dd>一个指向空栈的指针 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../dc/d60/_array_stack_8c_source.html#l00029">29</a> of file <a class="el" href="../../dc/d60/_array_stack_8c_source.html">ArrayStack.c</a>.</p>
 
 </div>
 </div>
@@ -209,8 +173,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../dc/d60/_array_stack_8c_source.html#l00039">39</a> of file <a class="el" href="../../dc/d60/_array_stack_8c_source.html">ArrayStack.c</a>.</p>
 
 </div>
 </div>
@@ -239,8 +201,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>栈长度 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d60/_array_stack_8c_source.html#l00046">46</a> of file <a class="el" href="../../dc/d60/_array_stack_8c_source.html">ArrayStack.c</a>.</p>
-
 </div>
 </div>
 <a id="a6f310e742c612dcc2d6ff1d1c4b18e0c" name="a6f310e742c612dcc2d6ff1d1c4b18e0c"></a>
@@ -268,8 +228,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>如果栈已空则返回 true ，否则返回 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d60/_array_stack_8c_source.html#l00051">51</a> of file <a class="el" href="../../dc/d60/_array_stack_8c_source.html">ArrayStack.c</a>.</p>
-
 </div>
 </div>
 <a id="a016d827ef722c13ce676ee5ac8e658eb" name="a016d827ef722c13ce676ee5ac8e658eb"></a>
@@ -287,7 +245,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">ArrayStackItem&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d4/d76/_array_stack_8h.html#ad196e5eb43f459241857e2850b64d681">ArrayStackItem</a>&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -307,8 +265,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d60/_array_stack_8c_source.html#l00056">56</a> of file <a class="el" href="../../dc/d60/_array_stack_8c_source.html">ArrayStack.c</a>.</p>
-
 </div>
 </div>
 <a id="a111c65da2db28ce5bdd2cc29ed221fd9" name="a111c65da2db28ce5bdd2cc29ed221fd9"></a>
@@ -318,7 +274,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ArrayStackItem ArrayStack_Pop </td>
+          <td class="memname"><a class="el" href="../../d4/d76/_array_stack_8h.html#ad196e5eb43f459241857e2850b64d681">ArrayStackItem</a> ArrayStack_Pop </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -336,8 +292,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>栈顶元素 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../dc/d60/_array_stack_8c_source.html#l00063">63</a> of file <a class="el" href="../../dc/d60/_array_stack_8c_source.html">ArrayStack.c</a>.</p>
-
 </div>
 </div>
 <a id="a6322bd8a1440bee3ac0e9b54a8505d2c" name="a6322bd8a1440bee3ac0e9b54a8505d2c"></a>
@@ -347,7 +301,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ArrayStackItem ArrayStack_Top </td>
+          <td class="memname"><a class="el" href="../../d4/d76/_array_stack_8h.html#ad196e5eb43f459241857e2850b64d681">ArrayStackItem</a> ArrayStack_Top </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="../../de/de8/struct_array_stack.html">ArrayStack</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -364,8 +318,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>栈顶元素 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../dc/d60/_array_stack_8c_source.html#l00070">70</a> of file <a class="el" href="../../dc/d60/_array_stack_8c_source.html">ArrayStack.c</a>.</p>
 
 </div>
 </div>
@@ -392,8 +344,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../dc/d60/_array_stack_8c_source.html#l00077">77</a> of file <a class="el" href="../../dc/d60/_array_stack_8c_source.html">ArrayStack.c</a>.</p>
 
 </div>
 </div>

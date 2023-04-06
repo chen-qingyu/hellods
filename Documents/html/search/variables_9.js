@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['p_5flatest_0',['p_latest',['../d6/db6/struct_doubly_linked_list.html#a5fa4a4b7bc3b61cd224be7be336b04b9',1,'DoublyLinkedList']]],
-  ['pairs_1',['pairs',['../d8/d82/struct_hash_table.html#ab970bbe17910709d182d6df82dfc2532',1,'HashTable']]],
-  ['prev_2',['prev',['../d9/d1f/struct_doubly_linked_list_node.html#a6a1cd98a18a7c62cbd0480f1e8d0a617',1,'DoublyLinkedListNode']]]
+  ['rear_0',['rear',['../d7/df5/struct_array_queue.html#af866be352de659d624986cb76b8d45b6',1,'ArrayQueue::rear()'],['../dc/d5d/struct_linked_queue.html#a0a7859e7a6578a20f76a5ab641a1863a',1,'LinkedQueue::rear()']]],
+  ['right_1',['right',['../d4/ddc/struct_binary_search_tree_node.html#a229eb0a7be8621adf830cdb2d2b405f0',1,'BinarySearchTreeNode']]],
+  ['root_2',['root',['../de/d22/struct_binary_search_tree.html#a30571dadc89e6ab706c2c10ae674b4b0',1,'BinarySearchTree']]]
 ];

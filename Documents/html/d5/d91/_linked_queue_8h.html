@@ -83,15 +83,16 @@ $(function() {
 
 <p>队列 链表实现 (Linked Queue)  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &lt;stdbool.h&gt;</code><br />
-</div>
-<p><a href="../../d5/d91/_linked_queue_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:a761762667986c674ed955e6824b3ecc2"><td class="memItemLeft" align="right" valign="top">typedef int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a761762667986c674ed955e6824b3ecc2">LinkedQueueItem</a></td></tr>
+<tr class="memitem:a761762667986c674ed955e6824b3ecc2"><td class="memItemLeft" align="right" valign="top"><a id="a761762667986c674ed955e6824b3ecc2" name="a761762667986c674ed955e6824b3ecc2"></a>
+typedef int&#160;</td><td class="memItemRight" valign="bottom"><b>LinkedQueueItem</b></td></tr>
+<tr class="memdesc:a761762667986c674ed955e6824b3ecc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linked Queue Item. <br /></td></tr>
 <tr class="separator:a761762667986c674ed955e6824b3ecc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2d739af8a7b73de9a0354b98ee6ea5a1"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a2d739af8a7b73de9a0354b98ee6ea5a1">LinkedQueue</a></td></tr>
+<tr class="memitem:a2d739af8a7b73de9a0354b98ee6ea5a1"><td class="memItemLeft" align="right" valign="top"><a id="a2d739af8a7b73de9a0354b98ee6ea5a1" name="a2d739af8a7b73de9a0354b98ee6ea5a1"></a>
+typedef struct <a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a>&#160;</td><td class="memItemRight" valign="bottom"><b>LinkedQueue</b></td></tr>
+<tr class="memdesc:a2d739af8a7b73de9a0354b98ee6ea5a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Linked Queue. <br /></td></tr>
 <tr class="separator:a2d739af8a7b73de9a0354b98ee6ea5a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -108,13 +109,13 @@ Functions</h2></td></tr>
 <tr class="memitem:a2ce108cc8d8f353e10977f78d983dfc6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a2ce108cc8d8f353e10977f78d983dfc6">LinkedQueue_IsEmpty</a> (const <a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *self)</td></tr>
 <tr class="memdesc:a2ce108cc8d8f353e10977f78d983dfc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断队列是否已空  <br /></td></tr>
 <tr class="separator:a2ce108cc8d8f353e10977f78d983dfc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aadcfd904a1145d27caba33dab46bac4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#aadcfd904a1145d27caba33dab46bac4f">LinkedQueue_Enqueue</a> (<a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *self, LinkedQueueItem data)</td></tr>
+<tr class="memitem:aadcfd904a1145d27caba33dab46bac4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#aadcfd904a1145d27caba33dab46bac4f">LinkedQueue_Enqueue</a> (<a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *self, <a class="el" href="../../d5/d91/_linked_queue_8h.html#a761762667986c674ed955e6824b3ecc2">LinkedQueueItem</a> data)</td></tr>
 <tr class="memdesc:aadcfd904a1145d27caba33dab46bac4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">入队，将元素 data 插入到队列的尾部  <br /></td></tr>
 <tr class="separator:aadcfd904a1145d27caba33dab46bac4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad0a01010926e3c0a52e87fc491654821"><td class="memItemLeft" align="right" valign="top">LinkedQueueItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#ad0a01010926e3c0a52e87fc491654821">LinkedQueue_Dequeue</a> (<a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *self)</td></tr>
+<tr class="memitem:ad0a01010926e3c0a52e87fc491654821"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a761762667986c674ed955e6824b3ecc2">LinkedQueueItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#ad0a01010926e3c0a52e87fc491654821">LinkedQueue_Dequeue</a> (<a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *self)</td></tr>
 <tr class="memdesc:ad0a01010926e3c0a52e87fc491654821"><td class="mdescLeft">&#160;</td><td class="mdescRight">出队，将队列的队首元素出队  <br /></td></tr>
 <tr class="separator:ad0a01010926e3c0a52e87fc491654821"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9793bd6ae3be807f26ea1771241c1017"><td class="memItemLeft" align="right" valign="top">LinkedQueueItem&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a9793bd6ae3be807f26ea1771241c1017">LinkedQueue_Front</a> (<a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *self)</td></tr>
+<tr class="memitem:a9793bd6ae3be807f26ea1771241c1017"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a761762667986c674ed955e6824b3ecc2">LinkedQueueItem</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a9793bd6ae3be807f26ea1771241c1017">LinkedQueue_Front</a> (<a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *self)</td></tr>
 <tr class="memdesc:a9793bd6ae3be807f26ea1771241c1017"><td class="mdescLeft">&#160;</td><td class="mdescRight">查看队首元素  <br /></td></tr>
 <tr class="separator:a9793bd6ae3be807f26ea1771241c1017"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a285d8a43c1b3f4f1a5975cd7d971b02f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a285d8a43c1b3f4f1a5975cd7d971b02f">LinkedQueue_Clear</a> (<a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *self)</td></tr>
@@ -127,42 +128,7 @@ Functions</h2></td></tr>
 <dl class="section version"><dt>Version</dt><dd>1.0 </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2022.01.28</dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2022 </dd></dl>
-
-<p class="definition">Definition in file <a class="el" href="../../d5/d91/_linked_queue_8h_source.html">LinkedQueue.h</a>.</p>
-</div><h2 class="groupheader">Typedef Documentation</h2>
-<a id="a761762667986c674ed955e6824b3ecc2" name="a761762667986c674ed955e6824b3ecc2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a761762667986c674ed955e6824b3ecc2">&#9670;&#160;</a></span>LinkedQueueItem</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef int LinkedQueueItem</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d5/d91/_linked_queue_8h_source.html#l00016">16</a> of file <a class="el" href="../../d5/d91/_linked_queue_8h_source.html">LinkedQueue.h</a>.</p>
-
-</div>
-</div>
-<a id="a2d739af8a7b73de9a0354b98ee6ea5a1" name="a2d739af8a7b73de9a0354b98ee6ea5a1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2d739af8a7b73de9a0354b98ee6ea5a1">&#9670;&#160;</a></span>LinkedQueue</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef struct <a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> <a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="../../d5/d91/_linked_queue_8h_source.html#l00018">18</a> of file <a class="el" href="../../d5/d91/_linked_queue_8h_source.html">LinkedQueue.h</a>.</p>
-
-</div>
-</div>
-<h2 class="groupheader">Function Documentation</h2>
+</div><h2 class="groupheader">Function Documentation</h2>
 <a id="ac7f3c4d9851f6cc460a77828a7e069a5" name="ac7f3c4d9851f6cc460a77828a7e069a5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac7f3c4d9851f6cc460a77828a7e069a5">&#9670;&#160;</a></span>LinkedQueue_Create()</h2>
 
@@ -181,8 +147,6 @@ Functions</h2></td></tr>
 
 <p>创建一个空队列 </p>
 <dl class="section return"><dt>Returns</dt><dd>一个指向空队列的指针 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../db/d4d/_linked_queue_8c_source.html#l00054">54</a> of file <a class="el" href="../../db/d4d/_linked_queue_8c_source.html">LinkedQueue.c</a>.</p>
 
 </div>
 </div>
@@ -209,8 +173,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../db/d4d/_linked_queue_8c_source.html#l00069">69</a> of file <a class="el" href="../../db/d4d/_linked_queue_8c_source.html">LinkedQueue.c</a>.</p>
 
 </div>
 </div>
@@ -239,8 +201,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队列长度 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d4d/_linked_queue_8c_source.html#l00079">79</a> of file <a class="el" href="../../db/d4d/_linked_queue_8c_source.html">LinkedQueue.c</a>.</p>
-
 </div>
 </div>
 <a id="a2ce108cc8d8f353e10977f78d983dfc6" name="a2ce108cc8d8f353e10977f78d983dfc6"></a>
@@ -268,8 +228,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>如果队列已空则返回 true ，否则返回 false </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d4d/_linked_queue_8c_source.html#l00084">84</a> of file <a class="el" href="../../db/d4d/_linked_queue_8c_source.html">LinkedQueue.c</a>.</p>
-
 </div>
 </div>
 <a id="aadcfd904a1145d27caba33dab46bac4f" name="aadcfd904a1145d27caba33dab46bac4f"></a>
@@ -287,7 +245,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">LinkedQueueItem&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a761762667986c674ed955e6824b3ecc2">LinkedQueueItem</a>&#160;</td>
           <td class="paramname"><em>data</em>&#160;</td>
         </tr>
         <tr>
@@ -307,8 +265,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d4d/_linked_queue_8c_source.html#l00089">89</a> of file <a class="el" href="../../db/d4d/_linked_queue_8c_source.html">LinkedQueue.c</a>.</p>
-
 </div>
 </div>
 <a id="ad0a01010926e3c0a52e87fc491654821" name="ad0a01010926e3c0a52e87fc491654821"></a>
@@ -318,7 +274,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">LinkedQueueItem LinkedQueue_Dequeue </td>
+          <td class="memname"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a761762667986c674ed955e6824b3ecc2">LinkedQueueItem</a> LinkedQueue_Dequeue </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -336,8 +292,6 @@ Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队首元素 </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d4d/_linked_queue_8c_source.html#l00105">105</a> of file <a class="el" href="../../db/d4d/_linked_queue_8c_source.html">LinkedQueue.c</a>.</p>
-
 </div>
 </div>
 <a id="a9793bd6ae3be807f26ea1771241c1017" name="a9793bd6ae3be807f26ea1771241c1017"></a>
@@ -347,7 +301,7 @@ Functions</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">LinkedQueueItem LinkedQueue_Front </td>
+          <td class="memname"><a class="el" href="../../d5/d91/_linked_queue_8h.html#a761762667986c674ed955e6824b3ecc2">LinkedQueueItem</a> LinkedQueue_Front </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../dc/d5d/struct_linked_queue.html">LinkedQueue</a> *&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -364,8 +318,6 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>队首元素 </dd></dl>
-
-<p class="definition">Definition at line <a class="el" href="../../db/d4d/_linked_queue_8c_source.html#l00125">125</a> of file <a class="el" href="../../db/d4d/_linked_queue_8c_source.html">LinkedQueue.c</a>.</p>
 
 </div>
 </div>
@@ -392,8 +344,6 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-
-<p class="definition">Definition at line <a class="el" href="../../db/d4d/_linked_queue_8c_source.html#l00132">132</a> of file <a class="el" href="../../db/d4d/_linked_queue_8c_source.html">LinkedQueue.c</a>.</p>
 
 </div>
 </div>
