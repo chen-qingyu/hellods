@@ -7,6 +7,7 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
+/// Linked Queue Node.
 struct LinkedQueueNode
 {
     /// Data stored in the node.
@@ -16,6 +17,7 @@ struct LinkedQueueNode
     struct LinkedQueueNode* next;
 };
 
+/// Linked Queue.
 struct LinkedQueue
 {
     /// Number of elements.
@@ -28,9 +30,9 @@ struct LinkedQueue
     struct LinkedQueueNode* rear;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
 // Remove all of the elements.
 static inline void clear(LinkedQueue* self)
@@ -47,9 +49,9 @@ static inline void clear(LinkedQueue* self)
     self->size = 0;
 }
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 LinkedQueue* LinkedQueue_Create(void)
 {

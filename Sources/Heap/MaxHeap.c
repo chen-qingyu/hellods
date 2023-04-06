@@ -7,7 +7,8 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-#define MAX_ITEM INT_MAX // max value of MaxHeapItem
+// Max value of MaxHeapItem.
+#define MAX_ITEM INT_MAX
 
 // Initial capacity.
 #define INIT_CAPACITY 8
@@ -15,6 +16,7 @@
 // Maximum capacity.
 #define MAX_CAPACITY (INT_MAX - 1) // - 1 to prevent boundary subscript overflow
 
+/// Max Heap.
 struct MaxHeap
 {
     /// Number of elements.
@@ -27,9 +29,9 @@ struct MaxHeap
     MaxHeapItem* data;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
 // Expand capacity safely.
 static inline void expand_capacity(MaxHeap* self)
@@ -39,9 +41,9 @@ static inline void expand_capacity(MaxHeap* self)
     check_pointer(self->data);
 }
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 MaxHeap* MaxHeap_Create(void)
 {

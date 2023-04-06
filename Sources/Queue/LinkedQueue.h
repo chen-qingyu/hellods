@@ -13,8 +13,10 @@
 
 #include <stdbool.h> // bool
 
+/// Linked Queue Item.
 typedef int LinkedQueueItem;
 
+/// Linked Queue.
 typedef struct LinkedQueue LinkedQueue;
 
 /**

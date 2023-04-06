@@ -13,8 +13,10 @@
 
 #include <stdbool.h> // bool
 
+/// Doubly Linked List Item.
 typedef int DoublyLinkedListItem;
 
+/// Doubly Linked List.
 typedef struct DoublyLinkedList DoublyLinkedList;
 
 /**

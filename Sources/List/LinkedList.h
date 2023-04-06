@@ -13,8 +13,10 @@
 
 #include <stdbool.h> // bool
 
+/// Linked List Item.
 typedef int LinkedListItem;
 
+/// Linked List.
 typedef struct LinkedList LinkedList;
 
 /**

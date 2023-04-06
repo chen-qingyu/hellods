@@ -13,8 +13,10 @@
 
 #include <stdbool.h> // bool
 
+/// Array List Item.
 typedef int ArrayListItem;
 
+/// Array List.
 typedef struct ArrayList ArrayList;
 
 /**

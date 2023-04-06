@@ -7,6 +7,7 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
+/// Linked Stack Node.
 struct LinkedStackNode
 {
     /// Data stored in the node.
@@ -16,6 +17,7 @@ struct LinkedStackNode
     struct LinkedStackNode* next;
 };
 
+/// Linked Stack.
 struct LinkedStack
 {
     /// Number of elements.
@@ -25,9 +27,9 @@ struct LinkedStack
     struct LinkedStackNode* top;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
 // Remove all of the elements.
 static inline void clear(LinkedStack* self)
@@ -43,9 +45,9 @@ static inline void clear(LinkedStack* self)
     self->size = 0;
 }
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 LinkedStack* LinkedStack_Create(void)
 {

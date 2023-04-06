@@ -9,6 +9,7 @@
 // 为保证入栈是严格的 O(1) 时间复杂度，故这里采用固定的容量，而不是动态增长。
 #define MAX_CAPACITY 256
 
+/// Array Stack.
 struct ArrayStack
 {
     /// Pointer to the data.
@@ -18,13 +19,13 @@ struct ArrayStack
     int top;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 ArrayStack* ArrayStack_Create(void)
 {

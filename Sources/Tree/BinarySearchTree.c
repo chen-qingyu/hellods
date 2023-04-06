@@ -7,6 +7,7 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
+/// Binary Search Tree Node.
 struct BinarySearchTreeNode
 {
     /// Data stored in the node.
@@ -19,6 +20,7 @@ struct BinarySearchTreeNode
     struct BinarySearchTreeNode* right;
 };
 
+/// Binary Search Tree.
 struct BinarySearchTree
 {
     /// Number of elements.
@@ -28,9 +30,9 @@ struct BinarySearchTree
     struct BinarySearchTreeNode* root;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
 typedef const struct BinarySearchTreeNode* ArrayQueueItem;
 
@@ -242,9 +244,9 @@ static inline int depth(const struct BinarySearchTreeNode* node)
     return node == NULL ? 0 : 1 + MAX(depth(node->left), depth(node->right));
 }
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 BinarySearchTree* BinarySearchTree_Create(void)
 {

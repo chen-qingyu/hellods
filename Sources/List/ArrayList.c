@@ -14,6 +14,7 @@
 // Maximum capacity.
 #define MAX_CAPACITY (INT_MAX - 1) // - 1 to prevent boundary subscript overflow
 
+/// Array List.
 struct ArrayList
 {
     /// Number of elements.
@@ -26,9 +27,9 @@ struct ArrayList
     ArrayListItem* data;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
 // Expand capacity safely.
 static inline void expand_capacity(ArrayList* self)
@@ -38,9 +39,9 @@ static inline void expand_capacity(ArrayList* self)
     check_pointer(self->data);
 }
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 ArrayList* ArrayList_Create(void)
 {

@@ -9,6 +9,7 @@
 // TODO 动态增长
 #define INIT_CAPACITY 17
 
+/// Hash Table State.
 enum HashTableState
 {
     EMPTY,
@@ -16,6 +17,7 @@ enum HashTableState
     REMOVED
 };
 
+/// Hash Table Pair.
 struct HashTablePair
 {
     /// Key of the key-value pair.
@@ -28,6 +30,7 @@ struct HashTablePair
     enum HashTableState state;
 };
 
+/// Hash Table.
 struct HashTable
 {
     /// Number of elements.
@@ -40,9 +43,9 @@ struct HashTable
     struct HashTablePair* pairs;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
 static int hash(HashTableKey key, int mod)
 {
@@ -101,9 +104,9 @@ static inline void clear(HashTable* self)
     self->size = 0;
 }
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 HashTable* HashTable_Create(void)
 {

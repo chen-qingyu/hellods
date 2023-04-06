@@ -16,10 +16,13 @@
 /// A value of HashTableValue that indicates not found.
 #define HASH_TABLE_NOT_FOUND (-1)
 
+/// Hash Table Key.
 typedef const char* HashTableKey;
 
+/// Hash Table Value.
 typedef int HashTableValue;
 
+/// Hash Table.
 typedef struct HashTable HashTable;
 
 /**

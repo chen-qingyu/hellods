@@ -16,6 +16,7 @@
 /// A value of BinarySearchTreeItem that indicates not found.
 #define BINARY_SEARCH_TREE_NOT_FOUND (-1)
 
+/// Traverse Option.
 enum TraverseOption
 {
     PRE_ORDER,
@@ -24,8 +25,10 @@ enum TraverseOption
     LEVEL_ORDER
 };
 
+/// Binary Search Tree Item.
 typedef int BinarySearchTreeItem;
 
+/// Binary Search Tree.
 typedef struct BinarySearchTree BinarySearchTree;
 
 /**

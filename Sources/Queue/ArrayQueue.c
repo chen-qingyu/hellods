@@ -9,6 +9,7 @@
 // 为保证入队是严格的 O(1) 时间复杂度，故这里采用固定的容量，而不是动态增长。
 #define MAX_CAPACITY 256
 
+/// Array Queue.
 struct ArrayQueue
 {
     /// Pointer to the data.
@@ -21,13 +22,13 @@ struct ArrayQueue
     int rear;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 ArrayQueue* ArrayQueue_Create(void)
 {

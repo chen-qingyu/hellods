@@ -51,10 +51,6 @@
 #ifndef STRING_H
 #define STRING_H
 
-/*******************************
- * Type declaration.
- *******************************/
-
 // For `true` and `false`.
 #include <stdbool.h>
 
@@ -64,10 +60,14 @@
 // INFINITY: Positive infinity.
 #include <math.h>
 
-// String structure declaration.
+/*
+ * Type Declaration
+ */
+
+/// String.
 typedef struct String String;
 
-// Used for string comparison.
+/// Used for string comparison.
 enum Order
 {
     // Less Than.
@@ -80,11 +80,7 @@ enum Order
     GT = 1,
 };
 
-/*******************************
- * Interface function declaration.
- *******************************/
-
-/**
+/*
  * Constructor / Destructor
  */
 
@@ -153,7 +149,7 @@ String* String_Move(String* str);
  */
 void String_Destroy(String* self);
 
-/**
+/*
  * Assignment
  */
 
@@ -181,7 +177,7 @@ void String_CopyAssign(String* self, const String* that);
  */
 void String_MoveAssign(String* self, String* that);
 
-/**
+/*
  * Getter / Setter
  */
 
@@ -205,7 +201,7 @@ char* String_Get(const String* self);
  */
 void String_Set(String* self, const char* chars);
 
-/**
+/*
  * Examination (will not change the object itself)
  */
 
@@ -329,7 +325,7 @@ long long String_ToInteger(const String* self, int base);
  */
 int String_Count(const String* self, char ch);
 
-/**
+/*
  * Manipulation (will change the object itself)
  */
 
@@ -402,7 +398,7 @@ void String_Swap(String* self, String* that);
  */
 void String_Clear(String* self);
 
-/**
+/*
  * Production (will produce new object)
  */
 
@@ -434,7 +430,7 @@ String** String_Split(const String* self, const String* sep);
  */
 String* String_Slice(const String* self, int start, int stop, int step);
 
-/**
+/*
  * Auxiliary (helper functions)
  */
 

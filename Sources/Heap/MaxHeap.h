@@ -13,8 +13,10 @@
 
 #include <stdbool.h> // bool
 
+/// Max Heap Item.
 typedef int MaxHeapItem;
 
+/// Max Heap.
 typedef struct MaxHeap MaxHeap;
 
 /**

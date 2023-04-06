@@ -5,19 +5,20 @@
 
 #include "../common/check_pointer.h"
 
+/// Linked Deque.
 struct LinkedDeque
 {
     /// A doubly linked list.
     DoublyLinkedList* dlist;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 LinkedDeque* LinkedDeque_Create(void)
 {

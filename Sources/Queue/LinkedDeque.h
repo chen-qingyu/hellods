@@ -13,8 +13,10 @@
 
 #include <stdbool.h> // bool
 
+/// Linked Deque Item.
 typedef int LinkedDequeItem; // must be same as DoublyLinkedListItem
 
+/// Linked Deque.
 typedef struct LinkedDeque LinkedDeque;
 
 /**

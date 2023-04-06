@@ -8,6 +8,7 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
+/// Doubly Linked List Node.
 struct DoublyLinkedListNode
 {
     /// Data stored in the node.
@@ -20,6 +21,7 @@ struct DoublyLinkedListNode
     struct DoublyLinkedListNode* next;
 };
 
+/// Doubly Linked List.
 struct DoublyLinkedList
 {
     /// Number of elements.
@@ -38,9 +40,9 @@ struct DoublyLinkedList
     struct DoublyLinkedListNode* p_latest;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
 // Remove all of the elements.
 static inline void clear(DoublyLinkedList* self)
@@ -59,9 +61,9 @@ static inline void clear(DoublyLinkedList* self)
     self->trailer->prev = self->header;
 }
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 DoublyLinkedList* DoublyLinkedList_Create(void)
 {

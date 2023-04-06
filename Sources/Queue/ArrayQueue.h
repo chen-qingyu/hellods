@@ -13,8 +13,10 @@
 
 #include <stdbool.h> // bool
 
+/// Array Queue Item.
 typedef int ArrayQueueItem;
 
+/// Array Queue.
 typedef struct ArrayQueue ArrayQueue;
 
 /**

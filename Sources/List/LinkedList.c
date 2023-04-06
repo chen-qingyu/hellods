@@ -8,6 +8,7 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
+/// Linked List Node.
 struct LinkedListNode
 {
     /// Data stored in the node.
@@ -17,6 +18,7 @@ struct LinkedListNode
     struct LinkedListNode* next;
 };
 
+/// Linked List.
 struct LinkedList
 {
     /// Number of elements.
@@ -26,9 +28,9 @@ struct LinkedList
     struct LinkedListNode* header;
 };
 
-/*******************************
-Helper functions implementation.
-*******************************/
+/*
+ * Helpers
+ */
 
 // Remove all of the elements.
 static inline void clear(LinkedList* self)
@@ -44,9 +46,9 @@ static inline void clear(LinkedList* self)
     self->header->next = NULL;
 }
 
-/*******************************
-Interface functions implementation.
-*******************************/
+/*
+ * Functions
+ */
 
 LinkedList* LinkedList_Create(void)
 {

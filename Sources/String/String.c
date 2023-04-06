@@ -9,11 +9,11 @@
 #include "../common/check_full.h"
 #include "../common/check_pointer.h"
 
-/*******************************
- * Type definition.
- *******************************/
+/*
+ * Type Definition
+ */
 
-// String structure definition.
+/// String.
 struct String
 {
     /// Number of characters.
@@ -29,7 +29,7 @@ struct String
 // String initial capacity.
 #define INIT_CAPACITY 8
 
-// Used for FSM
+// Used for FSM.
 enum State
 {
     S_BEGIN_BLANK = 1 << 0,        // begin blank character
@@ -45,7 +45,7 @@ enum State
     S_OTHER = 1 << 10,             // other
 };
 
-// Used for FSM
+// Used for FSM.
 enum Event
 {
     E_BLANK = 1 << 11,     // blank character: '\n', '\r', '\t', ' '
@@ -56,9 +56,9 @@ enum Event
     E_OTHER = 1 << 16,     // other
 };
 
-/*******************************
- * Helper function definition.
- *******************************/
+/*
+ * Helpers
+ */
 
 // Use the KMP algorithm to find the position of the pattern.
 static inline int kmp(const char* str, const char* pattern, int n, int m)
@@ -180,11 +180,7 @@ static inline void append_char(String* self, const char ch)
     self->data[self->size] = '\0';
 }
 
-/*******************************
- * Interface functions definition.
- *******************************/
-
-/**
+/*
  * Constructor / Destructor
  */
 
@@ -273,7 +269,7 @@ void String_Destroy(String* self)
     free(self);
 }
 
-/**
+/*
  * Assignment
  */
 
@@ -307,7 +303,7 @@ void String_MoveAssign(String* self, String* that)
     that->data[0] = '\0';
 }
 
-/**
+/*
  * Getter / Setter
  */
 
@@ -338,7 +334,7 @@ void String_Set(String* self, const char* chars)
     self->data[self->size] = '\0';
 }
 
-/**
+/*
  * Examination (will not change the object itself)
  */
 
@@ -620,7 +616,7 @@ int String_Count(const String* self, char ch)
     return cnt;
 }
 
-/**
+/*
  * Manipulation (will change the object itself)
  */
 
@@ -734,7 +730,7 @@ void String_Clear(String* self)
     }
 }
 
-/**
+/*
  * Production (will produce new object)
  */
 
@@ -793,7 +789,7 @@ String* String_Slice(const String* self, int start, int stop, int step)
     return str;
 }
 
-/**
+/*
  * Auxiliary (helper functions)
  */
 
