@@ -68,4 +68,4 @@ String_Slice("12345", 0, 5, 2); // "135" 切片
 
 这个是C版本的，目标是实现完整而标准的数据结构。但是有一个缺点，就是不支持真正的泛型编程。
 
-我还写了C++版本的： [MDSPP (GitHub)](https://github.com/chen-qingyu/MDSPP) [MDSPP (Gitee)](https://gitee.com/ChobitsY/mdspp) ，目标是像Python的内置类型一样好用又优雅。
+我还写了C++版本的： [MDSPP (GitHub)](https://github.com/chen-qingyu/MDSPP) [MDSPP (Gitee)](https://gitee.com/ChobitsY/mdspp) ，目标是实现一个像Python的内置类型一样优雅的C++库。
