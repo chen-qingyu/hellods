@@ -1,41 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Sources">
-      <UniqueIdentifier>{f41b0d36-7d49-4870-86fd-a995663f9a91}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\common">
-      <UniqueIdentifier>{ff16b2df-c98a-43f1-b218-0693ba87a364}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Graph">
-      <UniqueIdentifier>{61698947-d64b-4e27-b7cb-f1442ba98e09}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Heap">
-      <UniqueIdentifier>{3a8d4fe6-c8a5-4231-9b80-ab1042368073}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\List">
-      <UniqueIdentifier>{03a869f0-a4b8-49b6-8c49-a0991e775b39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Queue">
-      <UniqueIdentifier>{39703d15-e9f7-4cb7-8ec4-91fc294c7548}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Stack">
-      <UniqueIdentifier>{f7857d3d-34f0-4f18-964e-d0c39999f0e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\String">
-      <UniqueIdentifier>{a402ddaf-02dd-4021-b8af-a32b0fd5a464}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Table">
-      <UniqueIdentifier>{10c2d753-c19f-4589-a1d8-a7901651a9e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Sources\Tree">
-      <UniqueIdentifier>{806db555-d524-40a7-a8c5-ff204e58268d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Tests">
-      <UniqueIdentifier>{4a57a22b-95b3-442f-8101-a7b9bb23cdfe}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
+    <ClCompile Include="Sources\Graph\MatrixGraph.c">
+      <Filter>Sources\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Heap\MaxHeap.c">
+      <Filter>Sources\Heap</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\List\ArrayList.c">
+      <Filter>Sources\List</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\List\DoublyLinkedList.c">
+      <Filter>Sources\List</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\List\LinkedList.c">
+      <Filter>Sources\List</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Queue\ArrayQueue.c">
+      <Filter>Sources\Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Queue\LinkedDeque.c">
+      <Filter>Sources\Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Queue\LinkedQueue.c">
+      <Filter>Sources\Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Stack\ArrayStack.c">
+      <Filter>Sources\Stack</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Stack\LinkedStack.c">
+      <Filter>Sources\Stack</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\String\String.c">
+      <Filter>Sources\String</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Table\HashTable.c">
+      <Filter>Sources\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="Sources\Tree\BinarySearchTree.c">
+      <Filter>Sources\Tree</Filter>
+    </ClCompile>
     <ClCompile Include="Tests\MainTest.c">
       <Filter>Tests</Filter>
     </ClCompile>
@@ -63,50 +67,11 @@
     <ClCompile Include="Tests\TestTree.c">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Sources\Graph\MatrixGraph.c">
-      <Filter>Sources\Graph</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Heap\MaxHeap.c">
-      <Filter>Sources\Heap</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\List\ArrayList.c">
-      <Filter>Sources\List</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\List\DoublyLinkedList.c">
-      <Filter>Sources\List</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\List\LinkedList.c">
-      <Filter>Sources\List</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Tree\BinarySearchTree.c">
-      <Filter>Sources\Tree</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Table\HashTable.c">
-      <Filter>Sources\Table</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\String\String.c">
-      <Filter>Sources\String</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Stack\ArrayStack.c">
-      <Filter>Sources\Stack</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Stack\LinkedStack.c">
-      <Filter>Sources\Stack</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Queue\ArrayQueue.c">
-      <Filter>Sources\Queue</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Queue\LinkedDeque.c">
-      <Filter>Sources\Queue</Filter>
-    </ClCompile>
-    <ClCompile Include="Sources\Queue\LinkedQueue.c">
-      <Filter>Sources\Queue</Filter>
+    <ClCompile Include="pch.cpp">
+      <Filter>Tests</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\common\check_bounds.h">
-      <Filter>Sources\common</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\common\check_empty.h">
       <Filter>Sources\common</Filter>
     </ClInclude>
@@ -114,6 +79,9 @@
       <Filter>Sources\common</Filter>
     </ClInclude>
     <ClInclude Include="Sources\common\check_pointer.h">
+      <Filter>Sources\common</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\common\check_bounds.h">
       <Filter>Sources\common</Filter>
     </ClInclude>
     <ClInclude Include="Sources\Graph\MatrixGraph.h">
@@ -131,21 +99,6 @@
     <ClInclude Include="Sources\List\LinkedList.h">
       <Filter>Sources\List</Filter>
     </ClInclude>
-    <ClInclude Include="Sources\Tree\BinarySearchTree.h">
-      <Filter>Sources\Tree</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Table\HashTable.h">
-      <Filter>Sources\Table</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\String\String.h">
-      <Filter>Sources\String</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Stack\ArrayStack.h">
-      <Filter>Sources\Stack</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\Stack\LinkedStack.h">
-      <Filter>Sources\Stack</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Queue\ArrayQueue.h">
       <Filter>Sources\Queue</Filter>
     </ClInclude>
@@ -155,5 +108,63 @@
     <ClInclude Include="Sources\Queue\LinkedQueue.h">
       <Filter>Sources\Queue</Filter>
     </ClInclude>
+    <ClInclude Include="Sources\Stack\ArrayStack.h">
+      <Filter>Sources\Stack</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Stack\LinkedStack.h">
+      <Filter>Sources\Stack</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\String\String.h">
+      <Filter>Sources\String</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Table\HashTable.h">
+      <Filter>Sources\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\Tree\BinarySearchTree.h">
+      <Filter>Sources\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{ec1c12ee-80ca-4446-b0e4-dcda8d6a1c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\common">
+      <UniqueIdentifier>{90753c06-4ab0-47fa-b36f-42a63255ffef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Graph">
+      <UniqueIdentifier>{75cd2660-fb8b-4f1f-97b9-ae3c796ae64d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Heap">
+      <UniqueIdentifier>{6d1f7847-1c1a-4ecc-961f-7089a880497f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\List">
+      <UniqueIdentifier>{3a66dd06-2f01-4087-8a0d-0e2499faccf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Queue">
+      <UniqueIdentifier>{b521d5cf-931f-488f-a782-62090ea50c5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Stack">
+      <UniqueIdentifier>{46c0d040-5462-40de-9b82-fcd8dd5a5722}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\String">
+      <UniqueIdentifier>{1a8e2977-38bc-4397-abae-6d8b56ed5c81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Table">
+      <UniqueIdentifier>{7a92179e-b6f4-46fc-b310-4f96b39e1b44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Tree">
+      <UniqueIdentifier>{378665d0-4c7e-4809-987f-9460656c89e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{4d72a8f2-45e0-427e-b3fd-739306194a05}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>Tests</Filter>
+    </None>
   </ItemGroup>
 </Project>
