@@ -1,8 +1,11 @@
-#include "../Sources/Tree/BinarySearchTree.h"
+// Tested on Microsoft Visual Studio Community 2019: ALL PASSED
 
-#include <assert.h>
-#include <stdio.h>
-#include <string.h>
+#include "../pch.h"
+
+extern "C"
+{
+#include "../Sources/Tree/BinarySearchTree.h"
+}
 
 // for test traverse
 static char str[64] = {0};
@@ -14,17 +17,17 @@ static void Visit(const BinarySearchTreeItem n)
     strcat(str, tmp);
 }
 
-void TestBinarySearchTree()
+TEST(Tree, BinarySearchTree)
 {
     // BinarySearchTree_Create BinarySearchTree_Size BinarySearchTree_IsEmpty
     BinarySearchTree* tree = BinarySearchTree_Create();
-    assert(BinarySearchTree_Size(tree) == 0);
-    assert(BinarySearchTree_IsEmpty(tree) == true);
+    ASSERT_EQ(BinarySearchTree_Size(tree), 0);
+    ASSERT_EQ(BinarySearchTree_IsEmpty(tree), true);
 
     // BinarySearchTree_Find BinarySearchTree_FindMax BinarySearchTree_FindMin
-    assert(BinarySearchTree_Find(tree, 0) == BINARY_SEARCH_TREE_NOT_FOUND);
-    assert(BinarySearchTree_FindMax(tree) == BINARY_SEARCH_TREE_NOT_FOUND);
-    assert(BinarySearchTree_FindMin(tree) == BINARY_SEARCH_TREE_NOT_FOUND);
+    ASSERT_EQ(BinarySearchTree_Find(tree, 0), BINARY_SEARCH_TREE_NOT_FOUND);
+    ASSERT_EQ(BinarySearchTree_FindMax(tree), BINARY_SEARCH_TREE_NOT_FOUND);
+    ASSERT_EQ(BinarySearchTree_FindMin(tree), BINARY_SEARCH_TREE_NOT_FOUND);
 
     // BinarySearchTree_Insert
     BinarySearchTree_Insert(tree, 3);
@@ -35,56 +38,54 @@ void TestBinarySearchTree()
     BinarySearchTree_Insert(tree, 5);
     BinarySearchTree_Insert(tree, 5);
     BinarySearchTree_Insert(tree, 1);
-    assert(BinarySearchTree_Size(tree) == 5);
+    ASSERT_EQ(BinarySearchTree_Size(tree), 5);
 
     // BinarySearchTree_Traverse
     BinarySearchTree_Traverse(tree, PRE_ORDER, Visit);
-    assert(strcmp(str, "3 1 2 4 5 ") == 0);
+    ASSERT_EQ(strcmp(str, "3 1 2 4 5 "), 0);
     memset(str, 0, sizeof(str));
 
     BinarySearchTree_Traverse(tree, IN_ORDER, Visit);
-    assert(strcmp(str, "1 2 3 4 5 ") == 0);
+    ASSERT_EQ(strcmp(str, "1 2 3 4 5 "), 0);
     memset(str, 0, sizeof(str));
 
     BinarySearchTree_Traverse(tree, POST_ORDER, Visit);
-    assert(strcmp(str, "2 1 5 4 3 ") == 0);
+    ASSERT_EQ(strcmp(str, "2 1 5 4 3 "), 0);
     memset(str, 0, sizeof(str));
 
     BinarySearchTree_Traverse(tree, LEVEL_ORDER, Visit);
-    assert(strcmp(str, "3 1 4 2 5 ") == 0);
+    ASSERT_EQ(strcmp(str, "3 1 4 2 5 "), 0);
     memset(str, 0, sizeof(str));
 
     // BinarySearchTree_Find
-    assert(BinarySearchTree_Find(tree, 2) == 2);
-    assert(BinarySearchTree_Find(tree, 0) == BINARY_SEARCH_TREE_NOT_FOUND);
+    ASSERT_EQ(BinarySearchTree_Find(tree, 2), 2);
+    ASSERT_EQ(BinarySearchTree_Find(tree, 0), BINARY_SEARCH_TREE_NOT_FOUND);
 
     // BinarySearchTree_FindMin BinarySearchTree_FindMax
-    assert(BinarySearchTree_FindMin(tree) == 1);
-    assert(BinarySearchTree_FindMax(tree) == 5);
+    ASSERT_EQ(BinarySearchTree_FindMin(tree), 1);
+    ASSERT_EQ(BinarySearchTree_FindMax(tree), 5);
 
     // BinarySearchTree_Depth
-    assert(BinarySearchTree_Depth(tree) == 3);
+    ASSERT_EQ(BinarySearchTree_Depth(tree), 3);
 
     // BinarySearchTree_Remove
     BinarySearchTree_Remove(tree, 1);
-    assert(BinarySearchTree_FindMin(tree) == 2);
+    ASSERT_EQ(BinarySearchTree_FindMin(tree), 2);
     BinarySearchTree_Remove(tree, 5);
-    assert(BinarySearchTree_FindMax(tree) == 4);
-    assert(BinarySearchTree_Size(tree) == 3);
+    ASSERT_EQ(BinarySearchTree_FindMax(tree), 4);
+    ASSERT_EQ(BinarySearchTree_Size(tree), 3);
 
     // BinarySearchTree_Depth
-    assert(BinarySearchTree_Depth(tree) == 2);
+    ASSERT_EQ(BinarySearchTree_Depth(tree), 2);
 
     // BinarySearchTree_Clear
     BinarySearchTree_Clear(tree);
-    assert(BinarySearchTree_Size(tree) == 0);
-    assert(BinarySearchTree_Depth(tree) == 0);
+    ASSERT_EQ(BinarySearchTree_Size(tree), 0);
+    ASSERT_EQ(BinarySearchTree_Depth(tree), 0);
     BinarySearchTree_Clear(tree); // double clear
-    assert(BinarySearchTree_Size(tree) == 0);
-    assert(BinarySearchTree_Depth(tree) == 0);
+    ASSERT_EQ(BinarySearchTree_Size(tree), 0);
+    ASSERT_EQ(BinarySearchTree_Depth(tree), 0);
 
     // BinarySearchTree_Destroy
     BinarySearchTree_Destroy(tree);
-
-    printf("Binary Search Tree Test OK.\n");
 }

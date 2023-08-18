@@ -1,8 +1,11 @@
-#include "../Sources/Graph/MatrixGraph.h"
+// Tested on Microsoft Visual Studio Community 2019: ALL PASSED
 
-#include <assert.h>
-#include <stdio.h>
-#include <string.h>
+#include "../pch.h"
+
+extern "C"
+{
+#include "../Sources/Graph/MatrixGraph.h"
+}
 
 // for test traverse
 static char str[64] = {0};
@@ -14,7 +17,7 @@ static void Visit(MatrixGraphVertex V)
     strcat(str, tmp);
 }
 
-void TestMatrixGraph(void)
+TEST(Graph, MatrixGraph)
 {
     // MatrixGraph_Create
     MatrixGraph* G = MatrixGraph_Create();
@@ -35,45 +38,45 @@ void TestMatrixGraph(void)
     MatrixGraph_Link(G, 3, 6, 4);
     MatrixGraph_Link(G, 6, 5, 1);
 
-    //       +--+   2    +--+
-    //       |V0|------->|V1|
-    //       +--+        +--+
-    //    +--^  | 1    3 |  |  10
-    //   4|     +--v  v--+  +--v
+    // +--+   2    +--+
+    // |V0|------->|V1|
+    // +--+        +--+
+    // +--^  | 1    3 |  |  10
+    // 4|     +--v  v--+  +--v
     // +--+    2   +--+   2    +--+
     // |V2|<-------|V3|------->|V4|
     // +--+        +--+        +--+
-    //   5|      8 |  | 4      |6
-    //    +--v  v--+  +--v  v--+
-    //       +--+   1    +--+
-    //       |V5|<-------|V6|
-    //       +--+        +--+
+    // 5|      8 |  | 4      |6
+    // +--v  v--+  +--v  v--+
+    // +--+   1    +--+
+    // |V5|<-------|V6|
+    // +--+        +--+
 
     // MatrixGraph_IsAdjacent
-    assert(MatrixGraph_IsAdjacent(G, 0, 1) == true);
-    assert(MatrixGraph_IsAdjacent(G, 0, 6) == false);
-    assert(MatrixGraph_IsAdjacent(G, 6, 0) == false);
+    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 0, 1), true);
+    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 0, 6), false);
+    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 6, 0), false);
 
     MatrixGraph_Link(G, 0, 6, 99);
-    assert(MatrixGraph_IsAdjacent(G, 0, 6) == true);
+    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 0, 6), true);
 #ifndef UNDIRECTED
-    assert(MatrixGraph_IsAdjacent(G, 6, 0) == false);
+    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 6, 0), false);
 #else
-    assert(MatrixGraph_IsAdjacent(G, 6, 0) == true);
+    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 6, 0), true);
 #endif
 
     // MatrixGraph_Unlink
     MatrixGraph_Unlink(G, 0, 6);
-    assert(MatrixGraph_IsAdjacent(G, 0, 6) == false);
+    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 0, 6), false);
 
     // MatrixGraph_DFS
     MatrixGraph_DFS(G, 0, Visit);
-    assert(strcmp(str, "0 1 3 2 5 4 6 ") == 0);
+    ASSERT_EQ(strcmp(str, "0 1 3 2 5 4 6 "), 0);
     memset(str, 0, sizeof(str));
 
     // MatrixGraph_BFS
     MatrixGraph_BFS(G, 0, Visit);
-    assert(strcmp(str, "0 1 3 4 2 5 6 ") == 0);
+    ASSERT_EQ(strcmp(str, "0 1 3 4 2 5 6 "), 0);
     memset(str, 0, sizeof(str));
 
     // MatrixGraph_Dijkstra
@@ -81,24 +84,22 @@ void TestMatrixGraph(void)
     int path[7];
     MatrixGraph_Dijkstra(G, dist, path, 0);
 
-    assert(dist[0] == 0);
-    assert(dist[1] == 2);
-    assert(dist[2] == 3);
-    assert(dist[3] == 1);
-    assert(dist[4] == 3);
-    assert(dist[5] == 6);
-    assert(dist[6] == 5);
+    ASSERT_EQ(dist[0], 0);
+    ASSERT_EQ(dist[1], 2);
+    ASSERT_EQ(dist[2], 3);
+    ASSERT_EQ(dist[3], 1);
+    ASSERT_EQ(dist[4], 3);
+    ASSERT_EQ(dist[5], 6);
+    ASSERT_EQ(dist[6], 5);
 
-    assert(path[0] == -1);
-    assert(path[1] == 0);
-    assert(path[2] == 3);
-    assert(path[3] == 0);
-    assert(path[4] == 3);
-    assert(path[5] == 6);
-    assert(path[6] == 3);
+    ASSERT_EQ(path[0], -1);
+    ASSERT_EQ(path[1], 0);
+    ASSERT_EQ(path[2], 3);
+    ASSERT_EQ(path[3], 0);
+    ASSERT_EQ(path[4], 3);
+    ASSERT_EQ(path[5], 6);
+    ASSERT_EQ(path[6], 3);
 
     // MatrixGraph_Destroy
     MatrixGraph_Destroy(G);
-
-    printf("Matrix Graph Test OK.\n");
 }

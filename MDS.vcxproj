@@ -62,15 +62,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Tests\MainTest.c" />
-    <ClCompile Include="Tests\TestGraph.c" />
-    <ClCompile Include="Tests\TestHeap.c" />
-    <ClCompile Include="Tests\TestList.c" />
-    <ClCompile Include="Tests\TestQueue.c" />
-    <ClCompile Include="Tests\TestStack.c" />
-    <ClCompile Include="Tests\TestString.c" />
-    <ClCompile Include="Tests\TestTable.c" />
-    <ClCompile Include="Tests\TestTree.c" />
+    <ClCompile Include="Tests\TestGraph.cpp" />
+    <ClCompile Include="Tests\TestHeap.cpp" />
+    <ClCompile Include="Tests\TestList.cpp" />
+    <ClCompile Include="Tests\TestQueue.cpp" />
+    <ClCompile Include="Tests\TestStack.cpp" />
+    <ClCompile Include="Tests\TestString.cpp" />
+    <ClCompile Include="Tests\TestTable.cpp" />
+    <ClCompile Include="Tests\TestTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

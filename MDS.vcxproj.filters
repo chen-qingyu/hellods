@@ -40,31 +40,28 @@
     <ClCompile Include="Sources\Tree\BinarySearchTree.c">
       <Filter>Sources\Tree</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\MainTest.c">
+    <ClCompile Include="Tests\TestGraph.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\TestGraph.c">
+    <ClCompile Include="Tests\TestHeap.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\TestHeap.c">
+    <ClCompile Include="Tests\TestList.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\TestList.c">
+    <ClCompile Include="Tests\TestQueue.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\TestQueue.c">
+    <ClCompile Include="Tests\TestStack.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\TestStack.c">
+    <ClCompile Include="Tests\TestString.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\TestString.c">
+    <ClCompile Include="Tests\TestTable.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
-    <ClCompile Include="Tests\TestTable.c">
-      <Filter>Tests</Filter>
-    </ClCompile>
-    <ClCompile Include="Tests\TestTree.c">
+    <ClCompile Include="Tests\TestTree.cpp">
       <Filter>Tests</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
