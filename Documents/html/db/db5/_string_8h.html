@@ -276,7 +276,7 @@ Functions</h2></td></tr>
 
 <p>Create an empty string. Constructor. O(1) </p>
 <p>Like <code>string new_str();</code> in C++.</p>
-<p>Example: string *new_str = <a class="el" href="../../db/db5/_string_8h.html#a624d70a0010383532577409fedef39d5" title="Create an empty string. Constructor. O(1)">String_Create()</a>;</p>
+<p>Example: <code><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> *new_str = <a class="el" href="../../db/db5/_string_8h.html#a624d70a0010383532577409fedef39d5" title="Create an empty string. Constructor. O(1)">String_Create()</a>;</code></p>
 <dl class="section return"><dt>Returns</dt><dd>A pointer to the empty string. </dd></dl>
 
 </div>
@@ -299,7 +299,7 @@ Functions</h2></td></tr>
 
 <p>Create a string from null-terminated byte string. O(N) </p>
 <p>Like <code>string new_str("hello");</code> in C++.</p>
-<p>Example: string *new_str = String_From("hello");</p>
+<p>Example: <code><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> *new_str = String_From("hello");</code></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">chars</td><td>A pointer to a null-terminated byte string. </td></tr>
@@ -349,7 +349,7 @@ Functions</h2></td></tr>
 
 <p>Copy constructor. O(N) </p>
 <p>Like <code>string new_str(str);</code> in C++.</p>
-<p>Example: string *new_str = String_Copy(str);</p>
+<p>Example: <code><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> *new_str = String_Copy(str);</code></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>A pointer to the string. </td></tr>
@@ -378,14 +378,14 @@ Functions</h2></td></tr>
 
 <p>Move constructor. O(1) </p>
 <p>Like <code>string new_str(std::move(str));</code> in C++.</p>
-<p>Example: string *new_str = String_Move(str); // after moved, <code>str</code> is an empty string</p>
+<p>Example: <code><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> *new_str = String_Move(str);</code></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">str</td><td>A pointer to the string to be moved. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>A pointer to the moved string. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>A pointer to the moved string (empty string). </dd></dl>
 
 </div>
 </div>
@@ -407,7 +407,7 @@ Functions</h2></td></tr>
 
 <p>Destroy a string. O(1) </p>
 <p>Like <code>str.~string();</code> in C++.</p>
-<p>Example: String_Destroy(self);</p>
+<p>Example: <code>String_Destroy(self);</code></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>A pointer to the string to be destroyed. </td></tr>
@@ -445,7 +445,7 @@ Functions</h2></td></tr>
 
 <p>Copy assignment operation. O(N) </p>
 <p>Like <code>self = that;</code> in C++.</p>
-<p>Example: String_CopyAssign(self, that);</p>
+<p>Example: <code>String_CopyAssign(self, that);</code></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>A pointer to the left hand side string. </td></tr>
@@ -484,7 +484,7 @@ Functions</h2></td></tr>
 
 <p>Move assignment operation. O(1) </p>
 <p>Like <code>self = std::move(that);</code> in C++.</p>
-<p>Example: String_MoveAssign(self, that);</p>
+<p>Example: <code>String_MoveAssign(self, that);</code></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>A pointer to the left hand side string. </td></tr>
@@ -512,7 +512,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the copy of the contents of the string. O(N) </p>
-<p>Example: char *chars = String_Get(self);</p>
+<p>Example: <code>char *chars = String_Get(self);</code></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>A pointer to the string. </td></tr>
@@ -550,7 +550,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the contents of the string using null-terminated byte string. O(N) </p>
-<p>Example: String_Set(self, "hello");</p>
+<p>Example: <code>String_Set(self, "hello");</code></p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>A pointer to the string to be set. </td></tr>
@@ -828,11 +828,19 @@ Functions</h2></td></tr>
 
 <p>Convert the string to a double-precision floating-point decimal number. O(N) </p>
 <p>If the string is too big to be representable will return <code>HUGE_VAL</code>. If the string represents nan ("[+-]?(nan, NaN, NAN)") will return <code>NAN</code>. If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return <code>[+-]?INFINITY</code>.</p>
-<p>Example: string *str1 = String_From("233.33"); double number1 = String_ToDecimal(str1); // =&gt; 233.33</p>
-<p>string *str2 = String_From("1e+600"); double number2 = String_ToDecimal(str2); // =&gt; HUGE_VAL</p>
-<p>string *str3 = String_From("nan"); double number3 = String_ToDecimal(str3); // =&gt; NAN</p>
-<p>string *str4 = String_From("inf"); double number4 = String_ToDecimal(str4); // =&gt; INFINITY</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> *str1 = String_From(<span class="stringliteral">&quot;233.33&quot;</span>);</div>
+<div class="line"><span class="keywordtype">double</span> number1 = String_ToDecimal(str1); <span class="comment">// =&gt; 233.33</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> *str2 = String_From(<span class="stringliteral">&quot;1e+600&quot;</span>);</div>
+<div class="line"><span class="keywordtype">double</span> number2 = String_ToDecimal(str2); <span class="comment">// =&gt; HUGE_VAL</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> *str3 = String_From(<span class="stringliteral">&quot;nan&quot;</span>);</div>
+<div class="line"><span class="keywordtype">double</span> number3 = String_ToDecimal(str3); <span class="comment">// =&gt; NAN</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> *str4 = String_From(<span class="stringliteral">&quot;inf&quot;</span>);</div>
+<div class="line"><span class="keywordtype">double</span> number4 = String_ToDecimal(str4); <span class="comment">// =&gt; INFINITY</span></div>
+<div class="ttc" id="astruct_string_html"><div class="ttname"><a href="../../d1/d18/struct_string.html">String</a></div><div class="ttdoc">String.</div><div class="ttdef"><b>Definition:</b> String.c:18</div></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> to be parsed. </td></tr>
   </table>
@@ -870,10 +878,15 @@ Functions</h2></td></tr>
 
 <p>Convert the string to an integer number based on 2-36 base. O(N) </p>
 <p>Numeric character in 36 base: 0, 1, ..., 9, A(10), ..., F(15), G(16), ..., Y(34), Z(35).</p>
-<p>Example: string *str1 = String_From("233"); long long number1 = String_ToInteger(str1, 10); // =&gt; 233</p>
-<p>string *str2 = String_From("cafebabe"); long long number2 = String_ToInteger(str2, 16); // =&gt; 3405691582</p>
-<p>string *str3 = String_From("z"); long long number3 = String_ToInteger(str3, 36); // =&gt; 35</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> *str1 = String_From(<span class="stringliteral">&quot;233&quot;</span>);</div>
+<div class="line"><span class="keywordtype">long</span> <span class="keywordtype">long</span> number1 = String_ToInteger(str1, 10); <span class="comment">// =&gt; 233</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> *str2 = String_From(<span class="stringliteral">&quot;cafebabe&quot;</span>);</div>
+<div class="line"><span class="keywordtype">long</span> <span class="keywordtype">long</span> number2 = String_ToInteger(str2, 16); <span class="comment">// =&gt; 3405691582</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> *str3 = String_From(<span class="stringliteral">&quot;z&quot;</span>);</div>
+<div class="line"><span class="keywordtype">long</span> <span class="keywordtype">long</span> number3 = String_ToInteger(str3, 36); <span class="comment">// =&gt; 35</span></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> to be parsed. </td></tr>
     <tr><td class="paramname">base</td><td>The base of an integer (2 &lt;= base &lt;= 36). </td></tr>
@@ -1241,9 +1254,11 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Split string with separator. O(N) </p>
-<p>Example: string *str = String_From("one, two, three"); string *sep = String_From(", "); string **str_arr = String_Split(str, sep); // =&gt; ["one", "two", "three", NULL]</p>
-<p>Don't forget use String_DestroyArray(return-value).</p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Example: </p><div class="fragment"><div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> *str = String_From(<span class="stringliteral">&quot;one, two, three&quot;</span>);</div>
+<div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> *sep = String_From(<span class="stringliteral">&quot;, &quot;</span>);</div>
+<div class="line"><a class="code hl_struct" href="../../d1/d18/struct_string.html">String</a> **str_arr = String_Split(str, sep); <span class="comment">// =&gt; [&quot;one&quot;, &quot;two&quot;, &quot;three&quot;, NULL]</span></div>
+<div class="line">String_DestroyArray(str_arr); <span class="comment">// free memory</span></div>
+</div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td><a class="el" href="../../d1/d18/struct_string.html" title="String.">String</a> to be split. </td></tr>
     <tr><td class="paramname">sep</td><td>Separator string. </td></tr>

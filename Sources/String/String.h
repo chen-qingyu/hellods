@@ -89,7 +89,7 @@ enum Order
  *
  * Like `string new_str();` in C++.
  *
- * Example: string *new_str = String_Create();
+ * Example: `String *new_str = String_Create();`
  *
  * @return A pointer to the empty string.
  */
@@ -100,7 +100,7 @@ String* String_Create(void);
  *
  * Like `string new_str("hello");` in C++.
  *
- * Example: string *new_str = String_From("hello");
+ * Example: `String *new_str = String_From("hello");`
  *
  * @param chars A pointer to a null-terminated byte string.
  * @return A pointer to the new string.
@@ -119,7 +119,7 @@ String* String_Input(void);
  *
  * Like `string new_str(str);` in C++.
  *
- * Example: string *new_str = String_Copy(str);
+ * Example: `String *new_str = String_Copy(str);`
  *
  * @param str A pointer to the string.
  * @return A pointer to the copied string.
@@ -131,10 +131,10 @@ String* String_Copy(const String* str);
  *
  * Like `string new_str(std::move(str));` in C++.
  *
- * Example: string *new_str = String_Move(str); // after moved, `str` is an empty string
+ * Example: `String *new_str = String_Move(str);`
  *
  * @param str A pointer to the string to be moved.
- * @return A pointer to the moved string.
+ * @return A pointer to the moved string (empty string).
  */
 String* String_Move(String* str);
 
@@ -143,7 +143,7 @@ String* String_Move(String* str);
  *
  * Like `str.~string();` in C++.
  *
- * Example: String_Destroy(self);
+ * Example: `String_Destroy(self);`
  *
  * @param self A pointer to the string to be destroyed.
  */
@@ -158,7 +158,7 @@ void String_Destroy(String* self);
  *
  * Like `self = that;` in C++.
  *
- * Example: String_CopyAssign(self, that);
+ * Example: `String_CopyAssign(self, that);`
  *
  * @param self A pointer to the left hand side string.
  * @param that A pointer to the right hand side string.
@@ -170,7 +170,7 @@ void String_CopyAssign(String* self, const String* that);
  *
  * Like `self = std::move(that);` in C++.
  *
- * Example: String_MoveAssign(self, that);
+ * Example: `String_MoveAssign(self, that);`
  *
  * @param self A pointer to the left hand side string.
  * @param that A pointer to the right hand side string.
@@ -184,7 +184,7 @@ void String_MoveAssign(String* self, String* that);
 /**
  * @brief Get the copy of the contents of the string. O(N)
  *
- * Example: char *chars = String_Get(self);
+ * Example: `char *chars = String_Get(self);`
  *
  * @param self A pointer to the string.
  * @return A pointer to a null-terminated byte string.
@@ -194,7 +194,7 @@ char* String_Get(const String* self);
 /**
  * @brief Set the contents of the string using null-terminated byte string. O(N)
  *
- * Example: String_Set(self, "hello");
+ * Example: `String_Set(self, "hello");`
  *
  * @param self A pointer to the string to be set.
  * @param chars A pointer to a null-terminated byte string.
@@ -279,17 +279,20 @@ int String_Find(const String* self, const String* pattern, int start, int stop);
  * If the string represents nan ("[+-]?(nan, NaN, NAN)") will return `NAN`.
  * If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `[+-]?INFINITY`.
  *
- * Example: string *str1 = String_From("233.33");
+ * Example:
+ * ```
+ *          String *str1 = String_From("233.33");
  *          double number1 = String_ToDecimal(str1); // => 233.33
  *
- *          string *str2 = String_From("1e+600");
+ *          String *str2 = String_From("1e+600");
  *          double number2 = String_ToDecimal(str2); // => HUGE_VAL
  *
- *          string *str3 = String_From("nan");
+ *          String *str3 = String_From("nan");
  *          double number3 = String_ToDecimal(str3); // => NAN
  *
- *          string *str4 = String_From("inf");
+ *          String *str4 = String_From("inf");
  *          double number4 = String_ToDecimal(str4); // => INFINITY
+ * ```
  *
  * @param self String to be parsed.
  * @return A number that can represent the string or HUGE_VAL or NAN or [+-]?INFINITY.
@@ -301,14 +304,17 @@ double String_ToDecimal(const String* self);
  *
  * Numeric character in 36 base: 0, 1, ..., 9, A(10), ..., F(15), G(16), ..., Y(34), Z(35).
  *
- * Example: string *str1 = String_From("233");
+ * Example:
+ * ```
+ *          String *str1 = String_From("233");
  *          long long number1 = String_ToInteger(str1, 10); // => 233
  *
- *          string *str2 = String_From("cafebabe");
+ *          String *str2 = String_From("cafebabe");
  *          long long number2 = String_ToInteger(str2, 16); // => 3405691582
  *
- *          string *str3 = String_From("z");
+ *          String *str3 = String_From("z");
  *          long long number3 = String_ToInteger(str3, 36); // => 35
+ * ```
  *
  * @param self String to be parsed.
  * @param base The base of an integer (2 <= base <= 36).
@@ -405,11 +411,13 @@ void String_Clear(String* self);
 /**
  * @brief Split string with separator. O(N)
  *
- * Example: string *str = String_From("one, two, three");
- *          string *sep = String_From(", ");
- *          string **str_arr = String_Split(str, sep); // => ["one", "two", "three", NULL]
- *
- * Don't forget use String_DestroyArray(return-value).
+ * Example:
+ * ```
+ *          String *str = String_From("one, two, three");
+ *          String *sep = String_From(", ");
+ *          String **str_arr = String_Split(str, sep); // => ["one", "two", "three", NULL]
+ *          String_DestroyArray(str_arr); // free memory
+ * ```
  *
  * @param self String to be split.
  * @param sep Separator string.
