@@ -111,13 +111,13 @@ Functions</h2></td></tr>
 <tr class="memdesc:aee2feffaa7922fa31adec41524289949"><td class="mdescLeft">&#160;</td><td class="mdescRight">设置图的顶点数量  <br /></td></tr>
 <tr class="separator:aee2feffaa7922fa31adec41524289949"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2109fd353419f14ca752413abb00bed"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ab2109fd353419f14ca752413abb00bed">MatrixGraph_Link</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V1, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V2, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#ae595e1a6c96ad1d639ca6174e413b073">MatrixGraphEdge</a> E)</td></tr>
-<tr class="memdesc:ab2109fd353419f14ca752413abb00bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">以权重 E 链接图的两个顶点 V1 和 V2  <br /></td></tr>
+<tr class="memdesc:ab2109fd353419f14ca752413abb00bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">以权重 E 单向链接 V1 和 V2  <br /></td></tr>
 <tr class="separator:ab2109fd353419f14ca752413abb00bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afacf190e40cefeabe0591b1367d8f1f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#afacf190e40cefeabe0591b1367d8f1f3">MatrixGraph_Unlink</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V1, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V2)</td></tr>
-<tr class="memdesc:afacf190e40cefeabe0591b1367d8f1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">断开图的两个顶点 V1 和 V2  <br /></td></tr>
+<tr class="memdesc:afacf190e40cefeabe0591b1367d8f1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">断开 V1 到 V2 之间的单向链接  <br /></td></tr>
 <tr class="separator:afacf190e40cefeabe0591b1367d8f1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d0c16dc3350be2d67af2656617c0484"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a1d0c16dc3350be2d67af2656617c0484">MatrixGraph_IsAdjacent</a> (const <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V1, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V2)</td></tr>
-<tr class="memdesc:a1d0c16dc3350be2d67af2656617c0484"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断图的两个顶点 V1 和 V2 之间是否链接  <br /></td></tr>
+<tr class="memdesc:a1d0c16dc3350be2d67af2656617c0484"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断 V1 到 V2 之间是否有链接  <br /></td></tr>
 <tr class="separator:a1d0c16dc3350be2d67af2656617c0484"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08994f5d75438a26bbfc387d35e3d231"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a08994f5d75438a26bbfc387d35e3d231">MatrixGraph_DFS</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> startV, void(*p_visit)(<a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V))</td></tr>
 <tr class="memdesc:a08994f5d75438a26bbfc387d35e3d231"><td class="mdescLeft">&#160;</td><td class="mdescRight">深度优先遍历图  <br /></td></tr>
@@ -261,13 +261,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>以权重 E 链接图的两个顶点 V1 和 V2 </p>
+<p>以权重 E 单向链接 V1 和 V2 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>一个指向图的指针 </td></tr>
     <tr><td class="paramname">V1</td><td>顶点1 </td></tr>
     <tr><td class="paramname">V2</td><td>顶点2 </td></tr>
-    <tr><td class="paramname">E</td><td>两个顶点之间连线的权重 </td></tr>
+    <tr><td class="paramname">E</td><td>V1 到 V2 的权重 </td></tr>
   </table>
   </dd>
 </dl>
@@ -306,7 +306,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>断开图的两个顶点 V1 和 V2 </p>
+<p>断开 V1 到 V2 之间的单向链接 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>一个指向图的指针 </td></tr>
@@ -350,7 +350,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>判断图的两个顶点 V1 和 V2 之间是否链接 </p>
+<p>判断 V1 到 V2 之间是否有链接 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>一个指向图的指针 </td></tr>
@@ -359,7 +359,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>如果两个顶点已链接则返回 true ，否则返回 false </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>如果已链接则返回 true ，否则返回 false </dd></dl>
 
 </div>
 </div>

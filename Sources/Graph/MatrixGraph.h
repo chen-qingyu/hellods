@@ -45,17 +45,17 @@ void MatrixGraph_Destroy(MatrixGraph* self);
 void MatrixGraph_SetVertexNumber(MatrixGraph* self, int vertex_number);
 
 /**
- * @brief 以权重 E 链接图的两个顶点 V1 和 V2
+ * @brief 以权重 E 单向链接 V1 和 V2
  *
  * @param self 一个指向图的指针
  * @param V1 顶点1
  * @param V2 顶点2
- * @param E 两个顶点之间连线的权重
+ * @param E V1 到 V2 的权重
  */
 void MatrixGraph_Link(MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex V2, MatrixGraphEdge E);
 
 /**
- * @brief 断开图的两个顶点 V1 和 V2
+ * @brief 断开 V1 到 V2 之间的单向链接
  *
  * @param self 一个指向图的指针
  * @param V1 顶点1
@@ -64,12 +64,12 @@ void MatrixGraph_Link(MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex
 void MatrixGraph_Unlink(MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex V2);
 
 /**
- * @brief 判断图的两个顶点 V1 和 V2 之间是否链接
+ * @brief 判断 V1 到 V2 之间是否有链接
  *
  * @param self 一个指向图的指针
  * @param V1 顶点1
  * @param V2 顶点2
- * @return 如果两个顶点已链接则返回 true ，否则返回 false
+ * @return 如果已链接则返回 true ，否则返回 false
  */
 bool MatrixGraph_IsAdjacent(const MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex V2);
 

@@ -61,11 +61,7 @@ TEST(Graph, MatrixGraph)
 
     MatrixGraph_Link(G, 0, 6, 99);
     ASSERT_EQ(MatrixGraph_IsAdjacent(G, 0, 6), true);
-#ifndef UNDIRECTED
     ASSERT_EQ(MatrixGraph_IsAdjacent(G, 6, 0), false);
-#else
-    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 6, 0), true);
-#endif
 
     // MatrixGraph_Unlink
     MatrixGraph_Unlink(G, 0, 6);
