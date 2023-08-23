@@ -5,14 +5,6 @@
 extern "C"
 {
 #include "../Sources/String/String.h"
-
-#include <float.h>
-#include <stdlib.h>
-}
-
-static bool feq(const double a, const double b)
-{
-    return fabs(a - b) < DBL_EPSILON;
 }
 
 TEST(String, String)
@@ -124,68 +116,68 @@ TEST(String, String)
     // String_ToDecimal
 
     String_Set(s1, "233.33");
-    ASSERT_EQ(String_ToDecimal(s1), 233.33);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 233.33);
     String_Set(s1, "1e+600");
-    ASSERT_EQ(String_ToDecimal(s1), HUGE_VAL);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), HUGE_VAL);
     String_Set(s1, "nan");
     ASSERT_TRUE(isnan(String_ToDecimal(s1)));
     String_Set(s1, "inf");
-    ASSERT_EQ(String_ToDecimal(s1), INFINITY);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), INFINITY);
 
     String_Set(s1, "0");
-    ASSERT_EQ(String_ToDecimal(s1), 0);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 0);
     String_Set(s1, "-0");
-    ASSERT_EQ(String_ToDecimal(s1), 0);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 0);
     String_Set(s1, "+0");
-    ASSERT_EQ(String_ToDecimal(s1), 0);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 0);
     String_Set(s1, ".0");
-    ASSERT_EQ(String_ToDecimal(s1), 0);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 0);
     String_Set(s1, "0.");
-    ASSERT_EQ(String_ToDecimal(s1), 0);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 0);
 
     String_Set(s1, "1");
-    ASSERT_EQ(String_ToDecimal(s1), 1.0);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1.0);
     String_Set(s1, "-1");
-    ASSERT_EQ(String_ToDecimal(s1), -1.0);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), -1.0);
     String_Set(s1, "+1");
-    ASSERT_EQ(String_ToDecimal(s1), 1.0);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1.0);
     String_Set(s1, ".1");
-    ASSERT_EQ(String_ToDecimal(s1), 0.1);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 0.1);
     String_Set(s1, "1.");
-    ASSERT_EQ(String_ToDecimal(s1), 1.0);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1.0);
 
     String_Set(s1, "1e2");
-    ASSERT_EQ(String_ToDecimal(s1), 1e2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1e2);
     String_Set(s1, "-1e2");
-    ASSERT_EQ(String_ToDecimal(s1), -1e2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), -1e2);
     String_Set(s1, "+1e2");
-    ASSERT_EQ(String_ToDecimal(s1), 1e2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1e2);
     String_Set(s1, ".1e2");
-    ASSERT_EQ(String_ToDecimal(s1), 0.1e2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 0.1e2);
     String_Set(s1, "1.e2");
-    ASSERT_EQ(String_ToDecimal(s1), 1.e2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1.e2);
 
     String_Set(s1, "1e+2");
-    ASSERT_EQ(String_ToDecimal(s1), 1e+2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1e+2);
     String_Set(s1, "-1e+2");
-    ASSERT_EQ(String_ToDecimal(s1), -1e+2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), -1e+2);
     String_Set(s1, "+1e+2");
-    ASSERT_EQ(String_ToDecimal(s1), 1e+2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1e+2);
     String_Set(s1, ".1e+2");
-    ASSERT_EQ(String_ToDecimal(s1), 0.1e+2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 0.1e+2);
     String_Set(s1, "1.e+2");
-    ASSERT_EQ(String_ToDecimal(s1), 1.e+2);
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1.e+2);
 
     String_Set(s1, "1e-2");
-    ASSERT_TRUE(feq(String_ToDecimal(s1), 1e-2));
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1e-2);
     String_Set(s1, "-1e-2");
-    ASSERT_TRUE(feq(String_ToDecimal(s1), -1e-2));
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), -1e-2);
     String_Set(s1, "+1e-2");
-    ASSERT_TRUE(feq(String_ToDecimal(s1), 1e-2));
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1e-2);
     String_Set(s1, ".1e-2");
-    ASSERT_TRUE(feq(String_ToDecimal(s1), 0.1e-2));
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 0.1e-2);
     String_Set(s1, "1.e-2");
-    ASSERT_TRUE(feq(String_ToDecimal(s1), 1.e-2));
+    ASSERT_DOUBLE_EQ(String_ToDecimal(s1), 1.e-2);
 
     // String_ToInteger
 
