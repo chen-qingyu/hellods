@@ -69,18 +69,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Sources\common\check_empty.h">
-      <Filter>Sources\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\common\check_full.h">
-      <Filter>Sources\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\common\check_pointer.h">
-      <Filter>Sources\common</Filter>
-    </ClInclude>
-    <ClInclude Include="Sources\common\check_bounds.h">
-      <Filter>Sources\common</Filter>
-    </ClInclude>
     <ClInclude Include="Sources\Graph\MatrixGraph.h">
       <Filter>Sources\Graph</Filter>
     </ClInclude>
@@ -122,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Tests</Filter>
+    </ClInclude>
+    <ClInclude Include="Sources\common\utility.h">
+      <Filter>Sources\common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

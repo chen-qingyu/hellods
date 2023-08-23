@@ -3,10 +3,7 @@
 #include <limits.h> // INT_MAX
 #include <stdlib.h> // malloc free NULL abs
 
-#include "../common/check_bounds.h"
-#include "../common/check_empty.h"
-#include "../common/check_full.h"
-#include "../common/check_pointer.h"
+#include "../common/utility.h"
 
 /// Doubly Linked List Node.
 struct DoublyLinkedListNode

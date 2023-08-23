@@ -4,7 +4,7 @@
 #include <stdlib.h> // malloc free exit EXIT_FAILURE NULL
 #include <string.h> // strcmp strlen strcpy
 
-#include "../common/check_pointer.h"
+#include "../common/utility.h"
 
 // TODO 动态增长
 #define INIT_CAPACITY 17

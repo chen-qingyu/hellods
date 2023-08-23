@@ -26,10 +26,7 @@
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Sources\common\check_bounds.h" />
-    <ClInclude Include="Sources\common\check_empty.h" />
-    <ClInclude Include="Sources\common\check_full.h" />
-    <ClInclude Include="Sources\common\check_pointer.h" />
+    <ClInclude Include="Sources\common\utility.h" />
     <ClInclude Include="Sources\Graph\MatrixGraph.h" />
     <ClInclude Include="Sources\Heap\MaxHeap.h" />
     <ClInclude Include="Sources\List\ArrayList.h" />

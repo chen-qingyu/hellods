@@ -3,9 +3,7 @@
 #include <limits.h> // INT_MAX
 #include <stdlib.h> // malloc free realloc
 
-#include "../common/check_empty.h"
-#include "../common/check_full.h"
-#include "../common/check_pointer.h"
+#include "../common/utility.h"
 
 // Max value of MaxHeapItem.
 #define MAX_ITEM INT_MAX

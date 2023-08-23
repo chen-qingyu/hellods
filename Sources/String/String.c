@@ -4,10 +4,7 @@
 #include <stdio.h>  // fprintf stderr
 #include <stdlib.h> // malloc realloc free exit EXIT_FAILURE NULL
 
-#include "../common/check_bounds.h"
-#include "../common/check_empty.h"
-#include "../common/check_full.h"
-#include "../common/check_pointer.h"
+#include "../common/utility.h"
 
 /*
  * Type Definition

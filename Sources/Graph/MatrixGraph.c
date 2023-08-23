@@ -2,9 +2,7 @@
 
 #include <stdlib.h> // malloc free
 
-#include "../common/check_empty.h"
-#include "../common/check_full.h"
-#include "../common/check_pointer.h"
+#include "../common/utility.h"
 
 #define NOT_FOUND (-1)
 

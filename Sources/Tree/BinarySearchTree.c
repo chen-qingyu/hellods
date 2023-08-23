@@ -3,9 +3,7 @@
 #include <stdio.h>  // fprintf stderr
 #include <stdlib.h> // malloc free exit EXIT_FAILURE NULL
 
-#include "../common/check_empty.h"
-#include "../common/check_full.h"
-#include "../common/check_pointer.h"
+#include "../common/utility.h"
 
 /// Binary Search Tree Node.
 struct BinarySearchTreeNode

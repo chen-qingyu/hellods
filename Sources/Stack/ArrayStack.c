@@ -2,9 +2,7 @@
 
 #include <stdlib.h> // malloc free
 
-#include "../common/check_empty.h"
-#include "../common/check_full.h"
-#include "../common/check_pointer.h"
+#include "../common/utility.h"
 
 // 为保证入栈是严格的 O(1) 时间复杂度，故这里采用固定的容量，而不是动态增长。
 #define MAX_CAPACITY 256

@@ -3,7 +3,7 @@
 
 #include <stdlib.h> // malloc free
 
-#include "../common/check_pointer.h"
+#include "../common/utility.h"
 
 /// Linked Deque.
 struct LinkedDeque
