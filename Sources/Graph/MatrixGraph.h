@@ -55,7 +55,7 @@ void MatrixGraph_SetVertexNumber(MatrixGraph* self, int vertex_number);
 void MatrixGraph_Link(MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex V2, MatrixGraphEdge E);
 
 /**
- * @brief 断开 V1 到 V2 之间的单向链接
+ * @brief 断开 V1 到 V2 的单向链接
  *
  * @param self 一个指向图的指针
  * @param V1 顶点1
@@ -64,7 +64,7 @@ void MatrixGraph_Link(MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex
 void MatrixGraph_Unlink(MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex V2);
 
 /**
- * @brief 判断 V1 到 V2 之间是否有链接
+ * @brief 判断 V1 到 V2 是否有单向链接
  *
  * @param self 一个指向图的指针
  * @param V1 顶点1

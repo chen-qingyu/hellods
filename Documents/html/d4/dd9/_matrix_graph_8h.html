@@ -114,10 +114,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ab2109fd353419f14ca752413abb00bed"><td class="mdescLeft">&#160;</td><td class="mdescRight">以权重 E 单向链接 V1 和 V2  <br /></td></tr>
 <tr class="separator:ab2109fd353419f14ca752413abb00bed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afacf190e40cefeabe0591b1367d8f1f3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#afacf190e40cefeabe0591b1367d8f1f3">MatrixGraph_Unlink</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V1, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V2)</td></tr>
-<tr class="memdesc:afacf190e40cefeabe0591b1367d8f1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">断开 V1 到 V2 之间的单向链接  <br /></td></tr>
+<tr class="memdesc:afacf190e40cefeabe0591b1367d8f1f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">断开 V1 到 V2 的单向链接  <br /></td></tr>
 <tr class="separator:afacf190e40cefeabe0591b1367d8f1f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1d0c16dc3350be2d67af2656617c0484"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a1d0c16dc3350be2d67af2656617c0484">MatrixGraph_IsAdjacent</a> (const <a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V1, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V2)</td></tr>
-<tr class="memdesc:a1d0c16dc3350be2d67af2656617c0484"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断 V1 到 V2 之间是否有链接  <br /></td></tr>
+<tr class="memdesc:a1d0c16dc3350be2d67af2656617c0484"><td class="mdescLeft">&#160;</td><td class="mdescRight">判断 V1 到 V2 是否有单向链接  <br /></td></tr>
 <tr class="separator:a1d0c16dc3350be2d67af2656617c0484"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08994f5d75438a26bbfc387d35e3d231"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a08994f5d75438a26bbfc387d35e3d231">MatrixGraph_DFS</a> (<a class="el" href="../../d1/d51/struct_matrix_graph.html">MatrixGraph</a> *self, <a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> startV, void(*p_visit)(<a class="el" href="../../d4/dd9/_matrix_graph_8h.html#a63de785c7da44086e237e68b678c628a">MatrixGraphVertex</a> V))</td></tr>
 <tr class="memdesc:a08994f5d75438a26bbfc387d35e3d231"><td class="mdescLeft">&#160;</td><td class="mdescRight">深度优先遍历图  <br /></td></tr>
@@ -306,7 +306,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>断开 V1 到 V2 之间的单向链接 </p>
+<p>断开 V1 到 V2 的单向链接 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>一个指向图的指针 </td></tr>
@@ -350,7 +350,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>判断 V1 到 V2 之间是否有链接 </p>
+<p>判断 V1 到 V2 是否有单向链接 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">self</td><td>一个指向图的指针 </td></tr>

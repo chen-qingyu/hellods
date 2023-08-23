@@ -7,7 +7,7 @@
 - 名称：MineDataStructure，缩写为MDS，灵感来源于我喜欢的游戏——Minecraft。
 - 语言：采用标准C语言编写，最低兼容版本： ISO C99 。
 - 目的：学习数据结构。
-- 目标：实现完整而标准的数据结构。
+- 目标：实现标准的基础数据结构。
 - 模块：Graph, Heap, List, Queue, Stack, String, Table, Tree.
 - 简洁：Stay simple, stay young. 在保证好用和健壮的前提下，尽量简洁，便于维护和阅读。
 - 好用：提供了许多方便的函数，比如String类提供了像Python的str那样的替换、分割、查找等操作，比如List类和String类都支持像Python那样的负数下标等等。
@@ -45,7 +45,7 @@ String_At("Hello World!", -1); // '!' 取下标
 String_ToDecimal(".1e-2"); // 0.1e-2 解析浮点数（支持inf和nan）
 String_ToInteger("cafebabe", 16); // 3405691582LL 解析整数（支持2-36进制）
 String_Replace("hahaha", "a", "ooow~ "); // "hooow~ hooow~ hooow~ " 替换
-String_Split("one, two, three", ", "); // String** -> ["one", "two", "three"] 分割
+String_Split("one, two, three", ", "); // ["one", "two", "three", NULL] 分割
 String_Slice("12345", 0, 5, 2); // "135" 切片
 ```
 
@@ -64,8 +64,8 @@ String_Slice("12345", 0, 5, 2); // "135" 切片
 - 为开源世界做一点微小的贡献。里面的代码对于许多初学数据结构的新手来说，能有一定的帮助。
 - 期待有更多人加入，或者提出改进意见，一起把库进一步完善。
 
-### 5. C++版本
+### 5. 其他版本
 
-这个是C版本的，目标是实现完整而标准的数据结构。但是有一个缺点，就是不支持真正的泛型编程。
+这个是C版本的，目标是实现标准的基础数据结构。但是有一个缺点，就是不支持真正的泛型编程，所以此版本开发到这里就算差不多了，基础的数据结构差不多写完了，后续打算用C#或C++进一步实现完整而标准的数据结构。
 
 我还写了C++版本的： [MDSPP (GitHub)](https://github.com/chen-qingyu/MDSPP) [MDSPP (Gitee)](https://gitee.com/ChobitsY/mdspp) ，目标是实现一个像Python的内置类型一样优雅的C++库。
