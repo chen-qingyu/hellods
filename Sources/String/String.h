@@ -134,7 +134,7 @@ String* String_Copy(const String* str);
  * Example: `String *new_str = String_Move(str);`
  *
  * @param str A pointer to the string to be moved.
- * @return A pointer to the moved string (empty string).
+ * @return A pointer to the moved string.
  */
 String* String_Move(String* str);
 
