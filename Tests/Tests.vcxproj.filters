@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="TestGraph.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestHeap.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestList.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestQueue.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestStack.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestString.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTable.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="TestTree.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Graph\MatrixGraph.c">
+      <Filter>Sources\Graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Heap\MaxHeap.c">
+      <Filter>Sources\Heap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\List\ArrayList.c">
+      <Filter>Sources\List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\List\DoublyLinkedList.c">
+      <Filter>Sources\List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\List\LinkedList.c">
+      <Filter>Sources\List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Tree\BinarySearchTree.c">
+      <Filter>Sources\Tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Table\HashTable.c">
+      <Filter>Sources\Table</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\String\String.c">
+      <Filter>Sources\String</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Stack\ArrayStack.c">
+      <Filter>Sources\Stack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Stack\LinkedStack.c">
+      <Filter>Sources\Stack</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Queue\ArrayQueue.c">
+      <Filter>Sources\Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Queue\LinkedDeque.c">
+      <Filter>Sources\Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Sources\Queue\LinkedQueue.c">
+      <Filter>Sources\Queue</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Tests</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Sources\common\utility.h">
+      <Filter>Sources\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Graph\MatrixGraph.h">
+      <Filter>Sources\Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Heap\MaxHeap.h">
+      <Filter>Sources\Heap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\List\ArrayList.h">
+      <Filter>Sources\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\List\DoublyLinkedList.h">
+      <Filter>Sources\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\List\LinkedList.h">
+      <Filter>Sources\List</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Tree\BinarySearchTree.h">
+      <Filter>Sources\Tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Table\HashTable.h">
+      <Filter>Sources\Table</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\String\String.h">
+      <Filter>Sources\String</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Stack\ArrayStack.h">
+      <Filter>Sources\Stack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Stack\LinkedStack.h">
+      <Filter>Sources\Stack</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Queue\ArrayQueue.h">
+      <Filter>Sources\Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Queue\LinkedDeque.h">
+      <Filter>Sources\Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Queue\LinkedQueue.h">
+      <Filter>Sources\Queue</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Tests</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{581ffc03-337f-4781-b604-d66bed60614d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Tests">
+      <UniqueIdentifier>{7093754a-5776-4746-af73-725a7815fc22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\common">
+      <UniqueIdentifier>{924b6d39-38ec-4fd6-908e-fdfadb248c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Graph">
+      <UniqueIdentifier>{6270b40d-2f6c-48c2-a988-0f0c22810685}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Heap">
+      <UniqueIdentifier>{08baed7c-143b-47db-ae06-523db89a1c0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\List">
+      <UniqueIdentifier>{3c1398f5-aefb-493e-a48f-8500713c30cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Queue">
+      <UniqueIdentifier>{7eaccfa1-4daa-4cc1-bbdc-2312156248de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Stack">
+      <UniqueIdentifier>{604a505e-5a2d-4a40-8f08-5e2148b0cec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\String">
+      <UniqueIdentifier>{a5034702-3ec4-46f1-90d6-2155019b0c2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Table">
+      <UniqueIdentifier>{65ddc130-1db9-4dbe-93f3-e31b3f0be899}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Tree">
+      <UniqueIdentifier>{f67d5522-8aac-4d43-8286-e9ea0e94614b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config">
+      <Filter>Tests</Filter>
+    </None>
+  </ItemGroup>
+</Project>

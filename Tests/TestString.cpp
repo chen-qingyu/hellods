@@ -1,6 +1,6 @@
 // Tested on Microsoft Visual Studio Community 2019: ALL PASSED
 
-#include "../pch.h"
+#include "pch.h"
 
 extern "C"
 {
