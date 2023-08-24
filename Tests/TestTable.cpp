@@ -27,6 +27,9 @@ TEST(Table, HashTable)
     HashTable_Insert(table, "bbb", 2);
     HashTable_Insert(table, "ccc", 3);
     HashTable_Insert(table, "ddd", 4);
+    HashTable_Insert(table, "eee", 5);
+    HashTable_Insert(table, "fff", 6);
+    ASSERT_EQ(HashTable_Size(table), 6);
 
     // HashTable_Get
     ASSERT_EQ(HashTable_Get(table, "aaa"), 1);

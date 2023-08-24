@@ -1,13 +1,13 @@
 #include "HashTable.h"
 
+#include <assert.h> // assert
 #include <stdio.h>  // fprintf stderr
 #include <stdlib.h> // malloc free exit EXIT_FAILURE NULL
 #include <string.h> // strcmp strlen strcpy
 
 #include "../common/utility.h"
 
-// TODO 动态增长
-#define INIT_CAPACITY 17
+#define INIT_CAPACITY 3
 
 /// Hash Table State.
 enum HashTableState
@@ -104,6 +104,75 @@ static inline void clear(HashTable* self)
     self->size = 0;
 }
 
+// Calculate the next prime that > n
+static inline int next_prime(int n)
+{
+    assert(n > 1);
+
+    while (n < INT_MAX)
+    {
+        n++;
+        bool is_prime = true;
+        for (int i = 2; i * i <= n; i++)
+        {
+            if (n % i == 0)
+            {
+                is_prime = false;
+                break; // n is not prime, continue while loop
+            }
+        }
+        if (is_prime)
+        {
+            break; // n is prime, return
+        }
+    }
+
+    assert(n < INT_MAX);
+
+    return n;
+}
+
+// Expand capacity and rehash.
+static inline void expand_capacity(HashTable* self)
+{
+    int old_capacity = self->capacity;
+    struct HashTablePair* old_pairs = self->pairs;
+
+    // expand to the next prime greater than twice the current capacity
+    int new_capacity = next_prime(self->capacity * 2);
+
+    // create new pairs
+    struct HashTablePair* new_pairs = (struct HashTablePair*)malloc(sizeof(struct HashTablePair) * new_capacity);
+    check_pointer(new_pairs);
+    for (int i = 0; i < new_capacity; i++)
+    {
+        new_pairs[i].key = NULL;
+        new_pairs[i].state = EMPTY;
+    }
+
+    // move elements (rehash)
+    self->pairs = new_pairs;
+    self->capacity = new_capacity;
+    self->size = 0;
+    for (int i = 0; i < old_capacity; i++)
+    {
+        if (old_pairs[i].state == FULL)
+        {
+            HashTable_Insert(self, old_pairs[i].key, old_pairs[i].value);
+        }
+    }
+
+    // free old pairs
+    for (int i = 0; i < old_capacity; ++i)
+    {
+        if (old_pairs[i].key)
+        {
+            free((char*)old_pairs[i].key);
+        }
+    }
+    free(old_pairs);
+}
+
 /*
  * Functions
  */
@@ -187,6 +256,12 @@ void HashTable_Insert(HashTable* self, HashTableKey key, HashTableValue value)
         self->pairs[pos].value = value;
 
         self->size++;
+
+        // expand_capacity when the loading factor is too large (> 0.5)
+        if (self->size * 2 > self->capacity)
+        {
+            expand_capacity(self);
+        }
     }
     else
     {
