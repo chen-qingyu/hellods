@@ -7,7 +7,7 @@
 
 #include "../common/utility.h"
 
-#define INIT_CAPACITY 3
+#define INIT_CAPACITY 17
 
 /// Hash Table State.
 enum HashTableState
@@ -47,7 +47,8 @@ struct HashTable
  * Helpers
  */
 
-static int hash(HashTableKey key, int mod)
+// Calculate the hash value for key.
+static inline int hash(HashTableKey key, int mod)
 {
     unsigned int index = 0;
 
@@ -59,6 +60,7 @@ static int hash(HashTableKey key, int mod)
     return index % mod;
 }
 
+// Find the position for key.
 static int find_pos(const HashTable* table, HashTableKey key)
 {
     int current_pos = hash(key, table->capacity);
@@ -104,7 +106,7 @@ static inline void clear(HashTable* self)
     self->size = 0;
 }
 
-// Calculate the next prime that > n
+// Calculate the next prime that > n.
 static inline int next_prime(int n)
 {
     assert(n > 1);
@@ -133,7 +135,7 @@ static inline int next_prime(int n)
 }
 
 // Expand capacity and rehash.
-static inline void expand_capacity(HashTable* self)
+static void expand_capacity(HashTable* self)
 {
     int old_capacity = self->capacity;
     struct HashTablePair* old_pairs = self->pairs;
