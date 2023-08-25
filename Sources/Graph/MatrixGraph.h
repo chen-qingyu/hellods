@@ -1,7 +1,7 @@
 /**
  * @file MatrixGraph.h
  * @author 青羽 (chen_qingyu@qq.com)
- * @brief 图 邻接矩阵实现 (Matrix Graph)
+ * @brief 加权有向图 邻接矩阵实现 (Matrix Graph)
  * @version 1.0
  * @date 2022.01.29
  *
