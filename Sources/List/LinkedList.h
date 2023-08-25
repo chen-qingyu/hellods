@@ -1,6 +1,6 @@
 /**
  * @file LinkedList.h
- * @author 青羽 (chen_qingyu@qq.com)
+ * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
  * @brief 列表 链表实现 (Linked List)
  * @version 1.0
  * @date 2022.01.28

@@ -1,6 +1,6 @@
 /**
  * @file LinkedQueue.h
- * @author 青羽 (chen_qingyu@qq.com)
+ * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
  * @brief 队列 链表实现 (Linked Queue)
  * @version 1.0
  * @date 2022.01.28

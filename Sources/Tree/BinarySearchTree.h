@@ -1,6 +1,6 @@
 /**
  * @file BinarySearchTree.h
- * @author 青羽 (chen_qingyu@qq.com)
+ * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
  * @brief 二叉搜索树 (Binary Search Tree)
  * @version 1.0
  * @date 2022.01.29

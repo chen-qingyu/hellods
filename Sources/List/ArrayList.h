@@ -1,6 +1,6 @@
 /**
  * @file ArrayList.h
- * @author 青羽 (chen_qingyu@qq.com)
+ * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
  * @brief 列表 数组实现 (Array List)
  * @version 1.0
  * @date 2022.01.28

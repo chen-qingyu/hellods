@@ -1,6 +1,6 @@
 /**
  * @file MaxHeap.h
- * @author 青羽 (chen_qingyu@qq.com)
+ * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
  * @brief 最大堆 (Max Heap)
  * @version 1.0
  * @date 2022.01.29
