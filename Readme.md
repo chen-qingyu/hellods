@@ -2,6 +2,8 @@
 
 *——C语言写的标准的基础数据结构*
 
+![](https://img.shields.io/badge/version-1.0-blue.svg)
+
 ### 1. 基本属性
 
 - 名称：MineDataStructure，缩写为MDS，灵感来源于我喜欢的游戏——Minecraft。
