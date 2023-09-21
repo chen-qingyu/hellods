@@ -276,26 +276,28 @@ int String_Find(const String* self, const String* pattern, int start, int stop);
  * @brief Convert the string to a double-precision floating-point decimal number. O(N)
  *
  * If the string is too big to be representable will return `HUGE_VAL`.
- * If the string represents nan ("[+-]?(nan, NaN, NAN)") will return `NAN`.
- * If the string represents infinity ("[+-]?(inf, Inf, INF, infinity, Infinity, INFINITY)") will return `[+-]?INFINITY`.
+ *
+ * If the string represents NaN will return `NAN`.
+ *
+ * If the string represents Infinity will return `(+-)INFINITY`.
  *
  * Example:
  * ```
- *          String *str1 = String_From("233.33");
- *          double number1 = String_ToDecimal(str1); // => 233.33
+ * String *str1 = String_From("233.33");
+ * double number1 = String_ToDecimal(str1); // 233.33
  *
- *          String *str2 = String_From("1e+600");
- *          double number2 = String_ToDecimal(str2); // => HUGE_VAL
+ * String *str2 = String_From("1e+600");
+ * double number2 = String_ToDecimal(str2); // HUGE_VAL
  *
- *          String *str3 = String_From("nan");
- *          double number3 = String_ToDecimal(str3); // => NAN
+ * String *str3 = String_From("nan");
+ * double number3 = String_ToDecimal(str3); // NAN
  *
- *          String *str4 = String_From("inf");
- *          double number4 = String_ToDecimal(str4); // => INFINITY
+ * String *str4 = String_From("inf");
+ * double number4 = String_ToDecimal(str4); // INFINITY
  * ```
  *
  * @param self String to be parsed.
- * @return A number that can represent the string or HUGE_VAL or NAN or [+-]?INFINITY.
+ * @return A number that can represent the string or `HUGE_VAL` or `NAN` or `(+-)INFINITY`.
  */
 double String_ToDecimal(const String* self);
 
@@ -306,14 +308,14 @@ double String_ToDecimal(const String* self);
  *
  * Example:
  * ```
- *          String *str1 = String_From("233");
- *          long long number1 = String_ToInteger(str1, 10); // => 233
+ * String *str1 = String_From("233");
+ * long long number1 = String_ToInteger(str1, 10); // 233
  *
- *          String *str2 = String_From("cafebabe");
- *          long long number2 = String_ToInteger(str2, 16); // => 3405691582
+ * String *str2 = String_From("cafebabe");
+ * long long number2 = String_ToInteger(str2, 16); // 3405691582
  *
- *          String *str3 = String_From("z");
- *          long long number3 = String_ToInteger(str3, 36); // => 35
+ * String *str3 = String_From("z");
+ * long long number3 = String_ToInteger(str3, 36); // 35
  * ```
  *
  * @param self String to be parsed.
@@ -413,10 +415,10 @@ void String_Clear(String* self);
  *
  * Example:
  * ```
- *          String *str = String_From("one, two, three");
- *          String *sep = String_From(", ");
- *          String **str_arr = String_Split(str, sep); // => ["one", "two", "three", NULL]
- *          String_DestroyArray(str_arr); // free memory
+ * String *str = String_From("one, two, three");
+ * String *sep = String_From(", ");
+ * String **str_arr = String_Split(str, sep); // ["one", "two", "three", NULL]
+ * String_DestroyArray(str_arr); // free memory
  * ```
  *
  * @param self String to be split.
