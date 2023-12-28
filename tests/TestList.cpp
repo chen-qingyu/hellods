@@ -1,12 +1,10 @@
-// Tested on Microsoft Visual Studio Community 2019: ALL PASSED
-
-#include "pch.h"
+#include <gtest/gtest.h>
 
 extern "C"
 {
-#include "../Sources/List/ArrayList.h"
-#include "../Sources/List/DoublyLinkedList.h"
-#include "../Sources/List/LinkedList.h"
+#include "../sources/List/ArrayList.h"
+#include "../sources/List/DoublyLinkedList.h"
+#include "../sources/List/LinkedList.h"
 }
 
 // for test traverse

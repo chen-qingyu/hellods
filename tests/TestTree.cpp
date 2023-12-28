@@ -1,10 +1,8 @@
-// Tested on Microsoft Visual Studio Community 2019: ALL PASSED
-
-#include "pch.h"
+#include <gtest/gtest.h>
 
 extern "C"
 {
-#include "../Sources/Tree/BinarySearchTree.h"
+#include "../sources/Tree/BinarySearchTree.h"
 }
 
 // for test traverse

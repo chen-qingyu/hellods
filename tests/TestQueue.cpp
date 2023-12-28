@@ -1,12 +1,10 @@
-// Tested on Microsoft Visual Studio Community 2019: ALL PASSED
-
-#include "pch.h"
+#include <gtest/gtest.h>
 
 extern "C"
 {
-#include "../Sources/Queue/ArrayQueue.h"
-#include "../Sources/Queue/LinkedDeque.h"
-#include "../Sources/Queue/LinkedQueue.h"
+#include "../sources/Queue/ArrayQueue.h"
+#include "../sources/Queue/LinkedDeque.h"
+#include "../sources/Queue/LinkedQueue.h"
 }
 
 TEST(Queue, ArrayQueue)

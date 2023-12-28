@@ -1,10 +1,8 @@
-// Tested on Microsoft Visual Studio Community 2019: ALL PASSED
-
-#include "pch.h"
+#include <gtest/gtest.h>
 
 extern "C"
 {
-#include "../Sources/Table/HashTable.h"
+#include "../sources/Table/HashTable.h"
 }
 
 TEST(Table, HashTable)

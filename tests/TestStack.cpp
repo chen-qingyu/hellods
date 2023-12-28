@@ -1,11 +1,9 @@
-// Tested on Microsoft Visual Studio Community 2019: ALL PASSED
-
-#include "pch.h"
+#include <gtest/gtest.h>
 
 extern "C"
 {
-#include "../Sources/Stack/ArrayStack.h"
-#include "../Sources/Stack/LinkedStack.h"
+#include "../sources/Stack/ArrayStack.h"
+#include "../sources/Stack/LinkedStack.h"
 }
 
 TEST(Stack, ArrayStack)

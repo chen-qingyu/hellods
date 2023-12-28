@@ -1,10 +1,8 @@
-// Tested on Microsoft Visual Studio Community 2019: ALL PASSED
-
-#include "pch.h"
+#include <gtest/gtest.h>
 
 extern "C"
 {
-#include "../Sources/Heap/MaxHeap.h"
+#include "../sources/Heap/MaxHeap.h"
 }
 
 TEST(Heap, MaxHeap)
