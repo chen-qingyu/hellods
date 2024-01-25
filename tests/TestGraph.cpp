@@ -1,4 +1,4 @@
-#include <gtest/gtest.h>
+#include <catch2/catch_test_macros.hpp>
 
 extern "C"
 {
@@ -15,7 +15,7 @@ static void Visit(MatrixGraphVertex V)
     strcat(str, tmp);
 }
 
-TEST(Graph, MatrixGraph)
+TEST_CASE("Graph: MatrixGraph")
 {
     // MatrixGraph_Create
     MatrixGraph* G = MatrixGraph_Create();
@@ -53,26 +53,26 @@ TEST(Graph, MatrixGraph)
     */
 
     // MatrixGraph_IsAdjacent
-    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 0, 1), true);
-    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 0, 6), false);
-    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 6, 0), false);
+    REQUIRE(MatrixGraph_IsAdjacent(G, 0, 1) == true);
+    REQUIRE(MatrixGraph_IsAdjacent(G, 0, 6) == false);
+    REQUIRE(MatrixGraph_IsAdjacent(G, 6, 0) == false);
 
     MatrixGraph_Link(G, 0, 6, 99);
-    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 0, 6), true);
-    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 6, 0), false);
+    REQUIRE(MatrixGraph_IsAdjacent(G, 0, 6) == true);
+    REQUIRE(MatrixGraph_IsAdjacent(G, 6, 0) == false);
 
     // MatrixGraph_Unlink
     MatrixGraph_Unlink(G, 0, 6);
-    ASSERT_EQ(MatrixGraph_IsAdjacent(G, 0, 6), false);
+    REQUIRE(MatrixGraph_IsAdjacent(G, 0, 6) == false);
 
     // MatrixGraph_DFS
     MatrixGraph_DFS(G, 0, Visit);
-    ASSERT_EQ(strcmp(str, "0 1 3 2 5 4 6 "), 0);
+    REQUIRE(strcmp(str, "0 1 3 2 5 4 6 ") == 0);
     memset(str, 0, sizeof(str));
 
     // MatrixGraph_BFS
     MatrixGraph_BFS(G, 0, Visit);
-    ASSERT_EQ(strcmp(str, "0 1 3 4 2 5 6 "), 0);
+    REQUIRE(strcmp(str, "0 1 3 4 2 5 6 ") == 0);
     memset(str, 0, sizeof(str));
 
     // MatrixGraph_Dijkstra
@@ -80,21 +80,21 @@ TEST(Graph, MatrixGraph)
     int path[7];
     MatrixGraph_Dijkstra(G, dist, path, 0);
 
-    ASSERT_EQ(dist[0], 0);
-    ASSERT_EQ(dist[1], 2);
-    ASSERT_EQ(dist[2], 3);
-    ASSERT_EQ(dist[3], 1);
-    ASSERT_EQ(dist[4], 3);
-    ASSERT_EQ(dist[5], 6);
-    ASSERT_EQ(dist[6], 5);
+    REQUIRE(dist[0] == 0);
+    REQUIRE(dist[1] == 2);
+    REQUIRE(dist[2] == 3);
+    REQUIRE(dist[3] == 1);
+    REQUIRE(dist[4] == 3);
+    REQUIRE(dist[5] == 6);
+    REQUIRE(dist[6] == 5);
 
-    ASSERT_EQ(path[0], -1);
-    ASSERT_EQ(path[1], 0);
-    ASSERT_EQ(path[2], 3);
-    ASSERT_EQ(path[3], 0);
-    ASSERT_EQ(path[4], 3);
-    ASSERT_EQ(path[5], 6);
-    ASSERT_EQ(path[6], 3);
+    REQUIRE(path[0] == -1);
+    REQUIRE(path[1] == 0);
+    REQUIRE(path[2] == 3);
+    REQUIRE(path[3] == 0);
+    REQUIRE(path[4] == 3);
+    REQUIRE(path[5] == 6);
+    REQUIRE(path[6] == 3);
 
     // MatrixGraph_Destroy
     MatrixGraph_Destroy(G);

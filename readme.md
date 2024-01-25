@@ -16,7 +16,7 @@ _——C 语言写的标准的基础数据结构_
 - 健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查。这么多检查，肯定会对性能有一定影响，但是这个库追求的并不是性能，而是简洁，好用和健壮。
 - 优雅：经过我的精心设计，使用者无法直接访问到对象（结构体）的内部变量，几乎可以说等同于实现了 private 的效果。
 - 风格：大部分遵循 [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) ，小部分基于项目规模和源码简洁性的考虑采用自己的风格。
-- 测试：使用 [GoogleTest](https://github.com/google/googletest) 进行了测试，确保测试全部通过。
+- 测试：使用 [Catch2](https://github.com/catchorg/Catch2) 进行了测试，确保测试全部通过。
 - 安全：使用 [Dr. Memory](https://drmemory.org/) 进行了检查，确保没有安全问题。
 - 文档：使用 [Doxygen](https://www.doxygen.nl/) 生成文档。
 - 构建：使用 [XMake](https://xmake.io/) 进行构建。
