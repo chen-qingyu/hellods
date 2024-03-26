@@ -1,15 +1,27 @@
 /**
- * @file ArrayStack.h
- * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief 栈 数组实现 (Array Stack)
- * @version 1.0
+ * @file ArrayStack.hpp
+ * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
+ * @brief Stack implemented by array.
  * @date 2022.01.28
  *
- * @copyright Copyright (c) 2022
+ * @copyright Copyright (C) 2022
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef ARRAYSTACK_H
-#define ARRAYSTACK_H
+#ifndef ARRAYSTACK_HPP
+#define ARRAYSTACK_HPP
 
 #include <stdbool.h> // bool
 
@@ -80,4 +92,4 @@ ArrayStackItem ArrayStack_Top(const ArrayStack* self);
  */
 void ArrayStack_Clear(ArrayStack* self);
 
-#endif // ARRAYSTACK_H
+#endif // ARRAYSTACK_HPP

@@ -1,15 +1,27 @@
 /**
- * @file DoublyLinkedList.h
- * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief 列表 双链表实现 (Doubly Linked List)
- * @version 1.0
+ * @file DoublyLinkedList.hpp
+ * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
+ * @brief List implemented by double linked list.
  * @date 2023.01.02
  *
- * @copyright Copyright (c) 2023
+ * @copyright Copyright (C) 2023
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DOUBLYLINKEDLIST_H
-#define DOUBLYLINKEDLIST_H
+#ifndef DOUBLYLINKEDLIST_HPP
+#define DOUBLYLINKEDLIST_HPP
 
 #include <stdbool.h> // bool
 
@@ -107,4 +119,4 @@ void DoublyLinkedList_Reverse(DoublyLinkedList* self);
  */
 void DoublyLinkedList_Clear(DoublyLinkedList* self);
 
-#endif // DOUBLYLINKEDLIST_H
+#endif // DOUBLYLINKEDLIST_HPP

@@ -1,15 +1,27 @@
 /**
- * @file LinkedQueue.h
- * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief 队列 链表实现 (Linked Queue)
- * @version 1.0
+ * @file LinkedQueue.hpp
+ * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
+ * @brief Queue implemented by single linked list.
  * @date 2022.01.28
  *
- * @copyright Copyright (c) 2022
+ * @copyright Copyright (C) 2022
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LINKEDQUEUE_H
-#define LINKEDQUEUE_H
+#ifndef LINKEDQUEUE_HPP
+#define LINKEDQUEUE_HPP
 
 #include <stdbool.h> // bool
 
@@ -80,4 +92,4 @@ LinkedQueueItem LinkedQueue_Front(LinkedQueue* self);
  */
 void LinkedQueue_Clear(LinkedQueue* self);
 
-#endif // LINKEDQUEUE_H
+#endif // LINKEDQUEUE_HPP

@@ -1,15 +1,27 @@
 /**
- * @file MatrixGraph.h
- * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief 加权有向图 邻接矩阵实现 (Matrix Graph)
- * @version 1.0
+ * @file MatrixGraph.hpp
+ * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
+ * @brief Graph implemented by adjacency matrix. This is weighted directed graph.
  * @date 2022.01.29
  *
- * @copyright Copyright (c) 2022
+ * @copyright Copyright (C) 2022
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef MATRIXGRAPH_H
-#define MATRIXGRAPH_H
+#ifndef MATRIXGRAPH_HPP
+#define MATRIXGRAPH_HPP
 
 #include <stdbool.h> // bool
 
@@ -112,4 +124,4 @@ bool MatrixGraph_Dijkstra(const MatrixGraph* self, MatrixGraphEdge dist[], Matri
  */
 bool MatrixGraph_Floyd(const MatrixGraph* self, MatrixGraphEdge** dist, MatrixGraphVertex** path);
 
-#endif // MATRIXGRAPH_H
+#endif // MATRIXGRAPH_HPP

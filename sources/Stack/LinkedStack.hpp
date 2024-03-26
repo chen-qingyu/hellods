@@ -1,15 +1,27 @@
 /**
  * @file LinkedStack.h
- * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief 栈 链表实现 (Linked Stack)
- * @version 1.0
+ * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
+ * @brief Stack implemented by single linked list.
  * @date 2022.01.28
  *
- * @copyright Copyright (c) 2022
+ * @copyright Copyright (C) 2022
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LINKEDSTACK_H
-#define LINKEDSTACK_H
+#ifndef LINKEDSTACK_HPP
+#define LINKEDSTACK_HPP
 
 #include <stdbool.h> // bool
 
@@ -80,4 +92,4 @@ LinkedStackItem LinkedStack_Top(const LinkedStack* self);
  */
 void LinkedStack_Clear(LinkedStack* self);
 
-#endif // LINKEDSTACK_H
+#endif // LINKEDSTACK_HPP

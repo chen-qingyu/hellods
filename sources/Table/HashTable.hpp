@@ -1,15 +1,27 @@
 /**
- * @file HashTable.h
- * @author 青羽 (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief 散列表 (Hash Table)
- * @version 1.0
+ * @file HashTable.hpp
+ * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
+ * @brief Hash table.
  * @date 2022.01.29
  *
- * @copyright Copyright (c) 2022
+ * @copyright Copyright (C) 2022
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HASHTABLE_H
-#define HASHTABLE_H
+#ifndef HASHTABLE_HPP
+#define HASHTABLE_HPP
 
 #include <stdbool.h> // bool
 
@@ -97,4 +109,4 @@ void HashTable_Remove(HashTable* self, HashTableKey key);
  */
 void HashTable_Clear(HashTable* self);
 
-#endif // HASHTABLE_H
+#endif // HASHTABLE_HPP
