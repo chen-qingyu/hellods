@@ -28,6 +28,7 @@ void test()
     REQUIRE(empty.size() == 0);
     REQUIRE(empty.is_empty() == true);
     REQUIRE(empty.find(1) == -1);
+
     REQUIRE(list.size() == 5);
     REQUIRE(list.is_empty() == false);
     REQUIRE(list.find(1) == 0);
