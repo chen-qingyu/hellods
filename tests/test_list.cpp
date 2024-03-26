@@ -44,7 +44,7 @@ void test()
     REQUIRE(empty.remove(0) == 2);
     REQUIRE(empty.remove(0) == 3);
 
-    REQUIRE(list.map([&](int& e)
+    REQUIRE(list.map([&](auto& e)
                      { e *= 2; }) == List({2, 4, 6, 8, 10}));
 
     REQUIRE(list.reverse() == List({10, 8, 6, 4, 2}));
@@ -56,14 +56,17 @@ void test()
 TEST_CASE("ArrayList")
 {
     test<ArrayList<int>>();
+    test<ArrayList<double>>();
 }
 
 TEST_CASE("DoublyLinkedList")
 {
     test<DoublyLinkedList<int>>();
+    test<DoublyLinkedList<double>>();
 }
 
 TEST_CASE("LinkedList")
 {
     test<LinkedList<int>>();
+    test<LinkedList<double>>();
 }

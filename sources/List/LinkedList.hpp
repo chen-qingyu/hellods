@@ -167,7 +167,7 @@ public:
     }
 
     /*
-     * Examination (will not change the object itself)
+     * Examination
      */
 
     /// Get the number of elements of the list.
@@ -198,7 +198,7 @@ public:
     }
 
     /*
-     * Manipulation (will change the object itself)
+     * Manipulation
      */
 
     /// Insert the specified element at the specified position in the list.
