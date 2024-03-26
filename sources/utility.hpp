@@ -25,6 +25,7 @@
 
 #include <algorithm> // std::copy
 #include <climits>   // INT_MAX
+#include <cmath>     // std::abs
 #include <stdexcept> // std::runtime_error
 #include <utility>   // std::initializer_list std::move
 

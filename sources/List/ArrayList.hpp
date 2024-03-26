@@ -59,6 +59,10 @@ private:
     }
 
 public:
+    /*
+     * Constructor / Destructor
+     */
+
     /// Create an empty list.
     ArrayList()
         : size_(0)
@@ -76,23 +80,15 @@ public:
         std::copy(il.begin(), il.end(), data_);
     }
 
-    /// Destructor to free allocated memory.
+    /// Destroy the list object.
     ~ArrayList()
     {
         delete[] data_;
     }
 
-    /// Get the number of elements of the list.
-    int size() const
-    {
-        return size_;
-    }
-
-    /// Check if the list is empty.
-    bool is_empty() const
-    {
-        return size_ == 0;
-    }
+    /*
+     * Comparison
+     */
 
     /// Check whether two lists are equal.
     bool operator==(const ArrayList& that) const
@@ -119,6 +115,10 @@ public:
         return !(*this == that);
     }
 
+    /*
+     * Access
+     */
+
     /// Return the reference to the element at the specified position in the list.
     T& operator[](int index)
     {
@@ -133,12 +133,32 @@ public:
         return data_[index];
     }
 
+    /*
+     * Examination (will not change the object itself)
+     */
+
+    /// Get the number of elements of the list.
+    int size() const
+    {
+        return size_;
+    }
+
+    /// Check if the list is empty.
+    bool is_empty() const
+    {
+        return size_ == 0;
+    }
+
     /// Return the index of the first occurrence of the specified element, or -1 if the list does not contains the element.
     int find(const T& element) const
     {
         auto it = std::find(data_, data_ + size_, element);
         return it == data_ + size_ ? -1 : it - data_;
     }
+
+    /*
+     * Manipulation (will change the object itself)
+     */
 
     /// Insert the specified element at the specified position in the list.
     void insert(int index, const T& element)
@@ -211,7 +231,7 @@ public:
     }
 
     /// Remove all of the elements from the list.
-    void clear()
+    ArrayList& clear()
     {
         if (size_ != 0)
         {
@@ -219,6 +239,7 @@ public:
             delete[] data_;
             data_ = new T[capacity_];
         }
+        return *this;
     }
 };
 

@@ -1,61 +1,66 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "../sources/List/ArrayList.hpp"
-// #include "../sources/List/DoublyLinkedList.h"
+#include "../sources/List/DoublyLinkedList.hpp"
 // #include "../sources/List/LinkedList.h"
 
 using namespace hellods;
 
-TEST_CASE("List: ArrayList")
+template <typename List>
+void test()
 {
-    // basics
-    ArrayList<int> list;
-    REQUIRE(list.size() == 0);
-    REQUIRE(list.is_empty() == true);
+    // Constructor / Destructor
+    List empty;
+    List list = {1, 2, 3, 4, 5};
 
-    // clear
-    list.insert(0, 233);
-    REQUIRE(list == ArrayList<int>({233}));
-    list.clear();
-    REQUIRE(list.size() == 0);
-    list.clear(); // double clear
-    REQUIRE(list.size() == 0);
+    // Comparison
+    REQUIRE(empty == List());
+    REQUIRE(list == List({1, 2, 3, 4, 5}));
+    REQUIRE(empty != list);
 
-    // insert
-    int arr[] = {1, 2, 3, 4, 5};
-    int arr_size = sizeof(arr) / sizeof(arr[0]);
-    for (int i = 0; i < arr_size; i++)
-    {
-        list.insert(i, arr[i]);
-    }
-    REQUIRE(list == ArrayList<int>({1, 2, 3, 4, 5}));
-
-    // []
-    for (int i = 0; i < arr_size; ++i)
+    // Access
+    for (int i = 0; i < 5; ++i)
     {
         REQUIRE(list[i] == i + 1);
     }
 
-    // find
+    // Examination
+    REQUIRE(empty.size() == 0);
+    REQUIRE(empty.is_empty() == true);
+    REQUIRE(empty.find(1) == -1);
+    REQUIRE(list.size() == 5);
+    REQUIRE(list.is_empty() == false);
     REQUIRE(list.find(1) == 0);
-    REQUIRE(list.find(5) == 4);
-    REQUIRE(list.find(0) == -1);
 
-    // map
-    list.map([&](int& e)
-             { e *= 2; });
-    REQUIRE(list == ArrayList<int>({2, 4, 6, 8, 10}));
+    // Manipulation
+    empty.insert(0, 1);
+    REQUIRE(empty == List({1}));
+    empty.insert(0, 2);
+    REQUIRE(empty == List({2, 1}));
+    empty.insert(2, 3);
+    REQUIRE(empty == List({2, 1, 3}));
 
-    // reverse
-    list.reverse();
-    REQUIRE(list == ArrayList<int>({10, 8, 6, 4, 2}));
+    REQUIRE(empty.remove(1) == 1);
+    REQUIRE(empty.remove(0) == 2);
+    REQUIRE(empty.remove(0) == 3);
 
-    // remove
-    for (int i = 0; i < arr_size; i++)
-    {
-        REQUIRE(list.remove(0) == (arr_size - i) * 2);
-    }
-    REQUIRE(list.size() == 0);
+    REQUIRE(list.map([&](int& e)
+                     { e *= 2; }) == List({2, 4, 6, 8, 10}));
+
+    REQUIRE(list.reverse() == List({10, 8, 6, 4, 2}));
+
+    REQUIRE(list.clear() == empty);
+    REQUIRE(list.clear() == empty); // double clear
+}
+
+TEST_CASE("ArrayList")
+{
+    test<ArrayList<int>>();
+}
+
+TEST_CASE("DoublyLinkedList")
+{
+    test<DoublyLinkedList<int>>();
 }
 
 // TEST_CASE("List: LinkedList")
@@ -117,65 +122,4 @@ TEST_CASE("List: ArrayList")
 
 // // LinkedList_Destroy
 // LinkedList_Destroy(list);
-// }
-
-// TEST_CASE("List: DoublyLinkedList")
-// {
-//     // DoublyLinkedList_Create DoublyLinkedList_Size DoublyLinkedList_IsEmpty
-//     DoublyLinkedList* list = DoublyLinkedList_Create();
-//     REQUIRE(DoublyLinkedList_Size(list) == 0);
-//     REQUIRE(DoublyLinkedList_IsEmpty(list) == true);
-
-// // DoublyLinkedList_Clear
-// DoublyLinkedList_Insert(list, 0, 233);
-// REQUIRE(DoublyLinkedList_Size(list) == 1);
-// DoublyLinkedList_Clear(list);
-// REQUIRE(DoublyLinkedList_Size(list) == 0);
-// DoublyLinkedList_Clear(list); // double clear
-// REQUIRE(DoublyLinkedList_Size(list) == 0);
-
-// // DoublyLinkedList_Insert
-// DoublyLinkedListItem arr[] = {1, 2, 3, 4, 5};
-// int arr_size = sizeof(arr) / sizeof(arr[0]);
-// for (int i = 0; i < arr_size; i++)
-// {
-//     DoublyLinkedList_Insert(list, i, arr[i]);
-// }
-// REQUIRE(DoublyLinkedList_Size(list) == arr_size);
-
-// // DoublyLinkedList_At
-// for (int i = 0; i < arr_size; ++i) // forward
-// {
-//     REQUIRE(DoublyLinkedList_At(list, i) == i + 1);
-// }
-// for (int i = -1; i >= -arr_size; --i) // backward
-// {
-//     REQUIRE(DoublyLinkedList_At(list, i) == i + 6);
-// }
-
-// // DoublyLinkedList_Find
-// REQUIRE(DoublyLinkedList_Find(list, 1) == 0);
-// REQUIRE(DoublyLinkedList_Find(list, 5) == 4);
-// REQUIRE(DoublyLinkedList_Find(list, 0) == -1);
-
-// // DoublyLinkedList_Traverse
-// DoublyLinkedList_Traverse(list, Visit);
-// REQUIRE(strcmp(str, "1 2 3 4 5 ") == 0);
-// memset(str, 0, sizeof(str));
-
-// // DoublyLinkedList_Reverse
-// DoublyLinkedList_Reverse(list);
-// DoublyLinkedList_Traverse(list, Visit);
-// REQUIRE(strcmp(str, "5 4 3 2 1 ") == 0);
-// memset(str, 0, sizeof(str));
-
-// // DoublyLinkedList_Remove
-// for (int i = 0; i < arr_size; i++)
-// {
-//     REQUIRE(DoublyLinkedList_Remove(list, 0) == arr_size - i);
-// }
-// REQUIRE(DoublyLinkedList_Size(list) == 0);
-
-// // DoublyLinkedList_Destroy
-// DoublyLinkedList_Destroy(list);
 // }
