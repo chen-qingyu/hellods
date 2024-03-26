@@ -217,6 +217,7 @@ public:
         {
             action(data_[i]);
         }
+
         return *this;
     }
 
@@ -227,6 +228,7 @@ public:
         {
             internal::swap(data_[i], data_[j]);
         }
+
         return *this;
     }
 
@@ -239,6 +241,7 @@ public:
             delete[] data_;
             data_ = new T[capacity_];
         }
+
         return *this;
     }
 };

@@ -2,7 +2,7 @@
 
 #include "../sources/List/ArrayList.hpp"
 #include "../sources/List/DoublyLinkedList.hpp"
-// #include "../sources/List/LinkedList.h"
+#include "../sources/List/LinkedList.hpp"
 
 using namespace hellods;
 
@@ -63,63 +63,7 @@ TEST_CASE("DoublyLinkedList")
     test<DoublyLinkedList<int>>();
 }
 
-// TEST_CASE("List: LinkedList")
-// {
-//     // LinkedList_Create LinkedList_Size LinkedList_IsEmpty
-//     LinkedList* list = LinkedList_Create();
-//     REQUIRE(LinkedList_Size(list) == 0);
-//     REQUIRE(LinkedList_IsEmpty(list) == true);
-
-// // LinkedList_Clear
-// LinkedList_Insert(list, 0, 233);
-// REQUIRE(LinkedList_Size(list) == 1);
-// LinkedList_Clear(list);
-// REQUIRE(LinkedList_Size(list) == 0);
-// LinkedList_Clear(list); // double clear
-// REQUIRE(LinkedList_Size(list) == 0);
-
-// // LinkedList_Insert
-// LinkedListItem arr[] = {1, 2, 3, 4, 5};
-// int arr_size = sizeof(arr) / sizeof(arr[0]);
-// for (int i = 0; i < arr_size; i++)
-// {
-//     LinkedList_Insert(list, i, arr[i]);
-// }
-// REQUIRE(LinkedList_Size(list) == arr_size);
-
-// // LinkedList_At
-// for (int i = 0; i < arr_size; ++i) // forward
-// {
-//     REQUIRE(LinkedList_At(list, i) == i + 1);
-// }
-// for (int i = -1; i >= -arr_size; --i) // backward
-// {
-//     REQUIRE(LinkedList_At(list, i) == i + 6);
-// }
-
-// // LinkedList_Find
-// REQUIRE(LinkedList_Find(list, 1) == 0);
-// REQUIRE(LinkedList_Find(list, 5) == 4);
-// REQUIRE(LinkedList_Find(list, 0) == -1);
-
-// // LinkedList_Traverse
-// LinkedList_Traverse(list, Visit);
-// REQUIRE(strcmp(str, "1 2 3 4 5 ") == 0);
-// memset(str, 0, sizeof(str));
-
-// // LinkedList_Reverse
-// LinkedList_Reverse(list);
-// LinkedList_Traverse(list, Visit);
-// REQUIRE(strcmp(str, "5 4 3 2 1 ") == 0);
-// memset(str, 0, sizeof(str));
-
-// // LinkedList_Remove
-// for (int i = 0; i < arr_size; i++)
-// {
-//     REQUIRE(LinkedList_Remove(list, 0) == arr_size - i);
-// }
-// REQUIRE(LinkedList_Size(list) == 0);
-
-// // LinkedList_Destroy
-// LinkedList_Destroy(list);
-// }
+TEST_CASE("LinkedList")
+{
+    test<LinkedList<int>>();
+}

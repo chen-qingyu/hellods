@@ -23,100 +23,275 @@
 #ifndef LINKEDLIST_HPP
 #define LINKEDLIST_HPP
 
-#include <stdbool.h> // bool
+#include "../utility.hpp"
 
-/// Linked List Item.
-typedef int LinkedListItem;
+namespace hellods
+{
 
-/// Linked List.
-typedef struct LinkedList LinkedList;
+/// List implemented by single linked list.
+template <typename T>
+class LinkedList
+{
+private:
+    // Node of linked list.
+    class Node
+    {
+        friend class LinkedList;
 
-/**
- * @brief 创建一个空列表
- *
- * @return 一个指向空列表的指针
- */
-LinkedList* LinkedList_Create(void);
+    private:
+        // Data stored in the node.
+        T data_;
 
-/**
- * @brief 销毁一个列表
- *
- * @param self 一个指向待销毁列表的指针
- */
-void LinkedList_Destroy(LinkedList* self);
+        // Successor.
+        Node* succ_;
 
-/**
- * @brief 求列表的长度
- *
- * @param self 一个指向列表的指针
- * @return 列表长度
- */
-int LinkedList_Size(const LinkedList* self);
+        // Create a node with given element.
+        Node(const T& data, Node* succ = nullptr)
+            : data_(data)
+            , succ_(succ)
+        {
+        }
+    };
 
-/**
- * @brief 判断列表是否为空
- *
- * @param self 一个指向列表的指针
- * @return 如果列表为空则返回 true ，否则返回 false
- */
-bool LinkedList_IsEmpty(const LinkedList* self);
+    /// Number of elements.
+    int size_;
 
-/**
- * @brief 取列表的第 index 个元素
- *
- * @param self 一个指向列表的指针
- * @param index 下标 (-Size(self) <= index < Size(self))
- * @return 第 index 个元素
- */
-LinkedListItem LinkedList_At(const LinkedList* self, int index);
+    /// Pointer to the header (rank = -1).
+    Node* header_;
 
-/**
- * @brief 求元素 data 在列表中的下标
- *
- * @param self 一个指向列表的指针
- * @param data 一个待寻找元素
- * @return 待寻找元素 data 的下标 index 或者 -1 代表没找到
- */
-int LinkedList_Find(const LinkedList* self, LinkedListItem data);
+    // Maximum capacity.
+    static const int MAX_CAPACITY = INT_MAX - 1;
 
-/**
- * @brief 在列表的下标为 index 的位置上插入一个元素 data
- *
- * @param self 一个指向列表的指针
- * @param index 下标 (-Size(self) <= index <= Size(self))
- * @param data 待插入元素
- */
-void LinkedList_Insert(LinkedList* self, int index, LinkedListItem data);
+    // Clear the stored node of data.
+    void clear_data()
+    {
+        while (header_->succ_ != nullptr)
+        {
+            Node* node = header_->succ_->succ_;
+            delete header_->succ_;
+            header_->succ_ = node;
+        }
 
-/**
- * @brief 从列表当中删除下标为 index 的元素
- *
- * @param self 一个指向列表的指针
- * @param index 下标 (-Size(self) <= index < Size(self))
- * @return 删除的元素
- */
-LinkedListItem LinkedList_Remove(LinkedList* self, int index);
+        size_ = 0;
+        header_->succ_ = nullptr;
+    }
 
-/**
- * @brief 遍历列表
- *
- * @param self 一个指向列表的指针
- * @param p_trav 一个指向用以操作列表元素的函数的指针
- */
-void LinkedList_Traverse(LinkedList* self, void (*p_trav)(LinkedListItem data));
+    // Access helper.
+    T& access(int index)
+    {
+        internal::check_bounds(index, 0, size_);
 
-/**
- * @brief 就地逆置列表
- *
- * @param self 一个指向列表的指针
- */
-void LinkedList_Reverse(LinkedList* self);
+        Node* current = header_->succ_;
+        for (int i = 0; i < index; ++i)
+        {
+            current = current->succ_;
+        }
 
-/**
- * @brief 清空列表的内容
- *
- * @param self 一个指向列表的指针
- */
-void LinkedList_Clear(LinkedList* self);
+        return current->data_;
+    }
+
+public:
+    /*
+     * Constructor / Destructor
+     */
+
+    /// Create an empty list.
+    LinkedList()
+        : size_(0)
+        , header_(new Node(T()))
+
+    {
+        header_->succ_ = nullptr;
+    }
+
+    /// Create a list based on the given initializer list.
+    LinkedList(const std::initializer_list<T>& il)
+        : LinkedList()
+    {
+        for (auto it = il.begin(); it != il.end(); ++it)
+        {
+            insert(size_, *it);
+        }
+    }
+
+    /// Destroy the list object.
+    ~LinkedList()
+    {
+        clear_data();
+        delete header_;
+    }
+
+    /*
+     * Comparison
+     */
+
+    /// Check whether two lists are equal.
+    bool operator==(const LinkedList& that) const
+    {
+        if (size_ != that.size_)
+        {
+            return false;
+        }
+
+        for (Node *it1 = header_->succ_, *it2 = that.header_->succ_; it1 != nullptr; it1 = it1->succ_, it2 = it2->succ_)
+        {
+            if (it1->data_ != it2->data_)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /// Check whether two lists are not equal.
+    bool operator!=(const LinkedList& that) const
+    {
+        return !(*this == that);
+    }
+
+    /*
+     * Access
+     */
+
+    /// Return the reference to the element at the specified position in the list.
+    T& operator[](int index)
+    {
+        return access(index);
+    }
+
+    /// Return the const reference to element at the specified position in the list.
+    const T& operator[](int index) const
+    {
+        return access(index);
+    }
+
+    /*
+     * Examination (will not change the object itself)
+     */
+
+    /// Get the number of elements of the list.
+    int size() const
+    {
+        return size_;
+    }
+
+    /// Check if the list is empty.
+    bool is_empty() const
+    {
+        return size_ == 0;
+    }
+
+    /// Return the index of the first occurrence of the specified element, or -1 if the list does not contains the element.
+    int find(const T& element) const
+    {
+        int index = 0;
+        Node* current = header_->succ_;
+
+        while (current != nullptr && current->data_ != element)
+        {
+            current = current->succ_;
+            index++;
+        }
+
+        return current != nullptr ? index : -1;
+    }
+
+    /*
+     * Manipulation (will change the object itself)
+     */
+
+    /// Insert the specified element at the specified position in the list.
+    void insert(int index, const T& element)
+    {
+        // check
+        internal::check_full(size_, MAX_CAPACITY);
+        internal::check_bounds(index, 0, size_ + 1);
+
+        // index
+        Node* current = header_;
+        for (int i = 0; i < index; i++)
+        {
+            current = current->succ_;
+        }
+
+        // insert
+        Node* node = new Node(element, current->succ_);
+        current->succ_ = node;
+
+        // resize
+        ++size_;
+    }
+
+    /// Remove and return the element at the specified position in the list.
+    T remove(int index)
+    {
+        // check
+        internal::check_empty(size_);
+        internal::check_bounds(index, 0, size_);
+
+        // index
+        Node* current = header_;
+        for (int i = 0; i < index; i++)
+        {
+            current = current->succ_;
+        }
+
+        // move data
+        T data = std::move(current->succ_->data_);
+
+        // remove
+        Node* node = current->succ_;
+        current->succ_ = node->succ_;
+        delete node;
+
+        // resize
+        --size_;
+
+        // return data
+        return data;
+    }
+
+    /// Perform the given action for each element of the list.
+    template <typename F>
+    LinkedList& map(const F& action)
+    {
+        for (Node* cur = header_->succ_; cur != nullptr; cur = cur->succ_)
+        {
+            action(cur->data_);
+        }
+
+        return *this;
+    }
+
+    /// Reverse the list in place.
+    LinkedList& reverse()
+    {
+        Node* pre = header_->succ_;
+        header_->succ_ = nullptr;
+        while (pre)
+        {
+            Node* tmp = pre;
+            pre = pre->succ_;
+            tmp->succ_ = header_->succ_;
+            header_->succ_ = tmp;
+        }
+
+        return *this;
+    }
+
+    /// Remove all of the elements from the list.
+    LinkedList& clear()
+    {
+        if (size_ != 0)
+        {
+            clear_data();
+        }
+
+        return *this;
+    }
+};
+
+} // namespace hellods
 
 #endif // LINKEDLIST_HPP
