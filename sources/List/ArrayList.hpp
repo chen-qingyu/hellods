@@ -23,92 +23,205 @@
 #ifndef ARRAYLIST_HPP
 #define ARRAYLIST_HPP
 
-// /**
-//  * @brief 创建一个空列表
-//  *
-//  * @return 一个指向空列表的指针
-//  */
-// ArrayList* ArrayList_Create(void);
+#include "../utility.hpp"
 
-// /**
-//  * @brief 销毁一个列表
-//  *
-//  * @param self 一个指向待销毁列表的指针
-//  */
-// void ArrayList_Destroy(ArrayList* self);
+namespace hellods
+{
 
-// /**
-//  * @brief 求列表的长度
-//  *
-//  * @param self 一个指向列表的指针
-//  * @return 列表长度
-//  */
-// int ArrayList_Size(const ArrayList* self);
+/// List implemented by array.
+template <typename T>
+class ArrayList
+{
+private:
+    // Number of elements.
+    int size_;
 
-// /**
-//  * @brief 判断列表是否为空
-//  *
-//  * @param self 一个指向列表的指针
-//  * @return 如果列表为空则返回 true ，否则返回 false
-//  */
-// bool ArrayList_IsEmpty(const ArrayList* self);
+    // Available capacity.
+    int capacity_;
 
-// /**
-//  * @brief 取列表的第 index 个元素
-//  *
-//  * @param self 一个指向列表的指针
-//  * @param index 下标 (-Size(self) <= index < Size(self))
-//  * @return 第 index 个元素
-//  */
-// ArrayListItem ArrayList_At(const ArrayList* self, int index);
+    // Pointer to the data.
+    T* data_;
 
-// /**
-//  * @brief 求元素 data 在列表中的下标
-//  *
-//  * @param self 一个指向列表的指针
-//  * @param data 一个待寻找元素
-//  * @return 待寻找元素 data 的下标 index 或者 -1 代表没找到
-//  */
-// int ArrayList_Find(const ArrayList* self, ArrayListItem data);
+    // Initial capacity.
+    static const int INIT_CAPACITY = 8;
 
-// /**
-//  * @brief 在列表的下标为 index 的位置上插入一个元素 data
-//  *
-//  * @param self 一个指向列表的指针
-//  * @param index 下标 (-Size(self) <= index <= Size(self))
-//  * @param data 待插入元素
-//  */
-// void ArrayList_Insert(ArrayList* self, int index, ArrayListItem data);
+    // Maximum capacity.
+    static const int MAX_CAPACITY = INT_MAX - 1;
 
-// /**
-//  * @brief 从列表当中删除下标为 index 的元素
-//  *
-//  * @param self 一个指向列表的指针
-//  * @param index 下标 (-Size(self) <= index < Size(self))
-//  * @return 删除的元素
-//  */
-// ArrayListItem ArrayList_Remove(ArrayList* self, int index);
+    // Expand capacity safely.
+    void expand_capacity()
+    {
+        capacity_ = (capacity_ < MAX_CAPACITY / 2) ? capacity_ * 2 : MAX_CAPACITY; // double the capacity until MAX_CAPACITY
+        T* new_data = new T[capacity_];
+        std::copy(data_, data_ + size_, new_data);
+        delete[] data_;
+        data_ = new_data;
+    }
 
-// /**
-//  * @brief 遍历列表
-//  *
-//  * @param self 一个指向列表的指针
-//  * @param p_trav 一个指向用以操作列表元素的函数的指针
-//  */
-// void ArrayList_Traverse(ArrayList* self, void (*p_trav)(ArrayListItem data));
+public:
+    /// Create an empty list.
+    ArrayList()
+        : size_(0)
+        , capacity_(INIT_CAPACITY)
+        , data_(new T[capacity_])
+    {
+    }
 
-// /**
-//  * @brief 就地逆置列表
-//  *
-//  * @param self 一个指向列表的指针
-//  */
-// void ArrayList_Reverse(ArrayList* self);
+    /// Create a list based on the given initializer list.
+    ArrayList(const std::initializer_list<T>& il)
+        : size_(int(il.size()))
+        , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
+        , data_(new T[capacity_])
+    {
+        std::copy(il.begin(), il.end(), data_);
+    }
 
-// /**
-//  * @brief 清空列表的内容
-//  *
-//  * @param self 一个指向列表的指针
-//  */
-// void ArrayList_Clear(ArrayList* self);
+    /// Destructor to free allocated memory.
+    ~ArrayList()
+    {
+        delete[] data_;
+    }
+
+    /// Get the number of elements of the list.
+    int size() const
+    {
+        return size_;
+    }
+
+    /// Check if the list is empty.
+    bool is_empty() const
+    {
+        return size_ == 0;
+    }
+
+    /// Check whether two lists are equal.
+    bool operator==(const ArrayList& that) const
+    {
+        if (size_ != that.size_)
+        {
+            return false;
+        }
+
+        for (int i = 0; i < size_; ++i)
+        {
+            if (data_[i] != that.data_[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /// Check whether two lists are not equal.
+    bool operator!=(const ArrayList& that) const
+    {
+        return !(*this == that);
+    }
+
+    /// Return the reference to the element at the specified position in the list.
+    T& operator[](int index)
+    {
+        internal::check_bounds(index, 0, size_);
+        return data_[index];
+    }
+
+    /// Return the const reference to element at the specified position in the list.
+    const T& operator[](int index) const
+    {
+        internal::check_bounds(index, 0, size_);
+        return data_[index];
+    }
+
+    /// Return the index of the first occurrence of the specified element, or -1 if the list does not contains the element.
+    int find(const T& element) const
+    {
+        auto it = std::find(data_, data_ + size_, element);
+        return it == data_ + size_ ? -1 : it - data_;
+    }
+
+    /// Insert the specified element at the specified position in the list.
+    void insert(int index, const T& element)
+    {
+        // check
+        internal::check_full(size_, MAX_CAPACITY);
+        internal::check_bounds(index, 0, size_ + 1);
+
+        // expand capacity if need
+        if (size_ == capacity_)
+        {
+            expand_capacity();
+        }
+
+        // shift
+        for (int i = size_; i > index; --i)
+        {
+            data_[i] = data_[i - 1];
+        }
+
+        // insert
+        data_[index] = element; // copy assignment on T
+
+        // resize
+        ++size_;
+    }
+
+    /// Remove and return the element at the specified position in the list.
+    T remove(int index)
+    {
+        // check
+        internal::check_empty(size_);
+        internal::check_bounds(index, 0, size_);
+
+        // move element
+        T element = std::move(data_[index]);
+
+        // shift
+        for (int i = index + 1; i < size_; ++i)
+        {
+            data_[i - 1] = data_[i];
+        }
+
+        // resize
+        --size_;
+
+        // return element
+        return element;
+    }
+
+    /// Perform the given action for each element of the list.
+    template <typename F>
+    ArrayList& map(const F& action)
+    {
+        for (int i = 0; i < size_; ++i)
+        {
+            action(data_[i]);
+        }
+        return *this;
+    }
+
+    /// Reverse the list in place.
+    ArrayList& reverse()
+    {
+        for (int i = 0, j = size_ - 1; i < j; ++i, --j)
+        {
+            internal::swap(data_[i], data_[j]);
+        }
+        return *this;
+    }
+
+    /// Remove all of the elements from the list.
+    void clear()
+    {
+        if (size_ != 0)
+        {
+            size_ = 0;
+            delete[] data_;
+            data_ = new T[capacity_];
+        }
+    }
+};
+
+} // namespace hellods
 
 #endif // ARRAYLIST_HPP
