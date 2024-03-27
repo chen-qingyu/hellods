@@ -28,10 +28,12 @@
 namespace hellods
 {
 
+/// Queue implemented by array.
 template <typename T>
 class ArrayQueue
 {
 private:
+    // Maximum capacity.
     static const int MAX_CAPACITY = 256;
 
     // Pointer to the data.

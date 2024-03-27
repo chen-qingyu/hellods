@@ -62,7 +62,7 @@ private:
     // Maximum capacity.
     static const int MAX_CAPACITY = INT_MAX - 1;
 
-    // Clear the stored node of data.
+    // Clear the stored data.
     void clear_data()
     {
         while (header_->succ_ != nullptr)

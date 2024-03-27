@@ -3,7 +3,7 @@
 
 #include "../sources/Queue/ArrayQueue.hpp"
 // #include "../sources/Queue/LinkedDeque.hpp"
-// #include "../sources/Queue/LinkedQueue.hpp"
+#include "../sources/Queue/LinkedQueue.hpp"
 
 using Catch::Matchers::Message;
 
@@ -55,51 +55,14 @@ void test()
 TEST_CASE("ArrayQueue")
 {
     test<ArrayQueue<int>>();
+    test<ArrayQueue<double>>();
 }
 
-// TEST_CASE("Queue: LinkedQueue")
-// {
-//     // LinkedQueue_Create LinkedQueue_Size LinkedQueue_IsEmpty
-//     LinkedQueue* queue = LinkedQueue_Create();
-//     REQUIRE(LinkedQueue_Size(queue) == 0);
-//     REQUIRE(LinkedQueue_IsEmpty(queue) == true);
-
-// // LinkedQueue_Clear
-// LinkedQueue_Enqueue(queue, 233);
-// REQUIRE(LinkedQueue_Size(queue) == 1);
-// LinkedQueue_Clear(queue);
-// REQUIRE(LinkedQueue_Size(queue) == 0);
-// LinkedQueue_Clear(queue); // double clear
-// REQUIRE(LinkedQueue_Size(queue) == 0);
-
-// // LinkedQueue_Enqueue LinkedQueue_Dequeue LinkedQueue_Front
-// LinkedQueue_Enqueue(queue, -1);
-// REQUIRE(LinkedQueue_Front(queue) == -1);
-// REQUIRE(LinkedQueue_Dequeue(queue) == -1);
-// REQUIRE(LinkedQueue_Size(queue) == 0);
-
-// // LinkedQueue_Enqueue
-// LinkedQueueItem arr[] = {1, 2, 3, 4, 5};
-// int arr_size = sizeof(arr) / sizeof(arr[0]);
-// for (int i = 0; i < arr_size; i++)
-// {
-//     LinkedQueue_Enqueue(queue, arr[i]);
-// }
-// REQUIRE(LinkedQueue_Size(queue) == arr_size);
-
-// // LinkedQueue_Front
-// REQUIRE(LinkedQueue_Front(queue) == 1);
-
-// // LinkedQueue_Dequeue
-// for (int i = 0; i < arr_size; i++)
-// {
-//     REQUIRE(LinkedQueue_Dequeue(queue) == i + 1);
-// }
-// REQUIRE(LinkedQueue_Size(queue) == 0);
-
-// // LinkedQueue_Destroy
-// LinkedQueue_Destroy(queue);
-// }
+TEST_CASE("LinkedQueue")
+{
+    test<LinkedQueue<int>>();
+    test<LinkedQueue<double>>();
+}
 
 // TEST_CASE("Queue: LinkedDeque")
 // {

@@ -23,73 +23,205 @@
 #ifndef LINKEDQUEUE_HPP
 #define LINKEDQUEUE_HPP
 
-#include <stdbool.h> // bool
+#include "../utility.hpp"
 
-/// Linked Queue Item.
-typedef int LinkedQueueItem;
+namespace hellods
+{
+/// Queue implemented by single linked list.
+template <typename T>
+class LinkedQueue
+{
+private:
+    // Node of linked queue.
+    class Node
+    {
+        friend class LinkedQueue;
 
-/// Linked Queue.
-typedef struct LinkedQueue LinkedQueue;
+    private:
+        // Data stored in the node.
+        T data_;
 
-/**
- * @brief 创建一个空队列
- *
- * @return 一个指向空队列的指针
- */
-LinkedQueue* LinkedQueue_Create(void);
+        // Successor.
+        Node* succ_;
 
-/**
- * @brief 销毁一个队列
- *
- * @param self 一个指向待销毁队列的指针
- */
-void LinkedQueue_Destroy(LinkedQueue* self);
+        // Create a node with given element.
+        Node(const T& data, Node* succ = nullptr)
+            : data_(data)
+            , succ_(succ)
+        {
+        }
+    };
 
-/**
- * @brief 求队列的长度
- *
- * @param self 一个指向队列的指针
- * @return 队列长度
- */
-int LinkedQueue_Size(const LinkedQueue* self);
+    // Maximum capacity.
+    static const int MAX_CAPACITY = INT_MAX - 1;
 
-/**
- * @brief 判断队列是否已空
- *
- * @param self 一个指向队列的指针
- * @return 如果队列已空则返回 true ，否则返回 false
- */
-bool LinkedQueue_IsEmpty(const LinkedQueue* self);
+    // Number of elements.
+    int size_;
 
-/**
- * @brief 入队，将元素 data 插入到队列的尾部
- *
- * @param self 一个指向队列的指针
- * @param data 一个待入队的元素
- */
-void LinkedQueue_Enqueue(LinkedQueue* self, LinkedQueueItem data);
+    // Pointer to the front element.
+    Node* front_;
 
-/**
- * @brief 出队，将队列的队首元素出队
- *
- * @param self 一个指向队列的指针
- * @return 队首元素
- */
-LinkedQueueItem LinkedQueue_Dequeue(LinkedQueue* self);
+    // Pointer to the rear element.
+    Node* rear_;
 
-/**
- * @brief 查看队首元素
- *
- * @param self 一个指向队列的指针
- * @return 队首元素
- */
-LinkedQueueItem LinkedQueue_Front(LinkedQueue* self);
+    // Clear the stored data.
+    void clear_data()
+    {
+        while (front_->succ_ != nullptr)
+        {
+            Node* node = front_->succ_->succ_;
+            delete front_->succ_;
+            front_->succ_ = node;
+        }
 
-/**
- * @brief 清空队列的内容
- *
- * @param self 一个指向队列的指针
- */
-void LinkedQueue_Clear(LinkedQueue* self);
+        rear_ = front_;
+        front_->succ_ = nullptr;
+        size_ = 0;
+    }
+
+public:
+    /*
+     * Constructor / Destructor
+     */
+
+    /// Create an empty queue.
+    LinkedQueue()
+        : size_(0)
+        , front_(new Node(T(), nullptr))
+        , rear_(front_)
+    {
+    }
+
+    /// Create a queue based on the given initializer list.
+    LinkedQueue(const std::initializer_list<T>& il)
+        : LinkedQueue()
+    {
+        for (auto it = il.begin(); it != il.end(); it++)
+        {
+            enqueue(*it);
+        }
+    }
+
+    /// Destroy the queue object.
+    ~LinkedQueue()
+    {
+        clear_data();
+        delete front_;
+    }
+
+    /*
+     * Comparison
+     */
+
+    /// Check whether two queues are equal.
+    bool operator==(const LinkedQueue& that) const
+    {
+        if (size_ != that.size_)
+        {
+            return false;
+        }
+
+        for (Node *it1 = front_->succ_, *it2 = that.front_->succ_; it1 != nullptr; it1 = it1->succ_, it2 = it2->succ_)
+        {
+            if (it1->data_ != it2->data_)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /// Check whether two queues are not equal.
+    bool operator!=(const LinkedQueue& that) const
+    {
+        return !(*this == that);
+    }
+
+    /*
+     * Access
+     */
+
+    /// Return the reference to the element at the front in the queue.
+    T& front()
+    {
+        internal::check_empty(size_);
+        return front_->succ_->data_;
+    }
+
+    /// Return the const reference to the element at the front in the queue.
+    const T& front() const
+    {
+        internal::check_empty(size_);
+        return front_->succ_->data_;
+    }
+
+    /*
+     * Examination
+     */
+
+    /// Get the number of elements of the queue.
+    int size() const
+    {
+        return size_;
+    }
+
+    /// Check if the queue is empty.
+    bool is_empty() const
+    {
+        return size_ == 0;
+    }
+
+    /*
+     * Manipulation
+     */
+
+    /// Enqueue, insert an element at the end of the queue.
+    void enqueue(const T& element)
+    {
+        internal::check_full(size_, MAX_CAPACITY);
+
+        Node* node = new Node(element, nullptr);
+
+        rear_->succ_ = node;
+        rear_ = node;
+
+        ++size_;
+    }
+
+    /// Dequeue, pop the head element of the queue.
+    T dequeue()
+    {
+        internal::check_empty(size_);
+
+        if (rear_ == front_->succ_)
+        {
+            rear_ = front_;
+        }
+
+        Node* node = front_->succ_;
+        T data = std::move(node->data_);
+
+        front_->succ_ = node->succ_;
+        delete node;
+
+        --size_;
+
+        return data;
+    }
+
+    /// Remove all of the elements from the queue.
+    LinkedQueue& clear()
+    {
+        if (size_ != 0)
+        {
+            clear_data();
+        }
+
+        return *this;
+    }
+};
+
+} // namespace hellods
 
 #endif // LINKEDQUEUE_HPP
