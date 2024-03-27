@@ -23,13 +23,14 @@
 #ifndef LINKEDQUEUE_HPP
 #define LINKEDQUEUE_HPP
 
-#include "../utility.hpp"
+#include "../common/Container.hpp"
+#include "../common/utility.hpp"
 
 namespace hellods
 {
 /// Queue implemented by single linked list.
 template <typename T>
-class LinkedQueue
+class LinkedQueue : public internal::Container
 {
 private:
     // Node of linked queue.
@@ -54,9 +55,6 @@ private:
 
     // Maximum capacity.
     static const int MAX_CAPACITY = INT_MAX - 1;
-
-    // Number of elements.
-    int size_;
 
     // Pointer to the front element.
     Node* front_;
@@ -86,7 +84,7 @@ public:
 
     /// Create an empty queue.
     LinkedQueue()
-        : size_(0)
+        : internal::Container(0)
         , front_(new Node(T(), nullptr))
         , rear_(front_)
     {
@@ -159,18 +157,6 @@ public:
     /*
      * Examination
      */
-
-    /// Get the number of elements of the queue.
-    int size() const
-    {
-        return size_;
-    }
-
-    /// Check if the queue is empty.
-    bool is_empty() const
-    {
-        return size_ == 0;
-    }
 
     /*
      * Manipulation

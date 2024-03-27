@@ -23,7 +23,7 @@
 #ifndef ARRAYQUEUE_HPP
 #define ARRAYQUEUE_HPP
 
-#include "../utility.hpp"
+#include "../common/utility.hpp"
 
 namespace hellods
 {

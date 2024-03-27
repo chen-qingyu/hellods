@@ -23,19 +23,17 @@
 #ifndef ARRAYLIST_HPP
 #define ARRAYLIST_HPP
 
-#include "../utility.hpp"
+#include "../common/Container.hpp"
+#include "../common/utility.hpp"
 
 namespace hellods
 {
 
 /// List implemented by array.
 template <typename T>
-class ArrayList
+class ArrayList : public internal::Container
 {
 private:
-    // Number of elements.
-    int size_;
-
     // Available capacity.
     int capacity_;
 
@@ -65,7 +63,7 @@ public:
 
     /// Create an empty list.
     ArrayList()
-        : size_(0)
+        : internal::Container(0)
         , capacity_(INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -73,7 +71,7 @@ public:
 
     /// Create a list based on the given initializer list.
     ArrayList(const std::initializer_list<T>& il)
-        : size_(int(il.size()))
+        : internal::Container(int(il.size()))
         , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -136,18 +134,6 @@ public:
     /*
      * Examination
      */
-
-    /// Get the number of elements of the list.
-    int size() const
-    {
-        return size_;
-    }
-
-    /// Check if the list is empty.
-    bool is_empty() const
-    {
-        return size_ == 0;
-    }
 
     /// Return the index of the first occurrence of the specified element, or -1 if the list does not contains the element.
     int find(const T& element) const

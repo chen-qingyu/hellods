@@ -23,15 +23,17 @@
 #ifndef DOUBLYLINKEDLIST_HPP
 #define DOUBLYLINKEDLIST_HPP
 
-#include "../utility.hpp"
+#include "../common/Container.hpp"
+#include "../common/utility.hpp"
 
 namespace hellods
 {
-
+using namespace internal;
 /// List implemented by double linked list.
 template <typename T>
-class DoublyLinkedList
+class DoublyLinkedList : public internal::Container
 {
+
 private:
     // Node of linked list.
     class Node
@@ -56,9 +58,6 @@ private:
         {
         }
     };
-
-    // Number of elements.
-    int size_;
 
     // Pointer to the header (rank = -1).
     Node* header_;
@@ -133,7 +132,7 @@ public:
 
     /// Create an empty list.
     DoublyLinkedList()
-        : size_(0)
+        : internal::Container(0)
         , header_(new Node(T()))
         , trailer_(new Node(T()))
         , latest_(-1)
@@ -209,18 +208,6 @@ public:
     /*
      * Examination
      */
-
-    /// Get the number of elements of the list.
-    int size() const
-    {
-        return size_;
-    }
-
-    /// Check if the list is empty.
-    bool is_empty() const
-    {
-        return size_ == 0;
-    }
 
     /// Return the index of the first occurrence of the specified element, or -1 if the list does not contains the element.
     int find(const T& element) const

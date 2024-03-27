@@ -23,7 +23,7 @@
 #ifndef LINKEDDEQUE_HPP
 #define LINKEDDEQUE_HPP
 
-#include "../utility.hpp"
+#include "../common/utility.hpp"
 
 #include "../List/DoublyLinkedList.hpp"
 
