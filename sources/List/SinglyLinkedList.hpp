@@ -1,7 +1,7 @@
 /**
  * @file SinglyLinkedList.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief List implemented by single linked list.
+ * @brief List implemented by singly linked list.
  * @date 2022.01.28
  *
  * @copyright Copyright (C) 2022
@@ -24,19 +24,35 @@
 #define SINGLYLINKEDLIST_HPP
 
 #include "../common/Container.hpp"
-#include "../common/Node.hpp"
 #include "../common/utility.hpp"
 
 namespace hellods
 {
 
-/// List implemented by single linked list.
+/// List implemented by singly linked list.
 template <typename T>
 class SinglyLinkedList : public common::Container
 {
 private:
-    /// Pointer to the header (rank = -1).
-    common::Node<T>* header_;
+    // Node of singly linked list.
+    struct Node
+    {
+        // Data stored in the node.
+        T data_;
+
+        // Successor.
+        Node* succ_;
+
+        // Create a node with given element.
+        Node(const T& data, Node* succ = nullptr)
+            : data_(data)
+            , succ_(succ)
+        {
+        }
+    };
+
+    // Pointer to the header (rank = -1).
+    Node* header_;
 
     // Clear the stored data.
     void clear_data()
@@ -74,7 +90,7 @@ public:
     /// Create an empty list.
     SinglyLinkedList()
         : common::Container(0)
-        , header_(new common::Node<T>(T()))
+        , header_(new Node(T()))
 
     {
         header_->succ_ = nullptr;
@@ -180,7 +196,7 @@ public:
         }
 
         // insert
-        auto node = new common::Node<T>(element, current->succ_);
+        auto node = new Node(element, current->succ_);
         current->succ_ = node;
 
         // resize

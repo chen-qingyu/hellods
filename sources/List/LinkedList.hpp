@@ -48,14 +48,12 @@ class LinkedList : public common::Container
 
 private:
     // Node of doubly linked list.
-    class Node
+    struct Node
     {
-        friend class LinkedList;
         friend class LinkedDeque<T>;
         friend class LinkedQueue<T>;
         friend class LinkedStack<T>;
 
-    private:
         // Data stored in the node.
         T data_;
 
