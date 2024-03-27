@@ -30,6 +30,9 @@ namespace hellods
 {
 
 template <typename T>
+class LinkedDeque;
+
+template <typename T>
 class LinkedQueue;
 
 template <typename T>
@@ -39,6 +42,7 @@ class LinkedStack;
 template <typename T>
 class LinkedList : public common::Container
 {
+    friend class LinkedDeque<T>;
     friend class LinkedQueue<T>;
     friend class LinkedStack<T>;
 
@@ -47,6 +51,7 @@ private:
     class Node
     {
         friend class LinkedList;
+        friend class LinkedDeque<T>;
         friend class LinkedQueue<T>;
         friend class LinkedStack<T>;
 
