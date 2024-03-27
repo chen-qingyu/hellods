@@ -40,12 +40,6 @@ private:
     // Pointer to the data.
     T* data_;
 
-    // Initial capacity.
-    static const int INIT_CAPACITY = 8;
-
-    // Maximum capacity.
-    static const int MAX_CAPACITY = INT_MAX - 1;
-
     // Expand capacity safely.
     void expand_capacity()
     {

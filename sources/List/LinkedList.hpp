@@ -38,9 +38,6 @@ private:
     /// Pointer to the header (rank = -1).
     common::Node<T>* header_;
 
-    // Maximum capacity.
-    static const int MAX_CAPACITY = INT_MAX - 1;
-
     // Clear the stored data.
     void clear_data()
     {

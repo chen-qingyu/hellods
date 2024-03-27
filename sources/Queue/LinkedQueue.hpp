@@ -35,9 +35,6 @@ template <typename T>
 class LinkedQueue : public common::Container
 {
 private:
-    // Maximum capacity.
-    static const int MAX_CAPACITY = INT_MAX - 1;
-
     // Pointer to the front element.
     common::Node<T>* front_;
 

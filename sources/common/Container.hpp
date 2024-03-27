@@ -15,6 +15,12 @@ namespace hellods::common
 class Container
 {
 protected:
+    // Initial capacity.
+    static const int INIT_CAPACITY = 8;
+
+    // Maximum capacity.
+    static const int MAX_CAPACITY = INT_MAX - 1;
+
     // Number of elements in the container.
     int size_;
 

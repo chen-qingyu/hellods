@@ -71,9 +71,6 @@ private:
     // Pointer to the latest accessed element. For operator[]().
     Node* p_latest_;
 
-    // Maximum capacity.
-    static const int MAX_CAPACITY = INT_MAX - 1;
-
     // Clear the stored data.
     void clear_data()
     {
