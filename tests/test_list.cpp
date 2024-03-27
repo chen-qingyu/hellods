@@ -20,6 +20,7 @@ void test()
     REQUIRE(empty == List());
     REQUIRE(some == List({1, 2, 3, 4, 5}));
     REQUIRE(empty != some);
+    REQUIRE(some != List({1, 2, 3, 4, 6}));
 
     // Access
     for (int i = 0; i < 5; ++i)

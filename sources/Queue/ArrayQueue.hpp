@@ -23,73 +23,154 @@
 #ifndef ARRAYQUEUE_HPP
 #define ARRAYQUEUE_HPP
 
-#include <stdbool.h> // bool
+#include "../utility.hpp"
 
-/// Array Queue Item.
-typedef int ArrayQueueItem;
+namespace hellods
+{
 
-/// Array Queue.
-typedef struct ArrayQueue ArrayQueue;
+template <typename T>
+class ArrayQueue
+{
+private:
+    static const int MAX_CAPACITY = 256;
 
-/**
- * @brief 创建一个空队列
- *
- * @return 一个指向空队列的指针
- */
-ArrayQueue* ArrayQueue_Create(void);
+    // Pointer to the data.
+    T data_[MAX_CAPACITY + 1];
 
-/**
- * @brief 销毁一个队列
- *
- * @param self 一个指向待销毁队列的指针
- */
-void ArrayQueue_Destroy(ArrayQueue* self);
+    // Index before the front element.
+    int front_;
 
-/**
- * @brief 求队列的长度
- *
- * @param self 一个指向队列的指针
- * @return 队列长度
- */
-int ArrayQueue_Size(const ArrayQueue* self);
+    // Index of the rear element.
+    int rear_;
 
-/**
- * @brief 判断队列是否已空
- *
- * @param self 一个指向队列的指针
- * @return 如果队列已空则返回 true ，否则返回 false
- */
-bool ArrayQueue_IsEmpty(const ArrayQueue* self);
+public:
+    /*
+     * Constructor / Destructor
+     */
 
-/**
- * @brief 入队，将元素 data 插入到队列的尾部
- *
- * @param self 一个指向队列的指针
- * @param data 一个待入队的元素
- */
-void ArrayQueue_Enqueue(ArrayQueue* self, ArrayQueueItem data);
+    /// Create an empty queue.
+    ArrayQueue()
+        : front_(-1)
+        , rear_(-1)
+    {
+    }
 
-/**
- * @brief 出队，将队列的队首元素出队
- *
- * @param self 一个指向队列的指针
- * @return 队首元素
- */
-ArrayQueueItem ArrayQueue_Dequeue(ArrayQueue* self);
+    /// Create a queue based on the given initializer list.
+    ArrayQueue(const std::initializer_list<T>& il)
+        : ArrayQueue()
+    {
+        for (auto it = il.begin(); it != il.end(); it++)
+        {
+            enqueue(*it);
+        }
+    }
 
-/**
- * @brief 查看队首元素
- *
- * @param self 一个指向队列的指针
- * @return 队首元素
- */
-ArrayQueueItem ArrayQueue_Front(ArrayQueue* self);
+    /*
+     * Comparison
+     */
 
-/**
- * @brief 清空队列的内容
- *
- * @param self 一个指向队列的指针
- */
-void ArrayQueue_Clear(ArrayQueue* self);
+    /// Check whether two queues are equal.
+    bool operator==(const ArrayQueue& that) const
+    {
+        if (size() != that.size())
+        {
+            return false;
+        }
+
+        int i;
+        for (i = front_ + 1; i < size() && i < MAX_CAPACITY; ++i)
+        {
+            if (data_[i] != that.data_[i])
+            {
+                return false;
+            }
+        }
+        if (i == MAX_CAPACITY)
+        {
+            for (i = 0; i <= rear_; ++i)
+            {
+                if (data_[i] != that.data_[i])
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /// Check whether two queues are not equal.
+    bool operator!=(const ArrayQueue& that) const
+    {
+        return !(*this == that);
+    }
+
+    /*
+     * Access
+     */
+
+    /// Return the reference to the element at the front in the queue.
+    T& front()
+    {
+        internal::check_empty(size());
+        return data_[(front_ + 1) % MAX_CAPACITY];
+    }
+
+    /// Return the const reference to the element at the front in the queue.
+    const T& front() const
+    {
+        internal::check_empty(size());
+        return data_[(front_ + 1) % MAX_CAPACITY];
+    }
+
+    /*
+     * Examination
+     */
+
+    /// Get the number of elements of the queue.
+    int size() const
+    {
+        return (rear_ - front_ + (MAX_CAPACITY + 1)) % (MAX_CAPACITY + 1);
+    }
+
+    /// Check if the queue is empty.
+    bool is_empty() const
+    {
+        return size() == 0;
+    }
+
+    /*
+     * Manipulation
+     */
+
+    /// Enqueue, insert an element at the end of the queue.
+    void enqueue(const T& element)
+    {
+        internal::check_full(size(), MAX_CAPACITY);
+
+        rear_ = (rear_ + 1) % MAX_CAPACITY;
+        data_[rear_] = element;
+    }
+
+    /// Dequeue, pop the head element of the queue.
+    T dequeue()
+    {
+        internal::check_empty(size());
+
+        front_ = (front_ + 1) % MAX_CAPACITY;
+        return data_[front_];
+    }
+
+    /// Remove all of the elements from the queue.
+    ArrayQueue& clear()
+    {
+        front_ = -1;
+        rear_ = -1;
+
+        return *this;
+    }
+};
+
+} // namespace hellods
 
 #endif // ARRAYQUEUE_HPP
