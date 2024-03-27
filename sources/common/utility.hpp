@@ -29,7 +29,7 @@
 #include <stdexcept> // std::runtime_error
 #include <utility>   // std::initializer_list std::move
 
-namespace hellods::internal
+namespace hellods::common
 {
 
 // Check whether the index is valid (begin <= pos < end).
@@ -68,6 +68,6 @@ static inline void swap(T& e1, T& e2)
     e2 = std::move(tmp);
 }
 
-} // namespace hellods::internal
+} // namespace hellods::common
 
 #endif // UTILITY_HPP

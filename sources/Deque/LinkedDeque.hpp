@@ -78,28 +78,28 @@ public:
     /// Return the reference to the element at the front in the deque.
     T& front()
     {
-        internal::check_empty(dlist_.size());
+        common::check_empty(dlist_.size());
         return dlist_[0];
     }
 
     /// Return the const reference to the element at the front in the deque.
     const T& front() const
     {
-        internal::check_empty(dlist_.size());
+        common::check_empty(dlist_.size());
         return dlist_[0];
     }
 
     /// Return the reference to the element at the back in the deque.
     T& back()
     {
-        internal::check_empty(dlist_.size());
+        common::check_empty(dlist_.size());
         return dlist_[dlist_.size() - 1];
     }
 
     /// Return the const reference to the element at the back in the deque.
     const T& back() const
     {
-        internal::check_empty(dlist_.size());
+        common::check_empty(dlist_.size());
         return dlist_[dlist_.size() - 1];
     }
 

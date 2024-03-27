@@ -31,7 +31,7 @@ namespace hellods
 
 /// List implemented by array.
 template <typename T>
-class ArrayList : public internal::Container
+class ArrayList : public common::Container
 {
 private:
     // Available capacity.
@@ -63,7 +63,7 @@ public:
 
     /// Create an empty list.
     ArrayList()
-        : internal::Container(0)
+        : common::Container(0)
         , capacity_(INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -71,7 +71,7 @@ public:
 
     /// Create a list based on the given initializer list.
     ArrayList(const std::initializer_list<T>& il)
-        : internal::Container(int(il.size()))
+        : common::Container(int(il.size()))
         , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -120,14 +120,14 @@ public:
     /// Return the reference to the element at the specified position in the list.
     T& operator[](int index)
     {
-        internal::check_bounds(index, 0, size_);
+        common::check_bounds(index, 0, size_);
         return data_[index];
     }
 
     /// Return the const reference to element at the specified position in the list.
     const T& operator[](int index) const
     {
-        internal::check_bounds(index, 0, size_);
+        common::check_bounds(index, 0, size_);
         return data_[index];
     }
 
@@ -150,8 +150,8 @@ public:
     void insert(int index, const T& element)
     {
         // check
-        internal::check_full(size_, MAX_CAPACITY);
-        internal::check_bounds(index, 0, size_ + 1);
+        common::check_full(size_, MAX_CAPACITY);
+        common::check_bounds(index, 0, size_ + 1);
 
         // expand capacity if need
         if (size_ == capacity_)
@@ -176,8 +176,8 @@ public:
     T remove(int index)
     {
         // check
-        internal::check_empty(size_);
-        internal::check_bounds(index, 0, size_);
+        common::check_empty(size_);
+        common::check_bounds(index, 0, size_);
 
         // move element
         T element = std::move(data_[index]);
@@ -212,7 +212,7 @@ public:
     {
         for (int i = 0, j = size_ - 1; i < j; ++i, --j)
         {
-            internal::swap(data_[i], data_[j]);
+            common::swap(data_[i], data_[j]);
         }
 
         return *this;

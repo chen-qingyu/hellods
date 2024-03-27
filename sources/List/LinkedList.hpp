@@ -24,6 +24,7 @@
 #define LINKEDLIST_HPP
 
 #include "../common/Container.hpp"
+#include "../common/Node.hpp"
 #include "../common/utility.hpp"
 
 namespace hellods
@@ -31,31 +32,11 @@ namespace hellods
 
 /// List implemented by single linked list.
 template <typename T>
-class LinkedList : public internal::Container
+class LinkedList : public common::Container
 {
 private:
-    // Node of linked list.
-    class Node
-    {
-        friend class LinkedList;
-
-    private:
-        // Data stored in the node.
-        T data_;
-
-        // Successor.
-        Node* succ_;
-
-        // Create a node with given element.
-        Node(const T& data, Node* succ = nullptr)
-            : data_(data)
-            , succ_(succ)
-        {
-        }
-    };
-
     /// Pointer to the header (rank = -1).
-    Node* header_;
+    common::Node<T>* header_;
 
     // Maximum capacity.
     static const int MAX_CAPACITY = INT_MAX - 1;
@@ -65,7 +46,7 @@ private:
     {
         while (header_->succ_ != nullptr)
         {
-            Node* node = header_->succ_->succ_;
+            auto node = header_->succ_->succ_;
             delete header_->succ_;
             header_->succ_ = node;
         }
@@ -77,9 +58,9 @@ private:
     // Access helper.
     T& access(int index)
     {
-        internal::check_bounds(index, 0, size_);
+        common::check_bounds(index, 0, size_);
 
-        Node* current = header_->succ_;
+        auto current = header_->succ_;
         for (int i = 0; i < index; ++i)
         {
             current = current->succ_;
@@ -95,8 +76,8 @@ public:
 
     /// Create an empty list.
     LinkedList()
-        : internal::Container(0)
-        , header_(new Node(T()))
+        : common::Container(0)
+        , header_(new common::Node<T>(T()))
 
     {
         header_->succ_ = nullptr;
@@ -131,7 +112,7 @@ public:
             return false;
         }
 
-        for (Node *it1 = header_->succ_, *it2 = that.header_->succ_; it1 != nullptr; it1 = it1->succ_, it2 = it2->succ_)
+        for (auto it1 = header_->succ_, it2 = that.header_->succ_; it1 != nullptr; it1 = it1->succ_, it2 = it2->succ_)
         {
             if (it1->data_ != it2->data_)
             {
@@ -172,7 +153,7 @@ public:
     int find(const T& element) const
     {
         int index = 0;
-        Node* current = header_->succ_;
+        auto current = header_->succ_;
 
         while (current != nullptr && current->data_ != element)
         {
@@ -191,18 +172,18 @@ public:
     void insert(int index, const T& element)
     {
         // check
-        internal::check_full(size_, MAX_CAPACITY);
-        internal::check_bounds(index, 0, size_ + 1);
+        common::check_full(size_, MAX_CAPACITY);
+        common::check_bounds(index, 0, size_ + 1);
 
         // index
-        Node* current = header_;
+        auto current = header_;
         for (int i = 0; i < index; i++)
         {
             current = current->succ_;
         }
 
         // insert
-        Node* node = new Node(element, current->succ_);
+        auto node = new common::Node<T>(element, current->succ_);
         current->succ_ = node;
 
         // resize
@@ -213,11 +194,11 @@ public:
     T remove(int index)
     {
         // check
-        internal::check_empty(size_);
-        internal::check_bounds(index, 0, size_);
+        common::check_empty(size_);
+        common::check_bounds(index, 0, size_);
 
         // index
-        Node* current = header_;
+        auto current = header_;
         for (int i = 0; i < index; i++)
         {
             current = current->succ_;
@@ -227,7 +208,7 @@ public:
         T data = std::move(current->succ_->data_);
 
         // remove
-        Node* node = current->succ_;
+        auto node = current->succ_;
         current->succ_ = node->succ_;
         delete node;
 
@@ -242,7 +223,7 @@ public:
     template <typename F>
     LinkedList& map(const F& action)
     {
-        for (Node* cur = header_->succ_; cur != nullptr; cur = cur->succ_)
+        for (auto cur = header_->succ_; cur != nullptr; cur = cur->succ_)
         {
             action(cur->data_);
         }
@@ -253,11 +234,11 @@ public:
     /// Reverse the list in place.
     LinkedList& reverse()
     {
-        Node* pre = header_->succ_;
+        auto pre = header_->succ_;
         header_->succ_ = nullptr;
         while (pre)
         {
-            Node* tmp = pre;
+            auto tmp = pre;
             pre = pre->succ_;
             tmp->succ_ = header_->succ_;
             header_->succ_ = tmp;

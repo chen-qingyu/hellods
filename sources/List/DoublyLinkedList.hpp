@@ -28,14 +28,14 @@
 
 namespace hellods
 {
-using namespace internal;
+
 /// List implemented by double linked list.
 template <typename T>
-class DoublyLinkedList : public internal::Container
+class DoublyLinkedList : public common::Container
 {
 
 private:
-    // Node of linked list.
+    // Node of doubly linked list.
     class Node
     {
         friend class DoublyLinkedList;
@@ -94,7 +94,7 @@ private:
     // Access helper. list[index] for index in 0..size() will be O(1) on each access.
     T& access(int index)
     {
-        internal::check_bounds(index, 0, size_);
+        common::check_bounds(index, 0, size_);
 
         // too far from the last accessed element
         if (std::abs(index - latest_) > size_ / 2)
@@ -132,7 +132,7 @@ public:
 
     /// Create an empty list.
     DoublyLinkedList()
-        : internal::Container(0)
+        : common::Container(0)
         , header_(new Node(T()))
         , trailer_(new Node(T()))
         , latest_(-1)
@@ -232,8 +232,8 @@ public:
     void insert(int index, const T& element)
     {
         // check
-        internal::check_full(size_, MAX_CAPACITY);
-        internal::check_bounds(index, 0, size_ + 1);
+        common::check_full(size_, MAX_CAPACITY);
+        common::check_bounds(index, 0, size_ + 1);
 
         // index
         Node* current = nullptr;
@@ -267,8 +267,8 @@ public:
     T remove(int index)
     {
         // check
-        internal::check_empty(size_);
-        internal::check_bounds(index, 0, size_);
+        common::check_empty(size_);
+        common::check_bounds(index, 0, size_);
 
         // index
         Node* current = nullptr;
@@ -328,9 +328,9 @@ public:
     {
         for (Node* cur = header_; cur != nullptr; cur = cur->pred_)
         {
-            internal::swap(cur->pred_, cur->succ_);
+            common::swap(cur->pred_, cur->succ_);
         }
-        internal::swap(header_, trailer_);
+        common::swap(header_, trailer_);
 
         return *this;
     }

@@ -24,50 +24,32 @@
 #define LINKEDQUEUE_HPP
 
 #include "../common/Container.hpp"
+#include "../common/Node.hpp"
 #include "../common/utility.hpp"
 
 namespace hellods
 {
+
 /// Queue implemented by single linked list.
 template <typename T>
-class LinkedQueue : public internal::Container
+class LinkedQueue : public common::Container
 {
 private:
-    // Node of linked queue.
-    class Node
-    {
-        friend class LinkedQueue;
-
-    private:
-        // Data stored in the node.
-        T data_;
-
-        // Successor.
-        Node* succ_;
-
-        // Create a node with given element.
-        Node(const T& data, Node* succ = nullptr)
-            : data_(data)
-            , succ_(succ)
-        {
-        }
-    };
-
     // Maximum capacity.
     static const int MAX_CAPACITY = INT_MAX - 1;
 
     // Pointer to the front element.
-    Node* front_;
+    common::Node<T>* front_;
 
     // Pointer to the rear element.
-    Node* rear_;
+    common::Node<T>* rear_;
 
     // Clear the stored data.
     void clear_data()
     {
         while (front_->succ_ != nullptr)
         {
-            Node* node = front_->succ_->succ_;
+            auto node = front_->succ_->succ_;
             delete front_->succ_;
             front_->succ_ = node;
         }
@@ -84,8 +66,8 @@ public:
 
     /// Create an empty queue.
     LinkedQueue()
-        : internal::Container(0)
-        , front_(new Node(T(), nullptr))
+        : common::Container(0)
+        , front_(new common::Node<T>(T(), nullptr))
         , rear_(front_)
     {
     }
@@ -119,7 +101,7 @@ public:
             return false;
         }
 
-        for (Node *it1 = front_->succ_, *it2 = that.front_->succ_; it1 != nullptr; it1 = it1->succ_, it2 = it2->succ_)
+        for (auto it1 = front_->succ_, it2 = that.front_->succ_; it1 != nullptr; it1 = it1->succ_, it2 = it2->succ_)
         {
             if (it1->data_ != it2->data_)
             {
@@ -143,14 +125,14 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front()
     {
-        internal::check_empty(size_);
+        common::check_empty(size_);
         return front_->succ_->data_;
     }
 
     /// Return the const reference to the element at the front in the queue.
     const T& front() const
     {
-        internal::check_empty(size_);
+        common::check_empty(size_);
         return front_->succ_->data_;
     }
 
@@ -165,9 +147,9 @@ public:
     /// Enqueue, insert an element at the end of the queue.
     void enqueue(const T& element)
     {
-        internal::check_full(size_, MAX_CAPACITY);
+        common::check_full(size_, MAX_CAPACITY);
 
-        Node* node = new Node(element, nullptr);
+        auto node = new common::Node<T>(element, nullptr);
 
         rear_->succ_ = node;
         rear_ = node;
@@ -178,14 +160,14 @@ public:
     /// Dequeue, pop the head element of the queue.
     T dequeue()
     {
-        internal::check_empty(size_);
+        common::check_empty(size_);
 
         if (rear_ == front_->succ_)
         {
             rear_ = front_;
         }
 
-        Node* node = front_->succ_;
+        auto node = front_->succ_;
         T data = std::move(node->data_);
 
         front_->succ_ = node->succ_;

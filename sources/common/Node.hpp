@@ -1,7 +1,7 @@
 /**
- * @file Container.hpp
+ * @file Node.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Base container class for HelloDS.
+ * @brief Common node class for HelloDS.
  * @date 2024.03.27
  *
  * @copyright Copyright (C) 2024
@@ -20,39 +20,30 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef CONTAINER_HPP
-#define CONTAINER_HPP
+#ifndef NODE_HPP
+#define NODE_HPP
 
 namespace hellods::common
 {
 
-/// Base container class for HelloDS.
-class Container
+/// Common node of linked list.
+template <typename T>
+struct Node
 {
-protected:
-    // Number of elements in the container.
-    int size_;
+    // Data stored in the node.
+    T data_;
 
-public:
-    /// Constructor.
-    Container(int size)
-        : size_(size)
-    {
-    }
+    // Successor.
+    Node* succ_;
 
-    /// Get the number of elements of the container.
-    virtual int size() const
+    // Create a node with given element.
+    Node(const T& data, Node* succ = nullptr)
+        : data_(data)
+        , succ_(succ)
     {
-        return size_;
-    }
-
-    /// Check if the container is empty.
-    virtual bool is_empty() const
-    {
-        return size_ == 0;
     }
 };
 
 } // namespace hellods::common
 
-#endif // CONTAINER_HPP
+#endif // NODE_HPP

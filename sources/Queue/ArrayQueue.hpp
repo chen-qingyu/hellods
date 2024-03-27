@@ -114,14 +114,14 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front()
     {
-        internal::check_empty(size());
+        common::check_empty(size());
         return data_[(front_ + 1) % MAX_CAPACITY];
     }
 
     /// Return the const reference to the element at the front in the queue.
     const T& front() const
     {
-        internal::check_empty(size());
+        common::check_empty(size());
         return data_[(front_ + 1) % MAX_CAPACITY];
     }
 
@@ -148,7 +148,7 @@ public:
     /// Enqueue, insert an element at the end of the queue.
     void enqueue(const T& element)
     {
-        internal::check_full(size(), MAX_CAPACITY);
+        common::check_full(size(), MAX_CAPACITY);
 
         rear_ = (rear_ + 1) % MAX_CAPACITY;
         data_[rear_] = element;
@@ -157,7 +157,7 @@ public:
     /// Dequeue, pop the head element of the queue.
     T dequeue()
     {
-        internal::check_empty(size());
+        common::check_empty(size());
 
         front_ = (front_ + 1) % MAX_CAPACITY;
         return data_[front_];
