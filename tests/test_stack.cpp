@@ -2,7 +2,7 @@
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
 #include "../sources/Stack/ArrayStack.hpp"
-// #include "../sources/Stack/LinkedQueue.hpp"
+#include "../sources/Stack/LinkedStack.hpp"
 
 using Catch::Matchers::Message;
 
@@ -57,8 +57,8 @@ TEST_CASE("ArrayStack")
     test<ArrayStack<double>>();
 }
 
-// TEST_CASE("LinkedQueue")
-// {
-//     test<LinkedQueue<int>>();
-//     test<LinkedQueue<double>>();
-// }
+TEST_CASE("LinkedStack")
+{
+    test<LinkedStack<int>>();
+    test<LinkedStack<double>>();
+}

@@ -1,7 +1,7 @@
 /**
  * @file LinkedStack.h
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Stack implemented by single linked list.
+ * @brief Stack implemented by doubly linked list.
  * @date 2022.01.28
  *
  * @copyright Copyright (C) 2022
@@ -23,73 +23,113 @@
 #ifndef LINKEDSTACK_HPP
 #define LINKEDSTACK_HPP
 
-#include <stdbool.h> // bool
+#include "../common/utility.hpp"
 
-/// Linked Stack Item.
-typedef int LinkedStackItem;
+#include "../List/DoublyLinkedList.hpp"
 
-/// Linked Stack.
-typedef struct LinkedStack LinkedStack;
+namespace hellods
+{
 
-/**
- * @brief 创建一个空栈
- *
- * @return 一个指向空栈的指针
- */
-LinkedStack* LinkedStack_Create(void);
+/// Stack implemented by doubly linked list.
+template <typename T>
+class LinkedStack
+{
+private:
+    // A doubly linked list.
+    DoublyLinkedList<T> dlist_;
 
-/**
- * @brief 销毁一个栈
- *
- * @param self 一个指向待销毁栈的指针
- */
-void LinkedStack_Destroy(LinkedStack* self);
+public:
+    /*
+     * Constructor / Destructor
+     */
 
-/**
- * @brief 求栈的长度
- *
- * @param self 一个指向栈的指针
- * @return 栈长度
- */
-int LinkedStack_Size(const LinkedStack* self);
+    /// Create an empty deque.
+    LinkedStack()
+        : dlist_()
+    {
+    }
 
-/**
- * @brief 判断栈是否已空
- *
- * @param self 一个指向栈的指针
- * @return 如果栈已空则返回 true ，否则返回 false
- */
-bool LinkedStack_IsEmpty(const LinkedStack* self);
+    /// Create a deque based on the given initializer list.
+    LinkedStack(const std::initializer_list<T>& il)
+        : dlist_(il)
+    {
+    }
 
-/**
- * @brief 入栈，将元素 data 压入到栈的顶部
- *
- * @param self 一个指向栈的指针
- * @param data 一个待入栈的元素
- */
-void LinkedStack_Push(LinkedStack* self, LinkedStackItem data);
+    /*
+     * Comparison
+     */
 
-/**
- * @brief 出栈，将栈的顶部的元素弹出来
- *
- * @param self 一个指向栈的指针
- * @return 栈顶元素
- */
-LinkedStackItem LinkedStack_Pop(LinkedStack* self);
+    /// Check whether two stacks are equal.
+    bool operator==(const LinkedStack& that) const
+    {
+        return dlist_ == that.dlist_;
+    }
 
-/**
- * @brief 检查栈的顶部元素，不改变栈
- *
- * @param self 一个指向栈的指针
- * @return 栈顶元素
- */
-LinkedStackItem LinkedStack_Top(const LinkedStack* self);
+    /// Check whether two stacks are not equal.
+    bool operator!=(const LinkedStack& that) const
+    {
+        return dlist_ != that.dlist_;
+    }
 
-/**
- * @brief 清空栈的内容
- *
- * @param self 一个指向栈的指针
- */
-void LinkedStack_Clear(LinkedStack* self);
+    /*
+     * Access
+     */
+
+    /// Return the reference to the element at the top in the stack.
+    T& top()
+    {
+        common::check_empty(size());
+        return dlist_[dlist_.size() - 1];
+    }
+
+    /// Return the const reference to the element at the top in the stack.
+    const T& top() const
+    {
+        common::check_empty(size());
+        return dlist_[dlist_.size() - 1];
+    }
+
+    /*
+     * Examination
+     */
+
+    /// Get the number of elements of the stack.
+    int size() const
+    {
+        return dlist_.size();
+    }
+
+    /// Check if the stack is empty.
+    bool is_empty() const
+    {
+        return dlist_.is_empty();
+    }
+
+    /*
+     * Manipulation
+     */
+
+    /// Push, insert an element at the top of the stack.
+    void push(const T& element)
+    {
+        dlist_.insert(dlist_.size(), element);
+    }
+
+    /// Pop the top element of the stack.
+    T pop()
+    {
+        return dlist_.remove(dlist_.size() - 1);
+    }
+
+    /// Remove all of the elements from the stack.
+    LinkedStack& clear()
+    {
+        dlist_.clear();
+
+        return *this;
+    }
+};
+
+} // namespace hellods
 
 #endif // LINKEDSTACK_HPP
