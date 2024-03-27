@@ -23,73 +23,137 @@
 #ifndef ARRAYSTACK_HPP
 #define ARRAYSTACK_HPP
 
-#include <stdbool.h> // bool
+#include "../common/utility.hpp"
 
-/// Array Stack Item.
-typedef int ArrayStackItem;
+namespace hellods
+{
 
-/// Array Stack.
-typedef struct ArrayStack ArrayStack;
+template <typename T>
+class ArrayStack
+{
+private:
+    // Maximum capacity.
+    static const int MAX_CAPACITY = 256; // TODO: dyn INT_MAX - 1: use ArrayList
 
-/**
- * @brief 创建一个空栈
- *
- * @return 一个指向空栈的指针
- */
-ArrayStack* ArrayStack_Create(void);
+    // Pointer to the data.
+    T data_[MAX_CAPACITY];
 
-/**
- * @brief 销毁一个栈
- *
- * @param self 一个指向待销毁栈的指针
- */
-void ArrayStack_Destroy(ArrayStack* self);
+    // Index of the top element.
+    int top_;
 
-/**
- * @brief 求栈的长度
- *
- * @param self 一个指向栈的指针
- * @return 栈长度
- */
-int ArrayStack_Size(const ArrayStack* self);
+public:
+    /*
+     * Constructor / Destructor
+     */
 
-/**
- * @brief 判断栈是否已空
- *
- * @param self 一个指向栈的指针
- * @return 如果栈已空则返回 true ，否则返回 false
- */
-bool ArrayStack_IsEmpty(const ArrayStack* self);
+    /// Create an empty stack.
+    ArrayStack()
+        : top_(-1)
+    {
+    }
 
-/**
- * @brief 入栈，将元素 data 压入到栈的顶部
- *
- * @param self 一个指向栈的指针
- * @param data 一个待入栈的元素
- */
-void ArrayStack_Push(ArrayStack* self, ArrayStackItem data);
+    /// Create a stack based on the given initializer list.
+    ArrayStack(const std::initializer_list<T>& il)
+        : ArrayStack()
+    {
+        for (auto it = il.begin(); it != il.end(); it++)
+        {
+            push(*it);
+        }
+    }
 
-/**
- * @brief 出栈，将栈的顶部的元素弹出来
- *
- * @param self 一个指向栈的指针
- * @return 栈顶元素
- */
-ArrayStackItem ArrayStack_Pop(ArrayStack* self);
+    /*
+     * Comparison
+     */
 
-/**
- * @brief 检查栈的顶部元素，不改变栈
- *
- * @param self 一个指向栈的指针
- * @return 栈顶元素
- */
-ArrayStackItem ArrayStack_Top(const ArrayStack* self);
+    /// Check whether two stacks are equal.
+    bool operator==(const ArrayStack& that) const
+    {
+        if (size() != that.size())
+        {
+            return false;
+        }
 
-/**
- * @brief 清空栈的内容
- *
- * @param self 一个指向栈的指针
- */
-void ArrayStack_Clear(ArrayStack* self);
+        for (int i = 0; i < size(); ++i)
+        {
+            if (data_[i] != that.data_[i])
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /// Check whether two stacks are not equal.
+    bool operator!=(const ArrayStack& that) const
+    {
+        return !(*this == that);
+    }
+
+    /*
+     * Access
+     */
+
+    /// Return the reference to the element at the top in the stack.
+    T& top()
+    {
+        common::check_empty(size());
+        return data_[top_];
+    }
+
+    /// Return the const reference to the element at the top in the stack.
+    const T& top() const
+    {
+        common::check_empty(size());
+        return data_[top_];
+    }
+
+    /*
+     * Examination
+     */
+
+    /// Get the number of elements of the stack.
+    int size() const
+    {
+        return top_ + 1;
+    }
+
+    /// Check if the stack is empty.
+    bool is_empty() const
+    {
+        return size() == 0;
+    }
+
+    /*
+     * Manipulation
+     */
+
+    /// Push, insert an element at the top of the stack.
+    void push(const T& element)
+    {
+        common::check_full(size(), MAX_CAPACITY);
+
+        data_[++top_] = element;
+    }
+
+    /// Pop the top element of the stack.
+    T pop()
+    {
+        common::check_empty(size());
+
+        return data_[top_--];
+    }
+
+    /// Remove all of the elements from the stack.
+    ArrayStack& clear()
+    {
+        top_ = -1;
+
+        return *this;
+    }
+};
+
+} // namespace hellods
 
 #endif // ARRAYSTACK_HPP
