@@ -1,7 +1,7 @@
 /**
  * @file ArrayStack.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Stack implemented by array.
+ * @brief Stack implemented by array list.
  * @date 2022.01.28
  *
  * @copyright Copyright (C) 2022
@@ -23,23 +23,18 @@
 #ifndef ARRAYSTACK_HPP
 #define ARRAYSTACK_HPP
 
-#include "../common/utility.hpp"
+#include "../List/ArrayList.hpp"
 
 namespace hellods
 {
 
+/// Stack implemented by array list.
 template <typename T>
 class ArrayStack
 {
 private:
-    // Maximum capacity.
-    static const int MAX_CAPACITY = 256; // TODO: dyn INT_MAX - 1: use ArrayList
-
-    // Pointer to the data.
-    T data_[MAX_CAPACITY];
-
-    // Index of the top element.
-    int top_;
+    // An array list.
+    ArrayList<T> alist_;
 
 public:
     /*
@@ -48,18 +43,14 @@ public:
 
     /// Create an empty stack.
     ArrayStack()
-        : top_(-1)
+        : alist_()
     {
     }
 
     /// Create a stack based on the given initializer list.
     ArrayStack(const std::initializer_list<T>& il)
-        : ArrayStack()
+        : alist_(il)
     {
-        for (auto it = il.begin(); it != il.end(); it++)
-        {
-            push(*it);
-        }
     }
 
     /*
@@ -69,26 +60,13 @@ public:
     /// Check whether two stacks are equal.
     bool operator==(const ArrayStack& that) const
     {
-        if (size() != that.size())
-        {
-            return false;
-        }
-
-        for (int i = 0; i < size(); ++i)
-        {
-            if (data_[i] != that.data_[i])
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return alist_ == that.alist_;
     }
 
     /// Check whether two stacks are not equal.
     bool operator!=(const ArrayStack& that) const
     {
-        return !(*this == that);
+        return alist_ != that.alist_;
     }
 
     /*
@@ -99,14 +77,14 @@ public:
     T& top()
     {
         common::check_empty(size());
-        return data_[top_];
+        return alist_[size() - 1];
     }
 
     /// Return the const reference to the element at the top in the stack.
     const T& top() const
     {
         common::check_empty(size());
-        return data_[top_];
+        return alist_[size() - 1];
     }
 
     /*
@@ -116,13 +94,13 @@ public:
     /// Get the number of elements of the stack.
     int size() const
     {
-        return top_ + 1;
+        return alist_.size();
     }
 
     /// Check if the stack is empty.
     bool is_empty() const
     {
-        return size() == 0;
+        return alist_.is_empty();
     }
 
     /*
@@ -132,23 +110,19 @@ public:
     /// Push, insert an element at the top of the stack.
     void push(const T& element)
     {
-        common::check_full(size(), MAX_CAPACITY);
-
-        data_[++top_] = element;
+        alist_.insert(size(), element);
     }
 
     /// Pop the top element of the stack.
     T pop()
     {
-        common::check_empty(size());
-
-        return data_[top_--];
+        return alist_.remove(size() - 1);
     }
 
     /// Remove all of the elements from the stack.
     ArrayStack& clear()
     {
-        top_ = -1;
+        alist_.clear();
 
         return *this;
     }
