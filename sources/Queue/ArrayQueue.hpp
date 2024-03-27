@@ -34,7 +34,7 @@ class ArrayQueue
 {
 private:
     // Maximum capacity.
-    static const int MAX_CAPACITY = 256;
+    static const int MAX_CAPACITY = 256; // TODO: dyn INT_MAX - 1: use ArrayList
 
     // Pointer to the data.
     T data_[MAX_CAPACITY + 1];

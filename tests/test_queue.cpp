@@ -2,7 +2,6 @@
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
 #include "../sources/Queue/ArrayQueue.hpp"
-// #include "../sources/Queue/LinkedDeque.hpp"
 #include "../sources/Queue/LinkedQueue.hpp"
 
 using Catch::Matchers::Message;
@@ -63,72 +62,3 @@ TEST_CASE("LinkedQueue")
     test<LinkedQueue<int>>();
     test<LinkedQueue<double>>();
 }
-
-// TEST_CASE("Queue: LinkedDeque")
-// {
-//     // LinkedDeque_Create LinkedDeque_Size LinkedDeque_IsEmpty
-//     LinkedDeque* queue = LinkedDeque_Create();
-//     REQUIRE(LinkedDeque_Size(queue) == 0);
-//     REQUIRE(LinkedDeque_IsEmpty(queue) == true);
-
-// // LinkedDeque_Clear
-// LinkedDeque_PushBack(queue, 233);
-// REQUIRE(LinkedDeque_Size(queue) == 1);
-// LinkedDeque_Clear(queue);
-// REQUIRE(LinkedDeque_Size(queue) == 0);
-// LinkedDeque_Clear(queue); // double clear
-// REQUIRE(LinkedDeque_Size(queue) == 0);
-
-// // LinkedDeque_PushBack LinkedDeque_PushFront
-// // LinkedDeque_PopBack LinkedDeque_PopFront
-// // LinkedDeque_Back LinkedDeque_Front
-// LinkedDeque_PushBack(queue, 233);
-// REQUIRE(LinkedDeque_Front(queue) == 233);
-// REQUIRE(LinkedDeque_Back(queue) == 233);
-// REQUIRE(LinkedDeque_PopFront(queue) == 233);
-// LinkedDeque_PushFront(queue, 233);
-// REQUIRE(LinkedDeque_Front(queue) == 233);
-// REQUIRE(LinkedDeque_Back(queue) == 233);
-// REQUIRE(LinkedDeque_PopBack(queue) == 233);
-
-// // LinkedDeque_PushBack
-// LinkedDequeItem arr[] = {1, 2, 3, 4, 5};
-// int arr_size = sizeof(arr) / sizeof(arr[0]);
-// for (int i = 0; i < arr_size; i++)
-// {
-//     LinkedDeque_PushBack(queue, arr[i]);
-// }
-// REQUIRE(LinkedDeque_Size(queue) == arr_size);
-
-// // LinkedDeque_Back LinkedDeque_Front
-// REQUIRE(LinkedDeque_Front(queue) == 1);
-// REQUIRE(LinkedDeque_Back(queue) == 5);
-
-// // LinkedDeque_PopFront
-// for (int i = 0; i < arr_size; i++)
-// {
-//     REQUIRE(LinkedDeque_PopFront(queue) == i + 1);
-// }
-// REQUIRE(LinkedDeque_Size(queue) == 0);
-
-// // LinkedDeque_PushFront
-// for (int i = 0; i < arr_size; i++)
-// {
-//     LinkedDeque_PushFront(queue, arr[i]);
-// }
-// REQUIRE(LinkedDeque_Size(queue) == arr_size);
-
-// // LinkedDeque_Back LinkedDeque_Front
-// REQUIRE(LinkedDeque_Front(queue) == 5);
-// REQUIRE(LinkedDeque_Back(queue) == 1);
-
-// // LinkedDeque_PopBack
-// for (int i = 0; i < arr_size; i++)
-// {
-//     REQUIRE(LinkedDeque_PopBack(queue) == i + 1);
-// }
-// REQUIRE(LinkedDeque_Size(queue) == 0);
-
-// // LinkedDeque_Destroy
-// LinkedDeque_Destroy(queue);
-// }
