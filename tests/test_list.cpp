@@ -2,8 +2,8 @@
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
 #include "../sources/List/ArrayList.hpp"
-#include "../sources/List/DoublyLinkedList.hpp"
 #include "../sources/List/LinkedList.hpp"
+#include "../sources/List/SinglyLinkedList.hpp"
 
 using Catch::Matchers::Message;
 
@@ -72,14 +72,14 @@ TEST_CASE("ArrayList")
     test<ArrayList<double>>();
 }
 
-TEST_CASE("DoublyLinkedList")
-{
-    test<DoublyLinkedList<int>>();
-    test<DoublyLinkedList<double>>();
-}
-
 TEST_CASE("LinkedList")
 {
     test<LinkedList<int>>();
     test<LinkedList<double>>();
+}
+
+TEST_CASE("SinglyLinkedList")
+{
+    test<SinglyLinkedList<int>>();
+    test<SinglyLinkedList<double>>();
 }

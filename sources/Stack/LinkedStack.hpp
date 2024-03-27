@@ -23,7 +23,7 @@
 #ifndef LINKEDSTACK_HPP
 #define LINKEDSTACK_HPP
 
-#include "../List/DoublyLinkedList.hpp"
+#include "../List/LinkedList.hpp"
 
 namespace hellods
 {
@@ -34,7 +34,7 @@ class LinkedStack
 {
 private:
     // A doubly linked list.
-    DoublyLinkedList<T> dlist_;
+    LinkedList<T> dlist_;
 
 public:
     /*

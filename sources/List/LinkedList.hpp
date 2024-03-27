@@ -1,10 +1,10 @@
 /**
  * @file LinkedList.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief List implemented by single linked list.
- * @date 2022.01.28
+ * @brief List implemented by double linked list.
+ * @date 2023.01.02
  *
- * @copyright Copyright (C) 2022
+ * @copyright Copyright (C) 2023
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,50 +20,116 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef LINKEDLIST_HPP
-#define LINKEDLIST_HPP
+#ifndef DOUBLYLINKEDLIST_HPP
+#define DOUBLYLINKEDLIST_HPP
 
 #include "../common/Container.hpp"
-#include "../common/Node.hpp"
 #include "../common/utility.hpp"
 
 namespace hellods
 {
 
-/// List implemented by single linked list.
+template <typename T>
+class LinkedQueue;
+
+template <typename T>
+class LinkedStack;
+
+/// List implemented by double linked list.
 template <typename T>
 class LinkedList : public common::Container
 {
+    friend class LinkedQueue<T>;
+    friend class LinkedStack<T>;
+
 private:
-    /// Pointer to the header (rank = -1).
-    common::Node<T>* header_;
+    // Node of doubly linked list.
+    class Node
+    {
+        friend class LinkedList;
+        friend class LinkedQueue<T>;
+        friend class LinkedStack<T>;
+
+    private:
+        // Data stored in the node.
+        T data_;
+
+        // Predecessor.
+        Node* pred_;
+
+        // Successor.
+        Node* succ_;
+
+        // Create a node with given element.
+        Node(const T& data, Node* pred = nullptr, Node* succ = nullptr)
+            : data_(data)
+            , pred_(pred)
+            , succ_(succ)
+        {
+        }
+    };
+
+    // Pointer to the header (rank = -1).
+    Node* header_;
+
+    // Pointer to the trailer (rank = size).
+    Node* trailer_;
+
+    // Index of the latest accessed element. For operator[]().
+    int latest_;
+
+    // Pointer to the latest accessed element. For operator[]().
+    Node* p_latest_;
 
     // Clear the stored data.
     void clear_data()
     {
-        while (header_->succ_ != nullptr)
+        while (header_->succ_ != trailer_)
         {
-            auto node = header_->succ_->succ_;
+            Node* node = header_->succ_->succ_;
             delete header_->succ_;
             header_->succ_ = node;
         }
 
         size_ = 0;
-        header_->succ_ = nullptr;
+        header_->succ_ = trailer_;
+        trailer_->pred_ = header_;
+        latest_ = -1;
+        p_latest_ = header_;
     }
 
-    // Access helper.
+    // Access helper. list[index] for index in 0..size() will be O(1) on each access.
     T& access(int index)
     {
         common::check_bounds(index, 0, size_);
 
-        auto current = header_->succ_;
-        for (int i = 0; i < index; ++i)
+        // too far from the last accessed element
+        if (std::abs(index - latest_) > size_ / 2)
         {
-            current = current->succ_;
+            // closer to the header or trailer
+            p_latest_ = (index < latest_) ? header_->succ_ : trailer_->pred_;
+            latest_ = (index < latest_) ? 0 : size_ - 1;
         }
 
-        return current->data_;
+        if (index < latest_)
+        {
+            while (index < latest_)
+            {
+                latest_--;
+                p_latest_ = p_latest_->pred_;
+            }
+        }
+        else if (index > latest_)
+        {
+            while (index > latest_)
+            {
+                latest_++;
+                p_latest_ = p_latest_->succ_;
+            }
+        }
+        // else the element accessed this time is the same as the last time
+
+        return p_latest_->data_;
     }
 
 public:
@@ -74,10 +140,13 @@ public:
     /// Create an empty list.
     LinkedList()
         : common::Container(0)
-        , header_(new common::Node<T>(T()))
-
+        , header_(new Node(T()))
+        , trailer_(new Node(T()))
+        , latest_(-1)
+        , p_latest_(header_)
     {
-        header_->succ_ = nullptr;
+        header_->succ_ = trailer_;
+        trailer_->pred_ = header_;
     }
 
     /// Create a list based on the given initializer list.
@@ -95,6 +164,7 @@ public:
     {
         clear_data();
         delete header_;
+        delete trailer_;
     }
 
     /*
@@ -109,7 +179,7 @@ public:
             return false;
         }
 
-        for (auto it1 = header_->succ_, it2 = that.header_->succ_; it1 != nullptr; it1 = it1->succ_, it2 = it2->succ_)
+        for (Node *it1 = header_->succ_, *it2 = that.header_->succ_; it1 != trailer_; it1 = it1->succ_, it2 = it2->succ_)
         {
             if (it1->data_ != it2->data_)
             {
@@ -150,15 +220,15 @@ public:
     int find(const T& element) const
     {
         int index = 0;
-        auto current = header_->succ_;
+        Node* current = header_->succ_;
 
-        while (current != nullptr && current->data_ != element)
+        while (current != trailer_ && current->data_ != element)
         {
             current = current->succ_;
             index++;
         }
 
-        return current != nullptr ? index : -1;
+        return current != trailer_ ? index : -1;
     }
 
     /*
@@ -173,15 +243,28 @@ public:
         common::check_bounds(index, 0, size_ + 1);
 
         // index
-        auto current = header_;
-        for (int i = 0; i < index; i++)
+        Node* current = nullptr;
+        if (index < size_ / 2)
         {
-            current = current->succ_;
+            current = header_->succ_;
+            for (int i = 0; i < index; i++)
+            {
+                current = current->succ_;
+            }
+        }
+        else
+        {
+            current = trailer_; // be careful, index may be same as size
+            for (int i = size_; i > index; i--)
+            {
+                current = current->pred_;
+            }
         }
 
         // insert
-        auto node = new common::Node<T>(element, current->succ_);
-        current->succ_ = node;
+        Node* node = new Node(element, current->pred_, current);
+        current->pred_->succ_ = node;
+        current->pred_ = node;
 
         // resize
         ++size_;
@@ -195,19 +278,38 @@ public:
         common::check_bounds(index, 0, size_);
 
         // index
-        auto current = header_;
-        for (int i = 0; i < index; i++)
+        Node* current = nullptr;
+        if (index < size_ / 2)
         {
-            current = current->succ_;
+            current = header_->succ_;
+            for (int i = 0; i < index; i++)
+            {
+                current = current->succ_;
+            }
+        }
+        else
+        {
+            current = trailer_->pred_;
+            for (int i = size_ - 1; i > index; i--)
+            {
+                current = current->pred_;
+            }
+        }
+
+        // reset state of the latest accessed element if it was removed
+        if (current == p_latest_)
+        {
+            latest_ = -1;
+            p_latest_ = header_;
         }
 
         // move data
-        T data = std::move(current->succ_->data_);
+        T data = std::move(current->data_);
 
         // remove
-        auto node = current->succ_;
-        current->succ_ = node->succ_;
-        delete node;
+        current->pred_->succ_ = current->succ_;
+        current->succ_->pred_ = current->pred_;
+        delete current;
 
         // resize
         --size_;
@@ -220,7 +322,7 @@ public:
     template <typename F>
     LinkedList& map(const F& action)
     {
-        for (auto cur = header_->succ_; cur != nullptr; cur = cur->succ_)
+        for (Node* cur = header_->succ_; cur != trailer_; cur = cur->succ_)
         {
             action(cur->data_);
         }
@@ -231,15 +333,11 @@ public:
     /// Reverse the list in place.
     LinkedList& reverse()
     {
-        auto pre = header_->succ_;
-        header_->succ_ = nullptr;
-        while (pre)
+        for (Node* cur = header_; cur != nullptr; cur = cur->pred_)
         {
-            auto tmp = pre;
-            pre = pre->succ_;
-            tmp->succ_ = header_->succ_;
-            header_->succ_ = tmp;
+            common::swap(cur->pred_, cur->succ_);
         }
+        common::swap(header_, trailer_);
 
         return *this;
     }
@@ -258,4 +356,4 @@ public:
 
 } // namespace hellods
 
-#endif // LINKEDLIST_HPP
+#endif // DOUBLYLINKEDLIST_HPP

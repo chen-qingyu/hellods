@@ -23,7 +23,7 @@
 #ifndef LINKEDQUEUE_HPP
 #define LINKEDQUEUE_HPP
 
-#include "../List/DoublyLinkedList.hpp"
+#include "../List/LinkedList.hpp"
 
 namespace hellods
 {
@@ -34,7 +34,7 @@ class LinkedQueue
 {
 private:
     // A doubly linked list.
-    DoublyLinkedList<T> dlist_;
+    LinkedList<T> dlist_;
 
 public:
     /*

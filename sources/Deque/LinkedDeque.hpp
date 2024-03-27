@@ -25,7 +25,7 @@
 
 #include "../common/utility.hpp"
 
-#include "../List/DoublyLinkedList.hpp"
+#include "../List/LinkedList.hpp"
 
 namespace hellods
 {
@@ -36,7 +36,7 @@ class LinkedDeque
 {
 private:
     // A doubly linked list.
-    DoublyLinkedList<T> dlist_;
+    LinkedList<T> dlist_;
 
 public:
     /*
