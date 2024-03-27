@@ -1,5 +1,5 @@
 /**
- * @file LinkedStack.h
+ * @file LinkedStack.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
  * @brief Stack implemented by doubly linked list.
  * @date 2022.01.28
@@ -79,14 +79,14 @@ public:
     T& top()
     {
         common::check_empty(size());
-        return dlist_[dlist_.size() - 1];
+        return dlist_.trailer_->pred_->data_;
     }
 
     /// Return the const reference to the element at the top in the stack.
     const T& top() const
     {
         common::check_empty(size());
-        return dlist_[dlist_.size() - 1];
+        return dlist_.trailer_->pred_->data_;
     }
 
     /*
