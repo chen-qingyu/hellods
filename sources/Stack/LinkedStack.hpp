@@ -23,8 +23,6 @@
 #ifndef LINKEDSTACK_HPP
 #define LINKEDSTACK_HPP
 
-#include "../common/utility.hpp"
-
 #include "../List/DoublyLinkedList.hpp"
 
 namespace hellods
@@ -43,13 +41,13 @@ public:
      * Constructor / Destructor
      */
 
-    /// Create an empty deque.
+    /// Create an empty stack.
     LinkedStack()
         : dlist_()
     {
     }
 
-    /// Create a deque based on the given initializer list.
+    /// Create a stack based on the given initializer list.
     LinkedStack(const std::initializer_list<T>& il)
         : dlist_(il)
     {

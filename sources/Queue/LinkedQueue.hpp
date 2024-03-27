@@ -1,7 +1,7 @@
 /**
  * @file LinkedQueue.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Queue implemented by single linked list.
+ * @brief Queue implemented by doubly linked list.
  * @date 2022.01.28
  *
  * @copyright Copyright (C) 2022
@@ -23,38 +23,18 @@
 #ifndef LINKEDQUEUE_HPP
 #define LINKEDQUEUE_HPP
 
-#include "../common/Container.hpp"
-#include "../common/Node.hpp"
-#include "../common/utility.hpp"
+#include "../List/DoublyLinkedList.hpp"
 
 namespace hellods
 {
 
-/// Queue implemented by single linked list.
+/// Queue implemented by doubly linked list.
 template <typename T>
-class LinkedQueue : public common::Container
+class LinkedQueue
 {
 private:
-    // Pointer to the front element.
-    common::Node<T>* front_;
-
-    // Pointer to the rear element.
-    common::Node<T>* rear_;
-
-    // Clear the stored data.
-    void clear_data()
-    {
-        while (front_->succ_ != nullptr)
-        {
-            auto node = front_->succ_->succ_;
-            delete front_->succ_;
-            front_->succ_ = node;
-        }
-
-        rear_ = front_;
-        front_->succ_ = nullptr;
-        size_ = 0;
-    }
+    // A doubly linked list.
+    DoublyLinkedList<T> dlist_;
 
 public:
     /*
@@ -63,27 +43,14 @@ public:
 
     /// Create an empty queue.
     LinkedQueue()
-        : common::Container(0)
-        , front_(new common::Node<T>(T(), nullptr))
-        , rear_(front_)
+        : dlist_()
     {
     }
 
     /// Create a queue based on the given initializer list.
     LinkedQueue(const std::initializer_list<T>& il)
-        : LinkedQueue()
+        : dlist_(il)
     {
-        for (auto it = il.begin(); it != il.end(); it++)
-        {
-            enqueue(*it);
-        }
-    }
-
-    /// Destroy the queue object.
-    ~LinkedQueue()
-    {
-        clear_data();
-        delete front_;
     }
 
     /*
@@ -93,26 +60,13 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const LinkedQueue& that) const
     {
-        if (size_ != that.size_)
-        {
-            return false;
-        }
-
-        for (auto it1 = front_->succ_, it2 = that.front_->succ_; it1 != nullptr; it1 = it1->succ_, it2 = it2->succ_)
-        {
-            if (it1->data_ != it2->data_)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return dlist_ == that.dlist_;
     }
 
     /// Check whether two queues are not equal.
     bool operator!=(const LinkedQueue& that) const
     {
-        return !(*this == that);
+        return dlist_ != that.dlist_;
     }
 
     /*
@@ -122,20 +76,32 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front()
     {
-        common::check_empty(size_);
-        return front_->succ_->data_;
+        common::check_empty(size());
+        return dlist_.header_->succ_->data_;
     }
 
     /// Return the const reference to the element at the front in the queue.
     const T& front() const
     {
-        common::check_empty(size_);
-        return front_->succ_->data_;
+        common::check_empty(size());
+        return dlist_.header_->succ_->data_;
     }
 
     /*
      * Examination
      */
+
+    /// Get the number of elements of the queue.
+    int size() const
+    {
+        return dlist_.size();
+    }
+
+    /// Check if the queue is empty.
+    bool is_empty() const
+    {
+        return dlist_.is_empty();
+    }
 
     /*
      * Manipulation
@@ -144,44 +110,19 @@ public:
     /// Enqueue, insert an element at the end of the queue.
     void enqueue(const T& element)
     {
-        common::check_full(size_, MAX_CAPACITY);
-
-        auto node = new common::Node<T>(element, nullptr);
-
-        rear_->succ_ = node;
-        rear_ = node;
-
-        ++size_;
+        dlist_.insert(size(), element);
     }
 
     /// Dequeue, pop the head element of the queue.
     T dequeue()
     {
-        common::check_empty(size_);
-
-        if (rear_ == front_->succ_)
-        {
-            rear_ = front_;
-        }
-
-        auto node = front_->succ_;
-        T data = std::move(node->data_);
-
-        front_->succ_ = node->succ_;
-        delete node;
-
-        --size_;
-
-        return data;
+        return dlist_.remove(0);
     }
 
     /// Remove all of the elements from the queue.
     LinkedQueue& clear()
     {
-        if (size_ != 0)
-        {
-            clear_data();
-        }
+        dlist_.clear();
 
         return *this;
     }
