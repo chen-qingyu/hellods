@@ -1,8 +1,11 @@
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_exception.hpp>
 
 #include "../sources/List/ArrayList.hpp"
 #include "../sources/List/DoublyLinkedList.hpp"
 #include "../sources/List/LinkedList.hpp"
+
+using Catch::Matchers::Message;
 
 using namespace hellods;
 
@@ -11,27 +14,33 @@ void test()
 {
     // Constructor / Destructor
     List empty;
-    List list = {1, 2, 3, 4, 5};
+    List some = {1, 2, 3, 4, 5};
 
     // Comparison
     REQUIRE(empty == List());
-    REQUIRE(list == List({1, 2, 3, 4, 5}));
-    REQUIRE(empty != list);
+    REQUIRE(some == List({1, 2, 3, 4, 5}));
+    REQUIRE(empty != some);
 
     // Access
     for (int i = 0; i < 5; ++i)
     {
-        REQUIRE(list[i] == i + 1);
+        REQUIRE(some[i] == i + 1);
     }
+    for (int i = 0; i < 5; ++i)
+    {
+        some[i] = i;
+        REQUIRE(some[i] == i);
+    }
+    REQUIRE_THROWS_MATCHES(some[5], std::runtime_error, Message("Error: Index out of range."));
 
     // Examination
     REQUIRE(empty.size() == 0);
     REQUIRE(empty.is_empty() == true);
     REQUIRE(empty.find(1) == -1);
 
-    REQUIRE(list.size() == 5);
-    REQUIRE(list.is_empty() == false);
-    REQUIRE(list.find(1) == 0);
+    REQUIRE(some.size() == 5);
+    REQUIRE(some.is_empty() == false);
+    REQUIRE(some.find(1) == 1);
 
     // Manipulation
     empty.insert(0, 1);
@@ -40,18 +49,20 @@ void test()
     REQUIRE(empty == List({2, 1}));
     empty.insert(2, 3);
     REQUIRE(empty == List({2, 1, 3}));
+    REQUIRE_THROWS_MATCHES(empty.insert(4, 3), std::runtime_error, Message("Error: Index out of range."));
 
     REQUIRE(empty.remove(1) == 1);
     REQUIRE(empty.remove(0) == 2);
     REQUIRE(empty.remove(0) == 3);
+    REQUIRE_THROWS_MATCHES(empty.remove(0), std::runtime_error, Message("Error: The container is empty."));
 
-    REQUIRE(list.map([&](auto& e)
-                     { e *= 2; }) == List({2, 4, 6, 8, 10}));
+    REQUIRE(some.map([&](auto& e)
+                     { e *= 2; }) == List({0, 2, 4, 6, 8}));
 
-    REQUIRE(list.reverse() == List({10, 8, 6, 4, 2}));
+    REQUIRE(some.reverse() == List({8, 6, 4, 2, 0}));
 
-    REQUIRE(list.clear() == empty);
-    REQUIRE(list.clear() == empty); // double clear
+    REQUIRE(some.clear() == empty);
+    REQUIRE(some.clear() == empty); // double clear
 }
 
 TEST_CASE("ArrayList")
