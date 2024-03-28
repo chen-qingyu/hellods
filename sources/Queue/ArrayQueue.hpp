@@ -144,7 +144,7 @@ public:
      * Manipulation
      */
 
-    /// Enqueue, insert an element at the end of the queue.
+    /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element)
     {
         common::check_full(size_, MAX_CAPACITY);
@@ -158,7 +158,7 @@ public:
         size_++;
     }
 
-    /// Dequeue, pop the head element of the queue.
+    /// Dequeue, pop the front element of the queue.
     T dequeue()
     {
         common::check_empty(size_);

@@ -107,13 +107,13 @@ public:
      * Manipulation
      */
 
-    /// Enqueue, insert an element at the end of the queue.
+    /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element)
     {
         dlist_.insert(size(), element);
     }
 
-    /// Dequeue, pop the head element of the queue.
+    /// Dequeue, pop the front element of the queue.
     T dequeue()
     {
         return dlist_.remove(0);
