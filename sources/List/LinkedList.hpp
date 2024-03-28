@@ -50,10 +50,6 @@ private:
     // Node of doubly linked list.
     struct Node
     {
-        friend class LinkedDeque<T>;
-        friend class LinkedQueue<T>;
-        friend class LinkedStack<T>;
-
         // Data stored in the node.
         T data_;
 

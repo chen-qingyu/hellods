@@ -141,10 +141,6 @@ public:
     }
 
     /*
-     * Examination
-     */
-
-    /*
      * Manipulation
      */
 
