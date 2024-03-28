@@ -173,13 +173,8 @@ public:
     /// Remove all of the elements from the queue.
     ArrayQueue& clear()
     {
-        if (size_ != 0)
-        {
-            size_ = 0;
-            front_ = 0;
-            delete[] data_;
-            data_ = new T[capacity_];
-        }
+        size_ = 0;
+        front_ = 0;
 
         return *this;
     }
