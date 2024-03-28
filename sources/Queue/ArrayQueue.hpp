@@ -173,6 +173,8 @@ public:
     /// Remove all of the elements from the queue.
     ArrayQueue& clear()
     {
+        // If the elements themselves are pointers, the pointed-to memory is not touched in any way.
+        // Managing the pointer is the user's responsibility.
         size_ = 0;
         front_ = 0;
 
