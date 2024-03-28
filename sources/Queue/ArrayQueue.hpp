@@ -23,6 +23,7 @@
 #ifndef ARRAYQUEUE_HPP
 #define ARRAYQUEUE_HPP
 
+#include "../common/Container.hpp"
 #include "../common/utility.hpp"
 
 namespace hellods
@@ -30,20 +31,43 @@ namespace hellods
 
 /// Queue implemented by array.
 template <typename T>
-class ArrayQueue
+class ArrayQueue : public common::Container
 {
 private:
-    // Maximum capacity.
-    static const int MAX_CAPACITY = 256; // TODO: dyn INT_MAX - 1: use ArrayList
-
-    // Pointer to the data.
-    T data_[MAX_CAPACITY + 1];
-
-    // Index before the front element.
+    // Index of front in ring buffer. data[front] is the first element, except size == 0.
     int front_;
 
-    // Index of the rear element.
-    int rear_;
+    // Available capacity.
+    int capacity_;
+
+    // Pointer to ring buffer.
+    T* data_;
+
+    // Convert logic index to ring buffer physical index.
+    int access(int logic_index) const
+    {
+        return (front_ + logic_index) % capacity_;
+    }
+
+    // Expand capacity safely for ring buffer. Require size == capacity.
+    void expand_capacity()
+    {
+        capacity_ = (capacity_ < MAX_CAPACITY / 2) ? capacity_ * 2 : MAX_CAPACITY; // double the capacity until MAX_CAPACITY
+        T* new_data = new T[capacity_];
+        int j = 0;
+        for (int i = front_; i < size_; ++i)
+        {
+            new_data[j++] = data_[i];
+        }
+        for (int i = 0; i < front_; ++i)
+        {
+            new_data[j++] = data_[i];
+        }
+
+        delete[] data_;
+        data_ = new_data;
+        front_ = 0;
+    }
 
 public:
     /*
@@ -52,19 +76,21 @@ public:
 
     /// Create an empty queue.
     ArrayQueue()
-        : front_(-1)
-        , rear_(-1)
+        : common::Container(0)
+        , front_(0)
+        , capacity_(INIT_CAPACITY)
+        , data_(new T[capacity_])
     {
     }
 
     /// Create a queue based on the given initializer list.
     ArrayQueue(const std::initializer_list<T>& il)
-        : ArrayQueue()
+        : common::Container(int(il.size()))
+        , front_(0)
+        , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
+        , data_(new T[capacity_])
     {
-        for (auto it = il.begin(); it != il.end(); it++)
-        {
-            enqueue(*it);
-        }
+        std::copy(il.begin(), il.end(), data_);
     }
 
     /*
@@ -74,27 +100,16 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const ArrayQueue& that) const
     {
-        if (size() != that.size())
+        if (size_ != that.size_)
         {
             return false;
         }
 
-        int i;
-        for (i = front_ + 1; i < size() && i < MAX_CAPACITY; ++i)
+        for (int i = access(0), j = that.access(0), cnt = 0; cnt < size_; i = access(i + 1), j = that.access(j + 1), ++cnt)
         {
-            if (data_[i] != that.data_[i])
+            if (data_[i] != that.data_[j])
             {
                 return false;
-            }
-        }
-        if (i == MAX_CAPACITY)
-        {
-            for (i = 0; i <= rear_; ++i)
-            {
-                if (data_[i] != that.data_[i])
-                {
-                    return false;
-                }
             }
         }
 
@@ -114,32 +129,20 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front()
     {
-        common::check_empty(size());
-        return data_[(front_ + 1) % MAX_CAPACITY];
+        common::check_empty(size_);
+        return data_[front_];
     }
 
     /// Return the const reference to the element at the front in the queue.
     const T& front() const
     {
-        common::check_empty(size());
-        return data_[(front_ + 1) % MAX_CAPACITY];
+        common::check_empty(size_);
+        return data_[front_];
     }
 
     /*
      * Examination
      */
-
-    /// Get the number of elements of the queue.
-    int size() const
-    {
-        return (rear_ - front_ + (MAX_CAPACITY + 1)) % (MAX_CAPACITY + 1);
-    }
-
-    /// Check if the queue is empty.
-    bool is_empty() const
-    {
-        return size() == 0;
-    }
 
     /*
      * Manipulation
@@ -148,26 +151,39 @@ public:
     /// Enqueue, insert an element at the end of the queue.
     void enqueue(const T& element)
     {
-        common::check_full(size(), MAX_CAPACITY);
+        common::check_full(size_, MAX_CAPACITY);
 
-        rear_ = (rear_ + 1) % MAX_CAPACITY;
-        data_[rear_] = element;
+        if (size_ == capacity_)
+        {
+            expand_capacity();
+        }
+
+        data_[(front_ + size_) % capacity_] = element;
+        size_++;
     }
 
     /// Dequeue, pop the head element of the queue.
     T dequeue()
     {
-        common::check_empty(size());
+        common::check_empty(size_);
 
-        front_ = (front_ + 1) % MAX_CAPACITY;
-        return data_[front_];
+        T data = std::move(data_[front_]);
+        front_ = (front_ + 1) % capacity_;
+        size_--;
+
+        return data;
     }
 
     /// Remove all of the elements from the queue.
     ArrayQueue& clear()
     {
-        front_ = -1;
-        rear_ = -1;
+        if (size_ != 0)
+        {
+            size_ = 0;
+            front_ = 0;
+            delete[] data_;
+            data_ = new T[capacity_];
+        }
 
         return *this;
     }
