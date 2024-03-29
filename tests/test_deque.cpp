@@ -58,14 +58,14 @@ void test()
     REQUIRE(some.clear() == empty); // double clear
 }
 
-TEST_CASE("LinkedDeque")
-{
-    test<LinkedDeque<int>>();
-    test<LinkedDeque<double>>();
-}
-
 TEST_CASE("ArrayDeque")
 {
     test<ArrayDeque<int>>();
     test<ArrayDeque<double>>();
+}
+
+TEST_CASE("LinkedDeque")
+{
+    test<LinkedDeque<int>>();
+    test<LinkedDeque<double>>();
 }
