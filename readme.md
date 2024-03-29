@@ -7,7 +7,7 @@ _C++ 语言写的标准的基础数据结构_
 - 名称：HelloDS，意为 **Hello** **D**ata **S**tructure。
 - 语言：C++，要求 C++17 。
 - 目标：实现标准的基础数据结构。
-- 模块：Graph, List, Queue, Stack, Table, Tree
+- 模块：Deque, Graph, Heap, List, Queue, Stack, Table, Tree
 - 简洁：Stay simple, stay young. 在保证健壮的前提下，尽量简洁，便于维护和阅读。
 - 健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查。
 - 风格：大部分遵循 [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) ，小部分基于项目规模和源码简洁性的考虑采用自己的风格。
