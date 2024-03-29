@@ -144,14 +144,14 @@ public:
     T& back()
     {
         common::check_empty(size_);
-        return data_[(front_ + size_ - 1) % capacity_];
+        return data_[access(size_ - 1)];
     }
 
     /// Return the const reference to the element at the back in the deque.
     const T& back() const
     {
         common::check_empty(size_);
-        return data_[(front_ + size_ - 1) % capacity_];
+        return data_[access(size_ - 1)];
     }
 
     /*
@@ -183,7 +183,7 @@ public:
             expand_capacity();
         }
 
-        data_[(front_ + size_) % capacity_] = element;
+        data_[access(size_)] = element;
         size_++;
     }
 
@@ -204,7 +204,7 @@ public:
     {
         common::check_empty(size_);
 
-        T data = std::move(data_[(front_ + size_ - 1) % capacity_]);
+        T data = std::move(data_[access(size_ - 1)]);
         size_--;
 
         return data;
