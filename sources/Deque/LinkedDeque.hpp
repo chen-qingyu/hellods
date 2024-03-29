@@ -23,8 +23,6 @@
 #ifndef LINKEDDEQUE_HPP
 #define LINKEDDEQUE_HPP
 
-#include "../common/utility.hpp"
-
 #include "../List/LinkedList.hpp"
 
 namespace hellods

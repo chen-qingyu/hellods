@@ -23,8 +23,6 @@
 #ifndef BINARYHEAP_HPP
 #define BINARYHEAP_HPP
 
-#include "../common/utility.hpp"
-
 #include "../List/ArrayList.hpp"
 
 namespace hellods
