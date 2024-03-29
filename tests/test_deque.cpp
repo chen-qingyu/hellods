@@ -1,6 +1,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
+#include "../sources/Deque/ArrayDeque.hpp"
 #include "../sources/Deque/LinkedDeque.hpp"
 
 using Catch::Matchers::Message;
@@ -61,4 +62,10 @@ TEST_CASE("LinkedDeque")
 {
     test<LinkedDeque<int>>();
     test<LinkedDeque<double>>();
+}
+
+TEST_CASE("ArrayDeque")
+{
+    test<ArrayDeque<int>>();
+    test<ArrayDeque<double>>();
 }
