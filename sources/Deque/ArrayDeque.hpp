@@ -220,6 +220,17 @@ public:
 
         return *this;
     }
+
+    /// Print the deque.
+    friend std::ostream& operator<<(std::ostream& os, const ArrayDeque& deque)
+    {
+        os << "<";
+        for (int i = 0; i < deque.size_; i++)
+        {
+            os << ((i == 0) ? "" : ", ") << deque.data_[deque.access(i)];
+        }
+        return os << ">";
+    }
 };
 
 } // namespace hellods
