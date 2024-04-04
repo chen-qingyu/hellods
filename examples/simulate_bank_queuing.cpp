@@ -23,7 +23,9 @@
 #include <ctime>
 #include <iostream>
 
-#include "../sources/Deque/ArrayDeque.hpp"
+#include "../sources/Queue/ArrayQueue.hpp"
+
+using hellods::ArrayQueue;
 
 // 顾客类
 struct Customer
@@ -35,11 +37,11 @@ const static int MAX_TIME = 10; // 最大所需服务时长
 
 std::ostream& operator<<(std::ostream& os, const Customer& c)
 {
-    return os << "(time: " << c.time << ")";
+    return os << "time: " << c.time;
 }
 
 // 为新到顾客确定最佳队列
-int best_window(hellods::ArrayDeque<Customer> windows[], int win_num)
+int best_window(ArrayQueue<Customer> windows[], int win_num)
 {
     int min_size = windows[0].size(), opt_win = 0;
     for (int i = 1; i < win_num; i++) // 在所有窗口中
@@ -56,7 +58,7 @@ int best_window(hellods::ArrayDeque<Customer> windows[], int win_num)
 // 按指定窗口数、服务总时间模拟银行业务
 void simulate_bank_queuing(int win_num, int serv_time)
 {
-    hellods::ArrayDeque<Customer>* windows = new hellods::ArrayDeque<Customer>[win_num]; // 为每一窗口创建一个队列
+    ArrayQueue<Customer>* windows = new ArrayQueue<Customer>[win_num]; // 为每一窗口创建一个队列
 
     std::srand((unsigned int)std::time(nullptr));
     for (int now = 1; now <= serv_time; now++) // 每隔一个单位时间
@@ -66,7 +68,7 @@ void simulate_bank_queuing(int win_num, int serv_time)
         {
             Customer c{1 + rand() % MAX_TIME};       // 新顾客到达，服务时长随机确定
             int win = best_window(windows, win_num); // 找出最佳（最短）的服务窗口
-            windows[win].push_back(c);               // 新顾客加入对应的队列
+            windows[win].enqueue(c);                 // 新顾客加入对应的队列
             std::cout << "New customer: " << c << " at Window " << win << std::endl;
         }
 
@@ -77,7 +79,7 @@ void simulate_bank_queuing(int win_num, int serv_time)
             {
                 if (--windows[i].front().time <= 0) // 队首顾客的服务时长减少一个单位
                 {
-                    windows[i].pop_front(); // 服务完毕的顾客出列
+                    windows[i].dequeue(); // 服务完毕的顾客出列
                 }
             }
         }

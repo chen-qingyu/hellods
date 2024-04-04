@@ -221,15 +221,19 @@ public:
         return *this;
     }
 
+    /*
+     * Print
+     */
+
     /// Print the deque.
     friend std::ostream& operator<<(std::ostream& os, const ArrayDeque& deque)
     {
-        os << "<";
+        os << "Deque(";
         for (int i = 0; i < deque.size_; i++)
         {
             os << ((i == 0) ? "" : ", ") << deque.data_[deque.access(i)];
         }
-        return os << ">";
+        return os << ")";
     }
 };
 
