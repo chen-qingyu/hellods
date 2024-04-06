@@ -30,12 +30,8 @@ namespace hellods
 
 /// Queue implemented by array.
 template <typename T>
-class ArrayQueue
+class ArrayQueue : private ArrayDeque<T>
 {
-private:
-    // An array deque.
-    ArrayDeque<T> adeque_;
-
 public:
     /*
      * Constructor / Destructor
@@ -43,13 +39,13 @@ public:
 
     /// Create an empty queue.
     ArrayQueue()
-        : adeque_()
+        : ArrayDeque()
     {
     }
 
     /// Create a queue based on the given initializer list.
     ArrayQueue(const std::initializer_list<T>& il)
-        : adeque_(il)
+        : ArrayDeque(il)
     {
     }
 
@@ -60,7 +56,7 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const ArrayQueue& that) const
     {
-        return adeque_ == that.adeque_;
+        return static_cast<const ArrayDeque&>(*this) == static_cast<const ArrayDeque&>(that);
     }
 
     /// Check whether two queues are not equal.
@@ -76,13 +72,13 @@ public:
     /// Get the number of elements of the queue.
     int size() const
     {
-        return adeque_.size();
+        return ArrayDeque::size();
     }
 
     /// Check if the queue is empty.
     bool is_empty() const
     {
-        return adeque_.is_empty();
+        return ArrayDeque::is_empty();
     }
 
     /*
@@ -92,13 +88,13 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front()
     {
-        return adeque_.front();
+        return ArrayDeque::front();
     }
 
     /// Return the const reference to the element at the front in the queue.
     const T& front() const
     {
-        return adeque_.front();
+        return ArrayDeque::front();
     }
 
     /*
@@ -108,19 +104,19 @@ public:
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element)
     {
-        adeque_.push_back(element);
+        ArrayDeque::push_back(element);
     }
 
     /// Dequeue, pop the front element of the queue.
     T dequeue()
     {
-        return adeque_.pop_front();
+        return ArrayDeque::pop_front();
     }
 
     /// Remove all of the elements from the queue.
     ArrayQueue& clear()
     {
-        adeque_.clear();
+        ArrayDeque::clear();
 
         return *this;
     }
@@ -133,7 +129,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const ArrayQueue& queue)
     {
         std::ostringstream oss;
-        oss << queue.adeque_;
+        oss << static_cast<const ArrayDeque&>(queue);
         std::string str = oss.str();
         return os << str.replace(str.begin(), str.begin() + 5, "Queue");
     }

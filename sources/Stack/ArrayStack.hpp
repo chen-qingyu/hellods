@@ -30,12 +30,8 @@ namespace hellods
 
 /// Stack implemented by array list.
 template <typename T>
-class ArrayStack
+class ArrayStack : private ArrayList<T>
 {
-private:
-    // An array list.
-    ArrayList<T> alist_;
-
 public:
     /*
      * Constructor / Destructor
@@ -43,13 +39,13 @@ public:
 
     /// Create an empty stack.
     ArrayStack()
-        : alist_()
+        : ArrayList()
     {
     }
 
     /// Create a stack based on the given initializer list.
     ArrayStack(const std::initializer_list<T>& il)
-        : alist_(il)
+        : ArrayList(il)
     {
     }
 
@@ -60,13 +56,13 @@ public:
     /// Check whether two stacks are equal.
     bool operator==(const ArrayStack& that) const
     {
-        return alist_ == that.alist_;
+        return static_cast<const ArrayList&>(*this) == static_cast<const ArrayList&>(that);
     }
 
     /// Check whether two stacks are not equal.
     bool operator!=(const ArrayStack& that) const
     {
-        return alist_ != that.alist_;
+        return !(*this == that);
     }
 
     /*
@@ -77,14 +73,14 @@ public:
     T& top()
     {
         common::check_empty(size());
-        return alist_[size() - 1];
+        return ArrayList::data_[size() - 1];
     }
 
     /// Return the const reference to the element at the top in the stack.
     const T& top() const
     {
         common::check_empty(size());
-        return alist_[size() - 1];
+        return ArrayList::data_[size() - 1];
     }
 
     /*
@@ -94,13 +90,13 @@ public:
     /// Get the number of elements of the stack.
     int size() const
     {
-        return alist_.size();
+        return ArrayList::size();
     }
 
     /// Check if the stack is empty.
     bool is_empty() const
     {
-        return alist_.is_empty();
+        return ArrayList::is_empty();
     }
 
     /*
@@ -110,19 +106,19 @@ public:
     /// Push, insert an element at the top of the stack.
     void push(const T& element)
     {
-        alist_.insert(size(), element);
+        ArrayList::insert(size(), element);
     }
 
     /// Pop the top element of the stack.
     T pop()
     {
-        return alist_.remove(size() - 1);
+        return ArrayList::remove(size() - 1);
     }
 
     /// Remove all of the elements from the stack.
     ArrayStack& clear()
     {
-        alist_.clear();
+        ArrayList::clear();
 
         return *this;
     }

@@ -30,12 +30,8 @@ namespace hellods
 
 /// Deque implemented by double linked list.
 template <typename T>
-class LinkedDeque
+class LinkedDeque : private LinkedList<T>
 {
-private:
-    // A doubly linked list.
-    LinkedList<T> dlist_;
-
 public:
     /*
      * Constructor / Destructor
@@ -43,13 +39,13 @@ public:
 
     /// Create an empty deque.
     LinkedDeque()
-        : dlist_()
+        : LinkedList()
     {
     }
 
     /// Create a deque based on the given initializer list.
     LinkedDeque(const std::initializer_list<T>& il)
-        : dlist_(il)
+        : LinkedList(il)
     {
     }
 
@@ -60,13 +56,13 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const LinkedDeque& that) const
     {
-        return dlist_ == that.dlist_;
+        return static_cast<const LinkedList&>(*this) == static_cast<const LinkedList&>(that);
     }
 
     /// Check whether two queues are not equal.
     bool operator!=(const LinkedDeque& that) const
     {
-        return dlist_ != that.dlist_;
+        return !(*this == that);
     }
 
     /*
@@ -76,29 +72,29 @@ public:
     /// Return the reference to the element at the front in the deque.
     T& front()
     {
-        common::check_empty(dlist_.size());
-        return dlist_.header_->succ_->data_;
+        common::check_empty(LinkedList::size());
+        return LinkedList::header_->succ_->data_;
     }
 
     /// Return the const reference to the element at the front in the deque.
     const T& front() const
     {
-        common::check_empty(dlist_.size());
-        return dlist_.header_->succ_->data_;
+        common::check_empty(LinkedList::size());
+        return LinkedList::header_->succ_->data_;
     }
 
     /// Return the reference to the element at the back in the deque.
     T& back()
     {
-        common::check_empty(dlist_.size());
-        return dlist_.trailer_->pred_->data_;
+        common::check_empty(LinkedList::size());
+        return LinkedList::trailer_->pred_->data_;
     }
 
     /// Return the const reference to the element at the back in the deque.
     const T& back() const
     {
-        common::check_empty(dlist_.size());
-        return dlist_.trailer_->pred_->data_;
+        common::check_empty(LinkedList::size());
+        return LinkedList::trailer_->pred_->data_;
     }
 
     /*
@@ -108,13 +104,13 @@ public:
     /// Get the number of elements of the deque.
     int size() const
     {
-        return dlist_.size();
+        return LinkedList::size();
     }
 
     /// Check if the deque is empty.
     bool is_empty() const
     {
-        return dlist_.is_empty();
+        return LinkedList::is_empty();
     }
 
     /*
@@ -124,31 +120,31 @@ public:
     /// Push front, insert an element at the front of the deque.
     void push_front(const T& element)
     {
-        dlist_.insert(0, element);
+        LinkedList::insert(0, element);
     }
 
     /// Push back, insert an element at the back of the deque.
     void push_back(const T& element)
     {
-        dlist_.insert(dlist_.size(), element);
+        LinkedList::insert(LinkedList::size(), element);
     }
 
     /// Pop front, pop the front element of the deque.
     T pop_front()
     {
-        return dlist_.remove(0);
+        return LinkedList::remove(0);
     }
 
     /// Pop back, pop the back element of the deque.
     T pop_back()
     {
-        return dlist_.remove(dlist_.size() - 1);
+        return LinkedList::remove(LinkedList::size() - 1);
     }
 
     /// Remove all of the elements from the deque.
     LinkedDeque& clear()
     {
-        dlist_.clear();
+        LinkedList::clear();
 
         return *this;
     }

@@ -30,12 +30,8 @@ namespace hellods
 
 /// Queue implemented by doubly linked list.
 template <typename T>
-class LinkedQueue
+class LinkedQueue : private LinkedList<T>
 {
-private:
-    // A doubly linked list.
-    LinkedList<T> dlist_;
-
 public:
     /*
      * Constructor / Destructor
@@ -43,13 +39,13 @@ public:
 
     /// Create an empty queue.
     LinkedQueue()
-        : dlist_()
+        : LinkedList()
     {
     }
 
     /// Create a queue based on the given initializer list.
     LinkedQueue(const std::initializer_list<T>& il)
-        : dlist_(il)
+        : LinkedList(il)
     {
     }
 
@@ -60,13 +56,13 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const LinkedQueue& that) const
     {
-        return dlist_ == that.dlist_;
+        return static_cast<const LinkedList&>(*this) == static_cast<const LinkedList&>(that);
     }
 
     /// Check whether two queues are not equal.
     bool operator!=(const LinkedQueue& that) const
     {
-        return dlist_ != that.dlist_;
+        return !(*this == that);
     }
 
     /*
@@ -77,14 +73,14 @@ public:
     T& front()
     {
         common::check_empty(size());
-        return dlist_.header_->succ_->data_;
+        return LinkedList::header_->succ_->data_;
     }
 
     /// Return the const reference to the element at the front in the queue.
     const T& front() const
     {
         common::check_empty(size());
-        return dlist_.header_->succ_->data_;
+        return LinkedList::header_->succ_->data_;
     }
 
     /*
@@ -94,13 +90,13 @@ public:
     /// Get the number of elements of the queue.
     int size() const
     {
-        return dlist_.size();
+        return LinkedList::size();
     }
 
     /// Check if the queue is empty.
     bool is_empty() const
     {
-        return dlist_.is_empty();
+        return LinkedList::is_empty();
     }
 
     /*
@@ -110,19 +106,19 @@ public:
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element)
     {
-        dlist_.insert(size(), element);
+        LinkedList::insert(size(), element);
     }
 
     /// Dequeue, pop the front element of the queue.
     T dequeue()
     {
-        return dlist_.remove(0);
+        return LinkedList::remove(0);
     }
 
     /// Remove all of the elements from the queue.
     LinkedQueue& clear()
     {
-        dlist_.clear();
+        LinkedList::clear();
 
         return *this;
     }

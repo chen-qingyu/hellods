@@ -33,6 +33,9 @@ namespace hellods
 template <typename T>
 class ArrayList : public common::Container
 {
+    template <typename _>
+    friend class ArrayStack;
+
 private:
     // Available capacity.
     int capacity_;

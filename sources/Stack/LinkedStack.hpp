@@ -30,12 +30,8 @@ namespace hellods
 
 /// Stack implemented by doubly linked list.
 template <typename T>
-class LinkedStack
+class LinkedStack : private LinkedList<T>
 {
-private:
-    // A doubly linked list.
-    LinkedList<T> dlist_;
-
 public:
     /*
      * Constructor / Destructor
@@ -43,13 +39,13 @@ public:
 
     /// Create an empty stack.
     LinkedStack()
-        : dlist_()
+        : LinkedList()
     {
     }
 
     /// Create a stack based on the given initializer list.
     LinkedStack(const std::initializer_list<T>& il)
-        : dlist_(il)
+        : LinkedList(il)
     {
     }
 
@@ -60,13 +56,13 @@ public:
     /// Check whether two stacks are equal.
     bool operator==(const LinkedStack& that) const
     {
-        return dlist_ == that.dlist_;
+        return static_cast<const LinkedList&>(*this) == static_cast<const LinkedList&>(that);
     }
 
     /// Check whether two stacks are not equal.
     bool operator!=(const LinkedStack& that) const
     {
-        return dlist_ != that.dlist_;
+        return !(*this == that);
     }
 
     /*
@@ -77,14 +73,14 @@ public:
     T& top()
     {
         common::check_empty(size());
-        return dlist_.trailer_->pred_->data_;
+        return LinkedList::trailer_->pred_->data_;
     }
 
     /// Return the const reference to the element at the top in the stack.
     const T& top() const
     {
         common::check_empty(size());
-        return dlist_.trailer_->pred_->data_;
+        return LinkedList::trailer_->pred_->data_;
     }
 
     /*
@@ -94,13 +90,13 @@ public:
     /// Get the number of elements of the stack.
     int size() const
     {
-        return dlist_.size();
+        return LinkedList::size();
     }
 
     /// Check if the stack is empty.
     bool is_empty() const
     {
-        return dlist_.is_empty();
+        return LinkedList::is_empty();
     }
 
     /*
@@ -110,19 +106,19 @@ public:
     /// Push, insert an element at the top of the stack.
     void push(const T& element)
     {
-        dlist_.insert(dlist_.size(), element);
+        LinkedList::insert(LinkedList::size(), element);
     }
 
     /// Pop the top element of the stack.
     T pop()
     {
-        return dlist_.remove(dlist_.size() - 1);
+        return LinkedList::remove(LinkedList::size() - 1);
     }
 
     /// Remove all of the elements from the stack.
     LinkedStack& clear()
     {
-        dlist_.clear();
+        LinkedList::clear();
 
         return *this;
     }
