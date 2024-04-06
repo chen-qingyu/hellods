@@ -29,22 +29,18 @@
 namespace hellods
 {
 
-template <typename T>
-class LinkedDeque;
-
-template <typename T>
-class LinkedQueue;
-
-template <typename T>
-class LinkedStack;
-
 /// List implemented by doubly linked list.
 template <typename T>
 class LinkedList : public common::Container
 {
-    friend class LinkedDeque<T>;
-    friend class LinkedQueue<T>;
-    friend class LinkedStack<T>;
+    template <typename _>
+    friend class LinkedDeque;
+
+    template <typename _>
+    friend class LinkedQueue;
+
+    template <typename _>
+    friend class LinkedStack;
 
 private:
     // Node of doubly linked list.
