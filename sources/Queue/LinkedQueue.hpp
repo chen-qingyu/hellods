@@ -122,6 +122,19 @@ public:
 
         return *this;
     }
+
+    /*
+     * Print
+     */
+
+    /// Print the queue.
+    friend std::ostream& operator<<(std::ostream& os, const LinkedQueue& queue)
+    {
+        std::ostringstream oss;
+        oss << static_cast<const LinkedList&>(queue);
+        std::string str = oss.str();
+        return os << str.replace(str.begin(), str.begin() + 4, "Queue");
+    }
 };
 
 } // namespace hellods

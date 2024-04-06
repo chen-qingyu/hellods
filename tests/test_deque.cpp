@@ -1,6 +1,8 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
+#include <sstream>
+
 #include "../sources/Deque/ArrayDeque.hpp"
 #include "../sources/Deque/LinkedDeque.hpp"
 
@@ -56,6 +58,21 @@ void test()
 
     REQUIRE(some.clear() == empty);
     REQUIRE(some.clear() == empty); // double clear
+
+    // Print
+    std::ostringstream oss;
+
+    oss << Deque({});
+    REQUIRE(oss.str() == "Deque()");
+    oss.str("");
+
+    oss << Deque({1});
+    REQUIRE(oss.str() == "Deque(1)");
+    oss.str("");
+
+    oss << Deque({1, 2, 3, 4, 5});
+    REQUIRE(oss.str() == "Deque(1, 2, 3, 4, 5)");
+    oss.str("");
 }
 
 TEST_CASE("ArrayDeque")

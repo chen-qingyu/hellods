@@ -231,7 +231,7 @@ public:
         os << "Deque(";
         for (int i = 0; i < deque.size_; i++)
         {
-            os << ((i == 0) ? "" : ", ") << deque.data_[deque.access(i)];
+            os << (i == 0 ? "" : ", ") << deque.data_[deque.access(i)];
         }
         return os << ")";
     }

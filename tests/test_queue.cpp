@@ -49,6 +49,21 @@ void test()
 
     REQUIRE(some.clear() == empty);
     REQUIRE(some.clear() == empty); // double clear
+
+    // Print
+    std::ostringstream oss;
+
+    oss << Queue({});
+    REQUIRE(oss.str() == "Queue()");
+    oss.str("");
+
+    oss << Queue({1});
+    REQUIRE(oss.str() == "Queue(1)");
+    oss.str("");
+
+    oss << Queue({1, 2, 3, 4, 5});
+    REQUIRE(oss.str() == "Queue(1, 2, 3, 4, 5)");
+    oss.str("");
 }
 
 TEST_CASE("ArrayQueue")

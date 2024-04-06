@@ -122,6 +122,19 @@ public:
 
         return *this;
     }
+
+    /*
+     * Print
+     */
+
+    /// Print the stack.
+    friend std::ostream& operator<<(std::ostream& os, const ArrayStack& stack)
+    {
+        std::ostringstream oss;
+        oss << static_cast<const ArrayList&>(stack);
+        std::string str = oss.str();
+        return os << str.replace(str.begin(), str.begin() + 4, "Stack");
+    }
 };
 
 } // namespace hellods

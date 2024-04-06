@@ -49,6 +49,21 @@ void test()
 
     REQUIRE(some.clear() == empty);
     REQUIRE(some.clear() == empty); // double clear
+
+    // Print
+    std::ostringstream oss;
+
+    oss << Stack({});
+    REQUIRE(oss.str() == "Stack()");
+    oss.str("");
+
+    oss << Stack({1});
+    REQUIRE(oss.str() == "Stack(1)");
+    oss.str("");
+
+    oss << Stack({1, 2, 3, 4, 5});
+    REQUIRE(oss.str() == "Stack(1, 2, 3, 4, 5)");
+    oss.str("");
 }
 
 TEST_CASE("ArrayStack")

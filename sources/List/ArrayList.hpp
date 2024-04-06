@@ -224,6 +224,21 @@ public:
 
         return *this;
     }
+
+    /*
+     * Print
+     */
+
+    /// Print the list.
+    friend std::ostream& operator<<(std::ostream& os, const ArrayList& list)
+    {
+        os << "List(";
+        for (int i = 0; i < list.size_; i++)
+        {
+            os << (i == 0 ? "" : ", ") << list.data_[i];
+        }
+        return os << ")";
+    }
 };
 
 } // namespace hellods

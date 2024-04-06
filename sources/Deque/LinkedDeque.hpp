@@ -148,6 +148,19 @@ public:
 
         return *this;
     }
+
+    /*
+     * Print
+     */
+
+    /// Print the deque.
+    friend std::ostream& operator<<(std::ostream& os, const LinkedDeque& deque)
+    {
+        std::ostringstream oss;
+        oss << static_cast<const LinkedList&>(deque);
+        std::string str = oss.str();
+        return os << str.replace(str.begin(), str.begin() + 4, "Deque");
+    }
 };
 
 } // namespace hellods
