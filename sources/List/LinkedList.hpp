@@ -1,7 +1,7 @@
 /**
  * @file LinkedList.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief List implemented by double linked list.
+ * @brief List implemented by doubly linked list.
  * @date 2023.01.02
  *
  * @copyright Copyright (C) 2023
@@ -20,8 +20,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DOUBLYLINKEDLIST_HPP
-#define DOUBLYLINKEDLIST_HPP
+#ifndef LINKEDLIST_HPP
+#define LINKEDLIST_HPP
 
 #include "../common/Container.hpp"
 #include "../common/utility.hpp"
@@ -38,7 +38,7 @@ class LinkedQueue;
 template <typename T>
 class LinkedStack;
 
-/// List implemented by double linked list.
+/// List implemented by doubly linked list.
 template <typename T>
 class LinkedList : public common::Container
 {
@@ -355,4 +355,4 @@ public:
 
 } // namespace hellods
 
-#endif // DOUBLYLINKEDLIST_HPP
+#endif // LINKEDLIST_HPP
