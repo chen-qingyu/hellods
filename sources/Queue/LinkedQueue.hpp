@@ -132,8 +132,7 @@ public:
     {
         std::ostringstream oss;
         oss << static_cast<const LinkedList&>(queue);
-        std::string str = oss.str();
-        return os << str.replace(str.begin(), str.begin() + 4, "Queue");
+        return os << "Queue" << oss.str().erase(0, 4);
     }
 };
 
