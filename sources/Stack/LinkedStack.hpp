@@ -73,14 +73,14 @@ public:
     T& top()
     {
         common::check_empty(size());
-        return LinkedList::trailer_->pred_->data_;
+        return trailer_->pred_->data_;
     }
 
     /// Return the const reference to the element at the top in the stack.
     const T& top() const
     {
         common::check_empty(size());
-        return LinkedList::trailer_->pred_->data_;
+        return trailer_->pred_->data_;
     }
 
     /*

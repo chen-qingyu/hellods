@@ -73,14 +73,14 @@ public:
     T& top()
     {
         common::check_empty(size());
-        return ArrayList::data_[size() - 1];
+        return data_[size() - 1];
     }
 
     /// Return the const reference to the element at the top in the stack.
     const T& top() const
     {
         common::check_empty(size());
-        return ArrayList::data_[size() - 1];
+        return data_[size() - 1];
     }
 
     /*

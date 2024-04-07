@@ -72,29 +72,29 @@ public:
     /// Return the reference to the element at the front in the deque.
     T& front()
     {
-        common::check_empty(LinkedList::size());
-        return LinkedList::header_->succ_->data_;
+        common::check_empty(size());
+        return header_->succ_->data_;
     }
 
     /// Return the const reference to the element at the front in the deque.
     const T& front() const
     {
-        common::check_empty(LinkedList::size());
-        return LinkedList::header_->succ_->data_;
+        common::check_empty(size());
+        return header_->succ_->data_;
     }
 
     /// Return the reference to the element at the back in the deque.
     T& back()
     {
-        common::check_empty(LinkedList::size());
-        return LinkedList::trailer_->pred_->data_;
+        common::check_empty(size());
+        return trailer_->pred_->data_;
     }
 
     /// Return the const reference to the element at the back in the deque.
     const T& back() const
     {
-        common::check_empty(LinkedList::size());
-        return LinkedList::trailer_->pred_->data_;
+        common::check_empty(size());
+        return trailer_->pred_->data_;
     }
 
     /*

@@ -73,14 +73,14 @@ public:
     T& front()
     {
         common::check_empty(size());
-        return LinkedList::header_->succ_->data_;
+        return header_->succ_->data_;
     }
 
     /// Return the const reference to the element at the front in the queue.
     const T& front() const
     {
         common::check_empty(size());
-        return LinkedList::header_->succ_->data_;
+        return header_->succ_->data_;
     }
 
     /*
@@ -106,7 +106,7 @@ public:
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element)
     {
-        LinkedList::insert(size(), element);
+        LinkedList::insert(LinkedList::size(), element);
     }
 
     /// Dequeue, pop the front element of the queue.
