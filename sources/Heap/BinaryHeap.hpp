@@ -25,7 +25,7 @@
 
 #include "../List/ArrayList.hpp"
 
-#include <map>
+#include <map> // for operator==()
 
 namespace hellods
 {
@@ -112,13 +112,13 @@ public:
      * Examination
      */
 
-    /// Get the number of elements of the deque.
+    /// Get the number of elements of the heap.
     int size() const
     {
         return ArrayList::size();
     }
 
-    /// Check if the deque is empty.
+    /// Check if the heap is empty.
     bool is_empty() const
     {
         return ArrayList::is_empty();
