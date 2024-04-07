@@ -36,6 +36,9 @@ class ArrayList : public common::Container
     template <typename _>
     friend class ArrayStack;
 
+    template <typename _>
+    friend class BinaryHeap;
+
 private:
     // Available capacity.
     int capacity_;

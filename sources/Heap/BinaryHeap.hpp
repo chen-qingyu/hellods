@@ -25,15 +25,26 @@
 
 #include "../List/ArrayList.hpp"
 
+#include <map>
+
 namespace hellods
 {
 
 template <typename T>
-class BinaryHeap
+class BinaryHeap : private ArrayList<T>
 {
 private:
-    // An array list.
-    ArrayList<T> alist_;
+    // Adjust an element: process down.
+    void proc_down(int index)
+    {
+        while (index * 2 + 1 < size_ && data_[index] < data_[index * 2 + 1] || index * 2 + 2 < size_ && data_[index] < data_[index * 2 + 2])
+        {
+            // if size is even then only have left node, short to avoid subscript out of bounds
+            bool is_left_max = (size_ % 2 == 0) || (data_[index * 2 + 1] > data_[index * 2 + 2]);
+            common::swap(data_[index], is_left_max ? data_[index * 2 + 1] : data_[index * 2 + 2]);
+            index = index * 2 + (is_left_max ? 1 : 2);
+        }
+    }
 
 public:
     /*
@@ -42,15 +53,19 @@ public:
 
     /// Create an empty heap.
     BinaryHeap()
-        : alist_()
+        : ArrayList()
     {
     }
 
     /// Create a heap based on the given initializer list.
     BinaryHeap(const std::initializer_list<T>& il)
-        : alist_(il)
+        : ArrayList(il)
     {
-        // TODO: build heap
+        // build heap
+        for (int i = (size_ - 1) / 2; i >= 0; i--)
+        {
+            proc_down(i);
+        }
     }
 
     /*
@@ -60,13 +75,26 @@ public:
     /// Check whether two heaps are equal.
     bool operator==(const BinaryHeap& that) const
     {
-        return alist_ == that.alist_;
+        if (size() != that.size())
+        {
+            return false;
+        }
+
+        // count elements in each heap
+        std::map<T, int> this_map, that_map;
+        for (int i = 0; i < size(); i++)
+        {
+            this_map[data_[i]] = this_map.find(data_[i]) == this_map.end() ? 1 : this_map[data_[i]] + 1;
+            that_map[that.data_[i]] = that_map.find(that.data_[i]) == that_map.end() ? 1 : that_map[that.data_[i]] + 1;
+        }
+
+        return this_map == that_map;
     }
 
     /// Check whether two heaps are not equal.
     bool operator!=(const BinaryHeap& that) const
     {
-        return alist_ != that.alist_;
+        return !(*this == that);
     }
 
     /*
@@ -76,8 +104,8 @@ public:
     /// Returns const reference of the greatest item in the heap.
     const T& peek() const
     {
-        common::check_empty(alist_.size());
-        return alist_[0];
+        common::check_empty(size());
+        return data_[0];
     }
 
     /*
@@ -87,13 +115,13 @@ public:
     /// Get the number of elements of the deque.
     int size() const
     {
-        return alist_.size();
+        return ArrayList::size();
     }
 
     /// Check if the deque is empty.
     bool is_empty() const
     {
-        return alist_.is_empty();
+        return ArrayList::is_empty();
     }
 
     /*
@@ -103,72 +131,53 @@ public:
     /// Pushes an element onto the heap.
     void push(const T& element)
     {
-        // TODO: get rid of the dependence on data[0] (MAX_ITEM = INT_MAX)
-        // ref: https://doc.rust-lang.org/src/alloc/collections/binary_heap/mod.rs.html#610
+        common::check_full(size_, MAX_CAPACITY);
 
-        /*
-        check_full(self->size, MAX_CAPACITY);
-
-        if (self->size == self->capacity) // need to expand capacity
+        // expand capacity if need
+        if (size_ == capacity_)
         {
-            expand_capacity(self);
+            expand_capacity();
         }
 
         int pos;
-        for (pos = ++self->size; self->data[pos / 2] < data; pos /= 2)
+        for (pos = size_++; pos != 0 && data_[pos / 2] < element; pos /= 2)
         {
-            self->data[pos] = self->data[pos / 2];
+            data_[pos] = data_[pos / 2];
         }
-        self->data[pos] = data;
-        */
+        data_[pos] = element;
     }
 
     /// Removes the greatest element from the heap and returns it.
     T pop()
     {
-        common::check_empty(alist_.size());
+        common::check_empty(size());
 
-        // TODO: get rid of the dependence on data[0] (MAX_ITEM = INT_MAX)
-        // ref: https://doc.rust-lang.org/src/alloc/collections/binary_heap/mod.rs.html#566
+        T item = std::move(data_[0]);
+        data_[0] = data_[size_ - 1];
+        size_--;
+        proc_down(0);
 
-        /*
-        check_empty(self->size);
-
-        MaxHeapItem max_item = self->data[1];
-        MaxHeapItem tmp = self->data[self->size--];
-
-        int parent, child;
-        for (parent = 1; parent * 2 <= self->size; parent = child)
-        {
-            child = parent * 2;
-            if ((child != self->size) && (self->data[child] < self->data[child + 1]))
-            {
-                child++;
-            }
-
-            if (tmp >= self->data[child])
-            {
-                break;
-            }
-            else
-            {
-                self->data[parent] = self->data[child];
-            }
-        }
-        self->data[parent] = tmp;
-
-        return max_item;
-        */
-
-        return T();
+        return item;
     }
 
     /// Remove all of the elements from the heap.
     BinaryHeap& clear()
     {
-        alist_.clear();
+        ArrayList::clear();
 
         return *this;
+    }
+
+    /*
+     * Print
+     */
+
+    /// Print the heap.
+    friend std::ostream& operator<<(std::ostream& os, const BinaryHeap& heap)
+    {
+        std::ostringstream oss;
+        oss << static_cast<const ArrayList&>(heap);
+        return os << "Heap" << oss.str().erase(0, 4);
     }
 };
 
