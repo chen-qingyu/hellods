@@ -32,13 +32,13 @@ public:
     }
 
     /// Get the number of elements of the container.
-    virtual int size() const
+    int size() const
     {
         return size_;
     }
 
     /// Check if the container is empty.
-    virtual bool is_empty() const
+    bool is_empty() const
     {
         return size_ == 0;
     }
