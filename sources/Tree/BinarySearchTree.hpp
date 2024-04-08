@@ -77,7 +77,7 @@ private:
 
     // Traverse the tree in specified order.
     template <typename F>
-    void traverse_node(Node* node, TraverseOption order, const F& p_trav) const
+    void traverse_node(Node* node, TraverseOption order, const F& action) const
     {
         if (node)
         {
@@ -85,25 +85,25 @@ private:
             {
                 case PreOrder:
                 {
-                    p_trav(node->data_);
-                    traverse_node(node->left_, PreOrder, p_trav);
-                    traverse_node(node->right_, PreOrder, p_trav);
+                    action(node->data_);
+                    traverse_node(node->left_, PreOrder, action);
+                    traverse_node(node->right_, PreOrder, action);
                     break;
                 }
 
                 case InOrder:
                 {
-                    traverse_node(node->left_, InOrder, p_trav);
-                    p_trav(node->data_);
-                    traverse_node(node->right_, InOrder, p_trav);
+                    traverse_node(node->left_, InOrder, action);
+                    action(node->data_);
+                    traverse_node(node->right_, InOrder, action);
                     break;
                 }
 
                 case PostOrder:
                 {
-                    traverse_node(node->left_, PostOrder, p_trav);
-                    traverse_node(node->right_, PostOrder, p_trav);
-                    p_trav(node->data_);
+                    traverse_node(node->left_, PostOrder, action);
+                    traverse_node(node->right_, PostOrder, action);
+                    action(node->data_);
                     break;
                 }
 
@@ -114,7 +114,7 @@ private:
                     while (!queue.is_empty())
                     {
                         node = queue.dequeue();
-                        p_trav(node->data_);
+                        action(node->data_);
                         if (node->left_)
                         {
                             queue.enqueue(node->left_);
@@ -302,9 +302,9 @@ public:
 
     /// Traverse the tree.
     template <typename F>
-    void traverse(TraverseOption order, const F& p_trav) const
+    void traverse(TraverseOption order, const F& action) const
     {
-        traverse_node(root_, order, p_trav);
+        traverse_node(root_, order, action);
     }
 
     /// Determine whether an element is in the tree.
