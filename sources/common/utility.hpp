@@ -8,13 +8,14 @@
 #ifndef UTILITY_HPP
 #define UTILITY_HPP
 
-#include <algorithm> // std::copy
-#include <climits>   // INT_MAX
-#include <cmath>     // std::abs
-#include <iostream>  // std::ostream
-#include <sstream>   // std::ostringstream
-#include <stdexcept> // std::runtime_error
-#include <utility>   // std::initializer_list std::move
+#include <algorithm>  // std::copy
+#include <climits>    // INT_MAX
+#include <cmath>      // std::abs
+#include <functional> // std::std::greater std::hash std::equal_to
+#include <iostream>   // std::ostream
+#include <sstream>    // std::ostringstream
+#include <stdexcept>  // std::runtime_error
+#include <utility>    // std::initializer_list std::move
 
 namespace hellods::common
 {
