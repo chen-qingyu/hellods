@@ -36,7 +36,7 @@ class ArrayList : public common::Container
     template <typename _>
     friend class ArrayStack;
 
-    template <typename _>
+    template <typename _, typename Cmp>
     friend class BinaryHeap;
 
 private:

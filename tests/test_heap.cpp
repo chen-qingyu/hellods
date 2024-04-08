@@ -73,4 +73,10 @@ TEST_CASE("BinaryHeap")
 {
     test<BinaryHeap<int>>();
     test<BinaryHeap<double>>();
+
+    BinaryHeap<int, std::less<int>> min_heap = {3, 2, 1};
+    REQUIRE(min_heap.peek() == 1);
+    REQUIRE(min_heap.pop() == 1);
+    REQUIRE(min_heap.pop() == 2);
+    REQUIRE(min_heap.pop() == 3);
 }

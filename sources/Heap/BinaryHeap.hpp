@@ -1,7 +1,7 @@
 /**
  * @file BinaryHeap.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Binary heap implemented by array. This is max-heap.
+ * @brief Binary heap implemented by array. Default is max-heap.
  * @date 2022.01.29
  *
  * @copyright Copyright (C) 2022
@@ -30,17 +30,17 @@
 namespace hellods
 {
 
-template <typename T>
+template <typename T, typename Cmp = std::greater<T>>
 class BinaryHeap : private ArrayList<T>
 {
 private:
     // Adjust an element: process down.
     void proc_down(int index)
     {
-        while (index * 2 + 1 < size_ && data_[index] < data_[index * 2 + 1] || index * 2 + 2 < size_ && data_[index] < data_[index * 2 + 2])
+        while (index * 2 + 1 < size_ && Cmp()(data_[index * 2 + 1], data_[index]) || index * 2 + 2 < size_ && Cmp()(data_[index * 2 + 2], data_[index]))
         {
             // if size is even then only have left node, short to avoid subscript out of bounds
-            bool is_left_max = (size_ % 2 == 0) || (data_[index * 2 + 1] > data_[index * 2 + 2]);
+            bool is_left_max = (size_ % 2 == 0) || Cmp()(data_[index * 2 + 1], data_[index * 2 + 2]);
             common::swap(data_[index], is_left_max ? data_[index * 2 + 1] : data_[index * 2 + 2]);
             index = index * 2 + (is_left_max ? 1 : 2);
         }
@@ -140,7 +140,7 @@ public:
         }
 
         int pos;
-        for (pos = size_++; pos != 0 && data_[pos / 2] < element; pos /= 2)
+        for (pos = size_++; pos != 0 && Cmp()(element, data_[pos / 2]); pos /= 2)
         {
             data_[pos] = data_[pos / 2];
         }
