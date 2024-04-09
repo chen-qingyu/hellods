@@ -64,7 +64,7 @@ private:
     // Find the position for key.
     int find_pos(const K& key) const
     {
-        int current_pos = std::abs(int(Hash()(key))) % capacity_;
+        int current_pos = Hash()(key) % capacity_;
         int new_pos = current_pos;
         int conflict_cnt = 0;
 
