@@ -337,7 +337,7 @@ public:
                     os << v2 << "(" << graph.distance(v1, v2) << ") ";
                 }
             }
-            os << ";\n";
+            os << "\n";
         }
         return os << ")";
     }
