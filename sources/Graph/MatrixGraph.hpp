@@ -36,13 +36,13 @@ template <bool Directed = true>
 class MatrixGraph : public common::Container
 {
 public:
-    /// Vertex.
+    /// Vertex type.
     using V = int;
 
-    /// Edge.
+    /// Edge type.
     using E = int;
 
-    /// A value indicating that this edge does not exist.
+    /// A value of edge type indicating that this edge does not exist.
     static const E NO_EDGE = INT_MAX;
 
 private:
@@ -62,7 +62,7 @@ private:
         }
     }
 
-    /// Depth-first search helper.
+    // Depth-first search helper.
     template <typename F>
     void dfs(const V& start, const F& action, std::vector<bool>& visited) const
     {
@@ -78,7 +78,7 @@ private:
         }
     }
 
-    /// Finds the vertex with the smallest distance in an unaccessed set of vertices.
+    // Finds the vertex with the smallest distance in an unaccessed set of vertices.
     V find_closest(std::vector<V>& dist, std::vector<bool>& visited) const
     {
         V min_v;
