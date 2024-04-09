@@ -1,7 +1,7 @@
 /**
  * @file MatrixGraph.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Graph implemented by adjacency matrix. This is weighted directed graph.
+ * @brief Graph implemented by adjacency matrix. Default is directed graph.
  * @date 2022.01.29
  *
  * @copyright Copyright (C) 2022
@@ -23,105 +23,326 @@
 #ifndef MATRIXGRAPH_HPP
 #define MATRIXGRAPH_HPP
 
-#include <stdbool.h> // bool
+#include "../common/Container.hpp"
+#include "../common/utility.hpp"
 
-/// 顶点的编号
-typedef int MatrixGraphVertex;
+#include "../Queue/ArrayQueue.hpp" // for breadth_first_search()
 
-/// 边的权重
-typedef int MatrixGraphEdge;
+namespace hellods
+{
 
-/// 加权有向图
-typedef struct MatrixGraph MatrixGraph;
+/// Graph implemented by adjacency matrix. Default is directed graph.
+template <bool Directed = true>
+class MatrixGraph : public common::Container
+{
+public:
+    /// Vertex.
+    using V = int;
 
-/**
- * @brief 创建一个空图（零个节点的加权有向图）
- *
- * @return 一个指向空图的指针
- */
-MatrixGraph* MatrixGraph_Create(void);
+    /// Edge.
+    using E = int;
 
-/**
- * @brief 销毁一个图
- *
- * @param self 一个指向待销毁图的指针
- */
-void MatrixGraph_Destroy(MatrixGraph* self);
+    /// A value indicating that this edge does not exist.
+    static const E NO_EDGE = INT_MAX;
 
-/**
- * @brief 设置图的顶点数量
- *
- * @param self 一个指向图的指针
- * @param vertex_number 顶点数量
- */
-void MatrixGraph_SetVertexNumber(MatrixGraph* self, int vertex_number);
+private:
+    // Adjacency matrix.
+    E** matrix_;
 
-/**
- * @brief 以权重 E 单向链接 V1 和 V2
- *
- * @param self 一个指向图的指针
- * @param V1 顶点1
- * @param V2 顶点2
- * @param E V1 到 V2 的权重
- */
-void MatrixGraph_Link(MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex V2, MatrixGraphEdge E);
+    // Free matrix memory.
+    void free_matrix()
+    {
+        if (matrix_ != nullptr)
+        {
+            for (int i = 0; i < size_; i++)
+            {
+                delete[] matrix_[i];
+            }
+            delete[] matrix_;
+        }
+    }
 
-/**
- * @brief 断开 V1 到 V2 的单向链接
- *
- * @param self 一个指向图的指针
- * @param V1 顶点1
- * @param V2 顶点2
- */
-void MatrixGraph_Unlink(MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex V2);
+    /// Depth-first search helper.
+    template <typename F>
+    void dfs(const V& start, const F& action, std::vector<bool>& visited) const
+    {
+        action(start);
+        visited[start] = true;
 
-/**
- * @brief 判断 V1 到 V2 是否有单向链接
- *
- * @param self 一个指向图的指针
- * @param V1 顶点1
- * @param V2 顶点2
- * @return 如果已链接则返回 true ，否则返回 false
- */
-bool MatrixGraph_IsAdjacent(const MatrixGraph* self, MatrixGraphVertex V1, MatrixGraphVertex V2);
+        for (V v = 0; v < size_; v++)
+        {
+            if (is_adjacent(start, v) && !visited[v])
+            {
+                dfs(v, action, visited);
+            }
+        }
+    }
 
-/**
- * @brief 深度优先遍历图
- *
- * @param self 一个指向图的指针
- * @param startV 遍历起始点
- * @param p_visit 一个对遍历到的每个顶点进行操作的函数的指针
- */
-void MatrixGraph_DFS(MatrixGraph* self, MatrixGraphVertex startV, void (*p_visit)(MatrixGraphVertex V));
+    /// Finds the vertex with the smallest distance in an unaccessed set of vertices.
+    V find_closest(std::vector<V>& dist, std::vector<bool>& visited) const
+    {
+        V min_v;
+        E min_dist = NO_EDGE;
 
-/**
- * @brief 广度优先遍历图
- *
- * @param self 一个指向图的指针
- * @param startV 遍历起始点
- * @param p_visit 一个对遍历到的每个顶点进行操作的函数的指针
- */
-void MatrixGraph_BFS(MatrixGraph* self, MatrixGraphVertex startV, void (*p_visit)(MatrixGraphVertex V));
+        for (V v = 0; v < size_; v++)
+        {
+            if (!visited[v] && dist[v] < min_dist)
+            {
+                min_dist = dist[v];
+                min_v = v;
+            }
+        }
 
-/**
- * @brief Dijkstra 算法遍历图
- *
- * @param self 一个指向图的指针
- * @param dist 距离数组
- * @param path 路径数组
- * @param startV 遍历起始点
- * @return 如果执行成功返回 true ，否则返回 false
- */
-bool MatrixGraph_Dijkstra(const MatrixGraph* self, MatrixGraphEdge dist[], MatrixGraphVertex path[], MatrixGraphVertex startV);
+        return min_dist < NO_EDGE ? min_v : -1;
+    }
 
-/**
- * @brief Floyd 算法遍历图
- *
- * @param self 一个指向图的指针
- * @param dist 距离数组
- * @param path 路径数组
- * @return 如果执行成功返回 true ，否则返回 false
- */
-bool MatrixGraph_Floyd(const MatrixGraph* self, MatrixGraphEdge** dist, MatrixGraphVertex** path);
+public:
+    /*
+     * Constructor / Destructor
+     */
+
+    /// Create an empty graph.
+    MatrixGraph()
+        : common::Container(0)
+        , matrix_(nullptr)
+    {
+    }
+
+    /// Create a graph with n vertices.
+    MatrixGraph(int n)
+        : MatrixGraph()
+    {
+        set_vertex_number(n);
+    }
+
+    /// Destroy the graph object.
+    ~MatrixGraph()
+    {
+        free_matrix();
+    }
+
+    /*
+     * Comparison
+     */
+
+    /// Check whether two graphs are equal.
+    bool operator==(const MatrixGraph& that) const
+    {
+        if (size() != that.size())
+        {
+            return false;
+        }
+
+        for (V v1 = 0; v1 < size_; v1++)
+        {
+            for (V v2 = 0; v2 < size_; v2++)
+            {
+                if (matrix_[v1][v2] != that.matrix_[v1][v2])
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /// Check whether two graphs are not equal.
+    bool operator!=(const MatrixGraph& that) const
+    {
+        return !(*this == that);
+    }
+
+    /*
+     * Examination
+     */
+
+    /// Return the distance from vertex `from` to vertex `to`.
+    E distance(const V& from, const V& to) const
+    {
+        common::check_bounds(from, 0, size_);
+        common::check_bounds(to, 0, size_);
+
+        return matrix_[from][to];
+    }
+
+    /// Determine if vertex `from` has a link to vertex `to`.
+    bool is_adjacent(const V& from, const V& to) const
+    {
+        common::check_bounds(from, 0, size_);
+        common::check_bounds(to, 0, size_);
+
+        return matrix_[from][to] != NO_EDGE;
+    }
+
+    /// Depth-first search graph.
+    template <typename F>
+    void depth_first_search(const V& start, const F& action) const
+    {
+        common::check_bounds(start, 0, size_);
+
+        auto visited = std::vector<bool>(size_, false);
+
+        dfs(start, action, visited);
+    }
+
+    /// Breadth-first search graph.
+    template <typename F>
+    void breadth_first_search(const V& start, const F& action) const
+    {
+        common::check_bounds(start, 0, size_);
+
+        auto visited = std::vector<bool>(size_, false);
+
+        action(start);
+        visited[start] = true;
+
+        ArrayQueue<V> queue;
+        queue.enqueue(start);
+        while (!queue.is_empty())
+        {
+            V v1 = queue.dequeue();
+            for (V v2 = 0; v2 < size_; v2++)
+            {
+                if (!visited[v2] && is_adjacent(v1, v2))
+                {
+                    action(v2);
+                    visited[v2] = true;
+                    queue.enqueue(v2);
+                }
+            }
+        }
+    }
+
+    /// The Dijkstra algorithm on the graph. Return distance and path.
+    std::pair<std::vector<V>, std::vector<V>> dijkstra(const V& start) const
+    {
+        common::check_bounds(start, 0, size_);
+
+        // init state
+        auto visited = std::vector<bool>(size_, false);
+        std::vector<V> dist(size_);
+        std::vector<V> path(size_);
+        for (V v = 0; v < size_; v++)
+        {
+            dist[v] = matrix_[start][v];
+            path[v] = dist[v] < NO_EDGE ? start : -1;
+        }
+
+        dist[start] = 0;
+        visited[start] = true;
+
+        while (true)
+        {
+            V v1 = find_closest(dist, visited);
+            if (v1 == -1)
+            {
+                break;
+            }
+            visited[v1] = true;
+            for (V v2 = 0; v2 < size_; v2++)
+            {
+                if (!visited[v2] && matrix_[v1][v2] < NO_EDGE)
+                {
+                    if (matrix_[v1][v2] < 0)
+                    {
+                        throw std::runtime_error("Error: Cannot apply Dijkstra algorithm with a negative weighted egde.");
+                    }
+                    if (dist[v1] + matrix_[v1][v2] < dist[v2])
+                    {
+                        dist[v2] = dist[v1] + matrix_[v1][v2];
+                        path[v2] = v1;
+                    }
+                }
+            }
+        }
+
+        return {dist, path};
+    }
+
+    /*
+     * Manipulation
+     */
+
+    /// Set the number of vertices in the graph.
+    void set_vertex_number(int n)
+    {
+        free_matrix();
+
+        size_ = n;
+
+        matrix_ = new E*[n];
+        for (int i = 0; i < n; i++)
+        {
+            matrix_[i] = new E[n];
+        }
+
+        for (V v1 = 0; v1 < n; v1++)
+        {
+            for (V v2 = 0; v2 < n; v2++)
+            {
+                matrix_[v1][v2] = NO_EDGE;
+            }
+        }
+    }
+
+    /// Link vertex `from` and vertex `to` with `weight`.
+    void link(const V& from, const V& to, const E& weight)
+    {
+        matrix_[from][to] = weight;
+        if constexpr (Directed == false)
+        {
+            matrix_[to][from] = weight;
+        }
+    }
+
+    /// Disconnect the link from vertex `from` to vertex `to`.
+    void unlink(const V& from, const V& to)
+    {
+        matrix_[from][to] = NO_EDGE;
+        if constexpr (Directed == false)
+        {
+            matrix_[to][from] = NO_EDGE;
+        }
+    }
+
+    /// Clear this graph.
+    MatrixGraph& clear()
+    {
+        if (size_ != 0)
+        {
+            free_matrix();
+            size_ = 0;
+            matrix_ = nullptr;
+        }
+
+        return *this;
+    }
+
+    /*
+     * Print
+     */
+
+    /// Print the graph.
+    friend std::ostream& operator<<(std::ostream& os, const MatrixGraph& graph)
+    {
+        os << "Graph(\n";
+        for (V v1 = 0; v1 < graph.size(); v1++)
+        {
+            os << v1 << " -> ";
+            for (V v2 = 0; v2 < graph.size(); v2++)
+            {
+                if (graph.is_adjacent(v1, v2))
+                {
+                    os << v2 << "(" << graph.distance(v1, v2) << ") ";
+                }
+            }
+            os << ";\n";
+        }
+        return os << ")";
+    }
+};
+
+} // namespace hellods
 
 #endif // MATRIXGRAPH_HPP
