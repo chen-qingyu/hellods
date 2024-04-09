@@ -37,24 +37,22 @@ void test()
     REQUIRE(some.is_empty() == false);
 
     std::ostringstream buf;
+    auto action = [&](const auto& e)
+    { buf << e << " "; };
 
-    some.traverse(Tree::PreOrder, [&](const auto& e)
-                  { buf << e << " "; });
+    some.traverse(Tree::PreOrder, action);
     REQUIRE(buf.str() == "3 1 2 5 4 ");
     buf.str("");
 
-    some.traverse(Tree::InOrder, [&](const auto& e)
-                  { buf << e << " "; });
+    some.traverse(Tree::InOrder, action);
     REQUIRE(buf.str() == "1 2 3 4 5 ");
     buf.str("");
 
-    some.traverse(Tree::PostOrder, [&](const auto& e)
-                  { buf << e << " "; });
+    some.traverse(Tree::PostOrder, action);
     REQUIRE(buf.str() == "2 1 4 5 3 ");
     buf.str("");
 
-    some.traverse(Tree::LevelOrder, [&](const auto& e)
-                  { buf << e << " "; });
+    some.traverse(Tree::LevelOrder, action);
     REQUIRE(buf.str() == "3 1 5 2 4 ");
     buf.str("");
 
