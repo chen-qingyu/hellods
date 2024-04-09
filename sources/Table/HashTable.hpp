@@ -50,7 +50,10 @@ private:
     };
 
     // Initial capacity for hash table.
-    static const int INIT_TABLE_CAPACITY = 7; // prime number
+    static const int INIT_PRIME_CAPACITY = 7;
+
+    // Maximum capacity for hash table.
+    static const int MAX_PRIME_CAPACITY = 2147483629; // maximum prime number not exceeding INT_MAX
 
     // Available capacity.
     int capacity_;
@@ -91,14 +94,21 @@ private:
     // Calculate the next prime that > n.
     static int next_prime(int n)
     {
-        if (n < INIT_TABLE_CAPACITY)
+        if (n < INIT_PRIME_CAPACITY)
         {
-            return INIT_TABLE_CAPACITY;
+            return INIT_PRIME_CAPACITY;
         }
 
-        while (n < INT_MAX)
+        if (n >= MAX_PRIME_CAPACITY)
         {
-            n++;
+            return MAX_PRIME_CAPACITY;
+        }
+
+        // if n is even, let it odd, because prime > 2 is odd
+        n |= 1;
+        while (n < MAX_PRIME_CAPACITY)
+        {
+            n += 2;
             bool is_prime = true;
             for (int i = 2; i * i <= n; i++)
             {
@@ -157,7 +167,7 @@ public:
     /// Create an empty table.
     HashTable()
         : common::Container(0)
-        , capacity_(INIT_TABLE_CAPACITY)
+        , capacity_(INIT_PRIME_CAPACITY)
         , data_(new Pair[capacity_])
     {
         for (int i = 0; i < capacity_; i++)
@@ -274,6 +284,8 @@ public:
     /// Insert a new key-value pair into the table. Return whether the pair was newly inserted.
     bool insert(const K& key, const V& value)
     {
+        common::check_full(size_ * 2, MAX_PRIME_CAPACITY);
+
         int pos = find_pos(key);
 
         if (data_[pos].full_)
