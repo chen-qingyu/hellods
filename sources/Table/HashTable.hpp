@@ -284,7 +284,7 @@ public:
     /// Insert a new key-value pair into the table. Return whether the pair was newly inserted.
     bool insert(const K& key, const V& value)
     {
-        common::check_full(size_ * 2, MAX_PRIME_CAPACITY);
+        common::check_full(size_, MAX_PRIME_CAPACITY >> 1);
 
         int pos = find_pos(key);
 
@@ -300,7 +300,7 @@ public:
         size_++;
 
         // expand capacity when the loading factor is too large (> 0.5)
-        if (size_ * 2 > capacity_)
+        if (size_ > (capacity_ >> 1))
         {
             expand_capacity();
         }
