@@ -1,12 +1,12 @@
 # HelloDS
 
-_C++ 语言写的标准的基础数据结构_
+_C++ 模板实现的完整、通用的基础数据结构_
 
 ### 1. 基本属性
 
 - 名称：HelloDS，意为 **Hello** **D**ata **S**tructure。
 - 语言：C++，要求 C++17 。
-- 目标：实现标准的基础数据结构。
+- 目标：实现完整、通用的基础数据结构。
 - 模块：Deque, Graph, Heap, List, Queue, Stack, Table, Tree
 - 简洁：Stay simple, stay young. 在保证健壮的前提下，尽量简洁，便于维护和阅读。
 - 健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查。
