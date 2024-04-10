@@ -215,7 +215,7 @@ public:
     }
 
     /// The Dijkstra algorithm on the graph. Return distance and path.
-    std::pair<std::vector<V>, std::vector<V>> dijkstra(const V& start) const
+    std::pair<std::vector<E>, std::vector<V>> dijkstra(const V& start) const
     {
         common::check_bounds(start, 0, size_);
 
