@@ -324,7 +324,7 @@ public:
             {
                 node->link_left(insert_node(node->left_, element));
             }
-            else if (element > node->data_)
+            else if (node->data_ < element)
             {
                 node->link_right(insert_node(node->right_, element));
             }
@@ -356,7 +356,7 @@ public:
             {
                 node->link_left(remove_node(node->left_, element));
             }
-            else if (element > node->data_)
+            else if (node->data_ < element)
             {
                 node->link_right(remove_node(node->right_, element));
             }
@@ -513,7 +513,7 @@ public:
         Node* current = root_;
         while (current)
         {
-            if (element > current->data_)
+            if (current->data_ < element)
             {
                 current = current->right_;
             }
