@@ -250,7 +250,7 @@ public:
     /// Return the const reference of value for key if key is in the table, else throw exception.
     const V& operator[](const K& key) const
     {
-        return (const_cast<HashTable&>(*this))[key];
+        return const_cast<HashTable&>(*this)[key];
     }
 
     /*

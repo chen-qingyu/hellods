@@ -127,8 +127,7 @@ public:
     /// Return the const reference to element at the specified position in the list.
     const T& operator[](int index) const
     {
-        common::check_bounds(index, 0, size_);
-        return data_[index];
+        return const_cast<ArrayList&>(*this)[index];
     }
 
     /*

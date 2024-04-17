@@ -68,20 +68,6 @@ private:
         header_->succ_ = nullptr;
     }
 
-    // Access helper.
-    T& access(int index)
-    {
-        common::check_bounds(index, 0, size_);
-
-        auto current = header_->succ_;
-        for (int i = 0; i < index; ++i)
-        {
-            current = current->succ_;
-        }
-
-        return current->data_;
-    }
-
 public:
     /*
      * Constructor / Destructor
@@ -149,13 +135,21 @@ public:
     /// Return the reference to the element at the specified position in the list.
     T& operator[](int index)
     {
-        return access(index);
+        common::check_bounds(index, 0, size_);
+
+        auto current = header_->succ_;
+        for (int i = 0; i < index; ++i)
+        {
+            current = current->succ_;
+        }
+
+        return current->data_;
     }
 
     /// Return the const reference to element at the specified position in the list.
     const T& operator[](int index) const
     {
-        return access(index);
+        return const_cast<SinglyLinkedList&>(*this)[index];
     }
 
     /*

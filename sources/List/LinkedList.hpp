@@ -93,40 +93,6 @@ private:
         p_latest_ = header_;
     }
 
-    // Access helper. list[index] for index in 0..size() will be O(1) on each access.
-    T& access(int index)
-    {
-        common::check_bounds(index, 0, size_);
-
-        // too far from the last accessed element
-        if (std::abs(index - latest_) > size_ / 2)
-        {
-            // closer to the header or trailer
-            p_latest_ = (index < latest_) ? header_->succ_ : trailer_->pred_;
-            latest_ = (index < latest_) ? 0 : size_ - 1;
-        }
-
-        if (index < latest_)
-        {
-            while (index < latest_)
-            {
-                latest_--;
-                p_latest_ = p_latest_->pred_;
-            }
-        }
-        else if (index > latest_)
-        {
-            while (index > latest_)
-            {
-                latest_++;
-                p_latest_ = p_latest_->succ_;
-            }
-        }
-        // else the element accessed this time is the same as the last time
-
-        return p_latest_->data_;
-    }
-
 public:
     /*
      * Constructor / Destructor
@@ -195,16 +161,44 @@ public:
      * Access
      */
 
-    /// Return the reference to the element at the specified position in the list.
+    /// Return the reference to the element at the specified position in the list. list[index] for index in 0..size() will be O(1) on each access.
     T& operator[](int index)
     {
-        return access(index);
+        common::check_bounds(index, 0, size_);
+
+        // too far from the last accessed element
+        if (std::abs(index - latest_) > size_ / 2)
+        {
+            // closer to the header or trailer
+            p_latest_ = (index < latest_) ? header_->succ_ : trailer_->pred_;
+            latest_ = (index < latest_) ? 0 : size_ - 1;
+        }
+
+        if (index < latest_)
+        {
+            while (index < latest_)
+            {
+                latest_--;
+                p_latest_ = p_latest_->pred_;
+            }
+        }
+        else if (index > latest_)
+        {
+            while (index > latest_)
+            {
+                latest_++;
+                p_latest_ = p_latest_->succ_;
+            }
+        }
+        // else the element accessed this time is the same as the last time
+
+        return p_latest_->data_;
     }
 
-    /// Return the const reference to element at the specified position in the list.
+    /// Return the const reference to element at the specified position in the list. list[index] for index in 0..size() will be O(1) on each access.
     const T& operator[](int index) const
     {
-        return access(index);
+        return const_cast<LinkedList&>(*this)[index];
     }
 
     /*
