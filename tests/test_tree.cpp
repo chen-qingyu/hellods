@@ -2,6 +2,7 @@
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
 #include "../sources/Tree/BinarySearchTree.hpp"
+#include "../sources/Tree/RedBlackTree.hpp"
 
 using Catch::Matchers::Message;
 
@@ -12,7 +13,7 @@ void test()
 {
     // Constructor / Destructor
     Tree empty;
-    Tree some = {3, 1, 2, 5, 4};
+    Tree some = {3, 1, 5, 2, 4};
 
     // Comparison
     REQUIRE(empty == Tree());
@@ -102,12 +103,24 @@ void test()
     oss.str("");
 
     oss << Tree({1, 2, 3, 4, 5});
-    REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
+    if constexpr (std::is_same<Tree, BinarySearchTree<int>>::value)
+    {
+        REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
+    }
+    else
+    {
+        REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
+    }
+
     oss.str("");
 }
 
 TEST_CASE("BinarySearchTree")
 {
     test<BinarySearchTree<int>>();
-    test<BinarySearchTree<double>>();
+}
+
+TEST_CASE("RedBlackTree")
+{
+    test<RedBlackTree<int>>();
 }

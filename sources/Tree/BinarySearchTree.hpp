@@ -37,7 +37,7 @@ namespace hellods
 template <typename T>
 class BinarySearchTree : public common::Container
 {
-private:
+protected:
     // Binary search tree node.
     struct Node
     {
