@@ -372,6 +372,10 @@ public:
                 {
                     Node* tmp = node;
                     node = node->left_ ? node->left_ : node->right_;
+                    if (node)
+                    {
+                        node->parent_ = nullptr;
+                    }
                     delete tmp;
                     size_--;
                 }
@@ -552,10 +556,6 @@ public:
     {
         int old_size = size_;
         root_ = remove_node(root_, element);
-        if (root_)
-        {
-            root_->parent_ = nullptr;
-        }
         return old_size != size_;
     }
 
