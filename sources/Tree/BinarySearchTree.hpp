@@ -26,8 +26,6 @@
 #include "../common/Container.hpp"
 #include "../common/utility.hpp"
 
-#include <set> // for operator==()
-
 #include "../Queue/ArrayQueue.hpp" // for traverse()
 
 namespace hellods
@@ -44,6 +42,9 @@ protected:
         // Data stored in the node.
         T data_;
 
+        // Pointer to the parent.
+        Node* parent_;
+
         // Pointer to the left child.
         Node* left_;
 
@@ -51,11 +52,185 @@ protected:
         Node* right_;
 
         // Create a node with given element.
-        Node(const T& data, Node* left = nullptr, Node* right = nullptr)
+        Node(const T& data, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr)
             : data_(data)
+            , parent_(parent)
             , left_(left)
             , right_(right)
         {
+        }
+
+        // Link left child.
+        void link_left(Node* child)
+        {
+            left_ = child;
+            if (child != nullptr)
+            {
+                child->parent_ = this;
+            }
+        }
+
+        // Link right child.
+        void link_right(Node* child)
+        {
+            right_ = child;
+            if (child != nullptr)
+            {
+                child->parent_ = this;
+            }
+        }
+    };
+
+public:
+    /// Tree iterator class.
+    ///
+    /// Walk the tree in ascending order. This means that begin() is the smallest element.
+    ///
+    /// Because the internal elements of the tree have a fixed order,
+    /// thus the iterator of the tree only supports access and does not support modification.
+    class Iterator
+    {
+        friend class BinarySearchTree;
+
+    private:
+        // Current node pointer.
+        Node* current_;
+
+        // Constructor.
+        Iterator(Node* current)
+            : current_(current)
+        {
+        }
+
+        // Iterator to next ascending node.
+        void next()
+        {
+            if (current_->right_) // have right sub tree
+            {
+                current_ = current_->right_;
+                while (current_->left_) // find min in right sub tree
+                {
+                    current_ = current_->left_;
+                }
+            }
+            else // back to the next ascending node
+            {
+                while (current_->parent_ && current_->parent_->right_ == current_)
+                {
+                    current_ = current_->parent_;
+                }
+                current_ = current_->parent_;
+            }
+        }
+
+        // Iterator to previous ascending node.
+        void previous()
+        {
+            if (current_->left_) // have left sub tree
+            {
+                current_ = current_->left_;
+                while (current_->right_) // find max in left sub tree
+                {
+                    current_ = current_->right_;
+                }
+            }
+            else // back to the previous ascending node
+            {
+                while (current_->parent_ && current_->parent_->left_ == current_)
+                {
+                    current_ = current_->parent_;
+                }
+                current_ = current_->parent_;
+            }
+        }
+
+    public:
+        /**
+         * @brief Dereference.
+         *
+         * @return reference of the data
+         */
+        const T& operator*() const
+        {
+            return current_->data_;
+        }
+
+        /**
+         * @brief Get current pointer.
+         *
+         * @return current pointer
+         */
+        const T* operator->() const
+        {
+            return &current_->data_;
+        }
+
+        /**
+         * @brief Check if two iterators are same.
+         *
+         * @param that another iterator
+         * @return ture if two iterators are same, false otherwise.
+         */
+        bool operator==(const Iterator& that) const
+        {
+            return current_ == that.current_;
+        }
+
+        /**
+         * @brief Check if two iterators are different.
+         *
+         * @param that another iterator
+         * @return ture if two iterators are different, false otherwise.
+         */
+        bool operator!=(const Iterator& that) const
+        {
+            return !(*this == that);
+        }
+
+        /**
+         * @brief Increment the iterator: ++it.
+         *
+         * @return reference of this iterator that point to next data
+         */
+        Iterator& operator++()
+        {
+            next();
+            return *this;
+        }
+
+        /**
+         * @brief Increment the iterator: it++.
+         *
+         * @return const reference of this iterator that point to current data
+         */
+        Iterator operator++(int)
+        {
+            auto tmp = *this;
+            next();
+            return tmp;
+        }
+
+        /**
+         * @brief Decrement the iterator: --it.
+         *
+         * @return reference of this iterator that point to previous data
+         */
+        Iterator& operator--()
+        {
+            previous();
+            return *this;
+        }
+
+        /**
+         * @brief Decrement the iterator: it--.
+         *
+         * @return const reference of this iterator that point to current data
+         */
+        Iterator operator--(int)
+        {
+            auto tmp = *this;
+            previous();
+            return tmp;
         }
     };
 
@@ -147,11 +322,11 @@ protected:
         {
             if (element < node->data_)
             {
-                node->left_ = insert_node(node->left_, element);
+                node->link_left(insert_node(node->left_, element));
             }
             else if (element > node->data_)
             {
-                node->right_ = insert_node(node->right_, element);
+                node->link_right(insert_node(node->right_, element));
             }
         }
 
@@ -161,10 +336,14 @@ protected:
     // Find subtree minimum node.
     Node* find_min(Node* node) const
     {
-        while (node->left_) // node is not null
+        if (node)
         {
-            node = node->left_;
+            while (node->left_)
+            {
+                node = node->left_;
+            }
         }
+
         return node;
     }
 
@@ -175,11 +354,11 @@ protected:
         {
             if (element < node->data_)
             {
-                node->left_ = remove_node(node->left_, element);
+                node->link_left(remove_node(node->left_, element));
             }
             else if (element > node->data_)
             {
-                node->right_ = remove_node(node->right_, element);
+                node->link_right(remove_node(node->right_, element));
             }
             else // element == node->data_
             {
@@ -187,7 +366,7 @@ protected:
                 {
                     Node* min = find_min(node->right_);
                     node->data_ = min->data_;
-                    node->right_ = remove_node(node->right_, min->data_);
+                    node->link_right(remove_node(node->right_, min->data_));
                 }
                 else
                 {
@@ -248,14 +427,15 @@ public:
             return false;
         }
 
-        // count elements in each tree
-        std::set<T> this_set, that_set;
-        traverse_node(root_, InOrder, [&](const T& e)
-                      { this_set.insert(e); });
-        traverse_node(that.root_, InOrder, [&](const T& e)
-                      { that_set.insert(e); });
+        for (auto this_it = begin(), that_it = that.begin(); this_it != end(); ++this_it, ++that_it)
+        {
+            if (*this_it != *that_it)
+            {
+                return false;
+            }
+        }
 
-        return this_set == that_set;
+        return true;
     }
 
     /// Check whether two trees are not equal.
@@ -285,6 +465,26 @@ public:
             current = current->right_;
         }
         return current->data_;
+    }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the tree.
+    ///
+    /// If the tree is empty, the returned iterator will be equal to end().
+    Iterator begin() const
+    {
+        return Iterator(find_min(root_));
+    }
+
+    /// Return an iterator to the element following the last element of the tree.
+    ///
+    /// This element acts as a placeholder, attempting to access it results in undefined behavior.
+    Iterator end() const
+    {
+        return Iterator(nullptr);
     }
 
     /*
@@ -352,6 +552,10 @@ public:
     {
         int old_size = size_;
         root_ = remove_node(root_, element);
+        if (root_)
+        {
+            root_->parent_ = nullptr;
+        }
         return old_size != size_;
     }
 
