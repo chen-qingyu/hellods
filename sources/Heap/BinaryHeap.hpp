@@ -25,7 +25,7 @@
 
 #include "../List/ArrayList.hpp"
 
-#include <map> // for operator==()
+#include "../Table/HashTable.hpp" // for operator==()
 
 namespace hellods
 {
@@ -81,11 +81,11 @@ public:
         }
 
         // count elements in each heap
-        std::map<T, int> this_map, that_map;
+        HashTable<T, int> this_map, that_map;
         for (int i = 0; i < size(); i++)
         {
-            this_map[data_[i]] = this_map.find(data_[i]) == this_map.end() ? 1 : this_map[data_[i]] + 1;
-            that_map[that.data_[i]] = that_map.find(that.data_[i]) == that_map.end() ? 1 : that_map[that.data_[i]] + 1;
+            this_map.contains(data_[i]) ? ++this_map[data_[i]] : this_map.insert(data_[i], 1);
+            that_map.contains(that.data_[i]) ? ++that_map[that.data_[i]] : that_map.insert(that.data_[i], 1);
         }
 
         return this_map == that_map;
