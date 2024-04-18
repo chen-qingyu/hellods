@@ -115,7 +115,7 @@ public:
             }
             else // back to the next ascending node
             {
-                while (current_->parent_ && current_->parent_->right_ == current_)
+                while (current_->parent_->right_ == current_)
                 {
                     current_ = current_->parent_;
                 }
@@ -136,7 +136,7 @@ public:
             }
             else // back to the previous ascending node
             {
-                while (current_->parent_ && current_->parent_->left_ == current_)
+                while (current_->parent_->left_ == current_)
                 {
                     current_ = current_->parent_;
                 }
@@ -236,6 +236,9 @@ public:
 
     // Pointer to the root.
     Node* root_;
+
+    // Virtual maximum node.
+    Node* end_;
 
     // Destroy the subtree rooted at that node recursively.
     void destroy(Node* node)
@@ -344,7 +347,7 @@ public:
             }
         }
 
-        return node;
+        return node == nullptr ? end_ : node;
     }
 
     // Remove node recursively.
@@ -372,10 +375,6 @@ public:
                 {
                     Node* tmp = node;
                     node = node->left_ ? node->left_ : node->right_;
-                    if (node)
-                    {
-                        node->parent_ = nullptr;
-                    }
                     delete tmp;
                     size_--;
                 }
@@ -400,6 +399,7 @@ public:
     BinarySearchTree()
         : common::Container(0)
         , root_(nullptr)
+        , end_(new Node(T()))
     {
     }
 
@@ -416,7 +416,7 @@ public:
     /// Destroy the tree object.
     ~BinarySearchTree()
     {
-        destroy(root_);
+        destroy(end_);
     }
 
     /*
@@ -488,7 +488,7 @@ public:
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
     Iterator end() const
     {
-        return Iterator(nullptr);
+        return Iterator(end_);
     }
 
     /*
@@ -548,6 +548,7 @@ public:
     {
         int old_size = size_;
         root_ = insert_node(root_, element);
+        end_->link_left(root_);
         return old_size != size_;
     }
 
@@ -556,6 +557,7 @@ public:
     {
         int old_size = size_;
         root_ = remove_node(root_, element);
+        end_->link_left(root_);
         return old_size != size_;
     }
 
@@ -567,6 +569,7 @@ public:
             size_ = 0;
             destroy(root_);
             root_ = nullptr;
+            end_->link_left(root_);
         }
 
         return *this;
