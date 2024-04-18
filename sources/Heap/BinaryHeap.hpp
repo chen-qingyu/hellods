@@ -75,12 +75,7 @@ public:
     /// Check whether two heaps are equal.
     bool operator==(const BinaryHeap& that) const
     {
-        if (size() != that.size())
-        {
-            return false;
-        }
-
-        if (!is_empty() && peek() != that.peek())
+        if (size() != that.size() || (!is_empty() && peek() != that.peek()))
         {
             return false;
         }
