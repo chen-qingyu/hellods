@@ -80,6 +80,11 @@ public:
             return false;
         }
 
+        if (!is_empty() && peek() != that.peek())
+        {
+            return false;
+        }
+
         // count elements in each heap
         HashTable<T, int> this_map, that_map;
         for (int i = 0; i < size(); i++)
