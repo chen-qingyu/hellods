@@ -362,6 +362,13 @@ public:
      * Examination
      */
 
+    /// Find the first occurrence of the key in the table.
+    Iterator find(const K& key) const
+    {
+        return std::find_if(begin(), end(), [&](const auto& pair)
+                            { return pair.first == key; });
+    }
+
     /// Determine whether a key is in the table.
     bool contains(const K& key) const
     {

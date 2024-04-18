@@ -63,6 +63,10 @@ void test()
     REQUIRE(some.size() == 3);
     REQUIRE(some.is_empty() == false);
 
+    REQUIRE(empty.find(1) == empty.end());
+    REQUIRE(*some.find(1) == std::pair{1, "one"});
+    REQUIRE(some.find(4) == some.end());
+
     REQUIRE(some.contains(1) == true);
     REQUIRE(some.contains(0) == false);
     REQUIRE(empty.contains(1) == false);
