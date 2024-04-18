@@ -357,8 +357,8 @@ public:
     /// Find the first occurrence of the key in the table.
     Iterator find(const K& key) const
     {
-        return std::find_if(begin(), end(), [&](const auto& pair)
-                            { return pair.first == key; });
+        int pos = find_pos(key);
+        return data_[pos].full_ ? Iterator(pos, capacity_, data_) : end();
     }
 
     /// Determine whether a key is in the table.
