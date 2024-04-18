@@ -53,12 +53,11 @@ void test()
     REQUIRE(*it == std::pair{1, "one"});
     REQUIRE(*++it == std::pair{2, "two"});
     REQUIRE(*++it == std::pair{3, "three"});
+    REQUIRE(++it == some.end());
+    REQUIRE(*--it == std::pair{3, "three"});
     REQUIRE(*--it == std::pair{2, "two"});
     REQUIRE(*--it == std::pair{1, "one"});
     REQUIRE(it == some.begin());
-    REQUIRE(*++it == std::pair{2, "two"});
-    REQUIRE(*++it == std::pair{3, "three"});
-    REQUIRE(++it == some.end());
 
     // Examination
     REQUIRE(empty.size() == 0);

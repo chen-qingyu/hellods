@@ -31,26 +31,33 @@ void test()
     REQUIRE_THROWS_MATCHES(empty.max(), std::runtime_error, Message("Error: The container is empty."));
 
     // Iterator
-    REQUIRE(empty.begin() == empty.end()); // empty
+    REQUIRE(empty.begin() == empty.end());
 
-    int i = 1; // for
+    int i = 1;
     for (auto it = some.begin(); it != some.end(); ++it)
     {
         REQUIRE(*it == i++);
     }
 
-    auto it = some.begin();
-    REQUIRE(*++it == 2);
-    REQUIRE(*++it == 3);
-    REQUIRE(*--it == 2);
-    REQUIRE(*--it == 1);
-    REQUIRE(it == some.begin());
-
-    i = 1; // for in
+    i = 1;
     for (const auto& e : some)
     {
         REQUIRE(e == i++);
     }
+
+    auto it = some.begin();
+    REQUIRE(*it == 1);
+    REQUIRE(*++it == 2);
+    REQUIRE(*++it == 3);
+    REQUIRE(*++it == 4);
+    REQUIRE(*++it == 5);
+    REQUIRE(++it == some.end());
+    REQUIRE(*--it == 5);
+    REQUIRE(*--it == 4);
+    REQUIRE(*--it == 3);
+    REQUIRE(*--it == 2);
+    REQUIRE(*--it == 1);
+    REQUIRE(it == some.begin());
 
     // Examination
     REQUIRE(empty.size() == 0);
