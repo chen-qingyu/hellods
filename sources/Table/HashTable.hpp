@@ -39,16 +39,18 @@ private:
     // Hash table pair.
     struct Pair
     {
-        // Key of the key-value pair.
-        K key_;
-
-        // Value of the key-value pair.
-        V value_;
+        // The pair of the key-value.
+        std::pair<const K, V> pair_;
 
         // State of the key-value pair.
         bool full_;
+
+        // For convenient.
+        const K& key_ = pair_.first;
+        V& value_ = pair_.second;
     };
 
+private:
     // Initial capacity for hash table.
     static const int INIT_PRIME_CAPACITY = 7;
 
@@ -61,6 +63,89 @@ private:
     // Pointer to the pairs.
     Pair* data_;
 
+public:
+    /// Table iterator class.
+    ///
+    /// Walk the table in random order.
+    ///
+    /// Because the internal keys of the table have a fixed position,
+    /// thus the iterator of the table does not support modification for key.
+    class Iterator
+    {
+        friend class HashTable;
+
+    private:
+        Iterator(int index, int capacity, Pair* data)
+            : index_(index)
+            , table_capacity_(capacity)
+            , table_data_(data)
+        {
+            while (index_ < table_capacity_ && !table_data_[index_].full_)
+            {
+                ++index_;
+            }
+        }
+
+    public:
+        bool operator==(const Iterator& that) const
+        {
+            return index_ == that.index_;
+        }
+
+        bool operator!=(const Iterator& that) const
+        {
+            return !(*this == that);
+        }
+
+        std::pair<const K, V>& operator*() const
+        {
+            return table_data_[index_].pair_;
+        }
+
+        std::pair<const K, V>* operator->() const
+        {
+            return &(operator*());
+        }
+
+        Iterator& operator++()
+        {
+            while (++index_ < table_capacity_ && !table_data_[index_].full_)
+            {
+            }
+            return *this;
+        }
+
+        Iterator operator++(int)
+        {
+            Iterator it = *this;
+            ++(*this);
+            return it;
+        }
+
+        Iterator& operator--()
+        {
+            while (--index_ >= 0 && !table_data_[index_].full_)
+            {
+            }
+            return *this;
+        }
+
+        Iterator operator--(int)
+        {
+            Iterator it = *this;
+            --(*this);
+            return it;
+        }
+
+    private:
+        // Current index.
+        int index_;
+
+        int table_capacity_;
+        Pair* table_data_;
+    };
+
+private:
     // Find the position for key.
     int find_pos(const K& key) const
     {
@@ -177,7 +262,7 @@ public:
     }
 
     /// Create a table based on the given initializer list.
-    HashTable(const std::initializer_list<std::pair<K, V>>& il)
+    HashTable(const std::initializer_list<std::pair<const K, V>>& il)
         : HashTable()
     {
         for (auto it = il.begin(); it != il.end(); ++it)
@@ -254,6 +339,26 @@ public:
     }
 
     /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the table.
+    ///
+    /// If the table is empty, the returned iterator will be equal to end().
+    Iterator begin() const
+    {
+        return Iterator(0, capacity_, data_);
+    }
+
+    /// Return an iterator to the element following the last element of the table.
+    ///
+    /// This element acts as a placeholder, attempting to access it results in undefined behavior.
+    Iterator end() const
+    {
+        return Iterator(capacity_, capacity_, data_);
+    }
+
+    /*
      * Examination
      */
 
@@ -294,7 +399,7 @@ public:
         }
 
         data_[pos].full_ = true;
-        data_[pos].key_ = key;
+        const_cast<K&>(data_[pos].key_) = key;
         data_[pos].value_ = value;
 
         size_++;

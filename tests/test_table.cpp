@@ -30,6 +30,32 @@ void test()
     REQUIRE_THROWS_MATCHES(some[4], std::runtime_error, Message("Error: The key-value pair does not exist."));
     REQUIRE_THROWS_MATCHES(empty[1], std::runtime_error, Message("Error: The key-value pair does not exist."));
 
+    // Iterator
+    REQUIRE(empty.begin() == empty.end()); // empty
+
+    int i = 1; // for
+    for (auto it = some.begin(); it != some.end(); ++it)
+    {
+        REQUIRE(it->first == i++);
+    }
+
+    auto it = some.begin();
+    REQUIRE(*it == std::pair{1, "one"});
+    REQUIRE(*++it == std::pair{2, "two"});
+    REQUIRE(*++it == std::pair{3, "three"});
+    REQUIRE(*--it == std::pair{2, "two"});
+    REQUIRE(*--it == std::pair{1, "one"});
+    REQUIRE(it == some.begin());
+    REQUIRE(*++it == std::pair{2, "two"});
+    REQUIRE(*++it == std::pair{3, "three"});
+    REQUIRE(++it == some.end());
+
+    i = 1; // for in
+    for (const auto& e : some)
+    {
+        REQUIRE(e.first == i++);
+    }
+
     // Examination
     REQUIRE(empty.size() == 0);
     REQUIRE(empty.is_empty() == true);
