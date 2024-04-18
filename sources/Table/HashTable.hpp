@@ -289,24 +289,16 @@ public:
             return false;
         }
 
-        // count keys in each table
-        std::set<K> this_set, that_set;
-        for (int i = 0; i < capacity_; i++)
+        for (const auto& pair : *this)
         {
-            if (data_[i].full_)
+            auto it = that.find(pair.first);
+            if (it == that.end() || pair.second != it->second)
             {
-                this_set.insert(data_[i].key_);
-            }
-        }
-        for (int i = 0; i < that.capacity_; i++)
-        {
-            if (that.data_[i].full_)
-            {
-                that_set.insert(that.data_[i].key_);
+                return false;
             }
         }
 
-        return this_set == that_set;
+        return true;
     }
 
     /// Check whether two tables are not equal.

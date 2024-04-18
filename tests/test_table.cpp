@@ -20,7 +20,7 @@ void test()
     REQUIRE(empty != some);
     REQUIRE(some != Table({{1, "one"}, {2, "two"}, {4, "four"}}));
 
-    REQUIRE(Table({{1, "one"}, {2, "two"}, {3, "three"}}) == Table({{1, "one"}, {2, "two"}, {3, "333"}}));
+    REQUIRE(Table({{1, "one"}, {2, "two"}, {3, "three"}}) != Table({{1, "one"}, {2, "two"}, {3, "333"}}));
     REQUIRE(Table({{1, "one"}, {2, "two"}, {3, "three"}}) != Table({{1, "one"}, {2, "two"}, {4, "three"}}));
 
     // Access
