@@ -41,7 +41,7 @@ private:
         {
             // if size is even then only have left node, short to avoid subscript out of bounds
             bool is_left_max = (size_ % 2 == 0) || Cmp()(data_[index * 2 + 1], data_[index * 2 + 2]);
-            common::swap(data_[index], is_left_max ? data_[index * 2 + 1] : data_[index * 2 + 2]);
+            std::swap(data_[index], is_left_max ? data_[index * 2 + 1] : data_[index * 2 + 2]);
             index = index * 2 + (is_left_max ? 1 : 2);
         }
     }

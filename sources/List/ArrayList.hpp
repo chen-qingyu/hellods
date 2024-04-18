@@ -211,7 +211,7 @@ public:
     {
         for (int i = 0, j = size_ - 1; i < j; ++i, --j)
         {
-            common::swap(data_[i], data_[j]);
+            std::swap(data_[i], data_[j]);
         }
 
         return *this;

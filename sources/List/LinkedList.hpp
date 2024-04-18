@@ -324,9 +324,9 @@ public:
     {
         for (Node* cur = header_; cur != nullptr; cur = cur->pred_)
         {
-            common::swap(cur->pred_, cur->succ_);
+            std::swap(cur->pred_, cur->succ_);
         }
-        common::swap(header_, trailer_);
+        std::swap(header_, trailer_);
 
         return *this;
     }
