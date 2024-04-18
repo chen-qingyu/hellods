@@ -25,6 +25,10 @@ void test()
 
     // Access
     REQUIRE(some[1] == "one");
+    some[1] = "+1";
+    REQUIRE(some[1] == "+1");
+    some[1] = "one";
+    REQUIRE(some[1] == "one");
     const Table const_table = {{1, "one"}, {2, "two"}, {3, "three"}};
     REQUIRE(const_table[1] == "one");
     REQUIRE_THROWS_MATCHES(some[4], std::runtime_error, Message("Error: The key-value pair does not exist."));
@@ -82,19 +86,10 @@ void test()
     REQUIRE(empty.insert(3, "three!") == false);
     REQUIRE(empty == Table({{1, "one"}, {2, "two"}, {3, "three"}}));
 
-    REQUIRE(empty.modify(1, "one~") == true);
-    REQUIRE(empty == Table({{1, "one~"}, {2, "two"}, {3, "three"}}));
-    REQUIRE(empty.modify(3, "three!") == true);
-    REQUIRE(empty == Table({{1, "one~"}, {2, "two"}, {3, "three!"}}));
-    REQUIRE(empty.modify(3, "three!!!") == true);
-    REQUIRE(empty == Table({{1, "one~"}, {2, "two"}, {3, "three!!!"}}));
-    REQUIRE(empty.modify(4, "four~") == false);
-    REQUIRE(empty == Table({{1, "one~"}, {2, "two"}, {3, "three!!!"}}));
-
     REQUIRE(empty.remove(3) == true);
-    REQUIRE(empty == Table({{1, "one~"}, {2, "two"}}));
+    REQUIRE(empty == Table({{1, "one"}, {2, "two"}}));
     REQUIRE(empty.remove(2) == true);
-    REQUIRE(empty == Table({{1, "one~"}}));
+    REQUIRE(empty == Table({{1, "one"}}));
     REQUIRE(empty.remove(1) == true);
     REQUIRE(empty == Table({}));
     REQUIRE(empty.remove(1) == false);

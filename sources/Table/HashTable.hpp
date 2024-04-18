@@ -371,20 +371,6 @@ public:
      * Manipulation
      */
 
-    /// Modify the value corresponding to the key in the table. Return whether the pair was newly modified.
-    bool modify(const K& key, const V& value)
-    {
-        int pos = find_pos(key);
-
-        if (!data_[pos].full_)
-        {
-            return false;
-        }
-
-        data_[pos].value_ = value;
-        return true;
-    }
-
     /// Insert a new key-value pair into the table. Return whether the pair was newly inserted.
     bool insert(const K& key, const V& value)
     {
