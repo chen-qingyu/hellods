@@ -32,13 +32,15 @@ TEST_CASE("MatrixGraph")
 
     // Examination
     REQUIRE(empty.size() == 0);
-    REQUIRE(empty.is_empty() == true);
-    REQUIRE_THROWS_MATCHES(empty.is_adjacent(0, 1), std::runtime_error, Message("Error: Index out of range."));
-    REQUIRE_THROWS_MATCHES(empty.distance(0, 1), std::runtime_error, Message("Error: Index out of range."));
-
     REQUIRE(some.size() == 7);
+
+    REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
+
+    REQUIRE_THROWS_MATCHES(empty.is_adjacent(0, 1), std::runtime_error, Message("Error: Index out of range."));
     REQUIRE(some.is_adjacent(0, 1) == false);
+
+    REQUIRE_THROWS_MATCHES(empty.distance(0, 1), std::runtime_error, Message("Error: Index out of range."));
     REQUIRE(some.distance(0, 1) == MatrixGraph<>::NO_EDGE);
 
     // Manipulation & Examination

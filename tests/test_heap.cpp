@@ -24,14 +24,21 @@ void test()
     REQUIRE(Heap({2, 3, 3, 3}) != Heap({2, 2, 3, 3}));
 
     // Access
-    REQUIRE(some.peek() == 5);
+    if constexpr (std::is_same<Heap, BinaryHeap<int>>::value)
+    {
+        REQUIRE(some.peek() == 5);
+    }
+    else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value)
+    {
+        REQUIRE(some.peek() == 1);
+    }
     REQUIRE_THROWS_MATCHES(empty.peek(), std::runtime_error, Message("Error: The container is empty."));
 
     // Examination
     REQUIRE(empty.size() == 0);
-    REQUIRE(empty.is_empty() == true);
-
     REQUIRE(some.size() == 5);
+
+    REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
 
     // Manipulation
@@ -44,10 +51,20 @@ void test()
     empty.push(3);
     REQUIRE(empty == Heap({3, 2, 1, 0}));
 
-    REQUIRE(empty.pop() == 3);
-    REQUIRE(empty.pop() == 2);
-    REQUIRE(empty.pop() == 1);
-    REQUIRE(empty.pop() == 0);
+    if constexpr (std::is_same<Heap, BinaryHeap<int>>::value)
+    {
+        REQUIRE(empty.pop() == 3);
+        REQUIRE(empty.pop() == 2);
+        REQUIRE(empty.pop() == 1);
+        REQUIRE(empty.pop() == 0);
+    }
+    else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value)
+    {
+        REQUIRE(empty.pop() == 0);
+        REQUIRE(empty.pop() == 1);
+        REQUIRE(empty.pop() == 2);
+        REQUIRE(empty.pop() == 3);
+    }
     REQUIRE_THROWS_MATCHES(empty.pop(), std::runtime_error, Message("Error: The container is empty."));
 
     REQUIRE(some.clear() == empty);
@@ -64,19 +81,20 @@ void test()
     REQUIRE(oss.str() == "Heap(1)");
     oss.str("");
 
-    oss << Heap({1, 2, 3, 4, 5});
-    REQUIRE(oss.str() == "Heap(5, 4, 3, 1, 2)");
+    oss << Heap({3, 1, 2, 4, 5});
+    if constexpr (std::is_same<Heap, BinaryHeap<int>>::value)
+    {
+        REQUIRE(oss.str() == "Heap(5, 4, 2, 3, 1)");
+    }
+    else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value)
+    {
+        REQUIRE(oss.str() == "Heap(1, 3, 2, 4, 5)");
+    }
     oss.str("");
 }
 
 TEST_CASE("BinaryHeap")
 {
-    test<BinaryHeap<int>>();
-    test<BinaryHeap<double>>();
-
-    BinaryHeap<int, std::less<int>> min_heap = {3, 2, 1};
-    REQUIRE(min_heap.peek() == 1);
-    REQUIRE(min_heap.pop() == 1);
-    REQUIRE(min_heap.pop() == 2);
-    REQUIRE(min_heap.pop() == 3);
+    test<BinaryHeap<int>>();                 // max-heap (default)
+    test<BinaryHeap<int, std::less<int>>>(); // min-heap
 }

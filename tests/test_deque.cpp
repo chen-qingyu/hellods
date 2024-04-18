@@ -25,16 +25,18 @@ void test()
     REQUIRE(some.front() == 1);
     some.front() = 0;
     REQUIRE(some.front() == 0);
+    REQUIRE_THROWS_MATCHES(empty.front(), std::runtime_error, Message("Error: The container is empty."));
+
     REQUIRE(some.back() == 5);
     some.back() = 6;
     REQUIRE(some.back() == 6);
-    REQUIRE_THROWS_MATCHES(empty.front(), std::runtime_error, Message("Error: The container is empty."));
+    REQUIRE_THROWS_MATCHES(empty.back(), std::runtime_error, Message("Error: The container is empty."));
 
     // Examination
     REQUIRE(empty.size() == 0);
-    REQUIRE(empty.is_empty() == true);
-
     REQUIRE(some.size() == 5);
+
+    REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
 
     // Manipulation

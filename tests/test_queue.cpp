@@ -29,9 +29,9 @@ void test()
 
     // Examination
     REQUIRE(empty.size() == 0);
-    REQUIRE(empty.is_empty() == true);
-
     REQUIRE(some.size() == 5);
+
+    REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
 
     // Manipulation

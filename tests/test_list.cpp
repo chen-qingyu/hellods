@@ -36,11 +36,12 @@ void test()
 
     // Examination
     REQUIRE(empty.size() == 0);
-    REQUIRE(empty.is_empty() == true);
-    REQUIRE(empty.find(1) == -1);
-
     REQUIRE(some.size() == 5);
+
+    REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
+
+    REQUIRE(empty.find(1) == -1);
     REQUIRE(some.find(1) == 1);
 
     // Manipulation

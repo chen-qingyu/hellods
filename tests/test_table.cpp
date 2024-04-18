@@ -29,10 +29,12 @@ void test()
     REQUIRE(some[1] == "+1");
     some[1] = "one";
     REQUIRE(some[1] == "one");
+
     const Table const_table = {{1, "one"}, {2, "two"}, {3, "three"}};
     REQUIRE(const_table[1] == "one");
-    REQUIRE_THROWS_MATCHES(some[4], std::runtime_error, Message("Error: The key-value pair does not exist."));
+
     REQUIRE_THROWS_MATCHES(empty[1], std::runtime_error, Message("Error: The key-value pair does not exist."));
+    REQUIRE_THROWS_MATCHES(some[4], std::runtime_error, Message("Error: The key-value pair does not exist."));
 
     // Iterator
     REQUIRE(empty.begin() == empty.end());

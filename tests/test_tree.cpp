@@ -26,8 +26,9 @@ void test()
 
     // Access
     REQUIRE(some.min() == 1);
-    REQUIRE(some.max() == 5);
     REQUIRE_THROWS_MATCHES(empty.min(), std::runtime_error, Message("Error: The container is empty."));
+
+    REQUIRE(some.max() == 5);
     REQUIRE_THROWS_MATCHES(empty.max(), std::runtime_error, Message("Error: The container is empty."));
 
     // Iterator
@@ -61,9 +62,9 @@ void test()
 
     // Examination
     REQUIRE(empty.size() == 0);
-    REQUIRE(empty.is_empty() == true);
-
     REQUIRE(some.size() == 5);
+
+    REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
 
     std::ostringstream buf;
@@ -140,7 +141,6 @@ void test()
     {
         REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
     }
-
     oss.str("");
 }
 
