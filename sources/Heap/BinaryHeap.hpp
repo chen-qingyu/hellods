@@ -113,7 +113,7 @@ public:
         return ArrayList::is_empty();
     }
 
-    /// Peek the top item in the heap.
+    /// Peek the top element in the heap.
     const T& peek() const
     {
         common::check_empty(size());
@@ -148,12 +148,12 @@ public:
     {
         common::check_empty(size());
 
-        T item = std::move(data_[0]);
+        T element = std::move(data_[0]);
         data_[0] = data_[size_ - 1];
         size_--;
         proc_down(0);
 
-        return item;
+        return element;
     }
 
     /// Remove all of the elements from the heap.
