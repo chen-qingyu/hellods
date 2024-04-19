@@ -181,9 +181,7 @@ public:
     /// Print the tree.
     friend std::ostream& operator<<(std::ostream& os, const RedBlackTree& tree)
     {
-        std::ostringstream oss;
-        oss << static_cast<const BinarySearchTree&>(tree);
-        return os << oss.str();
+        return os << static_cast<const BinarySearchTree&>(tree);
     }
 };
 
