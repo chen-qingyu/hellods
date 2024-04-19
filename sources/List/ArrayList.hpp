@@ -39,6 +39,78 @@ class ArrayList : public common::Container
     template <typename _, typename Cmp>
     friend class BinaryHeap;
 
+public:
+    /// List iterator class.
+    class Iterator
+    {
+        friend class ArrayList;
+
+    private:
+        // Current data pointer.
+        T* current_;
+
+        // Create an iterator that point to the current data of list.
+        Iterator(T* current)
+            : current_(current)
+        {
+        }
+
+    public:
+        /// Dereference.
+        T& operator*() const
+        {
+            return *current_;
+        }
+
+        /// Get current pointer.
+        T* operator->() const
+        {
+            return current_;
+        }
+
+        /// Check if two iterators are same.
+        bool operator==(const Iterator& that) const
+        {
+            return current_ == that.current_;
+        }
+
+        /// Check if two iterators are different.
+        bool operator!=(const Iterator& that) const
+        {
+            return !(current_ == that.current_);
+        }
+
+        /// Increment the iterator: ++it.
+        Iterator& operator++()
+        {
+            ++current_;
+            return *this;
+        }
+
+        /// Increment the iterator: it++.
+        Iterator operator++(int)
+        {
+            Iterator tmp = *this;
+            ++current_;
+            return tmp;
+        }
+
+        /// Decrement the iterator: --it.
+        Iterator& operator--()
+        {
+            --current_;
+            return *this;
+        }
+
+        /// Decrement the iterator: it--.
+        Iterator operator--(int)
+        {
+            Iterator tmp = *this;
+            --current_;
+            return tmp;
+        }
+    };
+
 private:
     // Available capacity.
     int capacity_;
@@ -128,6 +200,24 @@ public:
     const T& operator[](int index) const
     {
         return const_cast<ArrayList&>(*this)[index];
+    }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the list.
+    /// If the list is empty, the returned iterator will be equal to end().
+    Iterator begin() const
+    {
+        return Iterator(data_);
+    }
+
+    /// Return an iterator to the element following the last element of the list.
+    /// This element acts as a placeholder, attempting to access it results in undefined behavior.
+    Iterator end() const
+    {
+        return Iterator(data_ + size_); // not nullptr, because size_ <= capacity_
     }
 
     /*

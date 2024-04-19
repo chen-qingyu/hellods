@@ -64,6 +64,79 @@ private:
         }
     };
 
+public:
+    /// List iterator class.
+    class Iterator
+    {
+        friend class LinkedList;
+
+    private:
+        // Current node pointer.
+        Node* current_;
+
+        // Create an iterator that point to the current node of list.
+        Iterator(Node* current)
+            : current_(current)
+        {
+        }
+
+    public:
+        /// Dereference.
+        T& operator*() const
+        {
+            return current_->data_;
+        }
+
+        /// Get current pointer.
+        T* operator->() const
+        {
+            return &current_->data_;
+        }
+
+        /// Check if two iterators are same.
+        bool operator==(const Iterator& that) const
+        {
+            return current_ == that.current_;
+        }
+
+        /// Check if two iterators are different.
+        bool operator!=(const Iterator& that) const
+        {
+            return !(current_ == that.current_);
+        }
+
+        /// Increment the iterator: ++it.
+        Iterator& operator++()
+        {
+            current_ = current_->succ_;
+            return *this;
+        }
+
+        /// Increment the iterator: it++.
+        Iterator operator++(int)
+        {
+            Iterator tmp = *this;
+            current_ = current_->succ_;
+            return tmp;
+        }
+
+        /// Decrement the iterator: --it.
+        Iterator& operator--()
+        {
+            current_ = current_->pred_;
+            return *this;
+        }
+
+        /// Decrement the iterator: it--.
+        Iterator operator--(int)
+        {
+            Iterator tmp = *this;
+            current_ = current_->pred_;
+            return tmp;
+        }
+    };
+
+private:
     // Pointer to the header (rank = -1).
     Node* header_;
 
@@ -199,6 +272,24 @@ public:
     const T& operator[](int index) const
     {
         return const_cast<LinkedList&>(*this)[index];
+    }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the list.
+    /// If the list is empty, the returned iterator will be equal to end().
+    Iterator begin() const
+    {
+        return Iterator(header_->succ_);
+    }
+
+    /// Return an iterator to the element following the last element of the list.
+    /// This element acts as a placeholder, attempting to access it results in undefined behavior.
+    Iterator end() const
+    {
+        return Iterator(trailer_);
     }
 
     /*

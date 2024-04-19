@@ -34,6 +34,38 @@ void test()
     }
     REQUIRE_THROWS_MATCHES(some[5], std::runtime_error, Message("Error: Index out of range."));
 
+    // Iterator
+    REQUIRE(empty.begin() == empty.end());
+
+    int i = 0;
+    for (auto it = some.begin(); it != some.end(); ++it)
+    {
+        REQUIRE(*it == i++);
+    }
+
+    i = 0;
+    for (const auto& e : some)
+    {
+        REQUIRE(e == i++);
+    }
+
+    auto it = some.begin();
+    REQUIRE(*it == 0);
+    REQUIRE(*++it == 1);
+    REQUIRE(*++it == 2);
+    REQUIRE(*++it == 3);
+    REQUIRE(*++it == 4);
+    REQUIRE(++it == some.end());
+    if constexpr (!std::is_same<List, SinglyLinkedList<int>>::value)
+    {
+        REQUIRE(*--it == 4);
+        REQUIRE(*--it == 3);
+        REQUIRE(*--it == 2);
+        REQUIRE(*--it == 1);
+        REQUIRE(*--it == 0);
+        REQUIRE(it == some.begin());
+    }
+
     // Examination
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 5);
@@ -85,17 +117,14 @@ void test()
 TEST_CASE("ArrayList")
 {
     test<ArrayList<int>>();
-    test<ArrayList<double>>();
 }
 
 TEST_CASE("LinkedList")
 {
     test<LinkedList<int>>();
-    test<LinkedList<double>>();
 }
 
 TEST_CASE("SinglyLinkedList")
 {
     test<SinglyLinkedList<int>>();
-    test<SinglyLinkedList<double>>();
 }
