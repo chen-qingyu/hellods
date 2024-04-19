@@ -384,7 +384,7 @@ public:
         return node;
     }
 
-    // Returns the maximum depth of the subtree rooted at the node.
+    // Return the maximum depth of the subtree rooted at the node.
     int depth_node(Node* node) const
     {
         return node == nullptr ? 0 : 1 + std::max(depth_node(node->left_), depth_node(node->right_));
@@ -529,7 +529,7 @@ public:
         return false;
     }
 
-    /// Find the maximum depth of the tree. Empty tree depth is 0.
+    /// Return the maximum depth of the tree. Empty tree depth is 0.
     int depth() const
     {
         return depth_node(root_);

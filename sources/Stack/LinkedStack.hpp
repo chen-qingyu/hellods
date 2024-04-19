@@ -103,7 +103,7 @@ public:
      * Manipulation
      */
 
-    /// Push, insert an element at the top of the stack.
+    /// Push an element at the top of the stack.
     void push(const T& element)
     {
         LinkedList::insert(LinkedList::size(), element);

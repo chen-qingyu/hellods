@@ -113,7 +113,7 @@ public:
         return ArrayList::is_empty();
     }
 
-    /// Returns const reference of the greatest item in the heap.
+    /// Peek the top item in the heap.
     const T& peek() const
     {
         common::check_empty(size());
@@ -124,7 +124,7 @@ public:
      * Manipulation
      */
 
-    /// Pushes an element onto the heap.
+    /// Push an element onto the heap.
     void push(const T& element)
     {
         common::check_full(size_, MAX_CAPACITY);
@@ -143,7 +143,7 @@ public:
         data_[pos] = element;
     }
 
-    /// Removes the greatest element from the heap and returns it.
+    /// Remove the top element from the heap and return it.
     T pop()
     {
         common::check_empty(size());
