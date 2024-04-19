@@ -79,8 +79,7 @@ public:
     /// Return the const reference to the element at the front in the deque.
     const T& front() const
     {
-        common::check_empty(size());
-        return header_->succ_->data_;
+        return const_cast<LinkedDeque&>(*this).front();
     }
 
     /// Return the reference to the element at the back in the deque.
@@ -93,8 +92,7 @@ public:
     /// Return the const reference to the element at the back in the deque.
     const T& back() const
     {
-        common::check_empty(size());
-        return trailer_->pred_->data_;
+        return const_cast<LinkedDeque&>(*this).back();
     }
 
     /*

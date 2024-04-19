@@ -136,8 +136,7 @@ public:
     /// Return the const reference to the element at the front in the deque.
     const T& front() const
     {
-        common::check_empty(size_);
-        return data_[front_];
+        return const_cast<ArrayDeque&>(*this).front();
     }
 
     /// Return the reference to the element at the back in the deque.
@@ -150,8 +149,7 @@ public:
     /// Return the const reference to the element at the back in the deque.
     const T& back() const
     {
-        common::check_empty(size_);
-        return data_[access(size_ - 1)];
+        return const_cast<ArrayDeque&>(*this).back();
     }
 
     /*

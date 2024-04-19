@@ -79,8 +79,7 @@ public:
     /// Return the const reference to the element at the top in the stack.
     const T& top() const
     {
-        common::check_empty(size());
-        return data_[size() - 1];
+        return const_cast<ArrayStack&>(*this).top();
     }
 
     /*

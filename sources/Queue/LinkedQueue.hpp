@@ -79,8 +79,7 @@ public:
     /// Return the const reference to the element at the front in the queue.
     const T& front() const
     {
-        common::check_empty(size());
-        return header_->succ_->data_;
+        return const_cast<LinkedQueue&>(*this).front();
     }
 
     /*

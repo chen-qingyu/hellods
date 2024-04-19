@@ -79,8 +79,7 @@ public:
     /// Return the const reference to the element at the top in the stack.
     const T& top() const
     {
-        common::check_empty(size());
-        return trailer_->pred_->data_;
+        return const_cast<LinkedStack&>(*this).top();
     }
 
     /*
