@@ -170,20 +170,7 @@ public:
     /// Check whether two lists are equal.
     bool operator==(const ArrayList& that) const
     {
-        if (size_ != that.size_)
-        {
-            return false;
-        }
-
-        for (int i = 0; i < size_; ++i)
-        {
-            if (data_[i] != that.data_[i])
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return size_ == that.size_ && std::equal(data_, data_ + size_, that.data_);
     }
 
     /// Check whether two lists are not equal.
@@ -255,10 +242,7 @@ public:
         }
 
         // shift
-        for (int i = size_; i > index; --i)
-        {
-            data_[i] = data_[i - 1];
-        }
+        std::copy_backward(data_ + index, data_ + size_, data_ + size_ + 1);
 
         // insert
         data_[index] = element; // copy assignment on T
@@ -278,10 +262,7 @@ public:
         T element = std::move(data_[index]);
 
         // shift
-        for (int i = index + 1; i < size_; ++i)
-        {
-            data_[i - 1] = data_[i];
-        }
+        std::copy(data_ + index + 1, data_ + size_, data_ + index);
 
         // resize
         --size_;
@@ -294,10 +275,7 @@ public:
     template <typename F>
     ArrayList& map(const F& action)
     {
-        for (int i = 0; i < size_; ++i)
-        {
-            action(data_[i]);
-        }
+        std::for_each(data_, data_ + size_, action);
 
         return *this;
     }
@@ -305,10 +283,7 @@ public:
     /// Reverse the list in place.
     ArrayList& reverse()
     {
-        for (int i = 0, j = size_ - 1; i < j; ++i, --j)
-        {
-            std::swap(data_[i], data_[j]);
-        }
+        std::reverse(data_, data_ + size_);
 
         return *this;
     }

@@ -215,20 +215,7 @@ public:
     /// Check whether two lists are equal.
     bool operator==(const LinkedList& that) const
     {
-        if (size_ != that.size_)
-        {
-            return false;
-        }
-
-        for (Node *it1 = header_->succ_, *it2 = that.header_->succ_; it1 != trailer_; it1 = it1->succ_, it2 = it2->succ_)
-        {
-            if (it1->data_ != it2->data_)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return size_ == that.size_ && std::equal(begin(), end(), that.begin());
     }
 
     /// Check whether two lists are not equal.
@@ -400,10 +387,7 @@ public:
     template <typename F>
     LinkedList& map(const F& action)
     {
-        for (Node* cur = header_->succ_; cur != trailer_; cur = cur->succ_)
-        {
-            action(cur->data_);
-        }
+        std::for_each(begin(), end(), action);
 
         return *this;
     }

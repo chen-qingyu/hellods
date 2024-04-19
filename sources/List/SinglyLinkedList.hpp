@@ -171,20 +171,7 @@ public:
     /// Check whether two lists are equal.
     bool operator==(const SinglyLinkedList& that) const
     {
-        if (size_ != that.size_)
-        {
-            return false;
-        }
-
-        for (auto it1 = header_->succ_, it2 = that.header_->succ_; it1 != nullptr; it1 = it1->succ_, it2 = it2->succ_)
-        {
-            if (it1->data_ != it2->data_)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return size_ == that.size_ && std::equal(begin(), end(), that.begin());
     }
 
     /// Check whether two lists are not equal.
@@ -304,10 +291,7 @@ public:
     template <typename F>
     SinglyLinkedList& map(const F& action)
     {
-        for (auto cur = header_->succ_; cur != nullptr; cur = cur->succ_)
-        {
-            action(cur->data_);
-        }
+        std::for_each(begin(), end(), action);
 
         return *this;
     }
