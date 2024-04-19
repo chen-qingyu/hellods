@@ -70,6 +70,13 @@ public:
     {
         friend class LinkedList;
 
+    public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = T;
+        using difference_type = int;
+        using pointer = value_type*;
+        using reference = value_type&;
+
     private:
         // Current node pointer.
         Node* current_;
@@ -296,19 +303,10 @@ public:
      * Examination
      */
 
-    /// Return the index of the first occurrence of the specified element, or -1 if the list does not contains the element.
-    int find(const T& element) const
+    /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
+    Iterator find(const T& element) const
     {
-        int index = 0;
-        Node* current = header_->succ_;
-
-        while (current != trailer_ && current->data_ != element)
-        {
-            current = current->succ_;
-            index++;
-        }
-
-        return current != trailer_ ? index : -1;
+        return std::find(begin(), end(), element);
     }
 
     /*

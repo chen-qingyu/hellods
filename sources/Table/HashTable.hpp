@@ -74,6 +74,13 @@ public:
     {
         friend class HashTable;
 
+    public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = std::pair<const K, V>;
+        using difference_type = int;
+        using pointer = value_type*;
+        using reference = value_type&;
+
     private:
         Iterator(int pos, int capacity, Pair* data)
             : pos_(pos)
@@ -354,7 +361,7 @@ public:
      * Examination
      */
 
-    /// Find the first occurrence of the key in the table.
+    /// Return an iterator to the first occurrence of the specified key, or end() if the table does not contains the key.
     Iterator find(const K& key) const
     {
         int pos = find_pos(key);

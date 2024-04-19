@@ -57,6 +57,13 @@ public:
     {
         friend class SinglyLinkedList;
 
+    public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = T;
+        using difference_type = int;
+        using pointer = value_type*;
+        using reference = value_type&;
+
     private:
         // Current node pointer.
         Node* current_;
@@ -232,19 +239,10 @@ public:
      * Examination
      */
 
-    /// Return the index of the first occurrence of the specified element, or -1 if the list does not contains the element.
-    int find(const T& element) const
+    /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
+    Iterator find(const T& element) const
     {
-        int index = 0;
-        auto current = header_->succ_;
-
-        while (current != nullptr && current->data_ != element)
-        {
-            current = current->succ_;
-            index++;
-        }
-
-        return current != nullptr ? index : -1;
+        return std::find(begin(), end(), element);
     }
 
     /*

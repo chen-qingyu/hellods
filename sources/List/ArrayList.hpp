@@ -45,6 +45,13 @@ public:
     {
         friend class ArrayList;
 
+    public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = T;
+        using difference_type = int;
+        using pointer = value_type*;
+        using reference = value_type&;
+
     private:
         // Current data pointer.
         T* current_;
@@ -224,11 +231,10 @@ public:
      * Examination
      */
 
-    /// Return the index of the first occurrence of the specified element, or -1 if the list does not contains the element.
-    int find(const T& element) const
+    /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
+    Iterator find(const T& element) const
     {
-        auto it = std::find(data_, data_ + size_, element);
-        return it == data_ + size_ ? -1 : it - data_;
+        return std::find(begin(), end(), element);
     }
 
     /*

@@ -86,6 +86,10 @@ void test()
     REQUIRE(buf.str() == "3 1 5 2 4 ");
     buf.str("");
 
+    REQUIRE(empty.find(1) == empty.end());
+    REQUIRE(*some.find(1) == 1);
+    REQUIRE(some.find(6) == some.end());
+
     REQUIRE(some.contains(1) == true);
     REQUIRE(some.contains(0) == false);
     REQUIRE(empty.contains(1) == false);

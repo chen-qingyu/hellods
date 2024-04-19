@@ -92,6 +92,13 @@ public:
     {
         friend class BinarySearchTree;
 
+    public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = T;
+        using difference_type = int;
+        using pointer = value_type*;
+        using reference = value_type&;
+
     private:
         // Current node pointer.
         Node* current_;
@@ -510,8 +517,8 @@ public:
         traverse_node(root_, order, action);
     }
 
-    /// Determine whether an element is in the tree.
-    bool contains(const T& element) const
+    /// Return an iterator to the specified element, or end() if the tree does not contains the element.
+    Iterator find(const T& element) const
     {
         Node* current = root_;
         while (current)
@@ -526,10 +533,16 @@ public:
             }
             else
             {
-                return true;
+                return Iterator(current);
             }
         }
-        return false;
+        return end();
+    }
+
+    /// Determine whether an element is in the tree.
+    bool contains(const T& element) const
+    {
+        return find(element) != end();
     }
 
     /// Return the maximum depth of the tree. Empty tree depth is 0.

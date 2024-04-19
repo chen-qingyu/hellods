@@ -73,8 +73,9 @@ void test()
     REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
 
-    REQUIRE(empty.find(1) == -1);
-    REQUIRE(some.find(1) == 1);
+    REQUIRE(empty.find(1) == empty.end());
+    REQUIRE(*some.find(1) == 1);
+    REQUIRE(some.find(6) == some.end());
 
     // Manipulation
     empty.insert(0, 1);
