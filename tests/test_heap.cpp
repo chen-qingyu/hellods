@@ -38,6 +38,11 @@ void test()
     {
         REQUIRE(some.peek() == 1);
     }
+    else
+    {
+        FAIL();
+    }
+
     REQUIRE_THROWS_MATCHES(empty.peek(), std::runtime_error, Message("Error: The container is empty."));
 
     // Manipulation
@@ -64,6 +69,10 @@ void test()
         REQUIRE(empty.pop() == 2);
         REQUIRE(empty.pop() == 3);
     }
+    else
+    {
+        FAIL();
+    }
     REQUIRE_THROWS_MATCHES(empty.pop(), std::runtime_error, Message("Error: The container is empty."));
 
     REQUIRE(some.clear() == empty);
@@ -88,6 +97,10 @@ void test()
     else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value)
     {
         REQUIRE(oss.str() == "Heap(1, 3, 2, 4, 5)");
+    }
+    else
+    {
+        FAIL();
     }
     oss.str("");
 }

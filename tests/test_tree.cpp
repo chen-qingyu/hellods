@@ -136,9 +136,13 @@ void test()
     {
         REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
     }
-    else
+    else if constexpr (std::is_same<Tree, RedBlackTree<int>>::value)
     {
         REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
+    }
+    else
+    {
+        FAIL();
     }
     oss.str("");
 }
