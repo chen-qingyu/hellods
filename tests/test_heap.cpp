@@ -23,7 +23,13 @@ void test()
     REQUIRE(Heap({2, 3, 3, 3}) == Heap({3, 3, 3, 2}));
     REQUIRE(Heap({2, 3, 3, 3}) != Heap({2, 2, 3, 3}));
 
-    // Access
+    // Examination
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
+
+    REQUIRE(empty.is_empty() == true);
+    REQUIRE(some.is_empty() == false);
+
     if constexpr (std::is_same<Heap, BinaryHeap<int>>::value)
     {
         REQUIRE(some.peek() == 5);
@@ -33,13 +39,6 @@ void test()
         REQUIRE(some.peek() == 1);
     }
     REQUIRE_THROWS_MATCHES(empty.peek(), std::runtime_error, Message("Error: The container is empty."));
-
-    // Examination
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-
-    REQUIRE(empty.is_empty() == true);
-    REQUIRE(some.is_empty() == false);
 
     // Manipulation
     empty.push(1);

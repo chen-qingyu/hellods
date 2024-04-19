@@ -449,29 +449,6 @@ public:
     }
 
     /*
-     * Access
-     */
-
-    /// Return the smallest element of the tree.
-    T min() const
-    {
-        common::check_empty(size());
-        return find_min(root_)->data_;
-    }
-
-    /// Return the largest element of the tree.
-    T max() const
-    {
-        common::check_empty(size());
-        Node* current = root_;
-        while (current->right_)
-        {
-            current = current->right_;
-        }
-        return current->data_;
-    }
-
-    /*
      * Iterator
      */
 
@@ -494,6 +471,25 @@ public:
     /*
      * Examination
      */
+
+    /// Return the smallest element of the tree.
+    T min() const
+    {
+        common::check_empty(size());
+        return find_min(root_)->data_;
+    }
+
+    /// Return the largest element of the tree.
+    T max() const
+    {
+        common::check_empty(size());
+        Node* current = root_;
+        while (current->right_)
+        {
+            current = current->right_;
+        }
+        return current->data_;
+    }
 
     /// Traverse option.
     enum TraverseOption

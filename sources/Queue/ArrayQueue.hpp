@@ -66,22 +66,6 @@ public:
     }
 
     /*
-     * Examination
-     */
-
-    /// Get the number of elements of the queue.
-    int size() const
-    {
-        return ArrayDeque::size();
-    }
-
-    /// Check if the queue is empty.
-    bool is_empty() const
-    {
-        return ArrayDeque::is_empty();
-    }
-
-    /*
      * Access
      */
 
@@ -95,6 +79,22 @@ public:
     const T& front() const
     {
         return ArrayDeque::front();
+    }
+
+    /*
+     * Examination
+     */
+
+    /// Get the number of elements of the queue.
+    int size() const
+    {
+        return ArrayDeque::size();
+    }
+
+    /// Check if the queue is empty.
+    bool is_empty() const
+    {
+        return ArrayDeque::is_empty();
     }
 
     /*

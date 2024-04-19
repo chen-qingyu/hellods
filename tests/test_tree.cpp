@@ -24,13 +24,6 @@ void test()
     REQUIRE(Tree({2, 3, 3, 3}) == Tree({2, 2, 3, 3}));
     REQUIRE(Tree({2, 3, 3, 3}) != Tree({3, 3, 3, 3}));
 
-    // Access
-    REQUIRE(some.min() == 1);
-    REQUIRE_THROWS_MATCHES(empty.min(), std::runtime_error, Message("Error: The container is empty."));
-
-    REQUIRE(some.max() == 5);
-    REQUIRE_THROWS_MATCHES(empty.max(), std::runtime_error, Message("Error: The container is empty."));
-
     // Iterator
     REQUIRE(empty.begin() == empty.end());
 
@@ -66,6 +59,12 @@ void test()
 
     REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
+
+    REQUIRE(some.min() == 1);
+    REQUIRE_THROWS_MATCHES(empty.min(), std::runtime_error, Message("Error: The container is empty."));
+
+    REQUIRE(some.max() == 5);
+    REQUIRE_THROWS_MATCHES(empty.max(), std::runtime_error, Message("Error: The container is empty."));
 
     std::ostringstream buf;
     auto action = [&](const auto& e)

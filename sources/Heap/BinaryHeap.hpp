@@ -98,17 +98,6 @@ public:
     }
 
     /*
-     * Access
-     */
-
-    /// Returns const reference of the greatest item in the heap.
-    const T& peek() const
-    {
-        common::check_empty(size());
-        return data_[0];
-    }
-
-    /*
      * Examination
      */
 
@@ -122,6 +111,13 @@ public:
     bool is_empty() const
     {
         return ArrayList::is_empty();
+    }
+
+    /// Returns const reference of the greatest item in the heap.
+    const T& peek() const
+    {
+        common::check_empty(size());
+        return data_[0];
     }
 
     /*
