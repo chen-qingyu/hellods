@@ -75,21 +75,21 @@ public:
         friend class HashTable;
 
     private:
-        Iterator(int index, int capacity, Pair* data)
-            : index_(index)
+        Iterator(int pos, int capacity, Pair* data)
+            : pos_(pos)
             , table_capacity_(capacity)
             , table_data_(data)
         {
-            while (index_ < table_capacity_ && !table_data_[index_].full_)
+            while (pos_ < table_capacity_ && !table_data_[pos_].full_)
             {
-                ++index_;
+                ++pos_;
             }
         }
 
     public:
         bool operator==(const Iterator& that) const
         {
-            return index_ == that.index_;
+            return pos_ == that.pos_;
         }
 
         bool operator!=(const Iterator& that) const
@@ -99,7 +99,7 @@ public:
 
         std::pair<const K, V>& operator*() const
         {
-            return table_data_[index_].pair_;
+            return table_data_[pos_].pair_;
         }
 
         std::pair<const K, V>* operator->() const
@@ -109,7 +109,7 @@ public:
 
         Iterator& operator++()
         {
-            while (++index_ < table_capacity_ && !table_data_[index_].full_)
+            while (++pos_ < table_capacity_ && !table_data_[pos_].full_)
             {
             }
             return *this;
@@ -124,7 +124,7 @@ public:
 
         Iterator& operator--()
         {
-            while (--index_ >= 0 && !table_data_[index_].full_)
+            while (--pos_ >= 0 && !table_data_[pos_].full_)
             {
             }
             return *this;
@@ -138,8 +138,8 @@ public:
         }
 
     private:
-        // Current index.
-        int index_;
+        // Current position.
+        int pos_;
 
         int table_capacity_;
         Pair* table_data_;
