@@ -235,6 +235,8 @@ public:
     };
 
     // Virtual maximum node.
+    // In order for the iterator to move forward from end, there must be a virtual maximum node.
+    // And due to the presence of this node, can simplify the judgment of iterator movement, thereby improving the performance of iterator.
     Node* end_;
 
     // Pointer to the root.
