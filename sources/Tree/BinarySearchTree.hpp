@@ -234,11 +234,11 @@ public:
         }
     };
 
-    // Pointer to the root.
-    Node* root_;
-
     // Virtual maximum node.
     Node* end_;
+
+    // Pointer to the root.
+    Node*& root_ = end_->left_;
 
     // Destroy the subtree rooted at that node recursively.
     void destroy(Node* node)
@@ -398,7 +398,6 @@ public:
     /// Create an empty tree.
     BinarySearchTree()
         : common::Container(0)
-        , root_(nullptr)
         , end_(new Node(T()))
     {
     }
@@ -543,8 +542,7 @@ public:
     bool insert(const T& element)
     {
         int old_size = size_;
-        root_ = insert_node(root_, element);
-        end_->link_left(root_);
+        end_->link_left(insert_node(root_, element));
         return old_size != size_;
     }
 
@@ -552,8 +550,7 @@ public:
     bool remove(const T& element)
     {
         int old_size = size_;
-        root_ = remove_node(root_, element);
-        end_->link_left(root_);
+        end_->link_left(remove_node(root_, element));
         return old_size != size_;
     }
 
@@ -565,7 +562,6 @@ public:
             size_ = 0;
             destroy(root_);
             root_ = nullptr;
-            end_->link_left(root_);
         }
 
         return *this;
