@@ -115,6 +115,7 @@ public:
             }
             else // back to the next ascending node
             {
+                // due to the presence of virtual maximum node, ensured current_->parent_ is not nullptr
                 while (current_->parent_->right_ == current_)
                 {
                     current_ = current_->parent_;
@@ -136,6 +137,7 @@ public:
             }
             else // back to the previous ascending node
             {
+                // due to the presence of virtual maximum node, ensured current_->parent_ is not nullptr
                 while (current_->parent_->left_ == current_)
                 {
                     current_ = current_->parent_;
