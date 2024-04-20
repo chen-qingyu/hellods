@@ -33,100 +33,86 @@ template <typename T>
 class RedBlackTree : public BinarySearchTree<T>
 {
 private:
-    // Red-black tree node.
-    struct RBNode : public Node
+    // Insert node for red-black tree.
+    void insert_rbnode(Node*& node, const T& element)
     {
-        int black_height_;
+        Node* current = node; // from root_
+        Node* parent = end_;  // root_'s parent is end_
 
-        bool is_red_;
-
-        RBNode* parent_;
-
-        // Create a node with given element.
-        RBNode(const T& data, RBNode* parent = nullptr, RBNode* left = nullptr, RBNode* right = nullptr)
-            : Node(data, left, right)
-            , black_height_(0)
-            , is_red_(false)
-            , parent_(parent)
+        // find the position for insert
+        while (current != nullptr)
         {
+            // if already has the element, do nothing
+            if (element == current->data_)
+            {
+                return;
+            }
+
+            parent = current;
+            current = current->data_ < element ? current->right_ : current->left_;
         }
 
-        bool is_root() const
+        // current is nullptr now, here is the position to insert
+        current = new Node(element);
+        size_++;
+
+        // if current is root, ok
+        if (parent == end_)
         {
-            return parent_ == nullptr;
+            current->red_ = false;
+            node = current;
+            return;
         }
 
-        bool is_left_child() const
+        // current is not root
+        if (parent->data_ < element)
         {
-            return parent_ != nullptr && this == parent_->left_;
+            parent->link_right(current);
+        }
+        else
+        {
+            parent->link_left(current);
         }
 
-        bool is_right_child() const
+        // if parent is black, ok (current is red)
+        if (parent->red_ == false)
         {
-            return parent_ != nullptr && this == parent_->right_;
+            return;
         }
 
-        bool is_leaf() const
+        // now, the level >= 3 (root is level 1), and parent is red, double red
+        Node* uncle = nullptr;   // parent's sibling
+        Node* grandpa = nullptr; // parent's parent
+
+        while (true)
         {
-            return left_ == nullptr && right_ == nullptr;
+            uncle = (parent->parent_ != nullptr) ? parent->sibling() : nullptr;
+            grandpa = current->parent_->parent_;
+
+            // if grandpa is end_, break
+            if (grandpa == end_)
+            {
+                break;
+            }
+
+            // if uncle is red
+            if (uncle != nullptr && uncle->red_)
+            {
+                // change color
+                parent->red_ = false;
+                uncle->red_ = false;
+                grandpa->red_ = true;
+
+                // if grandpa is the root, break
+                if (grandpa == root_)
+                {
+                    break;
+                }
+            }
         }
 
-        bool has_parent() const
-        {
-            return parent_ != nullptr;
-        }
-
-        bool has_left_child() const
-        {
-            return left_ != nullptr;
-        }
-
-        bool has_right_child() const
-        {
-            return right_ != nullptr;
-        }
-
-        bool has_child() const
-        {
-            return has_left_child() || has_right_child();
-        }
-
-        bool has_both_child() const
-        {
-            return has_left_child() && has_right_child();
-        }
-
-        RBNode* sibling() const
-        {
-            return is_left_child() ? parent_->right_ : parent_->left_;
-        }
-
-        RBNode* uncle() const
-        {
-            return parent_->is_left_child() ? parent_->parent_->right_ : parent_->parent_->left;
-        }
-
-        RBNode* add_left_child(const T& e)
-        {
-            assert(left_ == nullptr);
-            return static_cast<RBNode*>(left_ = new RBNode(e, this));
-        }
-
-        RBNode* add_right_child(const T& e)
-        {
-            assert(right_ == nullptr);
-            return static_cast<RBNode*>(right_ = new RBNode(e, this));
-        }
-    };
-
-    static bool is_black_node(RBNode* node)
-    {
-        return node == nullptr || !node->is_red_;
-    }
-
-    static bool is_red_node(RBNode* node)
-    {
-        return !is_black_node(node);
+        // root is black
+        root_->red_ = false;
     }
 
 public:
@@ -158,10 +144,8 @@ public:
     bool insert(const T& element)
     {
         // int old_size = size_;
-        // root_ = insert_node(root_, element);
+        // insert_rbnode(root_, element);
         // return old_size != size_;
-        RBNode node(element);
-        node.add_left_child(T());
         return BinarySearchTree::insert(element);
     }
 
@@ -169,7 +153,7 @@ public:
     bool remove(const T& element)
     {
         // int old_size = size_;
-        // root_ = remove_node(root_, element);
+        // remove_rbnode(root_, element);
         // return old_size != size_;
         return BinarySearchTree::remove(element);
     }

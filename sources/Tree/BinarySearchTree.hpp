@@ -36,7 +36,7 @@ template <typename T>
 class BinarySearchTree : public common::Container
 {
 protected:
-    // Binary search tree node.
+    // Tree node.
     struct Node
     {
         // Data stored in the node.
@@ -51,12 +51,16 @@ protected:
         // Pointer to the right child.
         Node* right_;
 
+        // Color of node, for red-black tree.
+        bool red_;
+
         // Create a node with given element.
-        Node(const T& data, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr)
+        Node(const T& data, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr, bool red = true)
             : data_(data)
             , parent_(parent)
             , left_(left)
             , right_(right)
+            , red_(red)
         {
         }
 
@@ -78,6 +82,13 @@ protected:
             {
                 child->parent_ = this;
             }
+        }
+
+        // Get the sibling node.
+        Node* sibling() const
+        {
+            assert(parent_ != nullptr);
+            return parent_->left_ == this ? parent_->right_ : parent_->left_;
         }
     };
 
@@ -243,6 +254,7 @@ public:
         }
     };
 
+protected:
     // Virtual maximum node.
     // In order for the iterator to move back from end, there must be a virtual maximum node.
     // And due to the presence of this node, can simplify the judgment of iterator movement, thereby improving the performance of iterator.
