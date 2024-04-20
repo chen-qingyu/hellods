@@ -33,15 +33,6 @@ namespace hellods
 template <typename T>
 class LinkedList : public common::Container
 {
-    template <typename _>
-    friend class LinkedDeque;
-
-    template <typename _>
-    friend class LinkedQueue;
-
-    template <typename _>
-    friend class LinkedStack;
-
 protected:
     // Node of doubly linked list.
     struct Node
@@ -101,7 +92,7 @@ public:
         using pointer = value_type*;
         using reference = value_type&;
 
-    private:
+    protected:
         // Current node pointer.
         Node* current_;
 
@@ -167,7 +158,7 @@ public:
         }
     };
 
-private:
+protected:
     // Pointer to the header (rank = -1).
     Node* header_;
 

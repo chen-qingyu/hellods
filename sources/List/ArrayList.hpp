@@ -33,12 +33,6 @@ namespace hellods
 template <typename T>
 class ArrayList : public common::Container
 {
-    template <typename _>
-    friend class ArrayStack;
-
-    template <typename _, typename Cmp>
-    friend class BinaryHeap;
-
 public:
     /// List iterator class.
     class Iterator
@@ -52,7 +46,7 @@ public:
         using pointer = value_type*;
         using reference = value_type&;
 
-    private:
+    protected:
         // Current data pointer.
         T* current_;
 
@@ -118,7 +112,7 @@ public:
         }
     };
 
-private:
+protected:
     // Available capacity.
     int capacity_;
 
