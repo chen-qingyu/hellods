@@ -71,6 +71,8 @@ private:
                 {
                     break;
                 }
+
+                continue;
             }
 
             // state 2:
@@ -104,7 +106,7 @@ private:
         if (parent == end_)
         {
             current->red_ = false;
-            node = current;
+            end_->link_left(current);
             return;
         }
 
