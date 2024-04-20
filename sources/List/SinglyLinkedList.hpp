@@ -155,7 +155,6 @@ public:
         : common::Container(0)
         , header_(static_cast<Node*>(new VNode()))
     {
-        header_->succ_ = nullptr;
     }
 
     /// Create a list based on the given initializer list.
