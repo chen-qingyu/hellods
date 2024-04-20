@@ -116,21 +116,21 @@ public:
     };
 
 private:
-    // Pointer to the header (rank = -1).
-    Node* header_;
+    // Pointer to the head (rank = 0).
+    Node* head_;
 
     // Clear the stored data.
     void clear_data()
     {
-        while (header_->succ_ != nullptr)
+        while (head_ != nullptr)
         {
-            auto node = header_->succ_->succ_;
-            delete header_->succ_;
-            header_->succ_ = node;
+            auto node = head_->succ_;
+            delete head_;
+            head_ = node;
         }
 
         size_ = 0;
-        header_->succ_ = nullptr;
+        head_ = nullptr;
     }
 
 public:
@@ -141,19 +141,26 @@ public:
     /// Create an empty list.
     SinglyLinkedList()
         : common::Container(0)
-        , header_(new Node(T()))
-
+        , head_(nullptr)
     {
-        header_->succ_ = nullptr;
     }
 
     /// Create a list based on the given initializer list.
     SinglyLinkedList(const std::initializer_list<T>& il)
-        : SinglyLinkedList()
+        : common::Container(int(il.size()))
+        , head_(size_ == 0 ? nullptr : new Node(*il.begin()))
     {
-        for (auto it = il.begin(); it != il.end(); ++it)
+        if (size_ <= 1)
         {
-            insert(size_, *it);
+            return;
+        }
+
+        Node* current = head_;
+        for (auto it = il.begin() + 1; it != il.end(); ++it)
+        {
+            auto node = new Node(*it);
+            current->succ_ = node;
+            current = node;
         }
     }
 
@@ -161,7 +168,7 @@ public:
     ~SinglyLinkedList()
     {
         clear_data();
-        delete header_;
+        delete head_;
     }
 
     /*
@@ -189,7 +196,7 @@ public:
     {
         common::check_bounds(index, 0, size_);
 
-        auto current = header_->succ_;
+        auto current = head_;
         for (int i = 0; i < index; ++i)
         {
             current = current->succ_;
@@ -212,7 +219,7 @@ public:
     /// If the list is empty, the returned iterator will be equal to end().
     Iterator begin() const
     {
-        return Iterator(header_->succ_);
+        return Iterator(head_);
     }
 
     /// Return an iterator to the element following the last element of the list.
@@ -243,9 +250,18 @@ public:
         common::check_full(size_, MAX_CAPACITY);
         common::check_bounds(index, 0, size_ + 1);
 
+        // handle special situation
+        if (index == 0 || head_ == nullptr)
+        {
+            auto node = new Node(element, head_);
+            head_ = node;
+            ++size_;
+            return;
+        }
+
         // index
-        auto current = header_;
-        for (int i = 0; i < index; i++)
+        auto current = head_;
+        for (int i = 0; i < index - 1; i++)
         {
             current = current->succ_;
         }
@@ -265,9 +281,20 @@ public:
         common::check_empty(size_);
         common::check_bounds(index, 0, size_);
 
+        // handle special situation
+        if (index == 0)
+        {
+            T data = std::move(head_->data_);
+            auto node = head_;
+            head_ = node->succ_;
+            delete node;
+            --size_;
+            return data;
+        }
+
         // index
-        auto current = header_;
-        for (int i = 0; i < index; i++)
+        auto current = head_;
+        for (int i = 0; i < index - 1; i++)
         {
             current = current->succ_;
         }
@@ -299,15 +326,17 @@ public:
     /// Reverse the list in place.
     SinglyLinkedList& reverse()
     {
-        auto pre = header_->succ_;
-        header_->succ_ = nullptr;
-        while (pre)
+        Node* prev = nullptr;
+        Node* current = head_;
+        Node* next = nullptr;
+        while (current != nullptr)
         {
-            auto tmp = pre;
-            pre = pre->succ_;
-            tmp->succ_ = header_->succ_;
-            header_->succ_ = tmp;
+            next = current->succ_; // save next node
+            current->succ_ = prev; // reverse current node
+            prev = current;        // move prev ptr
+            current = next;        // move current ptr
         }
+        head_ = prev; // prev is the new head
 
         return *this;
     }
@@ -331,9 +360,9 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const SinglyLinkedList& list)
     {
         os << "List(";
-        for (auto it = list.header_->succ_; it != nullptr; it = it->succ_)
+        for (auto it = list.head_; it != nullptr; it = it->succ_)
         {
-            os << (it == list.header_->succ_ ? "" : ", ") << it->data_;
+            os << (it == list.head_ ? "" : ", ") << it->data_;
         }
         return os << ")";
     }
