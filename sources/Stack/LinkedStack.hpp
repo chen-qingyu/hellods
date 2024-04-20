@@ -105,13 +105,15 @@ public:
     /// Push an element at the top of the stack.
     void push(const T& element)
     {
-        LinkedList::insert(LinkedList::size(), element);
+        common::check_full(size_, MAX_CAPACITY);
+        LinkedList::insert_node(trailer_, element);
     }
 
     /// Pop the top element of the stack.
     T pop()
     {
-        return LinkedList::remove(LinkedList::size() - 1);
+        common::check_empty(size_);
+        return LinkedList::remove_node(trailer_->pred_);
     }
 
     /// Remove all of the elements from the stack.

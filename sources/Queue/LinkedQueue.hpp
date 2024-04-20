@@ -105,13 +105,15 @@ public:
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element)
     {
-        LinkedList::insert(LinkedList::size(), element);
+        common::check_full(size_, MAX_CAPACITY);
+        LinkedList::insert_node(trailer_, element);
     }
 
     /// Dequeue, pop the front element of the queue.
     T dequeue()
     {
-        return LinkedList::remove(0);
+        common::check_empty(size_);
+        return LinkedList::remove_node(header_->succ_);
     }
 
     /// Remove all of the elements from the queue.

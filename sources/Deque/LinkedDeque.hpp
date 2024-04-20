@@ -118,25 +118,29 @@ public:
     /// Push front, insert an element at the front of the deque.
     void push_front(const T& element)
     {
-        LinkedList::insert(0, element);
+        common::check_full(size_, MAX_CAPACITY);
+        LinkedList::insert_node(header_->succ_, element);
     }
 
     /// Push back, insert an element at the back of the deque.
     void push_back(const T& element)
     {
-        LinkedList::insert(LinkedList::size(), element);
+        common::check_full(size_, MAX_CAPACITY);
+        LinkedList::insert_node(trailer_, element);
     }
 
     /// Pop front, pop the front element of the deque.
     T pop_front()
     {
-        return LinkedList::remove(0);
+        common::check_empty(size_);
+        return LinkedList::remove_node(header_->succ_);
     }
 
     /// Pop back, pop the back element of the deque.
     T pop_back()
     {
-        return LinkedList::remove(LinkedList::size() - 1);
+        common::check_empty(size_);
+        return LinkedList::remove_node(trailer_->pred_);
     }
 
     /// Remove all of the elements from the deque.
