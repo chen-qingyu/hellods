@@ -33,6 +33,50 @@ template <typename T>
 class RedBlackTree : public BinarySearchTree<T>
 {
 private:
+    // Solve double red node.
+    void solve_double_red(Node* current, Node* parent)
+    {
+        Node* uncle = nullptr;   // parent's sibling
+        Node* grandpa = nullptr; // parent's parent
+
+        while (true)
+        {
+            uncle = (parent->parent_ != nullptr) ? parent->sibling() : nullptr;
+            grandpa = current->parent_->parent_;
+
+            // if grandpa is end_, break
+            if (grandpa == end_)
+            {
+                break;
+            }
+
+            // state 1: if uncle is red
+            if (uncle != nullptr && uncle->red_)
+            {
+                // 1. change color
+                parent->red_ = false;
+                uncle->red_ = false;
+                grandpa->red_ = true;
+
+                // 2. if grandpa is the root, break
+                if (grandpa == root_)
+                {
+                    break;
+                }
+
+                // 3. up up, until there is no double red
+                current = grandpa;
+                parent = current->parent_;
+                if (parent->red_ == false)
+                {
+                    break;
+                }
+            }
+
+            // state 2:
+        }
+    }
+
     // Insert node for red-black tree.
     void insert_rbnode(Node*& node, const T& element)
     {
@@ -81,35 +125,7 @@ private:
         }
 
         // now, the level >= 3 (root is level 1), and parent is red, double red
-        Node* uncle = nullptr;   // parent's sibling
-        Node* grandpa = nullptr; // parent's parent
-
-        while (true)
-        {
-            uncle = (parent->parent_ != nullptr) ? parent->sibling() : nullptr;
-            grandpa = current->parent_->parent_;
-
-            // if grandpa is end_, break
-            if (grandpa == end_)
-            {
-                break;
-            }
-
-            // if uncle is red
-            if (uncle != nullptr && uncle->red_)
-            {
-                // change color
-                parent->red_ = false;
-                uncle->red_ = false;
-                grandpa->red_ = true;
-
-                // if grandpa is the root, break
-                if (grandpa == root_)
-                {
-                    break;
-                }
-            }
-        }
+        solve_double_red(current, parent);
 
         // root is black
         root_->red_ = false;
