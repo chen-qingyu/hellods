@@ -154,6 +154,11 @@ void test()
 TEST_CASE("BinarySearchTree")
 {
     test<BinarySearchTree<int>>();
+}
+
+TEST_CASE("RedBlackTree")
+{
+    test<RedBlackTree<int>>();
 
     // 1. No default constructor to test the virtual maximum node.
     // 2. Only overloaded == and < to test compatibility.
@@ -174,10 +179,5 @@ TEST_CASE("BinarySearchTree")
         }
     };
 
-    BinarySearchTree<TestType> t = {1, 2, 3, 4, 5};
-}
-
-TEST_CASE("RedBlackTree")
-{
-    test<RedBlackTree<int>>();
+    RedBlackTree<TestType> t = {1, 2, 3, 4, 5};
 }
