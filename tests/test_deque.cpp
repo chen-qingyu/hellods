@@ -1,10 +1,7 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_exception.hpp>
+#include "tool.hpp"
 
 #include "../sources/Deque/ArrayDeque.hpp"
 #include "../sources/Deque/LinkedDeque.hpp"
-
-using Catch::Matchers::Message;
 
 using namespace hellods;
 
@@ -78,11 +75,15 @@ void test()
 TEST_CASE("ArrayDeque")
 {
     test<ArrayDeque<int>>();
-    test<ArrayDeque<double>>();
+
+    ArrayDeque<EqType> empty;
+    ArrayDeque<EqType> some = {EqType(), EqType(), EqType()};
 }
 
 TEST_CASE("LinkedDeque")
 {
     test<LinkedDeque<int>>();
-    test<LinkedDeque<double>>();
+
+    LinkedDeque<EqType> empty;
+    LinkedDeque<EqType> some = {EqType(), EqType(), EqType()};
 }

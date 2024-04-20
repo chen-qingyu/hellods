@@ -1,11 +1,8 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_exception.hpp>
+#include "tool.hpp"
 
 #include "../sources/List/ArrayList.hpp"
 #include "../sources/List/LinkedList.hpp"
 #include "../sources/List/SinglyLinkedList.hpp"
-
-using Catch::Matchers::Message;
 
 using namespace hellods;
 
@@ -118,14 +115,23 @@ void test()
 TEST_CASE("ArrayList")
 {
     test<ArrayList<int>>();
+
+    ArrayList<EqType> empty;
+    ArrayList<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
 }
 
 TEST_CASE("LinkedList")
 {
     test<LinkedList<int>>();
+
+    LinkedList<EqType> empty;
+    LinkedList<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
 }
 
 TEST_CASE("SinglyLinkedList")
 {
     test<SinglyLinkedList<int>>();
+
+    SinglyLinkedList<EqType> empty;
+    SinglyLinkedList<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
 }

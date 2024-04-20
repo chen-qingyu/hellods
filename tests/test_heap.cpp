@@ -1,9 +1,6 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_exception.hpp>
+#include "tool.hpp"
 
 #include "../sources/Heap/BinaryHeap.hpp"
-
-using Catch::Matchers::Message;
 
 using namespace hellods;
 
@@ -109,4 +106,7 @@ TEST_CASE("BinaryHeap")
 {
     test<BinaryHeap<int>>();                 // max-heap (default)
     test<BinaryHeap<int, std::less<int>>>(); // min-heap
+
+    BinaryHeap<EqLtType, std::less<EqLtType>> empty;
+    BinaryHeap<EqLtType, std::less<EqLtType>> some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
 }

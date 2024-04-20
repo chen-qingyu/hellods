@@ -1,10 +1,7 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_exception.hpp>
+#include "tool.hpp"
 
 #include "../sources/Tree/BinarySearchTree.hpp"
 #include "../sources/Tree/RedBlackTree.hpp"
-
-using Catch::Matchers::Message;
 
 using namespace hellods;
 
@@ -160,24 +157,6 @@ TEST_CASE("RedBlackTree")
 {
     test<RedBlackTree<int>>();
 
-    // 1. No default constructor to test the virtual maximum node.
-    // 2. Only overloaded == and < to test compatibility.
-    struct TestType
-    {
-        int id_;
-        TestType(int id)
-            : id_(id)
-        {
-        }
-        bool operator==(const TestType& that) const
-        {
-            return id_ == that.id_;
-        }
-        bool operator<(const TestType& that) const
-        {
-            return id_ < that.id_;
-        }
-    };
-
-    RedBlackTree<TestType> t = {1, 2, 3, 4, 5};
+    RedBlackTree<EqLtType> empty;
+    RedBlackTree<EqLtType> some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
 }

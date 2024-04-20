@@ -1,10 +1,7 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_exception.hpp>
+#include "tool.hpp"
 
 #include "../sources/Queue/ArrayQueue.hpp"
 #include "../sources/Queue/LinkedQueue.hpp"
-
-using Catch::Matchers::Message;
 
 using namespace hellods;
 

@@ -1,9 +1,6 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_exception.hpp>
+#include "tool.hpp"
 
 #include "../sources/Table/HashTable.hpp"
-
-using Catch::Matchers::Message;
 
 using namespace hellods;
 
@@ -118,4 +115,7 @@ void test()
 TEST_CASE("HashTable")
 {
     test<HashTable<int, std::string>>();
+
+    HashTable<int, EqType> empty;
+    HashTable<int, EqType> some = {{1, EqType()}, {2, EqType()}, {3, EqType()}, {4, EqType()}, {5, EqType()}};
 }
