@@ -436,20 +436,7 @@ public:
     /// Check whether two trees are equal.
     bool operator==(const BinarySearchTree& that) const
     {
-        if (size_ != that.size_)
-        {
-            return false;
-        }
-
-        for (auto this_it = begin(), that_it = that.begin(); this_it != end(); ++this_it, ++that_it)
-        {
-            if (*this_it != *that_it)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return size_ == that.size_ && std::equal(begin(), end(), that.begin());
     }
 
     /// Check whether two trees are not equal.
