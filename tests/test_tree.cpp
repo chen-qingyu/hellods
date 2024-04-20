@@ -154,6 +154,27 @@ void test()
 TEST_CASE("BinarySearchTree")
 {
     test<BinarySearchTree<int>>();
+
+    // 1. No default constructor to test the virtual maximum node.
+    // 2. Only overloaded == and < to test compatibility.
+    struct TestType
+    {
+        int id_;
+        TestType(int id)
+            : id_(id)
+        {
+        }
+        bool operator==(const TestType& that) const
+        {
+            return id_ == that.id_;
+        }
+        bool operator<(const TestType& that) const
+        {
+            return id_ < that.id_;
+        }
+    };
+
+    BinarySearchTree<TestType> t = {1, 2, 3, 4, 5};
 }
 
 TEST_CASE("RedBlackTree")
