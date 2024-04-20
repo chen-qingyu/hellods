@@ -42,7 +42,7 @@ class LinkedList : public common::Container
     template <typename _>
     friend class LinkedStack;
 
-private:
+protected:
     // Node of doubly linked list.
     struct Node
     {
@@ -63,6 +63,30 @@ private:
         {
         }
     };
+
+    // Insert the given element at the given position.
+    void insert_node(Node* pos, const T& element)
+    {
+        Node* node = new Node(element, pos->pred_, pos);
+        pos->pred_->succ_ = node;
+        pos->pred_ = node;
+
+        ++size_;
+    }
+
+    // Remove and return the element at the given position.
+    T remove_node(Node* pos)
+    {
+        T element = std::move(pos->data_);
+
+        pos->pred_->succ_ = pos->succ_;
+        pos->succ_->pred_ = pos->pred_;
+        delete pos;
+
+        --size_;
+
+        return element;
+    }
 
 public:
     /// List iterator class.
@@ -327,12 +351,7 @@ public:
         }
 
         // insert
-        Node* node = new Node(element, current->pred_, current);
-        current->pred_->succ_ = node;
-        current->pred_ = node;
-
-        // resize
-        ++size_;
+        insert_node(current, element);
     }
 
     /// Remove and return the element at the specified position in the list.
@@ -368,19 +387,8 @@ public:
             p_latest_ = header_;
         }
 
-        // move data
-        T data = std::move(current->data_);
-
-        // remove
-        current->pred_->succ_ = current->succ_;
-        current->succ_->pred_ = current->pred_;
-        delete current;
-
-        // resize
-        --size_;
-
-        // return data
-        return data;
+        // remove and return data
+        return remove_node(current);
     }
 
     /// Perform the given action for each element of the list.
