@@ -211,7 +211,7 @@ public:
     {
         for (auto it = il.begin(); it != il.end(); ++it)
         {
-            insert(size_, *it);
+            insert_node(trailer_, *it);
         }
     }
 
