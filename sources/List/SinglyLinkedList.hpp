@@ -34,31 +34,19 @@ template <typename T>
 class SinglyLinkedList : public common::Container
 {
 private:
-    struct Node;
-
-    // Virtual node, no data is stored.
-    // In order to save space and deal with T have no default constructor.
-    struct VNode
-    {
-        // Successor.
-        Node* succ_;
-
-        VNode(Node* succ = nullptr)
-            : succ_(succ)
-        {
-        }
-    };
-
     // Node of singly linked list.
-    struct Node : public VNode
+    struct Node
     {
         // Data stored in the node.
         T data_;
 
+        // Successor.
+        Node* succ_;
+
         // Create a node with given element.
         Node(const T& data, Node* succ = nullptr)
-            : VNode(succ)
-            , data_(data)
+            : data_(data)
+            , succ_(succ)
         {
         }
     };
@@ -153,14 +141,14 @@ public:
     /// Create an empty list.
     SinglyLinkedList()
         : common::Container(0)
-        , header_(static_cast<Node*>(new VNode()))
+        , header_(new Node(T()))
     {
     }
 
     /// Create a list based on the given initializer list.
     SinglyLinkedList(const std::initializer_list<T>& il)
         : common::Container(int(il.size()))
-        , header_(static_cast<Node*>(new VNode()))
+        , header_(new Node(T()))
     {
         Node* current = header_;
         for (auto it = il.begin(); it != il.end(); ++it)

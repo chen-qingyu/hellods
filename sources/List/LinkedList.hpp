@@ -34,35 +34,23 @@ template <typename T>
 class LinkedList : public common::Container
 {
 protected:
-    struct Node;
-
-    // Virtual node, no data is stored.
-    // In order to save space and deal with T have no default constructor.
-    struct VNode
+    // Node of doubly linked list.
+    struct Node
     {
+        // Data stored in the node.
+        T data_;
+
         // Predecessor.
         Node* pred_;
 
         // Successor.
         Node* succ_;
 
-        VNode(Node* pred = nullptr, Node* succ = nullptr)
-            : pred_(pred)
-            , succ_(succ)
-        {
-        }
-    };
-
-    // Node of doubly linked list.
-    struct Node : public VNode
-    {
-        // Data stored in the node.
-        T data_;
-
         // Create a node with given element.
         Node(const T& data, Node* pred = nullptr, Node* succ = nullptr)
-            : VNode(pred, succ)
-            , data_(data)
+            : data_(data)
+            , pred_(pred)
+            , succ_(succ)
         {
         }
     };
@@ -208,8 +196,8 @@ public:
     /// Create an empty list.
     LinkedList()
         : common::Container(0)
-        , header_(static_cast<Node*>(new VNode()))
-        , trailer_(static_cast<Node*>(new VNode()))
+        , header_(new Node(T()))
+        , trailer_(new Node(T()))
         , latest_(-1)
         , p_latest_(header_)
     {

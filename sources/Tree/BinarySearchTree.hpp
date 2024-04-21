@@ -36,13 +36,12 @@ template <typename T>
 class BinarySearchTree : public common::Container
 {
 protected:
-    struct Node;
-
-    // Virtual node.
-    // No data is stored, just for the virtual maximum node.
-    // In order to save space and cope with the situation where T does not have a default constructor.
-    struct VNode
+    // Tree node.
+    struct Node
     {
+        // Data stored in the node.
+        T data_;
+
         // Pointer to the parent.
         Node* parent_;
 
@@ -52,27 +51,15 @@ protected:
         // Pointer to the right child.
         Node* right_;
 
-        VNode(Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr)
-            : parent_(parent)
-            , left_(left)
-            , right_(right)
-        {
-        }
-    };
-
-    // Tree node.
-    struct Node : public VNode
-    {
-        // Data stored in the node.
-        T data_;
-
         // Color of node, for red-black tree.
         bool red_;
 
         // Create a node with given element.
         Node(const T& data, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr, bool red = true)
-            : VNode(parent, left, right)
-            , data_(data)
+            : data_(data)
+            , parent_(parent)
+            , left_(left)
+            , right_(right)
             , red_(red)
         {
         }
@@ -434,7 +421,7 @@ public:
     /// Create an empty tree.
     BinarySearchTree()
         : common::Container(0)
-        , end_(static_cast<Node*>(new VNode()))
+        , end_(new Node(T()))
     {
     }
 
