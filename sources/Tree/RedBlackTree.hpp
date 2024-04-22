@@ -176,6 +176,14 @@ public:
         return BinarySearchTree::remove(element);
     }
 
+    /// Remove all of the elements from the tree.
+    RedBlackTree& clear()
+    {
+        BinarySearchTree::clear();
+
+        return *this;
+    }
+
     /*
      * Print
      */

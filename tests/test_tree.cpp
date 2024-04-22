@@ -121,6 +121,8 @@ void test()
     REQUIRE(some.clear() == empty);
     REQUIRE(some.clear() == empty); // double clear
 
+    REQUIRE(typeid(some) == typeid(some.clear())); // return self-ref
+
     // Print
     std::ostringstream oss;
 
