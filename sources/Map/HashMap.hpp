@@ -73,20 +73,24 @@ public:
         friend class HashMap;
 
     protected:
-        // Current position.
-        int pos_;
+        // Current data pointer.
+        Pair* current_;
 
-        int map_capacity_;
-        Pair* map_data_;
+        // Begin of the buffer.
+        Pair* buffer_begin_;
 
-        Iterator(int pos, int capacity, Pair* data)
-            : pos_(pos)
-            , map_capacity_(capacity)
-            , map_data_(data)
+        // End of the buffer.
+        Pair* buffer_end_;
+
+        // Constructor.
+        Iterator(Pair* current, Pair* begin, Pair* end)
+            : current_(current)
+            , buffer_begin_(begin)
+            , buffer_end_(end)
         {
-            while (pos_ < map_capacity_ && !map_data_[pos_].full_)
+            while (current_ != buffer_end_ && !current_->full_)
             {
-                ++pos_;
+                ++current_;
             }
         }
 
@@ -99,7 +103,7 @@ public:
 
         bool operator==(const Iterator& that) const
         {
-            return pos_ == that.pos_;
+            return current_ == that.current_;
         }
 
         bool operator!=(const Iterator& that) const
@@ -109,7 +113,7 @@ public:
 
         std::pair<const K, V>& operator*() const
         {
-            return map_data_[pos_].pair_;
+            return current_->pair_;
         }
 
         std::pair<const K, V>* operator->() const
@@ -119,7 +123,7 @@ public:
 
         Iterator& operator++()
         {
-            while (++pos_ < map_capacity_ && !map_data_[pos_].full_)
+            while (++current_ != buffer_end_ && !current_->full_)
             {
             }
             return *this;
@@ -134,7 +138,7 @@ public:
 
         Iterator& operator--()
         {
-            while (--pos_ >= 0 && !map_data_[pos_].full_)
+            while (--current_ != buffer_begin_ && !current_->full_)
             {
             }
             return *this;
@@ -340,13 +344,13 @@ public:
     /// Return an iterator to the first element of the map.
     Iterator begin() const
     {
-        return Iterator(0, capacity_, data_);
+        return Iterator(data_, data_, data_ + capacity_);
     }
 
     /// Return an iterator to the element following the last element of the map.
     Iterator end() const
     {
-        return Iterator(capacity_, capacity_, data_);
+        return Iterator(data_ + capacity_, data_, data_ + capacity_);
     }
 
     /*
@@ -357,7 +361,7 @@ public:
     Iterator find(const K& key) const
     {
         int pos = find_pos(key);
-        return data_[pos].full_ ? Iterator(pos, capacity_, data_) : end();
+        return data_[pos].full_ ? Iterator(data_ + pos, data_, data_ + capacity_) : end();
     }
 
     /// Determine whether a key is in the map.
