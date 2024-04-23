@@ -132,7 +132,7 @@ public:
         Iterator operator++(int)
         {
             Iterator it = *this;
-            ++(*this);
+            ++*this;
             return it;
         }
 
@@ -147,7 +147,7 @@ public:
         Iterator operator--(int)
         {
             Iterator it = *this;
-            --(*this);
+            --*this;
             return it;
         }
     };
