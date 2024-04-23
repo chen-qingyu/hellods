@@ -1,24 +1,24 @@
 #include "tool.hpp"
 
-#include "../sources/Table/HashTable.hpp"
+#include "../sources/Map/HashMap.hpp"
 
 using namespace hellods;
 
-template <typename Table>
+template <typename Map>
 void test()
 {
     // Constructor / Destructor
-    Table empty;
-    Table some = {{1, "one"}, {2, "two"}, {3, "three"}};
+    Map empty;
+    Map some = {{1, "one"}, {2, "two"}, {3, "three"}};
 
     // Comparison
-    REQUIRE(empty == Table());
-    REQUIRE(some == Table({{1, "one"}, {2, "two"}, {3, "three"}}));
+    REQUIRE(empty == Map());
+    REQUIRE(some == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
     REQUIRE(empty != some);
-    REQUIRE(some != Table({{1, "one"}, {2, "two"}, {4, "four"}}));
+    REQUIRE(some != Map({{1, "one"}, {2, "two"}, {4, "four"}}));
 
-    REQUIRE(Table({{1, "one"}, {2, "two"}, {3, "three"}}) != Table({{1, "one"}, {2, "two"}, {3, "333"}}));
-    REQUIRE(Table({{1, "one"}, {2, "two"}, {3, "three"}}) != Table({{1, "one"}, {2, "two"}, {4, "three"}}));
+    REQUIRE(Map({{1, "one"}, {2, "two"}, {3, "three"}}) != Map({{1, "one"}, {2, "two"}, {3, "333"}}));
+    REQUIRE(Map({{1, "one"}, {2, "two"}, {3, "three"}}) != Map({{1, "one"}, {2, "two"}, {4, "three"}}));
 
     // Access
     REQUIRE(some[1] == "one");
@@ -27,7 +27,7 @@ void test()
     some[1] = "one";
     REQUIRE(some[1] == "one");
 
-    const Table const_table = {{1, "one"}, {2, "two"}, {3, "three"}};
+    const Map const_table = {{1, "one"}, {2, "two"}, {3, "three"}};
     REQUIRE(const_table[1] == "one");
 
     REQUIRE_THROWS_MATCHES(empty[1], std::runtime_error, Message("Error: The key-value pair does not exist."));
@@ -76,22 +76,22 @@ void test()
 
     // Manipulation
     REQUIRE(empty.insert(1, "one") == true);
-    REQUIRE(empty == Table({{1, "one"}}));
+    REQUIRE(empty == Map({{1, "one"}}));
     REQUIRE(empty.insert(2, "two") == true);
-    REQUIRE(empty == Table({{1, "one"}, {2, "two"}}));
+    REQUIRE(empty == Map({{1, "one"}, {2, "two"}}));
     REQUIRE(empty.insert(3, "three") == true);
-    REQUIRE(empty == Table({{1, "one"}, {2, "two"}, {3, "three"}}));
+    REQUIRE(empty == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
     REQUIRE(empty.insert(3, "three!") == false);
-    REQUIRE(empty == Table({{1, "one"}, {2, "two"}, {3, "three"}}));
+    REQUIRE(empty == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
 
     REQUIRE(empty.remove(3) == true);
-    REQUIRE(empty == Table({{1, "one"}, {2, "two"}}));
+    REQUIRE(empty == Map({{1, "one"}, {2, "two"}}));
     REQUIRE(empty.remove(2) == true);
-    REQUIRE(empty == Table({{1, "one"}}));
+    REQUIRE(empty == Map({{1, "one"}}));
     REQUIRE(empty.remove(1) == true);
-    REQUIRE(empty == Table({}));
+    REQUIRE(empty == Map({}));
     REQUIRE(empty.remove(1) == false);
-    REQUIRE(empty == Table({}));
+    REQUIRE(empty == Map({}));
 
     REQUIRE(some.clear() == empty);
     REQUIRE(some.clear() == empty); // double clear
@@ -99,23 +99,23 @@ void test()
     // Print
     std::ostringstream oss;
 
-    oss << Table({});
-    REQUIRE(oss.str() == "Table()");
+    oss << Map({});
+    REQUIRE(oss.str() == "Map()");
     oss.str("");
 
-    oss << Table({{1, "one"}});
-    REQUIRE(oss.str() == "Table(1: one)");
+    oss << Map({{1, "one"}});
+    REQUIRE(oss.str() == "Map(1: one)");
     oss.str("");
 
-    oss << Table({{1, "one"}, {2, "two"}, {3, "three"}});
-    REQUIRE(oss.str() == "Table(1: one, 2: two, 3: three)");
+    oss << Map({{1, "one"}, {2, "two"}, {3, "three"}});
+    REQUIRE(oss.str() == "Map(1: one, 2: two, 3: three)");
     oss.str("");
 }
 
-TEST_CASE("HashTable")
+TEST_CASE("HashMap")
 {
-    test<HashTable<int, std::string>>();
+    test<HashMap<int, std::string>>();
 
-    HashTable<int, EqType> empty;
-    HashTable<int, EqType> some = {{1, EqType()}, {2, EqType()}, {3, EqType()}, {4, EqType()}, {5, EqType()}};
+    HashMap<int, EqType> empty;
+    HashMap<int, EqType> some = {{1, EqType()}, {2, EqType()}, {3, EqType()}, {4, EqType()}, {5, EqType()}};
 }

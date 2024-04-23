@@ -1,7 +1,7 @@
 /**
- * @file HashTable.hpp
+ * @file HashMap.hpp
  * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Hash table.
+ * @brief Hash map.
  * @date 2022.01.29
  *
  * @copyright Copyright (C) 2022
@@ -20,8 +20,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HASHTABLE_HPP
-#define HASHTABLE_HPP
+#ifndef HASHMAP_HPP
+#define HASHMAP_HPP
 
 #include "../common/Container.hpp"
 #include "../common/utility.hpp"
@@ -31,12 +31,12 @@
 namespace hellods
 {
 
-/// Hash table.
+/// Hash map.
 template <typename K, typename V, typename Hash = std::hash<K>, typename Eq = std::equal_to<K>>
-class HashTable : public common::Container
+class HashMap : public common::Container
 {
 private:
-    // Hash table pair.
+    // Hash map pair.
     struct Pair
     {
         // The pair of the key-value.
@@ -51,10 +51,10 @@ private:
     };
 
 private:
-    // Initial capacity for hash table.
+    // Initial capacity for hash map.
     static const int INIT_PRIME_CAPACITY = 7;
 
-    // Maximum capacity for hash table.
+    // Maximum capacity for hash map.
     static const int MAX_PRIME_CAPACITY = 2147483629; // maximum prime number not exceeding INT_MAX
 
     // Available capacity.
@@ -66,13 +66,13 @@ private:
 public:
     /// Table iterator class.
     ///
-    /// Walk the table in random order.
+    /// Walk the map in random order.
     ///
-    /// Because the internal keys of the table have a fixed position,
-    /// thus the iterator of the table does not support modification for key.
+    /// Because the internal keys of the map have a fixed position,
+    /// thus the iterator of the map does not support modification for key.
     class Iterator
     {
-        friend class HashTable;
+        friend class HashMap;
 
     public:
         using iterator_category = std::input_iterator_tag;
@@ -256,8 +256,8 @@ public:
      * Constructor / Destructor
      */
 
-    /// Create an empty table.
-    HashTable()
+    /// Create an empty map.
+    HashMap()
         : common::Container(0)
         , capacity_(INIT_PRIME_CAPACITY)
         , data_(new Pair[capacity_])
@@ -268,9 +268,9 @@ public:
         }
     }
 
-    /// Create a table based on the given initializer list.
-    HashTable(const std::initializer_list<std::pair<const K, V>>& il)
-        : HashTable()
+    /// Create a map based on the given initializer list.
+    HashMap(const std::initializer_list<std::pair<const K, V>>& il)
+        : HashMap()
     {
         for (auto it = il.begin(); it != il.end(); ++it)
         {
@@ -278,8 +278,8 @@ public:
         }
     }
 
-    /// Destroy the table object.
-    ~HashTable()
+    /// Destroy the map object.
+    ~HashMap()
     {
         delete[] data_;
     }
@@ -289,7 +289,7 @@ public:
      */
 
     /// Check whether two tables are equal.
-    bool operator==(const HashTable& that) const
+    bool operator==(const HashMap& that) const
     {
         if (size_ != that.size_)
         {
@@ -309,7 +309,7 @@ public:
     }
 
     /// Check whether two tables are not equal.
-    bool operator!=(const HashTable& that) const
+    bool operator!=(const HashMap& that) const
     {
         return !(*this == that);
     }
@@ -318,7 +318,7 @@ public:
      * Access
      */
 
-    /// Return the reference of value for key if key is in the table, else throw exception.
+    /// Return the reference of value for key if key is in the map, else throw exception.
     V& operator[](const K& key)
     {
         int pos = find_pos(key);
@@ -331,25 +331,25 @@ public:
         return data_[pos].value_;
     }
 
-    /// Return the const reference of value for key if key is in the table, else throw exception.
+    /// Return the const reference of value for key if key is in the map, else throw exception.
     const V& operator[](const K& key) const
     {
-        return const_cast<HashTable&>(*this)[key];
+        return const_cast<HashMap&>(*this)[key];
     }
 
     /*
      * Iterator
      */
 
-    /// Return an iterator to the first element of the table.
+    /// Return an iterator to the first element of the map.
     ///
-    /// If the table is empty, the returned iterator will be equal to end().
+    /// If the map is empty, the returned iterator will be equal to end().
     Iterator begin() const
     {
         return Iterator(0, capacity_, data_);
     }
 
-    /// Return an iterator to the element following the last element of the table.
+    /// Return an iterator to the element following the last element of the map.
     ///
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
     Iterator end() const
@@ -361,14 +361,14 @@ public:
      * Examination
      */
 
-    /// Return an iterator to the first occurrence of the specified key, or end() if the table does not contains the key.
+    /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
     Iterator find(const K& key) const
     {
         int pos = find_pos(key);
         return data_[pos].full_ ? Iterator(pos, capacity_, data_) : end();
     }
 
-    /// Determine whether a key is in the table.
+    /// Determine whether a key is in the map.
     bool contains(const K& key) const
     {
         return data_[find_pos(key)].full_;
@@ -378,7 +378,7 @@ public:
      * Manipulation
      */
 
-    /// Insert a new key-value pair into the table. Return whether the pair was newly inserted.
+    /// Insert a new key-value pair into the map. Return whether the pair was newly inserted.
     bool insert(const K& key, const V& value)
     {
         common::check_full(size_, MAX_PRIME_CAPACITY >> 1);
@@ -404,7 +404,7 @@ public:
         return true;
     }
 
-    /// Remove the key-value pair corresponding to the key in the table. Return whether such a key was present.
+    /// Remove the key-value pair corresponding to the key in the map. Return whether such a key was present.
     bool remove(const K& key)
     {
         int pos = find_pos(key);
@@ -419,8 +419,8 @@ public:
         return true;
     }
 
-    /// Remove all of the elements from the table.
-    HashTable& clear()
+    /// Remove all of the elements from the map.
+    HashMap& clear()
     {
         if (size_ != 0)
         {
@@ -438,15 +438,15 @@ public:
      * Print
      */
 
-    /// Print the table.
-    friend std::ostream& operator<<(std::ostream& os, const HashTable& table)
+    /// Print the map.
+    friend std::ostream& operator<<(std::ostream& os, const HashMap& map)
     {
-        os << "Table(";
-        for (int i = 0, first = 1; i < table.capacity_; i++)
+        os << "Map(";
+        for (int i = 0, first = 1; i < map.capacity_; i++)
         {
-            if (table.data_[i].full_)
+            if (map.data_[i].full_)
             {
-                os << (first ? "" : ", ") << table.data_[i].key_ << ": " << table.data_[i].value_;
+                os << (first ? "" : ", ") << map.data_[i].key_ << ": " << map.data_[i].value_;
                 first = 0;
             }
         }
@@ -456,4 +456,4 @@ public:
 
 } // namespace hellods
 
-#endif // HASHTABLE_HPP
+#endif // HASHMAP_HPP

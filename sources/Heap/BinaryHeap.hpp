@@ -25,7 +25,7 @@
 
 #include "../List/ArrayList.hpp"
 
-#include "../Table/HashTable.hpp" // for operator==()
+#include "../Map/HashMap.hpp" // for operator==()
 
 namespace hellods
 {
@@ -81,7 +81,7 @@ public:
         }
 
         // count elements in each heap
-        HashTable<T, int> this_map, that_map;
+        HashMap<T, int> this_map, that_map;
         for (int i = 0; i < size(); i++)
         {
             this_map.contains(data_[i]) ? ++this_map[data_[i]] : this_map.insert(data_[i], 1);
