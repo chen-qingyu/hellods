@@ -66,6 +66,22 @@ public:
     }
 
     /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the list.
+    Iterator begin() const
+    {
+        return LinkedList::begin();
+    }
+
+    /// Return an iterator to the element following the last element of the list.
+    Iterator end() const
+    {
+        return LinkedList::end();
+    }
+
+    /*
      * Access
      */
 
@@ -156,9 +172,7 @@ public:
     /// Print the deque.
     friend std::ostream& operator<<(std::ostream& os, const LinkedDeque& deque)
     {
-        std::ostringstream oss;
-        oss << static_cast<const LinkedList&>(deque);
-        return os << "Deque" << oss.str().erase(0, 4);
+        return common::print(os, deque, "Deque");
     }
 };
 
