@@ -103,7 +103,7 @@ public:
         Iterator operator++(int)
         {
             Iterator tmp = *this;
-            ++current_;
+            ++*this;
             return tmp;
         }
 
@@ -122,7 +122,7 @@ public:
         Iterator operator--(int)
         {
             Iterator tmp = *this;
-            --current_;
+            --*this;
             return tmp;
         }
     };
