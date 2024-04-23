@@ -26,8 +26,6 @@
 #include "../common/Container.hpp"
 #include "../common/utility.hpp"
 
-#include <set> // for operator==()
-
 namespace hellods
 {
 
@@ -342,16 +340,12 @@ public:
      */
 
     /// Return an iterator to the first element of the map.
-    ///
-    /// If the map is empty, the returned iterator will be equal to end().
     Iterator begin() const
     {
         return Iterator(0, capacity_, data_);
     }
 
     /// Return an iterator to the element following the last element of the map.
-    ///
-    /// This element acts as a placeholder, attempting to access it results in undefined behavior.
     Iterator end() const
     {
         return Iterator(capacity_, capacity_, data_);
