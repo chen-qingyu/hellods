@@ -72,14 +72,13 @@ public:
     {
         friend class HashMap;
 
-    public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = std::pair<const K, V>;
-        using difference_type = int;
-        using pointer = value_type*;
-        using reference = value_type&;
+    protected:
+        // Current position.
+        int pos_;
 
-    private:
+        int map_capacity_;
+        Pair* map_data_;
+
         Iterator(int pos, int capacity, Pair* data)
             : pos_(pos)
             , map_capacity_(capacity)
@@ -92,6 +91,12 @@ public:
         }
 
     public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = std::pair<const K, V>;
+        using difference_type = int;
+        using pointer = value_type*;
+        using reference = value_type&;
+
         bool operator==(const Iterator& that) const
         {
             return pos_ == that.pos_;
@@ -141,13 +146,6 @@ public:
             --(*this);
             return it;
         }
-
-    private:
-        // Current position.
-        int pos_;
-
-        int map_capacity_;
-        Pair* map_data_;
     };
 
 private:

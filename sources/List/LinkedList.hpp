@@ -85,13 +85,6 @@ public:
     {
         friend class LinkedList;
 
-    public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = T;
-        using difference_type = int;
-        using pointer = value_type*;
-        using reference = value_type&;
-
     protected:
         // Current node pointer.
         Node* current_;
@@ -103,6 +96,12 @@ public:
         }
 
     public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = T;
+        using difference_type = int;
+        using pointer = value_type*;
+        using reference = value_type&;
+
         /// Dereference.
         T& operator*() const
         {

@@ -39,13 +39,6 @@ public:
     {
         friend class ArrayList;
 
-    public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = T;
-        using difference_type = int;
-        using pointer = value_type*;
-        using reference = value_type&;
-
     protected:
         // Current data pointer.
         T* current_;
@@ -57,6 +50,12 @@ public:
         }
 
     public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = T;
+        using difference_type = int;
+        using pointer = value_type*;
+        using reference = value_type&;
+
         /// Dereference.
         T& operator*() const
         {
