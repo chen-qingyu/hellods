@@ -33,6 +33,101 @@ namespace hellods
 template <typename T>
 class ArrayDeque : public common::Container
 {
+public:
+    /// Deque iterator class.
+    class Iterator
+    {
+        friend class ArrayDeque;
+
+    public:
+        using iterator_category = std::input_iterator_tag;
+        using value_type = T;
+        using difference_type = int;
+        using pointer = value_type*;
+        using reference = value_type&;
+
+    protected:
+        // Current data pointer.
+        T* current_;
+
+        // Begin of the ring buffer.
+        T* buffer_begin_;
+
+        // End of the ring buffer.
+        T* buffer_end_;
+
+        // Create an iterator that point to the current data of list.
+        Iterator(T* current, T* begin, T* end)
+            : current_(current)
+            , buffer_begin_(begin)
+            , buffer_end_(end)
+        {
+        }
+
+    public:
+        /// Dereference.
+        T& operator*() const
+        {
+            return *current_;
+        }
+
+        /// Get current pointer.
+        T* operator->() const
+        {
+            return current_;
+        }
+
+        /// Check if two iterators are same.
+        bool operator==(const Iterator& that) const
+        {
+            return current_ == that.current_;
+        }
+
+        /// Check if two iterators are different.
+        bool operator!=(const Iterator& that) const
+        {
+            return !(current_ == that.current_);
+        }
+
+        /// Increment the iterator: ++it.
+        Iterator& operator++()
+        {
+            ++current_;
+            if (current_ == buffer_end_)
+            {
+                current_ = buffer_begin_;
+            }
+            return *this;
+        }
+
+        /// Increment the iterator: it++.
+        Iterator operator++(int)
+        {
+            Iterator tmp = *this;
+            ++current_;
+            return tmp;
+        }
+
+        /// Decrement the iterator: --it.
+        Iterator& operator--()
+        {
+            if (current_ == buffer_begin_)
+            {
+                current_ = buffer_end_;
+            }
+            --current_;
+            return *this;
+        }
+
+        /// Decrement the iterator: it--.
+        Iterator operator--(int)
+        {
+            Iterator tmp = *this;
+            --current_;
+            return tmp;
+        }
+    };
+
 private:
     // Index of front in ring buffer. data[front] is the first element, except size == 0.
     int front_;
@@ -120,6 +215,22 @@ public:
     bool operator!=(const ArrayDeque& that) const
     {
         return !(*this == that);
+    }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the list.
+    Iterator begin() const
+    {
+        return Iterator(data_ + front_, data_, data_ + capacity_);
+    }
+
+    /// Return an iterator to the element following the last element of the list.
+    Iterator end() const
+    {
+        return Iterator(data_ + access(size_), data_, data_ + capacity_);
     }
 
     /*
@@ -224,12 +335,7 @@ public:
     /// Print the deque.
     friend std::ostream& operator<<(std::ostream& os, const ArrayDeque& deque)
     {
-        os << "Deque(";
-        for (int i = 0; i < deque.size_; i++)
-        {
-            os << (i == 0 ? "" : ", ") << deque.data_[deque.access(i)];
-        }
-        return os << ")";
+        return common::print(os, deque, "Deque");
     }
 };
 
