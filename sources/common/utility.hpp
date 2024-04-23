@@ -47,6 +47,40 @@ static inline void check_full(int size, int capacity)
     }
 }
 
+// Print function template for iterable container.
+template <typename Iterable>
+static inline std::ostream& print(std::ostream& os, const Iterable& iterable, const std::string& name)
+{
+    // This form looks complex, but there is only one judgment in the loop.
+    // At the Assembly level (see https://godbolt.org/z/qT9n7GKf8), this is more efficient
+    // than the usual short form of the generated machine code under O3-level optimization.
+    // The inspiration comes from Java source code.
+
+    if (iterable.is_empty())
+    {
+        return os << name << "()";
+    }
+
+    os << name << "(";
+    auto it = iterable.begin();
+    while (true)
+    {
+        os << *it++;
+        if (it == iterable.end())
+        {
+            return os << ")";
+        }
+        os << ", ";
+    }
+}
+
+// Print function template for std::pair.
+template <typename K, typename V>
+std::ostream& operator<<(std::ostream& os, const std::pair<const K, V>& pair)
+{
+    return os << pair.first << ": " << pair.second;
+}
+
 } // namespace hellods::common
 
 #endif // UTILITY_HPP

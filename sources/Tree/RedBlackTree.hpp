@@ -183,16 +183,6 @@ public:
 
         return *this;
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the tree.
-    friend std::ostream& operator<<(std::ostream& os, const RedBlackTree& tree)
-    {
-        return os << static_cast<const BinarySearchTree&>(tree);
-    }
 };
 
 } // namespace hellods

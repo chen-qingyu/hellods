@@ -435,16 +435,7 @@ public:
     /// Print the map.
     friend std::ostream& operator<<(std::ostream& os, const HashMap& map)
     {
-        os << "Map(";
-        for (int i = 0, first = 1; i < map.capacity_; i++)
-        {
-            if (map.data_[i].full_)
-            {
-                os << (first ? "" : ", ") << map.data_[i].key_ << ": " << map.data_[i].value_;
-                first = 0;
-            }
-        }
-        return os << ")";
+        return common::print(os, map, "Map");
     }
 };
 

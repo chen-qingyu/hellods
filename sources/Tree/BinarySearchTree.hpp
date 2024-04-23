@@ -590,10 +590,7 @@ public:
     /// Print the tree.
     friend std::ostream& operator<<(std::ostream& os, const BinarySearchTree& tree)
     {
-        os << "Tree(";
-        tree.traverse_node(tree.root_, LevelOrder, [&](const T& e)
-                           { os << (tree.root_->data_ == e ? "" : ", ") << e; });
-        return os << ")";
+        return common::print(os, tree, "Tree");
     }
 };
 

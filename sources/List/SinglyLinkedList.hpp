@@ -332,12 +332,7 @@ public:
     /// Print the list.
     friend std::ostream& operator<<(std::ostream& os, const SinglyLinkedList& list)
     {
-        os << "List(";
-        for (auto it = list.header_->succ_; it != nullptr; it = it->succ_)
-        {
-            os << (it == list.header_->succ_ ? "" : ", ") << it->data_;
-        }
-        return os << ")";
+        return common::print(os, list, "List");
     }
 };
 
