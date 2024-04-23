@@ -62,7 +62,7 @@ private:
     Pair* data_;
 
 public:
-    /// Table iterator class.
+    /// Map iterator class.
     ///
     /// Walk the map in random order.
     ///
@@ -82,10 +82,10 @@ public:
     private:
         Iterator(int pos, int capacity, Pair* data)
             : pos_(pos)
-            , table_capacity_(capacity)
-            , table_data_(data)
+            , map_capacity_(capacity)
+            , map_data_(data)
         {
-            while (pos_ < table_capacity_ && !table_data_[pos_].full_)
+            while (pos_ < map_capacity_ && !map_data_[pos_].full_)
             {
                 ++pos_;
             }
@@ -104,7 +104,7 @@ public:
 
         std::pair<const K, V>& operator*() const
         {
-            return table_data_[pos_].pair_;
+            return map_data_[pos_].pair_;
         }
 
         std::pair<const K, V>* operator->() const
@@ -114,7 +114,7 @@ public:
 
         Iterator& operator++()
         {
-            while (++pos_ < table_capacity_ && !table_data_[pos_].full_)
+            while (++pos_ < map_capacity_ && !map_data_[pos_].full_)
             {
             }
             return *this;
@@ -129,7 +129,7 @@ public:
 
         Iterator& operator--()
         {
-            while (--pos_ >= 0 && !table_data_[pos_].full_)
+            while (--pos_ >= 0 && !map_data_[pos_].full_)
             {
             }
             return *this;
@@ -146,8 +146,8 @@ public:
         // Current position.
         int pos_;
 
-        int table_capacity_;
-        Pair* table_data_;
+        int map_capacity_;
+        Pair* map_data_;
     };
 
 private:
@@ -286,7 +286,7 @@ public:
      * Comparison
      */
 
-    /// Check whether two tables are equal.
+    /// Check whether two maps are equal.
     bool operator==(const HashMap& that) const
     {
         if (size_ != that.size_)
@@ -306,7 +306,7 @@ public:
         return true;
     }
 
-    /// Check whether two tables are not equal.
+    /// Check whether two maps are not equal.
     bool operator!=(const HashMap& that) const
     {
         return !(*this == that);
