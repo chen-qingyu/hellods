@@ -571,7 +571,7 @@ public:
     }
 
     /// Remove all of the elements from the tree.
-    BinarySearchTree& clear()
+    void clear()
     {
         if (size_ != 0)
         {
@@ -579,8 +579,6 @@ public:
             destroy(root_);
             root_ = nullptr;
         }
-
-        return *this;
     }
 
     /*

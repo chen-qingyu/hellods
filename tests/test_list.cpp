@@ -93,8 +93,10 @@ void test()
 
     REQUIRE(some.reverse() == List({8, 6, 4, 2, 0}));
 
-    REQUIRE(some.clear() == empty);
-    REQUIRE(some.clear() == empty); // double clear
+    some.clear();
+    REQUIRE(some == empty);
+    some.clear(); // double clear
+    REQUIRE(some == empty);
 
     // Print
     std::ostringstream oss;

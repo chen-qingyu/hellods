@@ -157,11 +157,9 @@ public:
     }
 
     /// Remove all of the elements from the heap.
-    BinaryHeap& clear()
+    void clear()
     {
         ArrayList::clear();
-
-        return *this;
     }
 
     /*

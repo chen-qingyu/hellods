@@ -114,11 +114,9 @@ public:
     }
 
     /// Remove all of the elements from the queue.
-    ArrayQueue& clear()
+    void clear()
     {
         ArrayDeque::clear();
-
-        return *this;
     }
 
     /*

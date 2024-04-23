@@ -117,11 +117,9 @@ public:
     }
 
     /// Remove all of the elements from the stack.
-    LinkedStack& clear()
+    void clear()
     {
         LinkedList::clear();
-
-        return *this;
     }
 
     /*

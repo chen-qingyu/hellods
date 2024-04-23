@@ -115,11 +115,9 @@ public:
     }
 
     /// Remove all of the elements from the stack.
-    ArrayStack& clear()
+    void clear()
     {
         ArrayList::clear();
-
-        return *this;
     }
 
     /*

@@ -315,14 +315,12 @@ public:
     }
 
     /// Remove all of the elements from the list.
-    SinglyLinkedList& clear()
+    void clear()
     {
         if (size_ != 0)
         {
             clear_data();
         }
-
-        return *this;
     }
 
     /*

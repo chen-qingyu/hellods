@@ -118,10 +118,10 @@ void test()
     REQUIRE(empty.remove(0) == false);
     REQUIRE(empty == Tree({}));
 
-    REQUIRE(some.clear() == empty);
-    REQUIRE(some.clear() == empty); // double clear
-
-    REQUIRE(typeid(some) == typeid(some.clear())); // return self-ref
+    some.clear();
+    REQUIRE(some == empty);
+    some.clear(); // double clear
+    REQUIRE(some == empty);
 
     // Print
     std::ostringstream oss;

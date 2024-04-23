@@ -414,7 +414,7 @@ public:
     }
 
     /// Remove all of the elements from the map.
-    HashMap& clear()
+    void clear()
     {
         if (size_ != 0)
         {
@@ -424,8 +424,6 @@ public:
             }
             size_ = 0;
         }
-
-        return *this;
     }
 
     /*

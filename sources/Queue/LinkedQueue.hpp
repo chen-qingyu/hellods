@@ -117,11 +117,9 @@ public:
     }
 
     /// Remove all of the elements from the queue.
-    LinkedQueue& clear()
+    void clear()
     {
         LinkedList::clear();
-
-        return *this;
     }
 
     /*

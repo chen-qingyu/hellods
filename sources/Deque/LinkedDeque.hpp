@@ -144,11 +144,9 @@ public:
     }
 
     /// Remove all of the elements from the deque.
-    LinkedDeque& clear()
+    void clear()
     {
         LinkedList::clear();
-
-        return *this;
     }
 
     /*

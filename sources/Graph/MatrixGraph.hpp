@@ -307,7 +307,7 @@ public:
     }
 
     /// Clear this graph.
-    MatrixGraph& clear()
+    void clear()
     {
         if (size_ != 0)
         {
@@ -315,8 +315,6 @@ public:
             size_ = 0;
             matrix_ = nullptr;
         }
-
-        return *this;
     }
 
     /*

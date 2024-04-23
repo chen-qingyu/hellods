@@ -44,8 +44,10 @@ void test()
     REQUIRE(empty.dequeue() == 3);
     REQUIRE_THROWS_MATCHES(empty.dequeue(), std::runtime_error, Message("Error: The container is empty."));
 
-    REQUIRE(some.clear() == empty);
-    REQUIRE(some.clear() == empty); // double clear
+    some.clear();
+    REQUIRE(some == empty);
+    some.clear(); // double clear
+    REQUIRE(some == empty);
 
     // Print
     std::ostringstream oss;

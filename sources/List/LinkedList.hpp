@@ -404,14 +404,12 @@ public:
     }
 
     /// Remove all of the elements from the list.
-    LinkedList& clear()
+    void clear()
     {
         if (size_ != 0)
         {
             clear_data();
         }
-
-        return *this;
     }
 
     /*

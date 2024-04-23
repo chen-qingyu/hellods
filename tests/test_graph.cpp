@@ -121,6 +121,8 @@ Graph(\n\
     oss.str("");
 
     // Manipulation
-    REQUIRE(some.clear() == empty);
-    REQUIRE(some.clear() == empty); // double clear
+    some.clear();
+    REQUIRE(some == empty);
+    some.clear(); // double clear
+    REQUIRE(some == empty);
 }
