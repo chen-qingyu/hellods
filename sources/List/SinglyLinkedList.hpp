@@ -108,9 +108,9 @@ public:
         /// Increment the iterator: it++.
         Iterator operator++(int)
         {
-            Iterator tmp = *this;
+            auto it = *this;
             current_ = current_->succ_;
-            return tmp;
+            return it;
         }
     };
 

@@ -136,9 +136,9 @@ public:
         /// Increment the iterator: it++.
         Iterator operator++(int)
         {
-            Iterator tmp = *this;
+            auto it = *this;
             current_ = current_->succ_;
-            return tmp;
+            return it;
         }
 
         /// Decrement the iterator: --it.
@@ -151,9 +151,9 @@ public:
         /// Decrement the iterator: it--.
         Iterator operator--(int)
         {
-            Iterator tmp = *this;
+            auto it = *this;
             current_ = current_->pred_;
-            return tmp;
+            return it;
         }
     };
 

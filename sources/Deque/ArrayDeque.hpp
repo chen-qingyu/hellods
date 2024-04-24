@@ -102,9 +102,9 @@ public:
         /// Increment the iterator: it++.
         Iterator operator++(int)
         {
-            Iterator tmp = *this;
+            auto it = *this;
             ++*this;
-            return tmp;
+            return it;
         }
 
         /// Decrement the iterator: --it.
@@ -121,9 +121,9 @@ public:
         /// Decrement the iterator: it--.
         Iterator operator--(int)
         {
-            Iterator tmp = *this;
+            auto it = *this;
             --*this;
-            return tmp;
+            return it;
         }
     };
 

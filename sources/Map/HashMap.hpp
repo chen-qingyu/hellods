@@ -131,7 +131,7 @@ public:
 
         Iterator operator++(int)
         {
-            Iterator it = *this;
+            auto it = *this;
             ++*this;
             return it;
         }
@@ -146,7 +146,7 @@ public:
 
         Iterator operator--(int)
         {
-            Iterator it = *this;
+            auto it = *this;
             --*this;
             return it;
         }

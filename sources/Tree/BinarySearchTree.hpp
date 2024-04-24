@@ -224,9 +224,9 @@ public:
          */
         Iterator operator++(int)
         {
-            auto tmp = *this;
+            auto it = *this;
             next();
-            return tmp;
+            return it;
         }
 
         /**
@@ -247,9 +247,9 @@ public:
          */
         Iterator operator--(int)
         {
-            auto tmp = *this;
+            auto it = *this;
             previous();
-            return tmp;
+            return it;
         }
     };
 
