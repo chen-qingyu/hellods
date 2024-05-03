@@ -69,10 +69,20 @@ TEST_CASE("ArrayQueue")
 {
     test<ArrayQueue<int>>();
     test<ArrayQueue<double>>();
+
+    ArrayQueue<EqType> empty;
+    ArrayQueue<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
 }
 
 TEST_CASE("LinkedQueue")
 {
     test<LinkedQueue<int>>();
     test<LinkedQueue<double>>();
+
+    LinkedQueue<EqType> empty;
+    LinkedQueue<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
 }

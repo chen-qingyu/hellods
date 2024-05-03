@@ -114,10 +114,22 @@ void test()
     oss.str("");
 }
 
+template <>
+struct std::hash<EqType> // explicit specialization
+{
+    std::size_t operator()(const EqType&) const
+    {
+        static std::size_t id = 0;
+        return id++;
+    }
+};
+
 TEST_CASE("HashMap")
 {
     test<HashMap<int, std::string>>();
 
-    HashMap<int, EqType> empty;
-    HashMap<int, EqType> some = {{1, EqType()}, {2, EqType()}, {3, EqType()}, {4, EqType()}, {5, EqType()}};
+    HashMap<EqType, EqType> empty;
+    HashMap<EqType, EqType> some = {{EqType(), EqType()}, {EqType(), EqType()}, {EqType(), EqType()}};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 3);
 }

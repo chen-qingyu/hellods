@@ -161,4 +161,6 @@ TEST_CASE("RedBlackTree")
 
     RedBlackTree<EqLtType> empty;
     RedBlackTree<EqLtType> some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
 }

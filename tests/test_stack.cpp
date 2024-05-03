@@ -69,10 +69,20 @@ TEST_CASE("ArrayStack")
 {
     test<ArrayStack<int>>();
     test<ArrayStack<double>>();
+
+    ArrayStack<EqType> empty;
+    ArrayStack<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
 }
 
 TEST_CASE("LinkedStack")
 {
     test<LinkedStack<int>>();
     test<LinkedStack<double>>();
+
+    LinkedStack<EqType> empty;
+    LinkedStack<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
 }

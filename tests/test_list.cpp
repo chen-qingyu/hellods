@@ -120,6 +120,8 @@ TEST_CASE("ArrayList")
 
     ArrayList<EqType> empty;
     ArrayList<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
 }
 
 TEST_CASE("LinkedList")
@@ -128,6 +130,8 @@ TEST_CASE("LinkedList")
 
     LinkedList<EqType> empty;
     LinkedList<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
 }
 
 TEST_CASE("SinglyLinkedList")
@@ -136,4 +140,6 @@ TEST_CASE("SinglyLinkedList")
 
     SinglyLinkedList<EqType> empty;
     SinglyLinkedList<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
 }

@@ -111,4 +111,6 @@ TEST_CASE("BinaryHeap")
 
     BinaryHeap<EqLtType, std::less<EqLtType>> empty;
     BinaryHeap<EqLtType, std::less<EqLtType>> some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 5);
 }
