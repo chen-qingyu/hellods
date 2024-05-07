@@ -33,6 +33,42 @@ template <typename T>
 class RedBlackTree : public BinarySearchTree<T>
 {
 private:
+    // Rotate right.
+    void rotate_right(Node*& current)
+    {
+        /*
+               6       ->        4
+              / \               / \
+             4   7             3   6
+            / \                   / \
+           3   5                 5   7
+        */
+
+        Node* tmproot = current;             // -> 6
+        current = tmproot->left_;            // -> 4
+        current->parent_ = tmproot->parent_; // 4'p = 6'p
+        tmproot->link_left(current->right_); // 6'l = 5
+        current->link_right(tmproot);        // 4'r = 6
+    }
+
+    // Rotate left.
+    void rotate_left(Node*& current)
+    {
+        /*
+             4       ->        6
+            / \               / \
+           3   6             4   7
+              / \           / \
+             5   7         3   5
+        */
+
+        Node* tmproot = current;             // -> 4
+        current = tmproot->right_;           // -> 6
+        current->parent_ = tmproot->parent_; // 6'p = 4'p
+        tmproot->link_right(current->left_); // 4'r = 5
+        current->link_left(tmproot);         // 6'l = 4
+    }
+
     // Solve double red node.
     void solve_double_red(Node* current, Node* parent)
     {
@@ -41,7 +77,7 @@ private:
 
         while (true)
         {
-            uncle = (parent->parent_ != nullptr) ? parent->sibling() : nullptr;
+            uncle = (parent->parent_ != end_) ? parent->sibling() : nullptr;
             grandpa = current->parent_->parent_;
 
             // if grandpa is end_, break
@@ -75,8 +111,61 @@ private:
                 continue;
             }
 
-            // state 2:
-        }
+            // state 2: if uncle is black or null
+            Node* fff = grandpa->parent_;
+            int flag = 0; // 0 means grandpa is end_, 1 is left child, 2 is right child
+            if (fff != end_)
+            {
+                flag = fff->left_ == grandpa ? 1 : 2;
+            }
+            if (parent == grandpa->left_)
+            {
+                if (current == parent->left_)
+                {
+                    rotate_right(grandpa);
+                }
+                else // current is right child
+                {
+                    rotate_left(parent);
+                    rotate_right(grandpa);
+                }
+
+                // change color
+                grandpa->red_ = false;
+                grandpa->right_->red_ = true;
+            }
+            else // parent is right child
+            {
+                if (parent->right_ == current)
+                {
+                    rotate_left(grandpa);
+                }
+                else
+                {
+                    rotate_right(parent);
+                    rotate_left(grandpa);
+                }
+
+                // change color
+                grandpa->red_ = false;
+                grandpa->left_->red_ = true;
+            }
+
+            // update root
+            if (flag == 0)
+            {
+                end_->link_left(grandpa);
+            }
+            else if (flag == 1)
+            {
+                fff->link_left(grandpa);
+            }
+            else if (flag == 2)
+            {
+                fff->link_right(grandpa);
+            }
+            break;
+        } // end while(true)
     }
 
     // Insert node for red-black tree.
@@ -161,10 +250,9 @@ public:
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
     bool insert(const T& element)
     {
-        // int old_size = size_;
-        // insert_rbnode(root_, element);
-        // return old_size != size_;
-        return BinarySearchTree::insert(element);
+        int old_size = size_;
+        insert_rbnode(root_, element);
+        return old_size != size_;
     }
 
     /// Remove the specified element from the tree. Return whether such an element was present.

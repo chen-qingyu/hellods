@@ -8,7 +8,7 @@ struct EqType
 {
     bool operator==(const EqType& that) const
     {
-        return true;
+        return false;
     }
 };
 
@@ -17,7 +17,7 @@ struct EqLtType
 {
     bool operator==(const EqLtType& that) const
     {
-        return true;
+        return false;
     }
     bool operator<(const EqLtType& that) const
     {
