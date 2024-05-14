@@ -196,8 +196,12 @@ private:
             return MAX_PRIME_CAPACITY;
         }
 
-        // if n is even, let it odd, because prime > 2 is odd
-        n |= 1;
+        // if n is even, let it odd and < this, because n > 2 is odd and while n += 2
+        if (n % 2 == 0)
+        {
+            --n;
+        }
+
         while (n < MAX_PRIME_CAPACITY)
         {
             n += 2;
