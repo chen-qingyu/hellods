@@ -53,7 +53,7 @@ private:
     static const int INIT_PRIME_CAPACITY = 7;
 
     // Maximum capacity for hash map.
-    static const int MAX_PRIME_CAPACITY = 2147483629; // maximum prime number not exceeding INT_MAX
+    static const int MAX_PRIME_CAPACITY = 2147483629; // maximum prime number that < INT_MAX
 
     // Available capacity.
     int capacity_;
