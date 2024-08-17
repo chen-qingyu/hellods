@@ -1,7 +1,7 @@
 /**
  * @file utility.hpp
- * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Utility functions for HelloDS.
+ * @author Chen QingYu <chen_qingyu@qq.com>
+ * @brief Utility functions of HelloDS.
  * @date 2023.01.05
  */
 

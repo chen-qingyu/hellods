@@ -1,7 +1,7 @@
 /**
  * @file Container.hpp
- * @author Qingyu Chen (chen_qingyu@qq.com, https://chen-qingyu.github.io/)
- * @brief Base container class for HelloDS.
+ * @author Chen QingYu <chen_qingyu@qq.com>
+ * @brief Base container class of HelloDS.
  * @date 2024.03.27
  */
 
