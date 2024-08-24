@@ -1,20 +1,20 @@
 # HelloDS
 
-_C++ 模板实现的完整、通用的基础数据结构_
+_C++ 实现的完整、通用的基础数据结构模板库_
 
 ## 1. 基本属性
 
-- 名称：HelloDS，意为 **Hello** **D**ata **S**tructure。
-- 语言：C++，要求 C++17 。
-- 目标：实现完整、通用的基础数据结构。不使用任何标准库容器。全部使用模板，并且支持迭代器。
+- 名称：HelloDS，意为 **Hello** **D**ata **S**tructure
+- 语言：C++，要求 C++17
+- 目标：实现完整、通用的基础数据结构模板库；不使用任何标准库容器；支持迭代器
 - 模块：Deque, Graph, Heap, List, Map, Queue, Set, Stack, Tree
-- 简洁：Stay simple, stay young. 在保证健壮的前提下，尽量简洁，便于维护和阅读。
-- 健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查。
-- 风格：大部分遵循 [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) ，小部分基于项目规模和源码简洁性的考虑采用自己的风格。
-- 测试：使用 [Catch2](https://github.com/catchorg/Catch2) 进行了测试，确保测试全部通过。
-- 安全：使用 [Dr. Memory](https://drmemory.org/) 进行了检查，确保没有安全问题。
-- 文档：使用 [Doxygen](https://www.doxygen.nl/) 生成文档。
-- 构建：使用 [XMake](https://xmake.io/) 进行构建。
+- 简洁：Stay simple, stay young. 在保证健壮的前提下，尽量简洁，便于维护和阅读
+- 健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查
+- 风格：大部分遵循 [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) ，小部分基于项目规模和源码简洁性的考虑采用自己的风格
+- 测试：使用 [Catch2](https://github.com/catchorg/Catch2) 进行了测试，确保测试全部通过
+- 安全：使用 [Dr. Memory](https://drmemory.org) 进行了检查，确保没有安全问题
+- 文档：使用 [Doxygen](https://www.doxygen.nl) 生成文档
+- 构建：使用 [XMake](https://xmake.io) 进行构建
 
 ## 2. 使用说明
 
