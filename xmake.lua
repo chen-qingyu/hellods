@@ -1,6 +1,6 @@
 set_project("hellods")
 set_version("2.5.0")
-set_languages("cxx20")
+set_languages("cxx23")
 
 add_rules("mode.debug", "mode.release")
 add_requires("catch2")
