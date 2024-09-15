@@ -7,7 +7,7 @@ _C++ 实现的完整、通用的基础数据结构模板库_
 - 名称：HelloDS，意为 **Hello** **D**ata **S**tructure
 - 语言：C++，满足 C++23 标准
 - 目标：实现完整、通用的基础数据结构模板库；不使用任何标准库容器；支持迭代器
-- 模块：Deque, Graph, Heap, List, Map, Queue, Set, Stack, Tree
+- 模块：List, Stack, Queue, Deque, Heap, Tree, Graph, Set, Map
 - 简洁：Stay simple, stay young. 在保证健壮的前提下，尽量简洁，便于维护和阅读
 - 健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查
 - 风格：大部分遵循 [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) ，小部分基于项目规模和源码简洁性的考虑采用自己的风格
