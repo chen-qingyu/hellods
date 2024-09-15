@@ -91,7 +91,10 @@ void test()
     REQUIRE(some.map([&](auto& e)
                      { e *= 2; }) == List({0, 2, 4, 6, 8}));
 
+    REQUIRE(empty.reverse() == empty);
+    REQUIRE(List({1}).reverse() == List({1}));
     REQUIRE(some.reverse() == List({8, 6, 4, 2, 0}));
+    REQUIRE(some.reverse() == List({0, 2, 4, 6, 8}));
 
     some.clear();
     REQUIRE(some == empty);

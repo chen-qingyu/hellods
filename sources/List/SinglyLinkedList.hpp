@@ -285,15 +285,16 @@ public:
     /// Reverse the list in place.
     SinglyLinkedList& reverse()
     {
-        auto pre = header_->succ_;
-        header_->succ_ = nullptr;
-        while (pre)
+        auto p = header_->succ_;
+        decltype(p) h = nullptr;
+        while (p)
         {
-            auto tmp = pre;
-            pre = pre->succ_;
-            tmp->succ_ = header_->succ_;
-            header_->succ_ = tmp;
+            auto tmp = p->succ_;
+            p->succ_ = h;
+            h = p;
+            p = tmp;
         }
+        header_->succ_ = h;
 
         return *this;
     }
