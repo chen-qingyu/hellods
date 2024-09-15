@@ -5,7 +5,7 @@ _C++ 实现的完整、通用的基础数据结构模板库_
 ## 1. 基本属性
 
 - 名称：HelloDS，意为 **Hello** **D**ata **S**tructure
-- 语言：C++，要求 C++17
+- 语言：C++，要求 C++20
 - 目标：实现完整、通用的基础数据结构模板库；不使用任何标准库容器；支持迭代器
 - 模块：Deque, Graph, Heap, List, Map, Queue, Set, Stack, Tree
 - 简洁：Stay simple, stay young. 在保证健壮的前提下，尽量简洁，便于维护和阅读

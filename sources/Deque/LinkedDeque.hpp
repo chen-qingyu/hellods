@@ -17,20 +17,28 @@ namespace hellods
 template <typename T>
 class LinkedDeque : private LinkedList<T>
 {
+protected:
+    using LinkedList<T>::MAX_CAPACITY;
+    using LinkedList<T>::size_;
+    using LinkedList<T>::header_;
+    using LinkedList<T>::trailer_;
+
 public:
+    using LinkedList<T>::Iterator;
+
     /*
      * Constructor / Destructor
      */
 
     /// Create an empty deque.
     LinkedDeque()
-        : LinkedList()
+        : LinkedList<T>()
     {
     }
 
     /// Create a deque based on the given initializer list.
     LinkedDeque(const std::initializer_list<T>& il)
-        : LinkedList(il)
+        : LinkedList<T>(il)
     {
     }
 
@@ -41,7 +49,7 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const LinkedDeque& that) const
     {
-        return static_cast<const LinkedList&>(*this) == static_cast<const LinkedList&>(that);
+        return static_cast<const LinkedList<T>&>(*this) == static_cast<const LinkedList<T>&>(that);
     }
 
     /// Check whether two queues are not equal.
@@ -54,16 +62,16 @@ public:
      * Iterator
      */
 
-    /// Return an iterator to the first element of the list.
+    /// Return an iterator to the first element of the deque.
     Iterator begin() const
     {
-        return LinkedList::begin();
+        return LinkedList<T>::begin();
     }
 
-    /// Return an iterator to the element following the last element of the list.
+    /// Return an iterator to the element following the last element of the deque.
     Iterator end() const
     {
-        return LinkedList::end();
+        return LinkedList<T>::end();
     }
 
     /*
@@ -103,13 +111,13 @@ public:
     /// Get the number of elements of the deque.
     int size() const
     {
-        return LinkedList::size();
+        return LinkedList<T>::size();
     }
 
     /// Check if the deque is empty.
     bool is_empty() const
     {
-        return LinkedList::is_empty();
+        return LinkedList<T>::is_empty();
     }
 
     /*
@@ -120,34 +128,34 @@ public:
     void push_front(const T& element)
     {
         common::check_full(size_, MAX_CAPACITY);
-        LinkedList::insert_node(header_->succ_, element);
+        LinkedList<T>::insert_node(header_->succ_, element);
     }
 
     /// Push back, insert an element at the back of the deque.
     void push_back(const T& element)
     {
         common::check_full(size_, MAX_CAPACITY);
-        LinkedList::insert_node(trailer_, element);
+        LinkedList<T>::insert_node(trailer_, element);
     }
 
     /// Pop front, pop the front element of the deque.
     T pop_front()
     {
         common::check_empty(size_);
-        return LinkedList::remove_node(header_->succ_);
+        return LinkedList<T>::remove_node(header_->succ_);
     }
 
     /// Pop back, pop the back element of the deque.
     T pop_back()
     {
         common::check_empty(size_);
-        return LinkedList::remove_node(trailer_->pred_);
+        return LinkedList<T>::remove_node(trailer_->pred_);
     }
 
     /// Remove all of the elements from the deque.
     void clear()
     {
-        LinkedList::clear();
+        LinkedList<T>::clear();
     }
 
     /*

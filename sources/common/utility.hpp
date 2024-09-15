@@ -47,6 +47,13 @@ static inline void check_full(int size, int capacity)
     }
 }
 
+// Print function template for std::pair.
+template <typename K, typename V>
+std::ostream& operator<<(std::ostream& os, const std::pair<const K, V>& pair)
+{
+    return os << pair.first << ": " << pair.second;
+}
+
 // Print function template for iterable container.
 template <typename Iterable>
 static inline std::ostream& print(std::ostream& os, const Iterable& iterable, const std::string& name)
@@ -72,13 +79,6 @@ static inline std::ostream& print(std::ostream& os, const Iterable& iterable, co
         }
         os << ", ";
     }
-}
-
-// Print function template for std::pair.
-template <typename K, typename V>
-std::ostream& operator<<(std::ostream& os, const std::pair<const K, V>& pair)
-{
-    return os << pair.first << ": " << pair.second;
 }
 
 } // namespace hellods::common

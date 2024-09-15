@@ -17,6 +17,12 @@ namespace hellods
 template <typename T>
 class LinkedQueue : private LinkedList<T>
 {
+protected:
+    using LinkedList<T>::MAX_CAPACITY;
+    using LinkedList<T>::size_;
+    using LinkedList<T>::header_;
+    using LinkedList<T>::trailer_;
+
 public:
     /*
      * Constructor / Destructor
@@ -24,13 +30,13 @@ public:
 
     /// Create an empty queue.
     LinkedQueue()
-        : LinkedList()
+        : LinkedList<T>()
     {
     }
 
     /// Create a queue based on the given initializer list.
     LinkedQueue(const std::initializer_list<T>& il)
-        : LinkedList(il)
+        : LinkedList<T>(il)
     {
     }
 
@@ -41,7 +47,7 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const LinkedQueue& that) const
     {
-        return static_cast<const LinkedList&>(*this) == static_cast<const LinkedList&>(that);
+        return static_cast<const LinkedList<T>&>(*this) == static_cast<const LinkedList<T>&>(that);
     }
 
     /// Check whether two queues are not equal.
@@ -74,13 +80,13 @@ public:
     /// Get the number of elements of the queue.
     int size() const
     {
-        return LinkedList::size();
+        return LinkedList<T>::size();
     }
 
     /// Check if the queue is empty.
     bool is_empty() const
     {
-        return LinkedList::is_empty();
+        return LinkedList<T>::is_empty();
     }
 
     /*
@@ -91,20 +97,20 @@ public:
     void enqueue(const T& element)
     {
         common::check_full(size_, MAX_CAPACITY);
-        LinkedList::insert_node(trailer_, element);
+        LinkedList<T>::insert_node(trailer_, element);
     }
 
     /// Dequeue, pop the front element of the queue.
     T dequeue()
     {
         common::check_empty(size_);
-        return LinkedList::remove_node(header_->succ_);
+        return LinkedList<T>::remove_node(header_->succ_);
     }
 
     /// Remove all of the elements from the queue.
     void clear()
     {
-        LinkedList::clear();
+        LinkedList<T>::clear();
     }
 
     /*
@@ -115,7 +121,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const LinkedQueue& queue)
     {
         std::ostringstream oss;
-        oss << static_cast<const LinkedList&>(queue);
+        oss << static_cast<const LinkedList<T>&>(queue);
         return os << "Queue" << oss.str().erase(0, 4);
     }
 };

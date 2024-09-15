@@ -17,6 +17,11 @@ namespace hellods
 template <typename T>
 class RedBlackTree : public BinarySearchTree<T>
 {
+    using BinarySearchTree<T>::Node;
+    using BinarySearchTree<T>::size_;
+    using BinarySearchTree<T>::end_;
+    using BinarySearchTree<T>::root_;
+
 private:
     // Rotate right.
     void rotate_right(Node*& current)
@@ -214,7 +219,7 @@ public:
 
     /// Create an empty tree.
     RedBlackTree()
-        : BinarySearchTree()
+        : BinarySearchTree<T>()
     {
     }
 
@@ -246,7 +251,7 @@ public:
         // int old_size = size_;
         // remove_rbnode(root_, element);
         // return old_size != size_;
-        return BinarySearchTree::remove(element);
+        return BinarySearchTree<T>::remove(element);
     }
 };
 

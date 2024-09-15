@@ -24,13 +24,13 @@ public:
 
     /// Create an empty queue.
     ArrayQueue()
-        : ArrayDeque()
+        : ArrayDeque<T>()
     {
     }
 
     /// Create a queue based on the given initializer list.
     ArrayQueue(const std::initializer_list<T>& il)
-        : ArrayDeque(il)
+        : ArrayDeque<T>(il)
     {
     }
 
@@ -41,7 +41,7 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const ArrayQueue& that) const
     {
-        return static_cast<const ArrayDeque&>(*this) == static_cast<const ArrayDeque&>(that);
+        return static_cast<const ArrayDeque<T>&>(*this) == static_cast<const ArrayDeque<T>&>(that);
     }
 
     /// Check whether two queues are not equal.
@@ -57,13 +57,13 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front()
     {
-        return ArrayDeque::front();
+        return ArrayDeque<T>::front();
     }
 
     /// Return the const reference to the element at the front in the queue.
     const T& front() const
     {
-        return ArrayDeque::front();
+        return ArrayDeque<T>::front();
     }
 
     /*
@@ -73,13 +73,13 @@ public:
     /// Get the number of elements of the queue.
     int size() const
     {
-        return ArrayDeque::size();
+        return ArrayDeque<T>::size();
     }
 
     /// Check if the queue is empty.
     bool is_empty() const
     {
-        return ArrayDeque::is_empty();
+        return ArrayDeque<T>::is_empty();
     }
 
     /*
@@ -89,19 +89,19 @@ public:
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element)
     {
-        ArrayDeque::push_back(element);
+        ArrayDeque<T>::push_back(element);
     }
 
     /// Dequeue, pop the front element of the queue.
     T dequeue()
     {
-        return ArrayDeque::pop_front();
+        return ArrayDeque<T>::pop_front();
     }
 
     /// Remove all of the elements from the queue.
     void clear()
     {
-        ArrayDeque::clear();
+        ArrayDeque<T>::clear();
     }
 
     /*
@@ -112,7 +112,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const ArrayQueue& queue)
     {
         std::ostringstream oss;
-        oss << static_cast<const ArrayDeque&>(queue);
+        oss << static_cast<const ArrayDeque<T>&>(queue);
         return os << "Queue" << oss.str().erase(0, 5);
     }
 };

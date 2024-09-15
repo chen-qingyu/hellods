@@ -18,7 +18,12 @@ namespace hellods
 template <typename T, typename Cmp = std::greater<T>>
 class BinaryHeap : private ArrayList<T>
 {
-private:
+protected:
+    using ArrayList<T>::MAX_CAPACITY;
+    using ArrayList<T>::size_;
+    using ArrayList<T>::capacity_;
+    using ArrayList<T>::data_;
+
     // Adjust an element: process down.
     void proc_down(int index)
     {
@@ -38,13 +43,13 @@ public:
 
     /// Create an empty heap.
     BinaryHeap()
-        : ArrayList()
+        : ArrayList<T>()
     {
     }
 
     /// Create a heap based on the given initializer list.
     BinaryHeap(const std::initializer_list<T>& il)
-        : ArrayList(il)
+        : ArrayList<T>(il)
     {
         // build heap
         for (int i = (size_ - 1) / 2; i >= 0; i--)
@@ -89,13 +94,13 @@ public:
     /// Get the number of elements of the heap.
     int size() const
     {
-        return ArrayList::size();
+        return ArrayList<T>::size();
     }
 
     /// Check if the heap is empty.
     bool is_empty() const
     {
-        return ArrayList::is_empty();
+        return ArrayList<T>::is_empty();
     }
 
     /// Peek the top element in the heap.
@@ -117,7 +122,7 @@ public:
         // expand capacity if need
         if (size_ == capacity_)
         {
-            expand_capacity();
+            ArrayList<T>::expand_capacity();
         }
 
         int pos;
@@ -144,7 +149,7 @@ public:
     /// Remove all of the elements from the heap.
     void clear()
     {
-        ArrayList::clear();
+        ArrayList<T>::clear();
     }
 
     /*
@@ -155,7 +160,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const BinaryHeap& heap)
     {
         std::ostringstream oss;
-        oss << static_cast<const ArrayList&>(heap);
+        oss << static_cast<const ArrayList<T>&>(heap);
         return os << "Heap" << oss.str().erase(0, 4);
     }
 };

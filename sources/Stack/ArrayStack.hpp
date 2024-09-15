@@ -17,6 +17,8 @@ namespace hellods
 template <typename T>
 class ArrayStack : private ArrayList<T>
 {
+    using ArrayList<T>::data_;
+
 public:
     /*
      * Constructor / Destructor
@@ -24,13 +26,13 @@ public:
 
     /// Create an empty stack.
     ArrayStack()
-        : ArrayList()
+        : ArrayList<T>()
     {
     }
 
     /// Create a stack based on the given initializer list.
     ArrayStack(const std::initializer_list<T>& il)
-        : ArrayList(il)
+        : ArrayList<T>(il)
     {
     }
 
@@ -41,7 +43,7 @@ public:
     /// Check whether two stacks are equal.
     bool operator==(const ArrayStack& that) const
     {
-        return static_cast<const ArrayList&>(*this) == static_cast<const ArrayList&>(that);
+        return static_cast<const ArrayList<T>&>(*this) == static_cast<const ArrayList<T>&>(that);
     }
 
     /// Check whether two stacks are not equal.
@@ -74,13 +76,13 @@ public:
     /// Get the number of elements of the stack.
     int size() const
     {
-        return ArrayList::size();
+        return ArrayList<T>::size();
     }
 
     /// Check if the stack is empty.
     bool is_empty() const
     {
-        return ArrayList::is_empty();
+        return ArrayList<T>::is_empty();
     }
 
     /*
@@ -90,19 +92,19 @@ public:
     /// Push an element at the top of the stack.
     void push(const T& element)
     {
-        ArrayList::insert(size(), element);
+        ArrayList<T>::insert(size(), element);
     }
 
     /// Pop the top element of the stack.
     T pop()
     {
-        return ArrayList::remove(size() - 1);
+        return ArrayList<T>::remove(size() - 1);
     }
 
     /// Remove all of the elements from the stack.
     void clear()
     {
-        ArrayList::clear();
+        ArrayList<T>::clear();
     }
 
     /*
@@ -113,7 +115,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const ArrayStack& stack)
     {
         std::ostringstream oss;
-        oss << static_cast<const ArrayList&>(stack);
+        oss << static_cast<const ArrayList<T>&>(stack);
         return os << "Stack" << oss.str().erase(0, 4);
     }
 };
