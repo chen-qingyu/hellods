@@ -135,6 +135,15 @@ public:
         std::copy(il.begin(), il.end(), data_);
     }
 
+    /// Copy constructor.
+    ArrayList(const ArrayList& that)
+        : common::Container(that.size_)
+        , capacity_(that.capacity_)
+        , data_(new T[capacity_])
+    {
+        std::copy(that.begin(), that.end(), data_);
+    }
+
     /// Destroy the list object.
     ~ArrayList()
     {

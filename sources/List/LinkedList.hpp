@@ -199,6 +199,16 @@ public:
         }
     }
 
+    /// Copy constructor.
+    LinkedList(const LinkedList& that)
+        : LinkedList()
+    {
+        for (auto it = that.begin(); it != that.end(); ++it)
+        {
+            insert_node(trailer_, *it);
+        }
+    }
+
     /// Destroy the list object.
     ~LinkedList()
     {

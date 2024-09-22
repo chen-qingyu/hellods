@@ -143,6 +143,20 @@ public:
         }
     }
 
+    /// Copy constructor.
+    SinglyLinkedList(const SinglyLinkedList& that)
+        : common::Container(that.size_)
+        , header_(new Node(T()))
+    {
+        Node* current = header_;
+        for (auto it = that.begin(); it != that.end(); ++it)
+        {
+            auto node = new Node(*it);
+            current->succ_ = node;
+            current = node;
+        }
+    }
+
     /// Destroy the list object.
     ~SinglyLinkedList()
     {

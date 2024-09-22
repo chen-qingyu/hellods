@@ -13,6 +13,9 @@ void test()
     List empty;
     List some = {1, 2, 3, 4, 5};
 
+    List copy = some;
+    REQUIRE(copy == List({1, 2, 3, 4, 5}));
+
     // Comparison
     REQUIRE(empty == List());
     REQUIRE(some == List({1, 2, 3, 4, 5}));
