@@ -299,6 +299,16 @@ public:
      * Manipulation
      */
 
+    /// Add the specified element to the end of the list.
+    void add(const T& element)
+    {
+        // check
+        common::check_full(size_, MAX_CAPACITY);
+
+        // insert and resize
+        insert_node(trailer_, element);
+    }
+
     /// Insert the specified element at the specified position in the list.
     void insert(int index, const T& element)
     {

@@ -206,6 +206,22 @@ public:
      * Manipulation
      */
 
+    /// Add the specified element to the end of the list.
+    void add(const T& element)
+    {
+        // check
+        common::check_full(size_, MAX_CAPACITY);
+
+        // expand capacity if need
+        if (size_ == capacity_)
+        {
+            expand_capacity();
+        }
+
+        // insert and resize
+        data_[size_++] = element; // copy assignment on T
+    }
+
     /// Insert the specified element at the specified position in the list.
     void insert(int index, const T& element)
     {
