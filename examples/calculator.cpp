@@ -40,36 +40,59 @@ static bool check_parentheses(const std::string& expr)
     return stk.is_empty();
 }
 
+// Token 定义
 struct Token
 {
-    enum
+    enum Type
     {
         NUM,
         OP
     } type;
 
-    union
+    union Data
     {
         double num;
         char op;
-    };
+
+        Data(double num)
+            : num(num)
+        {
+        }
+
+        Data(char op)
+            : op(op)
+        {
+        }
+    } data;
+
+    Token()
+        : type()
+        , data(0.0)
+    {
+    }
+
+    Token(Type type, const Data& data)
+        : type(type)
+        , data(data)
+    {
+    }
 
     friend std::ostream& operator<<(std::ostream& os, const Token& token)
     {
         if (token.type == Token::NUM)
         {
-            os << "NUM(" << token.num << ")";
+            os << "NUM(" << token.data.num << ")";
         }
         else if (token.type == Token::OP)
         {
-            os << "OP(" << token.op << ")";
+            os << "OP(" << token.data.op << ")";
         }
 
         return os;
     }
 };
 
-// 表达式字符串解析为 token 序列
+// 表达式字符串解析为 Token 序列，O(N)
 static ArrayList<Token> tokenize(const std::string& expr)
 {
     ArrayList<Token> tokens;
@@ -85,18 +108,12 @@ static ArrayList<Token> tokenize(const std::string& expr)
         if ((*it)[1].matched) // is number
         {
             double n = std::stod(it->str());
-            Token t{Token::NUM};
-            t.num = n;
-
-            tokens.add(t);
+            tokens.add(Token(Token::NUM, Token::Data(n)));
         }
         else if ((*it)[2].matched) // is operator
         {
             std::string op = it->str();
-            Token t{Token::OP};
-            t.op = op[0];
-
-            tokens.add(t);
+            tokens.add(Token(Token::OP, Token::Data(op[0])));
         }
         else if ((*it)[3].matched) // ignore space
         {
@@ -121,18 +138,22 @@ static ArrayList<Token> to_postfix(const ArrayList<Token>& tokens)
                 break;
 
             case Token::OP:
-                if (token.op == '(' || token.op == '*' || token.op == '/') // 若token优先级高于栈顶除左括号外的运算符（左括号可视作优先级无限大）
+                if (token.data.op == '(' ||
+                    token.data.op == '*' ||
+                    token.data.op == '/') // 若token优先级高于栈顶除左括号外的运算符（左括号可视作优先级无限大）
                 {
                     stk.push(token); // 直接入栈
                 }
-                else if (token.op == ')' || token.op == '+' || token.op == '-') // 否则，token优先级小于等于栈顶运算符，则依次弹出栈顶运算符（右括号可视作优先级无限小）
+                else if (token.data.op == ')' ||
+                         token.data.op == '+' ||
+                         token.data.op == '-') // 否则，token优先级小于等于栈顶运算符，则依次弹出栈顶运算符（右括号可视作优先级无限小）
                 {
                     Token t;
-                    while (!stk.is_empty() && (t = stk.pop()).op != '(') // 没匹配到对应的括号时
+                    while (!stk.is_empty() && (t = stk.pop()).data.op != '(') // 没匹配到对应的括号时
                     {
                         postfix.add(t); // 运算符均加入后缀表达式
                     }
-                    if (token.op != ')') // 当前运算符入栈（括号排除）
+                    if (token.data.op != ')') // 当前运算符入栈（括号排除）
                     {
                         stk.push(token);
                     }
@@ -160,15 +181,15 @@ static double eval_postfix(const ArrayList<Token>& tokens)
     {
         if (token.type == Token::NUM)
         {
-            stk.push(Token{Token::NUM, token.num});
+            stk.push(Token(Token::NUM, Token::Data(token.data.num)));
         }
         else if (token.type == Token::OP)
         {
-            double y = stk.pop().num;
-            double x = stk.pop().num;
+            double y = stk.pop().data.num;
+            double x = stk.pop().data.num;
             double z;
 
-            switch (token.op)
+            switch (token.data.op)
             {
                 case '+':
                     z = x + y;
@@ -190,9 +211,7 @@ static double eval_postfix(const ArrayList<Token>& tokens)
                     break;
             }
 
-            Token t{Token::NUM};
-            t.num = z;
-            stk.push(t);
+            stk.push(Token(Token::NUM, Token::Data(z)));
         }
     }
 
@@ -201,9 +220,10 @@ static double eval_postfix(const ArrayList<Token>& tokens)
         throw std::runtime_error("Error: Invalid expression.");
     }
 
-    return stk.pop().num;
+    return stk.pop().data.num;
 }
 
+// 表达式字符串求值，O(N)
 double calculator(const std::string& expr)
 {
     // 1. 检查括号
