@@ -58,12 +58,14 @@ struct Token
     {
         if (token.type == Token::NUM)
         {
-            return os << "NUM(" << token.num << ")";
+            os << "NUM(" << token.num << ")";
         }
         else if (token.type == Token::OP)
         {
-            return os << "OP(" << token.op << ")";
+            os << "OP(" << token.op << ")";
         }
+
+        return os;
     }
 };
 
@@ -123,12 +125,12 @@ static ArrayList<Token> to_postfix(const ArrayList<Token>& tokens)
                 {
                     stk.push(token); // 直接入栈
                 }
-                else if (token.op == ')' || token.op == '+' || token.op == '-') // 否则，token优先级小于等于栈顶运算符，则依次弹出栈顶运算符并加入后缀表达式（右括号可视作优先级无限小）
+                else if (token.op == ')' || token.op == '+' || token.op == '-') // 否则，token优先级小于等于栈顶运算符，则依次弹出栈顶运算符（右括号可视作优先级无限小）
                 {
                     Token t;
                     while (!stk.is_empty() && (t = stk.pop()).op != '(') // 没匹配到对应的括号时
                     {
-                        postfix.add(t); // 均加入后缀表达式
+                        postfix.add(t); // 运算符均加入后缀表达式
                     }
                     if (token.op != ')') // 当前运算符入栈（括号排除）
                     {
@@ -192,6 +194,11 @@ static double eval_postfix(const ArrayList<Token>& tokens)
             t.num = z;
             stk.push(t);
         }
+    }
+
+    if (stk.size() != 1)
+    {
+        throw std::runtime_error("Error: Invalid expression.");
     }
 
     return stk.pop().num;

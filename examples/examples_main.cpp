@@ -5,7 +5,6 @@
  * @date 2023.01.12
  */
 
-#include <cassert>
 #include <string>
 
 void simulate_bank_queuing(int win_num, int serv_time);
