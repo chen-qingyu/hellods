@@ -63,7 +63,7 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front()
     {
-        common::check_empty(size());
+        detail::check_empty(size());
         return header_->succ_->data_;
     }
 
@@ -96,14 +96,14 @@ public:
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element)
     {
-        common::check_full(size_, MAX_CAPACITY);
+        detail::check_full(size_, MAX_CAPACITY);
         LinkedList<T>::insert_node(trailer_, element);
     }
 
     /// Dequeue, pop the front element of the queue.
     T dequeue()
     {
-        common::check_empty(size_);
+        detail::check_empty(size_);
         return LinkedList<T>::remove_node(header_->succ_);
     }
 

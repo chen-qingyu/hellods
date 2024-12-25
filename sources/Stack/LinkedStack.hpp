@@ -63,7 +63,7 @@ public:
     /// Return the reference to the element at the top in the stack.
     T& top()
     {
-        common::check_empty(size());
+        detail::check_empty(size());
         return trailer_->pred_->data_;
     }
 
@@ -96,14 +96,14 @@ public:
     /// Push an element at the top of the stack.
     void push(const T& element)
     {
-        common::check_full(size_, MAX_CAPACITY);
+        detail::check_full(size_, MAX_CAPACITY);
         LinkedList<T>::insert_node(trailer_, element);
     }
 
     /// Pop the top element of the stack.
     T pop()
     {
-        common::check_empty(size_);
+        detail::check_empty(size_);
         return LinkedList<T>::remove_node(trailer_->pred_);
     }
 

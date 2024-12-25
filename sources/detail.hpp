@@ -1,12 +1,12 @@
 /**
- * @file utility.hpp
+ * @file detail.hpp
  * @author Chen QingYu <chen_qingyu@qq.com>
- * @brief Utility functions of HelloDS.
+ * @brief The internal details of HelloDS.
  * @date 2023.01.05
  */
 
-#ifndef UTILITY_HPP
-#define UTILITY_HPP
+#ifndef DETAIL_HPP
+#define DETAIL_HPP
 
 #include <algorithm>  // std::copy
 #include <climits>    // INT_MAX
@@ -17,7 +17,7 @@
 #include <stdexcept>  // std::runtime_error
 #include <utility>    // std::initializer_list std::move
 
-namespace hellods::common
+namespace hellods::detail
 {
 
 // Check whether the index is valid (begin <= pos < end).
@@ -81,6 +81,39 @@ static inline std::ostream& print(std::ostream& os, const Iterable& iterable, co
     }
 }
 
-} // namespace hellods::common
+// Base container class for HelloDS.
+class Container
+{
+protected:
+    // Initial capacity.
+    static const int INIT_CAPACITY = 8;
 
-#endif // UTILITY_HPP
+    // Maximum capacity.
+    static const int MAX_CAPACITY = INT_MAX - 1;
+
+    // Number of elements in the container.
+    int size_;
+
+public:
+    // Constructor.
+    Container(int size)
+        : size_(size)
+    {
+    }
+
+    // Get the number of elements of the container.
+    int size() const
+    {
+        return size_;
+    }
+
+    // Check if the container is empty.
+    bool is_empty() const
+    {
+        return size_ == 0;
+    }
+};
+
+} // namespace hellods::detail
+
+#endif // DETAIL_HPP

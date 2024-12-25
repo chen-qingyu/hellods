@@ -59,7 +59,7 @@ public:
     /// Return the reference to the element at the top in the stack.
     T& top()
     {
-        common::check_empty(size());
+        detail::check_empty(size());
         return data_[size() - 1];
     }
 

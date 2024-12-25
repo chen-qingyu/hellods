@@ -8,15 +8,14 @@
 #ifndef HASHMAP_HPP
 #define HASHMAP_HPP
 
-#include "../common/Container.hpp"
-#include "../common/utility.hpp"
+#include "../detail.hpp"
 
 namespace hellods
 {
 
 /// Hash map.
 template <typename K, typename V, typename Hash = std::hash<K>, typename Eq = std::equal_to<K>>
-class HashMap : public common::Container
+class HashMap : public detail::Container
 {
 private:
     // Hash map pair.
@@ -247,7 +246,7 @@ public:
 
     /// Create an empty map.
     HashMap()
-        : common::Container(0)
+        : detail::Container(0)
         , capacity_(INIT_PRIME_CAPACITY)
         , data_(new Pair[capacity_])
     {
@@ -366,7 +365,7 @@ public:
     /// Insert a new key-value pair into the map. Return whether the pair was newly inserted.
     bool insert(const K& key, const V& value)
     {
-        common::check_full(size_, MAX_PRIME_CAPACITY >> 1);
+        detail::check_full(size_, MAX_PRIME_CAPACITY >> 1);
 
         int pos = find_pos(key);
 
@@ -424,7 +423,7 @@ public:
     /// Print the map.
     friend std::ostream& operator<<(std::ostream& os, const HashMap& map)
     {
-        return common::print(os, map, "Map");
+        return detail::print(os, map, "Map");
     }
 };
 

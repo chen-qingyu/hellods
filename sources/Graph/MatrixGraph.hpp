@@ -8,8 +8,7 @@
 #ifndef MATRIXGRAPH_HPP
 #define MATRIXGRAPH_HPP
 
-#include "../common/Container.hpp"
-#include "../common/utility.hpp"
+#include "../detail.hpp"
 
 #include "../Queue/ArrayQueue.hpp" // for breadth_first_search()
 
@@ -18,7 +17,7 @@ namespace hellods
 
 /// Graph implemented by adjacency matrix. Default is directed graph.
 template <bool Directed = true>
-class MatrixGraph : public common::Container
+class MatrixGraph : public detail::Container
 {
 public:
     /// Vertex type.
@@ -88,7 +87,7 @@ public:
 
     /// Create an empty graph.
     MatrixGraph()
-        : common::Container(0)
+        : detail::Container(0)
         , matrix_(nullptr)
     {
     }
@@ -145,8 +144,8 @@ public:
     /// Return the distance from vertex `from` to vertex `to`.
     E distance(const V& from, const V& to) const
     {
-        common::check_bounds(from, 0, size_);
-        common::check_bounds(to, 0, size_);
+        detail::check_bounds(from, 0, size_);
+        detail::check_bounds(to, 0, size_);
 
         return matrix_[from][to];
     }
@@ -154,8 +153,8 @@ public:
     /// Determine if vertex `from` has a link to vertex `to`.
     bool is_adjacent(const V& from, const V& to) const
     {
-        common::check_bounds(from, 0, size_);
-        common::check_bounds(to, 0, size_);
+        detail::check_bounds(from, 0, size_);
+        detail::check_bounds(to, 0, size_);
 
         return matrix_[from][to] != NO_EDGE;
     }
@@ -164,7 +163,7 @@ public:
     template <typename F>
     void depth_first_search(const V& start, const F& action) const
     {
-        common::check_bounds(start, 0, size_);
+        detail::check_bounds(start, 0, size_);
 
         auto visited = std::vector<bool>(size_, false);
 
@@ -175,7 +174,7 @@ public:
     template <typename F>
     void breadth_first_search(const V& start, const F& action) const
     {
-        common::check_bounds(start, 0, size_);
+        detail::check_bounds(start, 0, size_);
 
         auto visited = std::vector<bool>(size_, false);
 
@@ -202,7 +201,7 @@ public:
     /// The Dijkstra algorithm on the graph. Return distance and path.
     std::pair<std::vector<E>, std::vector<V>> dijkstra(const V& start) const
     {
-        common::check_bounds(start, 0, size_);
+        detail::check_bounds(start, 0, size_);
 
         // init state
         auto visited = std::vector<bool>(size_, false);

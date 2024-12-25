@@ -8,15 +8,14 @@
 #ifndef ARRAYDEQUE_HPP
 #define ARRAYDEQUE_HPP
 
-#include "../common/Container.hpp"
-#include "../common/utility.hpp"
+#include "../detail.hpp"
 
 namespace hellods
 {
 
 /// Deque implemented by array.
 template <typename T>
-class ArrayDeque : public common::Container
+class ArrayDeque : public detail::Container
 {
 public:
     /// Deque iterator class.
@@ -155,7 +154,7 @@ public:
 
     /// Create an empty deque.
     ArrayDeque()
-        : common::Container(0)
+        : detail::Container(0)
         , front_(0)
         , capacity_(INIT_CAPACITY)
         , data_(new T[capacity_])
@@ -164,7 +163,7 @@ public:
 
     /// Create a deque based on the given initializer list.
     ArrayDeque(const std::initializer_list<T>& il)
-        : common::Container(int(il.size()))
+        : detail::Container(int(il.size()))
         , front_(0)
         , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
         , data_(new T[capacity_])
@@ -224,7 +223,7 @@ public:
     /// Return the reference to the element at the front in the deque.
     T& front()
     {
-        common::check_empty(size_);
+        detail::check_empty(size_);
         return data_[front_];
     }
 
@@ -237,7 +236,7 @@ public:
     /// Return the reference to the element at the back in the deque.
     T& back()
     {
-        common::check_empty(size_);
+        detail::check_empty(size_);
         return data_[access(size_ - 1)];
     }
 
@@ -254,7 +253,7 @@ public:
     /// Push front, insert an element at the front of the deque.
     void push_front(const T& element)
     {
-        common::check_full(size_, MAX_CAPACITY);
+        detail::check_full(size_, MAX_CAPACITY);
 
         if (size_ == capacity_)
         {
@@ -269,7 +268,7 @@ public:
     /// Push back, insert an element at the back of the deque.
     void push_back(const T& element)
     {
-        common::check_full(size_, MAX_CAPACITY);
+        detail::check_full(size_, MAX_CAPACITY);
 
         if (size_ == capacity_)
         {
@@ -283,7 +282,7 @@ public:
     /// Pop front, pop the front element of the deque.
     T pop_front()
     {
-        common::check_empty(size_);
+        detail::check_empty(size_);
 
         T data = std::move(data_[front_]);
         front_ = (front_ + 1) % capacity_;
@@ -295,7 +294,7 @@ public:
     /// Pop back, pop the back element of the deque.
     T pop_back()
     {
-        common::check_empty(size_);
+        detail::check_empty(size_);
 
         T data = std::move(data_[access(size_ - 1)]);
         size_--;
@@ -319,7 +318,7 @@ public:
     /// Print the deque.
     friend std::ostream& operator<<(std::ostream& os, const ArrayDeque& deque)
     {
-        return common::print(os, deque, "Deque");
+        return detail::print(os, deque, "Deque");
     }
 };
 

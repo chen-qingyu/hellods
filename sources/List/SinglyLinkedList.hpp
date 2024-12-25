@@ -8,15 +8,14 @@
 #ifndef SINGLYLINKEDLIST_HPP
 #define SINGLYLINKEDLIST_HPP
 
-#include "../common/Container.hpp"
-#include "../common/utility.hpp"
+#include "../detail.hpp"
 
 namespace hellods
 {
 
 /// List implemented by singly linked list.
 template <typename T>
-class SinglyLinkedList : public common::Container
+class SinglyLinkedList : public detail::Container
 {
 private:
     // Node of singly linked list.
@@ -124,14 +123,14 @@ public:
 
     /// Create an empty list.
     SinglyLinkedList()
-        : common::Container(0)
+        : detail::Container(0)
         , header_(new Node(T()))
     {
     }
 
     /// Create a list based on the given initializer list.
     SinglyLinkedList(const std::initializer_list<T>& il)
-        : common::Container(int(il.size()))
+        : detail::Container(int(il.size()))
         , header_(new Node(T()))
     {
         Node* current = header_;
@@ -145,7 +144,7 @@ public:
 
     /// Copy constructor.
     SinglyLinkedList(const SinglyLinkedList& that)
-        : common::Container(that.size_)
+        : detail::Container(that.size_)
         , header_(new Node(T()))
     {
         Node* current = header_;
@@ -187,7 +186,7 @@ public:
     /// Return the reference to the element at the specified position in the list.
     T& operator[](int index)
     {
-        common::check_bounds(index, 0, size_);
+        detail::check_bounds(index, 0, size_);
 
         auto current = header_->succ_;
         for (int i = 0; i < index; ++i)
@@ -240,8 +239,8 @@ public:
     void insert(int index, const T& element)
     {
         // check
-        common::check_full(size_, MAX_CAPACITY);
-        common::check_bounds(index, 0, size_ + 1);
+        detail::check_full(size_, MAX_CAPACITY);
+        detail::check_bounds(index, 0, size_ + 1);
 
         // index
         auto current = header_;
@@ -262,8 +261,8 @@ public:
     T remove(int index)
     {
         // check
-        common::check_empty(size_);
-        common::check_bounds(index, 0, size_);
+        detail::check_empty(size_);
+        detail::check_bounds(index, 0, size_);
 
         // index
         auto current = header_;
@@ -329,7 +328,7 @@ public:
     /// Print the list.
     friend std::ostream& operator<<(std::ostream& os, const SinglyLinkedList& list)
     {
-        return common::print(os, list, "List");
+        return detail::print(os, list, "List");
     }
 };
 

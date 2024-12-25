@@ -8,8 +8,7 @@
 #ifndef BINARYSEARCHTREE_HPP
 #define BINARYSEARCHTREE_HPP
 
-#include "../common/Container.hpp"
-#include "../common/utility.hpp"
+#include "../detail.hpp"
 
 #include "../Queue/ArrayQueue.hpp" // for traverse()
 
@@ -18,7 +17,7 @@ namespace hellods
 
 /// Binary search tree.
 template <typename T>
-class BinarySearchTree : public common::Container
+class BinarySearchTree : public detail::Container
 {
 protected:
     // Tree node.
@@ -404,7 +403,7 @@ public:
 
     /// Create an empty tree.
     BinarySearchTree()
-        : common::Container(0)
+        : detail::Container(0)
         , end_(new Node(T()))
     {
     }
@@ -468,14 +467,14 @@ public:
     /// Return the smallest element of the tree.
     T min() const
     {
-        common::check_empty(size());
+        detail::check_empty(size());
         return find_min(root_)->data_;
     }
 
     /// Return the largest element of the tree.
     T max() const
     {
-        common::check_empty(size());
+        detail::check_empty(size());
         Node* current = root_;
         while (current->right_)
         {
@@ -572,7 +571,7 @@ public:
     /// Print the tree.
     friend std::ostream& operator<<(std::ostream& os, const BinarySearchTree& tree)
     {
-        return common::print(os, tree, "Tree");
+        return detail::print(os, tree, "Tree");
     }
 };
 

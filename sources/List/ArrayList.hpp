@@ -8,15 +8,14 @@
 #ifndef ARRAYLIST_HPP
 #define ARRAYLIST_HPP
 
-#include "../common/Container.hpp"
-#include "../common/utility.hpp"
+#include "../detail.hpp"
 
 namespace hellods
 {
 
 /// List implemented by array.
 template <typename T>
-class ArrayList : public common::Container
+class ArrayList : public detail::Container
 {
 public:
     /// List iterator class.
@@ -120,7 +119,7 @@ public:
 
     /// Create an empty list.
     ArrayList()
-        : common::Container(0)
+        : detail::Container(0)
         , capacity_(INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -128,7 +127,7 @@ public:
 
     /// Create a list based on the given initializer list.
     ArrayList(const std::initializer_list<T>& il)
-        : common::Container(int(il.size()))
+        : detail::Container(int(il.size()))
         , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -137,7 +136,7 @@ public:
 
     /// Copy constructor.
     ArrayList(const ArrayList& that)
-        : common::Container(that.size_)
+        : detail::Container(that.size_)
         , capacity_(that.capacity_)
         , data_(new T[capacity_])
     {
@@ -173,7 +172,7 @@ public:
     /// Return the reference to the element at the specified position in the list.
     T& operator[](int index)
     {
-        common::check_bounds(index, 0, size_);
+        detail::check_bounds(index, 0, size_);
         return data_[index];
     }
 
@@ -219,7 +218,7 @@ public:
     void add(const T& element)
     {
         // check
-        common::check_full(size_, MAX_CAPACITY);
+        detail::check_full(size_, MAX_CAPACITY);
 
         // expand capacity if need
         if (size_ == capacity_)
@@ -235,8 +234,8 @@ public:
     void insert(int index, const T& element)
     {
         // check
-        common::check_full(size_, MAX_CAPACITY);
-        common::check_bounds(index, 0, size_ + 1);
+        detail::check_full(size_, MAX_CAPACITY);
+        detail::check_bounds(index, 0, size_ + 1);
 
         // expand capacity if need
         if (size_ == capacity_)
@@ -258,8 +257,8 @@ public:
     T remove(int index)
     {
         // check
-        common::check_empty(size_);
-        common::check_bounds(index, 0, size_);
+        detail::check_empty(size_);
+        detail::check_bounds(index, 0, size_);
 
         // move element
         T element = std::move(data_[index]);
@@ -306,7 +305,7 @@ public:
     /// Print the list.
     friend std::ostream& operator<<(std::ostream& os, const ArrayList& list)
     {
-        return common::print(os, list, "List");
+        return detail::print(os, list, "List");
     }
 };
 

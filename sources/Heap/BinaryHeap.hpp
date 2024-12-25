@@ -106,7 +106,7 @@ public:
     /// Peek the top element in the heap.
     const T& peek() const
     {
-        common::check_empty(size());
+        detail::check_empty(size());
         return data_[0];
     }
 
@@ -117,7 +117,7 @@ public:
     /// Push an element onto the heap.
     void push(const T& element)
     {
-        common::check_full(size_, MAX_CAPACITY);
+        detail::check_full(size_, MAX_CAPACITY);
 
         // expand capacity if need
         if (size_ == capacity_)
@@ -136,7 +136,7 @@ public:
     /// Remove the top element from the heap and return it.
     T pop()
     {
-        common::check_empty(size());
+        detail::check_empty(size());
 
         T element = std::move(data_[0]);
         data_[0] = data_[size_ - 1];

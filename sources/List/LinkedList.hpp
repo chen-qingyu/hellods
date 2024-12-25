@@ -8,15 +8,14 @@
 #ifndef LINKEDLIST_HPP
 #define LINKEDLIST_HPP
 
-#include "../common/Container.hpp"
-#include "../common/utility.hpp"
+#include "../detail.hpp"
 
 namespace hellods
 {
 
 /// List implemented by doubly linked list.
 template <typename T>
-class LinkedList : public common::Container
+class LinkedList : public detail::Container
 {
 protected:
     // Node of doubly linked list.
@@ -179,7 +178,7 @@ public:
 
     /// Create an empty list.
     LinkedList()
-        : common::Container(0)
+        : detail::Container(0)
         , header_(new Node(T()))
         , trailer_(new Node(T()))
         , latest_(-1)
@@ -240,7 +239,7 @@ public:
     /// Return the reference to the element at the specified position in the list. list[index] for index in 0..size() will be O(1) on each access.
     T& operator[](int index)
     {
-        common::check_bounds(index, 0, size_);
+        detail::check_bounds(index, 0, size_);
 
         // too far from the last accessed element
         if (std::abs(index - latest_) > size_ / 2)
@@ -313,7 +312,7 @@ public:
     void add(const T& element)
     {
         // check
-        common::check_full(size_, MAX_CAPACITY);
+        detail::check_full(size_, MAX_CAPACITY);
 
         // insert and resize
         insert_node(trailer_, element);
@@ -323,8 +322,8 @@ public:
     void insert(int index, const T& element)
     {
         // check
-        common::check_full(size_, MAX_CAPACITY);
-        common::check_bounds(index, 0, size_ + 1);
+        detail::check_full(size_, MAX_CAPACITY);
+        detail::check_bounds(index, 0, size_ + 1);
 
         // index
         Node* current = nullptr;
@@ -353,8 +352,8 @@ public:
     T remove(int index)
     {
         // check
-        common::check_empty(size_);
-        common::check_bounds(index, 0, size_);
+        detail::check_empty(size_);
+        detail::check_bounds(index, 0, size_);
 
         // index
         Node* current = nullptr;
@@ -423,7 +422,7 @@ public:
     /// Print the list.
     friend std::ostream& operator<<(std::ostream& os, const LinkedList& list)
     {
-        return common::print(os, list, "List");
+        return detail::print(os, list, "List");
     }
 };
 
