@@ -571,7 +571,7 @@ public:
     /// Print the tree.
     friend std::ostream& operator<<(std::ostream& os, const BinarySearchTree& tree)
     {
-        return detail::print(os, tree, "Tree");
+        return detail::print(os, tree.begin(), tree.end(), "Tree");
     }
 };
 

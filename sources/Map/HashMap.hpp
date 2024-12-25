@@ -423,7 +423,7 @@ public:
     /// Print the map.
     friend std::ostream& operator<<(std::ostream& os, const HashMap& map)
     {
-        return detail::print(os, map, "Map");
+        return detail::print(os, map.begin(), map.end(), "Map");
     }
 };
 

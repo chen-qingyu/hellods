@@ -12,7 +12,8 @@
 #include <climits>    // INT_MAX
 #include <cmath>      // std::abs
 #include <functional> // std::std::greater std::hash std::equal_to
-#include <iostream>   // std::ostream
+#include <iterator>   // std::input_iterator
+#include <ostream>    // std::ostream
 #include <sstream>    // std::ostringstream
 #include <stdexcept>  // std::runtime_error
 #include <utility>    // std::initializer_list std::move
@@ -54,26 +55,26 @@ std::ostream& operator<<(std::ostream& os, const std::pair<const K, V>& pair)
     return os << pair.first << ": " << pair.second;
 }
 
-// Print function template for iterable container.
-template <typename Iterable>
-static inline std::ostream& print(std::ostream& os, const Iterable& iterable, const std::string& name)
+// Print helper for range [`first`, `last`).
+template <std::input_iterator InputIt>
+static inline std::ostream& print(std::ostream& os, const InputIt& first, const InputIt& last, const std::string& name)
 {
     // This form looks complex, but there is only one judgment in the loop.
     // At the Assembly level (see https://godbolt.org/z/qT9n7GKf8), this is more efficient
     // than the usual short form of the generated machine code under O3-level optimization.
     // The inspiration comes from Java source code.
 
-    if (iterable.is_empty())
+    if (first == last)
     {
         return os << name << "()";
     }
 
     os << name << "(";
-    auto it = iterable.begin();
+    auto it = first;
     while (true)
     {
         os << *it++;
-        if (it == iterable.end())
+        if (it == last)
         {
             return os << ")";
         }

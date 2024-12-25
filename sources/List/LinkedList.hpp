@@ -422,7 +422,7 @@ public:
     /// Print the list.
     friend std::ostream& operator<<(std::ostream& os, const LinkedList& list)
     {
-        return detail::print(os, list, "List");
+        return detail::print(os, list.begin(), list.end(), "List");
     }
 };
 

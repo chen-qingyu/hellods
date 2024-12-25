@@ -318,7 +318,7 @@ public:
     /// Print the deque.
     friend std::ostream& operator<<(std::ostream& os, const ArrayDeque& deque)
     {
-        return detail::print(os, deque, "Deque");
+        return detail::print(os, deque.begin(), deque.end(), "Deque");
     }
 };
 
