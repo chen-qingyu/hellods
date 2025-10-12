@@ -9,13 +9,14 @@
 #define LINKEDQUEUE_HPP
 
 #include "../List/LinkedList.hpp"
+#include "Queue.hpp"
 
 namespace hellods
 {
 
 /// Queue implemented by doubly linked list.
 template <typename T>
-class LinkedQueue : private LinkedList<T>
+class LinkedQueue : private LinkedList<T>, virtual Queue<T>
 {
 protected:
     using LinkedList<T>::MAX_CAPACITY;
@@ -24,6 +25,9 @@ protected:
     using LinkedList<T>::trailer_;
 
 public:
+    using detail::Container::is_empty;
+    using detail::Container::size;
+
     /*
      * Constructor / Destructor
      */
@@ -31,12 +35,14 @@ public:
     /// Create an empty queue.
     LinkedQueue()
         : LinkedList<T>()
+        , Queue<T>(0)
     {
     }
 
     /// Create a queue based on the given initializer list.
     LinkedQueue(const std::initializer_list<T>& il)
         : LinkedList<T>(il)
+        , Queue<T>(int(il.size()))
     {
     }
 
@@ -61,54 +67,34 @@ public:
      */
 
     /// Return the reference to the element at the front in the queue.
-    T& front()
+    T& front() override
     {
         detail::check_empty(size());
         return header_->succ_->data_;
     }
 
-    /// Return the const reference to the element at the front in the queue.
-    const T& front() const
-    {
-        return const_cast<LinkedQueue&>(*this).front();
-    }
-
-    /*
-     * Examination
-     */
-
-    /// Get the number of elements of the queue.
-    int size() const
-    {
-        return LinkedList<T>::size();
-    }
-
-    /// Check if the queue is empty.
-    bool is_empty() const
-    {
-        return LinkedList<T>::is_empty();
-    }
+    using Queue<T>::front; // const
 
     /*
      * Manipulation
      */
 
     /// Enqueue, insert an element at the rear of the queue.
-    void enqueue(const T& element)
+    void enqueue(const T& element) override
     {
         detail::check_full(size_, MAX_CAPACITY);
         LinkedList<T>::insert_node(trailer_, element);
     }
 
     /// Dequeue, pop the front element of the queue.
-    T dequeue()
+    T dequeue() override
     {
         detail::check_empty(size_);
         return LinkedList<T>::remove_node(header_->succ_);
     }
 
     /// Remove all of the elements from the queue.
-    void clear()
+    void clear() override
     {
         LinkedList<T>::clear();
     }

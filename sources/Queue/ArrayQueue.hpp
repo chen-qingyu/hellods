@@ -9,15 +9,19 @@
 #define ARRAYQUEUE_HPP
 
 #include "../Deque/ArrayDeque.hpp"
+#include "Queue.hpp"
 
 namespace hellods
 {
 
 /// Queue implemented by array.
 template <typename T>
-class ArrayQueue : private ArrayDeque<T>
+class ArrayQueue : private ArrayDeque<T>, virtual Queue<T>
 {
 public:
+    using detail::Container::is_empty;
+    using detail::Container::size;
+
     /*
      * Constructor / Destructor
      */
@@ -25,12 +29,14 @@ public:
     /// Create an empty queue.
     ArrayQueue()
         : ArrayDeque<T>()
+        , Queue<T>(0)
     {
     }
 
     /// Create a queue based on the given initializer list.
     ArrayQueue(const std::initializer_list<T>& il)
         : ArrayDeque<T>(il)
+        , Queue<T>(int(il.size()))
     {
     }
 
@@ -55,51 +61,31 @@ public:
      */
 
     /// Return the reference to the element at the front in the queue.
-    T& front()
+    T& front() override
     {
         return ArrayDeque<T>::front();
     }
 
-    /// Return the const reference to the element at the front in the queue.
-    const T& front() const
-    {
-        return ArrayDeque<T>::front();
-    }
-
-    /*
-     * Examination
-     */
-
-    /// Get the number of elements of the queue.
-    int size() const
-    {
-        return ArrayDeque<T>::size();
-    }
-
-    /// Check if the queue is empty.
-    bool is_empty() const
-    {
-        return ArrayDeque<T>::is_empty();
-    }
+    using Queue<T>::front; // const
 
     /*
      * Manipulation
      */
 
     /// Enqueue, insert an element at the rear of the queue.
-    void enqueue(const T& element)
+    void enqueue(const T& element) override
     {
         ArrayDeque<T>::push_back(element);
     }
 
     /// Dequeue, pop the front element of the queue.
-    T dequeue()
+    T dequeue() override
     {
         return ArrayDeque<T>::pop_front();
     }
 
     /// Remove all of the elements from the queue.
-    void clear()
+    void clear() override
     {
         ArrayDeque<T>::clear();
     }

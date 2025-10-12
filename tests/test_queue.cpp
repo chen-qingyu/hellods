@@ -23,6 +23,8 @@ void test()
     some.front() = 0;
     REQUIRE(some.front() == 0);
     REQUIRE_THROWS_MATCHES(empty.front(), std::runtime_error, Message("Error: The container is empty."));
+    const Queue cqueue = {1};
+    REQUIRE(cqueue.front() == 1);
 
     // Examination
     REQUIRE(empty.size() == 0);
