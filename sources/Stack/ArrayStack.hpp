@@ -9,17 +9,21 @@
 #define ARRAYSTACK_HPP
 
 #include "../List/ArrayList.hpp"
+#include "Stack.hpp"
 
 namespace hellods
 {
 
 /// Stack implemented by array list.
 template <typename T>
-class ArrayStack : private ArrayList<T>
+class ArrayStack : private ArrayList<T>, virtual Stack<T>
 {
     using ArrayList<T>::data_;
 
 public:
+    using detail::Container::is_empty;
+    using detail::Container::size;
+
     /*
      * Constructor / Destructor
      */
@@ -27,12 +31,14 @@ public:
     /// Create an empty stack.
     ArrayStack()
         : ArrayList<T>()
+        , Stack<T>(0)
     {
     }
 
     /// Create a stack based on the given initializer list.
     ArrayStack(const std::initializer_list<T>& il)
         : ArrayList<T>(il)
+        , Stack<T>(int(il.size()))
     {
     }
 
@@ -57,32 +63,10 @@ public:
      */
 
     /// Return the reference to the element at the top in the stack.
-    T& top()
+    T& top() override
     {
         detail::check_empty(size());
         return data_[size() - 1];
-    }
-
-    /// Return the const reference to the element at the top in the stack.
-    const T& top() const
-    {
-        return const_cast<ArrayStack&>(*this).top();
-    }
-
-    /*
-     * Examination
-     */
-
-    /// Get the number of elements of the stack.
-    int size() const
-    {
-        return ArrayList<T>::size();
-    }
-
-    /// Check if the stack is empty.
-    bool is_empty() const
-    {
-        return ArrayList<T>::is_empty();
     }
 
     /*
@@ -90,19 +74,19 @@ public:
      */
 
     /// Push an element at the top of the stack.
-    void push(const T& element)
+    void push(const T& element) override
     {
         ArrayList<T>::insert(size(), element);
     }
 
     /// Pop the top element of the stack.
-    T pop()
+    T pop() override
     {
         return ArrayList<T>::remove(size() - 1);
     }
 
     /// Remove all of the elements from the stack.
-    void clear()
+    void clear() override
     {
         ArrayList<T>::clear();
     }

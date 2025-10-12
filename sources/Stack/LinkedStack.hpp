@@ -9,13 +9,14 @@
 #define LINKEDSTACK_HPP
 
 #include "../List/LinkedList.hpp"
+#include "Stack.hpp"
 
 namespace hellods
 {
 
 /// Stack implemented by doubly linked list.
 template <typename T>
-class LinkedStack : private LinkedList<T>
+class LinkedStack : private LinkedList<T>, virtual Stack<T>
 {
 protected:
     using LinkedList<T>::MAX_CAPACITY;
@@ -24,6 +25,9 @@ protected:
     using LinkedList<T>::trailer_;
 
 public:
+    using detail::Container::is_empty;
+    using detail::Container::size;
+
     /*
      * Constructor / Destructor
      */
@@ -31,12 +35,14 @@ public:
     /// Create an empty stack.
     LinkedStack()
         : LinkedList<T>()
+        , Stack<T>(0)
     {
     }
 
     /// Create a stack based on the given initializer list.
     LinkedStack(const std::initializer_list<T>& il)
         : LinkedList<T>(il)
+        , Stack<T>(int(il.size()))
     {
     }
 
@@ -61,32 +67,10 @@ public:
      */
 
     /// Return the reference to the element at the top in the stack.
-    T& top()
+    T& top() override
     {
         detail::check_empty(size());
         return trailer_->pred_->data_;
-    }
-
-    /// Return the const reference to the element at the top in the stack.
-    const T& top() const
-    {
-        return const_cast<LinkedStack&>(*this).top();
-    }
-
-    /*
-     * Examination
-     */
-
-    /// Get the number of elements of the stack.
-    int size() const
-    {
-        return LinkedList<T>::size();
-    }
-
-    /// Check if the stack is empty.
-    bool is_empty() const
-    {
-        return LinkedList<T>::is_empty();
     }
 
     /*
@@ -94,21 +78,21 @@ public:
      */
 
     /// Push an element at the top of the stack.
-    void push(const T& element)
+    void push(const T& element) override
     {
         detail::check_full(size_, MAX_CAPACITY);
         LinkedList<T>::insert_node(trailer_, element);
     }
 
     /// Pop the top element of the stack.
-    T pop()
+    T pop() override
     {
         detail::check_empty(size_);
         return LinkedList<T>::remove_node(trailer_->pred_);
     }
 
     /// Remove all of the elements from the stack.
-    void clear()
+    void clear() override
     {
         LinkedList<T>::clear();
     }
