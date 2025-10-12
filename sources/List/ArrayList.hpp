@@ -8,14 +8,14 @@
 #ifndef ARRAYLIST_HPP
 #define ARRAYLIST_HPP
 
-#include "../detail.hpp"
+#include "List.hpp"
 
 namespace hellods
 {
 
 /// List implemented by array.
 template <typename T>
-class ArrayList : public detail::Container
+class ArrayList : public List<T>
 {
 public:
     /// List iterator class.
@@ -96,6 +96,10 @@ public:
     };
 
 protected:
+    using detail::Container::INIT_CAPACITY;
+    using detail::Container::MAX_CAPACITY;
+    using detail::Container::size_;
+
     // Available capacity.
     int capacity_;
 
@@ -119,7 +123,7 @@ public:
 
     /// Create an empty list.
     ArrayList()
-        : detail::Container(0)
+        : List<T>(0)
         , capacity_(INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -127,7 +131,7 @@ public:
 
     /// Create a list based on the given initializer list.
     ArrayList(const std::initializer_list<T>& il)
-        : detail::Container(int(il.size()))
+        : List<T>(int(il.size()))
         , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -136,7 +140,7 @@ public:
 
     /// Copy constructor.
     ArrayList(const ArrayList& that)
-        : detail::Container(that.size_)
+        : List<T>(that.size_)
         , capacity_(that.capacity_)
         , data_(new T[capacity_])
     {
@@ -170,14 +174,14 @@ public:
      */
 
     /// Return the reference to the element at the specified position in the list.
-    T& operator[](int index)
+    T& operator[](int index) override
     {
         detail::check_bounds(index, 0, size_);
         return data_[index];
     }
 
     /// Return the const reference to element at the specified position in the list.
-    const T& operator[](int index) const
+    const T& operator[](int index) const override
     {
         return const_cast<ArrayList&>(*this)[index];
     }
@@ -215,7 +219,7 @@ public:
      */
 
     /// Add the specified element to the end of the list.
-    void add(const T& element)
+    void add(const T& element) override
     {
         // check
         detail::check_full(size_, MAX_CAPACITY);
@@ -231,7 +235,7 @@ public:
     }
 
     /// Insert the specified element at the specified position in the list.
-    void insert(int index, const T& element)
+    void insert(int index, const T& element) override
     {
         // check
         detail::check_full(size_, MAX_CAPACITY);
@@ -254,7 +258,7 @@ public:
     }
 
     /// Remove and return the element at the specified position in the list.
-    T remove(int index)
+    T remove(int index) override
     {
         // check
         detail::check_empty(size_);
@@ -274,7 +278,7 @@ public:
     }
 
     /// Remove all of the elements from the list.
-    void clear()
+    void clear() override
     {
         // If the elements themselves are pointers, the pointed-to memory is not touched in any way.
         // Managing the pointer is the user's responsibility.

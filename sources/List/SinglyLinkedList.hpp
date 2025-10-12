@@ -8,14 +8,14 @@
 #ifndef SINGLYLINKEDLIST_HPP
 #define SINGLYLINKEDLIST_HPP
 
-#include "../detail.hpp"
+#include "List.hpp"
 
 namespace hellods
 {
 
 /// List implemented by singly linked list.
 template <typename T>
-class SinglyLinkedList : public detail::Container
+class SinglyLinkedList : public List<T>
 {
 private:
     // Node of singly linked list.
@@ -99,6 +99,10 @@ public:
     };
 
 private:
+    using detail::Container::INIT_CAPACITY;
+    using detail::Container::MAX_CAPACITY;
+    using detail::Container::size_;
+
     // Pointer to the header (rank = -1).
     Node* header_;
 
@@ -123,14 +127,14 @@ public:
 
     /// Create an empty list.
     SinglyLinkedList()
-        : detail::Container(0)
+        : List<T>(0)
         , header_(new Node(T()))
     {
     }
 
     /// Create a list based on the given initializer list.
     SinglyLinkedList(const std::initializer_list<T>& il)
-        : detail::Container(int(il.size()))
+        : List<T>(int(il.size()))
         , header_(new Node(T()))
     {
         Node* current = header_;
@@ -144,7 +148,7 @@ public:
 
     /// Copy constructor.
     SinglyLinkedList(const SinglyLinkedList& that)
-        : detail::Container(that.size_)
+        : List<T>(that.size_)
         , header_(new Node(T()))
     {
         Node* current = header_;
@@ -184,7 +188,7 @@ public:
      */
 
     /// Return the reference to the element at the specified position in the list.
-    T& operator[](int index)
+    T& operator[](int index) override
     {
         detail::check_bounds(index, 0, size_);
 
@@ -198,7 +202,7 @@ public:
     }
 
     /// Return the const reference to element at the specified position in the list.
-    const T& operator[](int index) const
+    const T& operator[](int index) const override
     {
         return const_cast<SinglyLinkedList&>(*this)[index];
     }
@@ -236,7 +240,7 @@ public:
      */
 
     /// Add the specified element to the end of the list.
-    void add(const T& element)
+    void add(const T& element) override
     {
         // check
         detail::check_full(size_, MAX_CAPACITY);
@@ -254,7 +258,7 @@ public:
     }
 
     /// Insert the specified element at the specified position in the list.
-    void insert(int index, const T& element)
+    void insert(int index, const T& element) override
     {
         // check
         detail::check_full(size_, MAX_CAPACITY);
@@ -276,7 +280,7 @@ public:
     }
 
     /// Remove and return the element at the specified position in the list.
-    T remove(int index)
+    T remove(int index) override
     {
         // check
         detail::check_empty(size_);
@@ -305,7 +309,7 @@ public:
     }
 
     /// Remove all of the elements from the list.
-    void clear()
+    void clear() override
     {
         if (size_ != 0)
         {
