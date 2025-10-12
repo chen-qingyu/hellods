@@ -385,27 +385,6 @@ public:
         return remove_node(current);
     }
 
-    /// Perform the given action for each element of the list.
-    template <typename F>
-    LinkedList& map(const F& action)
-    {
-        std::for_each(begin(), end(), action);
-
-        return *this;
-    }
-
-    /// Reverse the list in place.
-    LinkedList& reverse()
-    {
-        for (Node* cur = header_; cur != nullptr; cur = cur->pred_)
-        {
-            std::swap(cur->pred_, cur->succ_);
-        }
-        std::swap(header_, trailer_);
-
-        return *this;
-    }
-
     /// Remove all of the elements from the list.
     void clear()
     {

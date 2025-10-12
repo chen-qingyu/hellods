@@ -273,23 +273,6 @@ public:
         return element;
     }
 
-    /// Perform the given action for each element of the list.
-    template <typename F>
-    ArrayList& map(const F& action)
-    {
-        std::for_each(data_, data_ + size_, action);
-
-        return *this;
-    }
-
-    /// Reverse the list in place.
-    ArrayList& reverse()
-    {
-        std::reverse(data_, data_ + size_);
-
-        return *this;
-    }
-
     /// Remove all of the elements from the list.
     void clear()
     {

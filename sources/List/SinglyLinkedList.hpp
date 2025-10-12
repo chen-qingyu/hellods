@@ -286,32 +286,6 @@ public:
         return data;
     }
 
-    /// Perform the given action for each element of the list.
-    template <typename F>
-    SinglyLinkedList& map(const F& action)
-    {
-        std::for_each(begin(), end(), action);
-
-        return *this;
-    }
-
-    /// Reverse the list in place.
-    SinglyLinkedList& reverse()
-    {
-        auto p = header_->succ_;
-        decltype(p) h = nullptr;
-        while (p)
-        {
-            auto tmp = p->succ_;
-            p->succ_ = h;
-            h = p;
-            p = tmp;
-        }
-        header_->succ_ = h;
-
-        return *this;
-    }
-
     /// Remove all of the elements from the list.
     void clear()
     {
