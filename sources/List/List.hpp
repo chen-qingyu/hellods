@@ -39,7 +39,10 @@ public:
     virtual T& operator[](int index) = 0;
 
     /// Return the const reference to element at the specified position in the list.
-    virtual const T& operator[](int index) const = 0;
+    virtual const T& operator[](int index) const
+    {
+        return const_cast<List&>(*this)[index];
+    }
 
     /*
      * Manipulation

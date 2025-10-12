@@ -180,12 +180,6 @@ public:
         return data_[index];
     }
 
-    /// Return the const reference to element at the specified position in the list.
-    const T& operator[](int index) const override
-    {
-        return const_cast<ArrayList&>(*this)[index];
-    }
-
     /*
      * Iterator
      */

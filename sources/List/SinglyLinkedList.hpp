@@ -201,12 +201,6 @@ public:
         return current->data_;
     }
 
-    /// Return the const reference to element at the specified position in the list.
-    const T& operator[](int index) const override
-    {
-        return const_cast<SinglyLinkedList&>(*this)[index];
-    }
-
     /*
      * Iterator
      */

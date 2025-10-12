@@ -274,12 +274,6 @@ public:
         return p_latest_->data_;
     }
 
-    /// Return the const reference to element at the specified position in the list. list[index] for index in 0..size() will be O(1) on each access.
-    const T& operator[](int index) const override
-    {
-        return const_cast<LinkedList&>(*this)[index];
-    }
-
     /*
      * Iterator
      */
