@@ -180,6 +180,8 @@ public:
         return data_[index];
     }
 
+    using List<T>::operator[];
+
     /*
      * Iterator
      */

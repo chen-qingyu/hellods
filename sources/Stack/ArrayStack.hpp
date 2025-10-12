@@ -69,6 +69,8 @@ public:
         return data_[size() - 1];
     }
 
+    using Stack<T>::top; // const
+
     /*
      * Manipulation
      */

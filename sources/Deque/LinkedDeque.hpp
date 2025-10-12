@@ -90,12 +90,16 @@ public:
         return header_->succ_->data_;
     }
 
+    using Deque<T>::front; // const
+
     /// Return the reference to the element at the back in the deque.
     T& back() override
     {
         detail::check_empty(size());
         return trailer_->pred_->data_;
     }
+
+    using Deque<T>::back; // const
 
     /*
      * Manipulation

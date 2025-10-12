@@ -23,11 +23,14 @@ void test()
     some.front() = 0;
     REQUIRE(some.front() == 0);
     REQUIRE_THROWS_MATCHES(empty.front(), std::runtime_error, Message("Error: The container is empty."));
+    const Deque cdeque = {1, 2};
+    REQUIRE(cdeque.front() == 1);
 
     REQUIRE(some.back() == 5);
     some.back() = 6;
     REQUIRE(some.back() == 6);
     REQUIRE_THROWS_MATCHES(empty.back(), std::runtime_error, Message("Error: The container is empty."));
+    REQUIRE(cdeque.back() == 2);
 
     // Examination
     REQUIRE(empty.size() == 0);

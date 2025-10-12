@@ -23,6 +23,8 @@ void test()
     some.top() = 6;
     REQUIRE(some.top() == 6);
     REQUIRE_THROWS_MATCHES(empty.top(), std::runtime_error, Message("Error: The container is empty."));
+    const Stack cstak = {1};
+    REQUIRE(cstak.top() == 1);
 
     // Examination
     REQUIRE(empty.size() == 0);

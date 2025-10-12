@@ -231,6 +231,7 @@ public:
         detail::check_empty(size_);
         return data_[front_];
     }
+
     using Deque<T>::front; // const
 
     /// Return the reference to the element at the back in the deque.
@@ -239,6 +240,7 @@ public:
         detail::check_empty(size_);
         return data_[access(size_ - 1)];
     }
+
     using Deque<T>::back; // const
 
     /*

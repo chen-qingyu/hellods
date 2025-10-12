@@ -73,6 +73,8 @@ public:
         return trailer_->pred_->data_;
     }
 
+    using Stack<T>::top; // const
+
     /*
      * Manipulation
      */

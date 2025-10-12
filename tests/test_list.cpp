@@ -33,6 +33,8 @@ void test()
         REQUIRE(some[i] == i);
     }
     REQUIRE_THROWS_MATCHES(some[5], std::runtime_error, Message("Error: Index out of range."));
+    const List clist = {1};
+    REQUIRE(clist[0] == 1);
 
     // Iterator
     REQUIRE(empty.begin() == empty.end());

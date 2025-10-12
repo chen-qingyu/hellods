@@ -201,6 +201,8 @@ public:
         return current->data_;
     }
 
+    using List<T>::operator[];
+
     /*
      * Iterator
      */
