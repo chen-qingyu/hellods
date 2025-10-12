@@ -64,11 +64,6 @@ void test()
         REQUIRE(*--it == 1);
         REQUIRE(*--it == 0);
         REQUIRE(it == some.begin());
-
-        List tmp;
-        tmp.add(1);
-        tmp.add(2);
-        REQUIRE(tmp == List({1, 2}));
     }
 
     // Examination
@@ -83,6 +78,11 @@ void test()
     REQUIRE(some.find(6) == some.end());
 
     // Manipulation
+    List tmp;
+    tmp.add(1);
+    tmp.add(2);
+    REQUIRE(tmp == List({1, 2}));
+
     empty.insert(0, 1);
     REQUIRE(empty == List({1}));
     empty.insert(0, 2);

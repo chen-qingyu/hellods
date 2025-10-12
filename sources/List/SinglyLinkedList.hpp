@@ -235,6 +235,24 @@ public:
      * Manipulation
      */
 
+    /// Add the specified element to the end of the list.
+    void add(const T& element)
+    {
+        // check
+        detail::check_full(size_, MAX_CAPACITY);
+
+        // insert and resize
+        auto current = header_;
+        while (current->succ_ != nullptr)
+        {
+            current = current->succ_;
+        }
+        auto node = new Node(element);
+        current->succ_ = node;
+
+        ++size_;
+    }
+
     /// Insert the specified element at the specified position in the list.
     void insert(int index, const T& element)
     {
