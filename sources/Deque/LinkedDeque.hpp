@@ -9,13 +9,14 @@
 #define LINKEDDEQUE_HPP
 
 #include "../List/LinkedList.hpp"
+#include "Deque.hpp"
 
 namespace hellods
 {
 
 /// Deque implemented by double linked list.
 template <typename T>
-class LinkedDeque : private LinkedList<T>
+class LinkedDeque : private LinkedList<T>, virtual Deque<T>
 {
 protected:
     using LinkedList<T>::MAX_CAPACITY;
@@ -25,6 +26,8 @@ protected:
 
 public:
     using LinkedList<T>::Iterator;
+    using detail::Container::is_empty;
+    using detail::Container::size;
 
     /*
      * Constructor / Destructor
@@ -33,12 +36,14 @@ public:
     /// Create an empty deque.
     LinkedDeque()
         : LinkedList<T>()
+        , Deque<T>(0)
     {
     }
 
     /// Create a deque based on the given initializer list.
     LinkedDeque(const std::initializer_list<T>& il)
         : LinkedList<T>(il)
+        , Deque<T>(int(il.size()))
     {
     }
 
@@ -79,45 +84,17 @@ public:
      */
 
     /// Return the reference to the element at the front in the deque.
-    T& front()
+    T& front() override
     {
         detail::check_empty(size());
         return header_->succ_->data_;
     }
 
-    /// Return the const reference to the element at the front in the deque.
-    const T& front() const
-    {
-        return const_cast<LinkedDeque&>(*this).front();
-    }
-
     /// Return the reference to the element at the back in the deque.
-    T& back()
+    T& back() override
     {
         detail::check_empty(size());
         return trailer_->pred_->data_;
-    }
-
-    /// Return the const reference to the element at the back in the deque.
-    const T& back() const
-    {
-        return const_cast<LinkedDeque&>(*this).back();
-    }
-
-    /*
-     * Examination
-     */
-
-    /// Get the number of elements of the deque.
-    int size() const
-    {
-        return LinkedList<T>::size();
-    }
-
-    /// Check if the deque is empty.
-    bool is_empty() const
-    {
-        return LinkedList<T>::is_empty();
     }
 
     /*

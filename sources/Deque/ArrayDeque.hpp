@@ -9,14 +9,19 @@
 #define ARRAYDEQUE_HPP
 
 #include "../detail.hpp"
+#include "Deque.hpp"
 
 namespace hellods
 {
 
 /// Deque implemented by array.
 template <typename T>
-class ArrayDeque : public detail::Container
+class ArrayDeque : public Deque<T>
 {
+    using detail::Container::INIT_CAPACITY;
+    using detail::Container::MAX_CAPACITY;
+    using detail::Container::size_;
+
 public:
     /// Deque iterator class.
     class Iterator
@@ -154,7 +159,7 @@ public:
 
     /// Create an empty deque.
     ArrayDeque()
-        : detail::Container(0)
+        : Deque<T>(0)
         , front_(0)
         , capacity_(INIT_CAPACITY)
         , data_(new T[capacity_])
@@ -163,7 +168,7 @@ public:
 
     /// Create a deque based on the given initializer list.
     ArrayDeque(const std::initializer_list<T>& il)
-        : detail::Container(int(il.size()))
+        : Deque<T>(int(il.size()))
         , front_(0)
         , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
         , data_(new T[capacity_])
@@ -221,37 +226,27 @@ public:
      */
 
     /// Return the reference to the element at the front in the deque.
-    T& front()
+    T& front() override
     {
         detail::check_empty(size_);
         return data_[front_];
     }
-
-    /// Return the const reference to the element at the front in the deque.
-    const T& front() const
-    {
-        return const_cast<ArrayDeque&>(*this).front();
-    }
+    using Deque<T>::front; // const
 
     /// Return the reference to the element at the back in the deque.
-    T& back()
+    T& back() override
     {
         detail::check_empty(size_);
         return data_[access(size_ - 1)];
     }
-
-    /// Return the const reference to the element at the back in the deque.
-    const T& back() const
-    {
-        return const_cast<ArrayDeque&>(*this).back();
-    }
+    using Deque<T>::back; // const
 
     /*
      * Manipulation
      */
 
     /// Push front, insert an element at the front of the deque.
-    void push_front(const T& element)
+    void push_front(const T& element) override
     {
         detail::check_full(size_, MAX_CAPACITY);
 
@@ -266,7 +261,7 @@ public:
     }
 
     /// Push back, insert an element at the back of the deque.
-    void push_back(const T& element)
+    void push_back(const T& element) override
     {
         detail::check_full(size_, MAX_CAPACITY);
 
@@ -280,7 +275,7 @@ public:
     }
 
     /// Pop front, pop the front element of the deque.
-    T pop_front()
+    T pop_front() override
     {
         detail::check_empty(size_);
 
@@ -292,7 +287,7 @@ public:
     }
 
     /// Pop back, pop the back element of the deque.
-    T pop_back()
+    T pop_back() override
     {
         detail::check_empty(size_);
 
@@ -303,7 +298,7 @@ public:
     }
 
     /// Remove all of the elements from the deque.
-    void clear()
+    void clear() override
     {
         // If the elements themselves are pointers, the pointed-to memory is not touched in any way.
         // Managing the pointer is the user's responsibility.
