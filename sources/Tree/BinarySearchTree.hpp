@@ -148,53 +148,32 @@ public:
         using pointer = value_type*;
         using reference = value_type&;
 
-        /**
-         * @brief Dereference.
-         *
-         * @return reference of the data
-         */
+        /// Dereference.
         const T& operator*() const
         {
             return current_->data_;
         }
 
-        /**
-         * @brief Get current pointer.
-         *
-         * @return current pointer
-         */
+        /// Get current pointer.
         const T* operator->() const
         {
             return &current_->data_;
         }
 
-        /**
-         * @brief Check if two iterators are same.
-         *
-         * @param that another iterator
-         * @return ture if two iterators are same, false otherwise.
-         */
+        /// Check if two iterators are same.
         bool operator==(const Iterator& that) const
         {
             return current_ == that.current_;
         }
 
-        /**
-         * @brief Increment the iterator: ++it.
-         *
-         * @return reference of this iterator that point to next data
-         */
+        /// Increment the iterator: ++it.
         Iterator& operator++()
         {
             next();
             return *this;
         }
 
-        /**
-         * @brief Increment the iterator: it++.
-         *
-         * @return const reference of this iterator that point to current data
-         */
+        /// Increment the iterator: it++.
         Iterator operator++(int)
         {
             auto it = *this;
@@ -202,22 +181,14 @@ public:
             return it;
         }
 
-        /**
-         * @brief Decrement the iterator: --it.
-         *
-         * @return reference of this iterator that point to previous data
-         */
+        /// Decrement the iterator: --it.
         Iterator& operator--()
         {
             previous();
             return *this;
         }
 
-        /**
-         * @brief Decrement the iterator: it--.
-         *
-         * @return const reference of this iterator that point to current data
-         */
+        /// Decrement the iterator: it--.
         Iterator operator--(int)
         {
             auto it = *this;
