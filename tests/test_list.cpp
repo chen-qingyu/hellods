@@ -81,8 +81,8 @@ void test()
 
     // Manipulation
     List tmp;
-    tmp.add(1);
-    tmp.add(2);
+    tmp.append(1);
+    tmp.append(2);
     REQUIRE(tmp == List({1, 2}));
 
     empty.insert(0, 1);

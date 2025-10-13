@@ -296,8 +296,8 @@ public:
      * Manipulation
      */
 
-    /// Add the specified element to the end of the list.
-    void add(const T& element) override
+    /// Append the specified element to the list.
+    void append(const T& element) override
     {
         // check
         detail::check_full(size_, MAX_CAPACITY);

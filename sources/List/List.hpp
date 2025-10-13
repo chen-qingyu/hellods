@@ -48,8 +48,8 @@ public:
      * Manipulation
      */
 
-    /// Add the specified element to the end of the list.
-    virtual void add(const T& element) = 0;
+    /// Append the specified element to the list.
+    virtual void append(const T& element) = 0;
 
     /// Insert the specified element at the specified position in the list.
     virtual void insert(int index, const T& element) = 0;
