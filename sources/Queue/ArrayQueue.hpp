@@ -50,12 +50,6 @@ public:
         return static_cast<const ArrayDeque<T>&>(*this) == static_cast<const ArrayDeque<T>&>(that);
     }
 
-    /// Check whether two queues are not equal.
-    bool operator!=(const ArrayQueue& that) const
-    {
-        return !(*this == that);
-    }
-
     /*
      * Access
      */

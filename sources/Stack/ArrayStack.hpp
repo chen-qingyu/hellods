@@ -52,12 +52,6 @@ public:
         return static_cast<const ArrayList<T>&>(*this) == static_cast<const ArrayList<T>&>(that);
     }
 
-    /// Check whether two stacks are not equal.
-    bool operator!=(const ArrayStack& that) const
-    {
-        return !(*this == that);
-    }
-
     /*
      * Access
      */

@@ -76,12 +76,6 @@ public:
             return current_ == that.current_;
         }
 
-        /// Check if two iterators are different.
-        bool operator!=(const Iterator& that) const
-        {
-            return !(current_ == that.current_);
-        }
-
         /// Increment the iterator: ++it.
         Iterator& operator++()
         {
@@ -175,12 +169,6 @@ public:
     bool operator==(const SinglyLinkedList& that) const
     {
         return size_ == that.size_ && std::equal(begin(), end(), that.begin());
-    }
-
-    /// Check whether two lists are not equal.
-    bool operator!=(const SinglyLinkedList& that) const
-    {
-        return !(*this == that);
     }
 
     /*

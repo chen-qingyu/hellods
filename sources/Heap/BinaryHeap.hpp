@@ -81,12 +81,6 @@ public:
         return this_map == that_map;
     }
 
-    /// Check whether two heaps are not equal.
-    bool operator!=(const BinaryHeap& that) const
-    {
-        return !(*this == that);
-    }
-
     /*
      * Examination
      */

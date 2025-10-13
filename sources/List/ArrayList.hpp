@@ -58,12 +58,6 @@ public:
             return current_ == that.current_;
         }
 
-        /// Check if two iterators are different.
-        bool operator!=(const Iterator& that) const
-        {
-            return !(current_ == that.current_);
-        }
-
         /// Increment the iterator: ++it.
         Iterator& operator++()
         {
@@ -161,12 +155,6 @@ public:
     bool operator==(const ArrayList& that) const
     {
         return size_ == that.size_ && std::equal(data_, data_ + size_, that.data_);
-    }
-
-    /// Check whether two lists are not equal.
-    bool operator!=(const ArrayList& that) const
-    {
-        return !(*this == that);
     }
 
     /*

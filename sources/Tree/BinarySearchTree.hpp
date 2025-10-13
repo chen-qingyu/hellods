@@ -180,17 +180,6 @@ public:
         }
 
         /**
-         * @brief Check if two iterators are different.
-         *
-         * @param that another iterator
-         * @return ture if two iterators are different, false otherwise.
-         */
-        bool operator!=(const Iterator& that) const
-        {
-            return !(*this == that);
-        }
-
-        /**
          * @brief Increment the iterator: ++it.
          *
          * @return reference of this iterator that point to next data
@@ -432,12 +421,6 @@ public:
     bool operator==(const BinarySearchTree& that) const
     {
         return size_ == that.size_ && std::equal(begin(), end(), that.begin());
-    }
-
-    /// Check whether two trees are not equal.
-    bool operator!=(const BinarySearchTree& that) const
-    {
-        return !(*this == that);
     }
 
     /*

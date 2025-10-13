@@ -71,12 +71,6 @@ public:
             return current_ == that.current_;
         }
 
-        /// Check if two iterators are different.
-        bool operator!=(const Iterator& that) const
-        {
-            return !(current_ == that.current_);
-        }
-
         /// Increment the iterator: ++it.
         Iterator& operator++()
         {
@@ -197,12 +191,6 @@ public:
         }
 
         return true;
-    }
-
-    /// Check whether two deques are not equal.
-    bool operator!=(const ArrayDeque& that) const
-    {
-        return !(*this == that);
     }
 
     /*

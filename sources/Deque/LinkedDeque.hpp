@@ -57,12 +57,6 @@ public:
         return static_cast<const LinkedList<T>&>(*this) == static_cast<const LinkedList<T>&>(that);
     }
 
-    /// Check whether two queues are not equal.
-    bool operator!=(const LinkedDeque& that) const
-    {
-        return !(*this == that);
-    }
-
     /*
      * Iterator
      */

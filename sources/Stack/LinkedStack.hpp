@@ -56,12 +56,6 @@ public:
         return static_cast<const LinkedList<T>&>(*this) == static_cast<const LinkedList<T>&>(that);
     }
 
-    /// Check whether two stacks are not equal.
-    bool operator!=(const LinkedStack& that) const
-    {
-        return !(*this == that);
-    }
-
     /*
      * Access
      */

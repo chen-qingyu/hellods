@@ -90,11 +90,6 @@ public:
             return current_ == that.current_;
         }
 
-        bool operator!=(const Iterator& that) const
-        {
-            return !(*this == that);
-        }
-
         std::pair<const K, V>& operator*() const
         {
             return current_->pair_;
@@ -294,12 +289,6 @@ public:
         }
 
         return true;
-    }
-
-    /// Check whether two maps are not equal.
-    bool operator!=(const HashMap& that) const
-    {
-        return !(*this == that);
     }
 
     /*

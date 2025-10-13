@@ -131,12 +131,6 @@ public:
         return true;
     }
 
-    /// Check whether two graphs are not equal.
-    bool operator!=(const MatrixGraph& that) const
-    {
-        return !(*this == that);
-    }
-
     /*
      * Examination
      */
