@@ -272,6 +272,25 @@ public:
         }
     }
 
+    /// Copy constructor.
+    HashMap(const HashMap& that)
+        : size_(0)
+        , capacity_(that.capacity_)
+        , data_(new Pair[capacity_])
+    {
+        for (int i = 0; i < capacity_; ++i)
+        {
+            data_[i].state_ = Pair::EMPTY;
+        }
+        for (int i = 0; i < that.capacity_; ++i)
+        {
+            if (that.data_[i].state_ == Pair::OCCUPIED)
+            {
+                insert(that.data_[i].key_, that.data_[i].value_);
+            }
+        }
+    }
+
     /// Destroy the map object.
     ~HashMap()
     {

@@ -117,6 +117,12 @@ public:
         }
     }
 
+    /// Copy constructor.
+    HashSet(const HashSet& that)
+        : map_(that.map_)
+    {
+    }
+
     /*
      * Comparison
      */

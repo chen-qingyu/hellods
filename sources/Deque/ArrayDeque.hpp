@@ -175,6 +175,16 @@ public:
         std::copy(il.begin(), il.end(), data_);
     }
 
+    /// Copy constructor.
+    ArrayDeque(const ArrayDeque& that)
+        : front_(that.front_)
+        , size_(that.size_)
+        , capacity_(that.capacity_)
+        , data_(new T[capacity_])
+    {
+        std::copy(that.data_, that.data_ + capacity_, data_);
+    }
+
     /// Destroy the deque object.
     ~ArrayDeque()
     {
