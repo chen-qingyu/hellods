@@ -113,4 +113,18 @@ TEST_CASE("BinaryHeap")
     BinaryHeap<EqLtType, std::less<EqLtType>> some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 5);
+
+    BinaryHeap<int> large;
+    for (int i = 0; i < 1000; ++i)
+    {
+        large.push(i);
+    }
+    REQUIRE(large.size() == 1000);
+    REQUIRE(large.peek() == 999);
+
+    for (int i = 999; i >= 0; --i)
+    {
+        REQUIRE(large.pop() == i);
+    }
+    REQUIRE(large.is_empty() == true);
 }

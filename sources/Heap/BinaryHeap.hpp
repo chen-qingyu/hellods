@@ -25,12 +25,26 @@ class BinaryHeap : public detail::Container
     // Adjust an element: process down.
     void proc_down(int index)
     {
-        while (index * 2 + 1 < list_.size_ && Cmp()(list_.data_[index * 2 + 1], list_.data_[index]) || index * 2 + 2 < list_.size_ && Cmp()(list_.data_[index * 2 + 2], list_.data_[index]))
+        while (index * 2 + 1 < list_.size_)
         {
-            // if size is even then only have left node, short to avoid subscript out of bounds
-            bool is_left_max = (list_.size_ % 2 == 0) || Cmp()(list_.data_[index * 2 + 1], list_.data_[index * 2 + 2]);
-            std::swap(list_.data_[index], is_left_max ? list_.data_[index * 2 + 1] : list_.data_[index * 2 + 2]);
-            index = index * 2 + (is_left_max ? 1 : 2);
+            int left = index * 2 + 1;
+            int right = index * 2 + 2;
+            int target = left;
+
+            // choose the larger/smaller child according to comparator
+            if (right < list_.size_ && Cmp()(list_.data_[right], list_.data_[left]))
+            {
+                target = right;
+            }
+
+            // if parent satisfies heap property, done
+            if (!Cmp()(list_.data_[target], list_.data_[index]))
+            {
+                break;
+            }
+
+            std::swap(list_.data_[index], list_.data_[target]);
+            index = target;
         }
     }
 
@@ -116,9 +130,9 @@ public:
         }
 
         int pos;
-        for (pos = list_.size_++; pos != 0 && Cmp()(element, list_.data_[pos / 2]); pos /= 2)
+        for (pos = list_.size_++; pos != 0 && Cmp()(element, list_.data_[(pos - 1) / 2]); pos = (pos - 1) / 2)
         {
-            list_.data_[pos] = list_.data_[pos / 2];
+            list_.data_[pos] = list_.data_[(pos - 1) / 2];
         }
         list_.data_[pos] = element;
     }
