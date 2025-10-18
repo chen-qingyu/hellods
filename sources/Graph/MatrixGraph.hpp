@@ -30,6 +30,9 @@ public:
     static const E NO_EDGE = INT_MAX;
 
 protected:
+    // Number of elements.
+    int size_;
+
     // Adjacency matrix.
     E** matrix_;
 
@@ -87,7 +90,7 @@ public:
 
     /// Create an empty graph.
     MatrixGraph()
-        : detail::Container(0)
+        : size_(0)
         , matrix_(nullptr)
     {
     }
@@ -134,6 +137,12 @@ public:
     /*
      * Examination
      */
+
+    /// Get the number of elements.
+    int size() const override
+    {
+        return size_;
+    }
 
     /// Return the distance from vertex `from` to vertex `to`.
     E distance(const V& from, const V& to) const

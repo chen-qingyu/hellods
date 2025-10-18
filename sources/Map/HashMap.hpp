@@ -17,6 +17,9 @@ namespace hellods
 template <typename K, typename V, typename Hash = std::hash<K>, typename Eq = std::equal_to<K>>
 class HashMap : public detail::Container
 {
+    template <typename U, typename Hash, typename Eq>
+    friend class HashSet;
+
 protected:
     // Hash map pair.
     struct Pair
@@ -43,6 +46,9 @@ protected:
 
     // Maximum capacity for hash map.
     static const int MAX_PRIME_CAPACITY = 2147483629; // maximum prime number that < INT_MAX
+
+    // Number of elements.
+    int size_;
 
     // Available capacity.
     int capacity_;
@@ -246,7 +252,7 @@ public:
 
     /// Create an empty map.
     HashMap()
-        : detail::Container(0)
+        : size_(0)
         , capacity_(INIT_PRIME_CAPACITY)
         , data_(new Pair[capacity_])
     {
@@ -324,13 +330,13 @@ public:
      */
 
     /// Return an iterator to the first element of the map.
-    Iterator begin() const
+    auto begin() const
     {
         return Iterator(data_, data_, data_ + capacity_);
     }
 
     /// Return an iterator to the element following the last element of the map.
-    Iterator end() const
+    auto end() const
     {
         return Iterator(data_ + capacity_, data_, data_ + capacity_);
     }
@@ -338,6 +344,12 @@ public:
     /*
      * Examination
      */
+
+    /// Get the number of elements.
+    int size() const override
+    {
+        return size_;
+    }
 
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
     Iterator find(const K& key) const

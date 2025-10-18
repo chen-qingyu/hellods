@@ -15,7 +15,7 @@ namespace hellods
 
 /// Hash set.
 template <typename T, typename Hash = std::hash<T>, typename Eq = std::equal_to<T>>
-class HashSet
+class HashSet : public detail::Container
 {
 protected:
     // Dummy value type for internal map.
@@ -124,7 +124,7 @@ public:
     /// Check whether two sets are equal.
     bool operator==(const HashSet& that) const
     {
-        if (map_.size() != that.map_.size())
+        if (map_.size_ != that.map_.size_)
         {
             return false;
         }
@@ -141,33 +141,17 @@ public:
     }
 
     /*
-     * Access
-     */
-
-    /// Get the number of elements of the set.
-    int size() const
-    {
-        return map_.size();
-    }
-
-    /// Check if the set is empty.
-    bool is_empty() const
-    {
-        return map_.is_empty();
-    }
-
-    /*
      * Iterator
      */
 
     /// Return an iterator to the first element of the set.
-    Iterator begin() const
+    auto begin() const
     {
         return Iterator(map_.begin());
     }
 
     /// Return an iterator to the element following the last element of the set.
-    Iterator end() const
+    auto end() const
     {
         return Iterator(map_.end());
     }
@@ -175,6 +159,12 @@ public:
     /*
      * Examination
      */
+
+    /// Get the number of elements.
+    int size() const override
+    {
+        return map_.size_;
+    }
 
     /// Return an iterator to the first occurrence of the specified item, or end() if the set does not contains the item.
     Iterator find(const T& item) const

@@ -22,12 +22,6 @@ public:
      * Constructor / Destructor
      */
 
-    /// Constructor.
-    Stack(int size)
-        : detail::Container(size)
-    {
-    }
-
     /// Virtual destructor.
     virtual ~Stack() = default;
 

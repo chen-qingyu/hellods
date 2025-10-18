@@ -95,7 +95,9 @@ public:
 protected:
     using detail::Container::INIT_CAPACITY;
     using detail::Container::MAX_CAPACITY;
-    using detail::Container::size_;
+
+    // Number of elements.
+    int size_;
 
     // Pointer to the header (rank = -1).
     Node* header_;
@@ -121,14 +123,14 @@ public:
 
     /// Create an empty list.
     SinglyLinkedList()
-        : List<T>(0)
+        : size_(0)
         , header_(new Node(T()))
     {
     }
 
     /// Create a list based on the given initializer list.
     SinglyLinkedList(const std::initializer_list<T>& il)
-        : List<T>(int(il.size()))
+        : size_(int(il.size()))
         , header_(new Node(T()))
     {
         Node* current = header_;
@@ -142,7 +144,7 @@ public:
 
     /// Copy constructor.
     SinglyLinkedList(const SinglyLinkedList& that)
-        : List<T>(that.size_)
+        : size_(that.size_)
         , header_(new Node(T()))
     {
         Node* current = header_;
@@ -197,14 +199,14 @@ public:
 
     /// Return an iterator to the first element of the list.
     /// If the list is empty, the returned iterator will be equal to end().
-    Iterator begin() const
+    auto begin() const
     {
         return Iterator(header_->succ_);
     }
 
     /// Return an iterator to the element following the last element of the list.
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    Iterator end() const
+    auto end() const
     {
         return Iterator(nullptr);
     }
@@ -212,6 +214,12 @@ public:
     /*
      * Examination
      */
+
+    /// Get the number of elements.
+    int size() const override
+    {
+        return size_;
+    }
 
     /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
     Iterator find(const T& element) const

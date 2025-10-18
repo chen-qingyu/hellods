@@ -16,12 +16,12 @@ namespace hellods
 
 /// Queue implemented by doubly linked list.
 template <typename T>
-class LinkedQueue : protected LinkedList<T>, virtual Queue<T>
+class LinkedQueue : public Queue<T>
 {
-    using LinkedList<T>::MAX_CAPACITY;
-    using LinkedList<T>::size_;
-    using LinkedList<T>::header_;
-    using LinkedList<T>::trailer_;
+    using detail::Container::INIT_CAPACITY;
+    using detail::Container::MAX_CAPACITY;
+
+    LinkedList<T> list_;
 
 public:
     /*
@@ -30,15 +30,13 @@ public:
 
     /// Create an empty queue.
     LinkedQueue()
-        : LinkedList<T>()
-        , Queue<T>(0)
+        : list_()
     {
     }
 
     /// Create a queue based on the given initializer list.
     LinkedQueue(const std::initializer_list<T>& il)
-        : LinkedList<T>(il)
-        , Queue<T>(int(il.size()))
+        : list_(il)
     {
     }
 
@@ -49,7 +47,7 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const LinkedQueue& that) const
     {
-        return static_cast<const LinkedList<T>&>(*this) == static_cast<const LinkedList<T>&>(that);
+        return list_ == that.list_;
     }
 
     /*
@@ -59,8 +57,8 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front() override
     {
-        detail::check_empty(size());
-        return header_->succ_->data_;
+        detail::check_empty(list_.size_);
+        return list_.header_->succ_->data_;
     }
 
     using Queue<T>::front; // const
@@ -69,8 +67,11 @@ public:
      * Examination
      */
 
-    using LinkedList<T>::is_empty;
-    using LinkedList<T>::size;
+    /// Get the number of elements.
+    int size() const override
+    {
+        return list_.size_;
+    }
 
     /*
      * Manipulation
@@ -79,21 +80,21 @@ public:
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element) override
     {
-        detail::check_full(size_, MAX_CAPACITY);
-        LinkedList<T>::insert_node(trailer_, element);
+        detail::check_full(list_.size_, MAX_CAPACITY);
+        list_.insert_node(list_.trailer_, element);
     }
 
     /// Dequeue, pop the front element of the queue.
     T dequeue() override
     {
-        detail::check_empty(size_);
-        return LinkedList<T>::remove_node(header_->succ_);
+        detail::check_empty(list_.size_);
+        return list_.remove_node(list_.header_->succ_);
     }
 
     /// Remove all of the elements from the queue.
     void clear() override
     {
-        LinkedList<T>::clear();
+        list_.clear();
     }
 
     /*
@@ -104,7 +105,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const LinkedQueue& queue)
     {
         std::ostringstream oss;
-        oss << static_cast<const LinkedList<T>&>(queue);
+        oss << queue.list_;
         return os << "Queue" << oss.str().erase(0, 4);
     }
 };

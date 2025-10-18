@@ -198,6 +198,9 @@ public:
     };
 
 protected:
+    // Number of elements.
+    int size_;
+
     // Virtual maximum node.
     // In order for the iterator to move back from end, there must be a virtual maximum node.
     // And due to the presence of this node, can simplify the judgment of iterator movement, thereby improving the performance of iterator.
@@ -363,7 +366,7 @@ public:
 
     /// Create an empty tree.
     BinarySearchTree()
-        : detail::Container(0)
+        : size_(0)
         , end_(new Node(T()))
     {
     }
@@ -401,7 +404,7 @@ public:
     /// Return an iterator to the first element of the tree.
     ///
     /// If the tree is empty, the returned iterator will be equal to end().
-    Iterator begin() const
+    auto begin() const
     {
         return Iterator(find_min(root_));
     }
@@ -409,7 +412,7 @@ public:
     /// Return an iterator to the element following the last element of the tree.
     ///
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    Iterator end() const
+    auto end() const
     {
         return Iterator(end_);
     }
@@ -418,17 +421,23 @@ public:
      * Examination
      */
 
+    /// Get the number of elements.
+    int size() const override
+    {
+        return size_;
+    }
+
     /// Return the smallest element of the tree.
     T min() const
     {
-        detail::check_empty(size());
+        detail::check_empty(size_);
         return find_min(root_)->data_;
     }
 
     /// Return the largest element of the tree.
     T max() const
     {
-        detail::check_empty(size());
+        detail::check_empty(size_);
         Node* current = root_;
         while (current->right_)
         {

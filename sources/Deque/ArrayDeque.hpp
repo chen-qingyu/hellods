@@ -18,9 +18,8 @@ namespace hellods
 template <typename T>
 class ArrayDeque : public Deque<T>
 {
-    using Deque<T>::INIT_CAPACITY;
-    using Deque<T>::MAX_CAPACITY;
-    using Deque<T>::size_;
+    template <typename U>
+    friend class ArrayQueue;
 
 public:
     /// Deque iterator class.
@@ -111,8 +110,14 @@ public:
     };
 
 protected:
+    using detail::Container::INIT_CAPACITY;
+    using detail::Container::MAX_CAPACITY;
+
     // Index of front in ring buffer. data[front] is the first element, except size == 0.
     int front_;
+
+    // Number of elements.
+    int size_;
 
     // Available capacity.
     int capacity_;
@@ -153,8 +158,8 @@ public:
 
     /// Create an empty deque.
     ArrayDeque()
-        : Deque<T>(0)
-        , front_(0)
+        : front_(0)
+        , size_(0)
         , capacity_(INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -162,8 +167,8 @@ public:
 
     /// Create a deque based on the given initializer list.
     ArrayDeque(const std::initializer_list<T>& il)
-        : Deque<T>(int(il.size()))
-        , front_(0)
+        : front_(0)
+        , size_(int(il.size()))
         , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -204,13 +209,13 @@ public:
      */
 
     /// Return an iterator to the first element of the list.
-    Iterator begin() const
+    auto begin() const
     {
         return Iterator(data_ + front_, data_, data_ + capacity_);
     }
 
     /// Return an iterator to the element following the last element of the list.
-    Iterator end() const
+    auto end() const
     {
         return Iterator(data_ + access(size_), data_, data_ + capacity_);
     }
@@ -236,6 +241,16 @@ public:
     }
 
     using Deque<T>::back; // const
+
+    /*
+     * Examination
+     */
+
+    /// Get the number of elements.
+    int size() const override
+    {
+        return size_;
+    }
 
     /*
      * Manipulation

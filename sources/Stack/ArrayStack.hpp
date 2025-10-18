@@ -16,9 +16,9 @@ namespace hellods
 
 /// Stack implemented by array list.
 template <typename T>
-class ArrayStack : protected ArrayList<T>, virtual Stack<T>
+class ArrayStack : public Stack<T>
 {
-    using ArrayList<T>::data_;
+    ArrayList<T> list_;
 
 public:
     /*
@@ -27,15 +27,13 @@ public:
 
     /// Create an empty stack.
     ArrayStack()
-        : ArrayList<T>()
-        , Stack<T>(0)
+        : list_()
     {
     }
 
     /// Create a stack based on the given initializer list.
     ArrayStack(const std::initializer_list<T>& il)
-        : ArrayList<T>(il)
-        , Stack<T>(int(il.size()))
+        : list_(il)
     {
     }
 
@@ -46,7 +44,7 @@ public:
     /// Check whether two stacks are equal.
     bool operator==(const ArrayStack& that) const
     {
-        return static_cast<const ArrayList<T>&>(*this) == static_cast<const ArrayList<T>&>(that);
+        return list_ == that.list_;
     }
 
     /*
@@ -56,8 +54,8 @@ public:
     /// Return the reference to the element at the top in the stack.
     T& top() override
     {
-        detail::check_empty(size());
-        return data_[size() - 1];
+        detail::check_empty(list_.size_);
+        return list_.data_[list_.size_ - 1];
     }
 
     using Stack<T>::top; // const
@@ -66,8 +64,11 @@ public:
      * Examination
      */
 
-    using ArrayList<T>::is_empty;
-    using ArrayList<T>::size;
+    /// Get the number of elements.
+    int size() const override
+    {
+        return list_.size_;
+    }
 
     /*
      * Manipulation
@@ -76,19 +77,19 @@ public:
     /// Push an element at the top of the stack.
     void push(const T& element) override
     {
-        ArrayList<T>::insert(size(), element);
+        list_.insert(list_.size_, element);
     }
 
     /// Pop the top element of the stack.
     T pop() override
     {
-        return ArrayList<T>::remove(size() - 1);
+        return list_.remove(list_.size_ - 1);
     }
 
     /// Remove all of the elements from the stack.
     void clear() override
     {
-        ArrayList<T>::clear();
+        list_.clear();
     }
 
     /*
@@ -99,7 +100,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const ArrayStack& stack)
     {
         std::ostringstream oss;
-        oss << static_cast<const ArrayList<T>&>(stack);
+        oss << stack.list_;
         return os << "Stack" << oss.str().erase(0, 4);
     }
 };

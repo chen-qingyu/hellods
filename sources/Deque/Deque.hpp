@@ -22,12 +22,6 @@ public:
      * Constructor / Destructor
      */
 
-    /// Constructor.
-    Deque(int size)
-        : detail::Container(size)
-    {
-    }
-
     /// Virtual destructor.
     virtual ~Deque() = default;
 

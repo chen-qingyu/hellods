@@ -17,6 +17,11 @@ namespace hellods
 template <typename T>
 class ArrayList : public List<T>
 {
+    template <typename U>
+    friend class ArrayStack;
+    template <typename U, typename Cmp>
+    friend class BinaryHeap;
+
 public:
     /// List iterator class.
     class Iterator
@@ -92,7 +97,9 @@ public:
 protected:
     using detail::Container::INIT_CAPACITY;
     using detail::Container::MAX_CAPACITY;
-    using detail::Container::size_;
+
+    // Number of elements.
+    int size_;
 
     // Available capacity.
     int capacity_;
@@ -117,7 +124,7 @@ public:
 
     /// Create an empty list.
     ArrayList()
-        : List<T>(0)
+        : size_(0)
         , capacity_(INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -125,7 +132,7 @@ public:
 
     /// Create a list based on the given initializer list.
     ArrayList(const std::initializer_list<T>& il)
-        : List<T>(int(il.size()))
+        : size_(int(il.size()))
         , capacity_(size_ > INIT_CAPACITY ? size_ : INIT_CAPACITY)
         , data_(new T[capacity_])
     {
@@ -134,7 +141,7 @@ public:
 
     /// Copy constructor.
     ArrayList(const ArrayList& that)
-        : List<T>(that.size_)
+        : size_(that.size_)
         , capacity_(that.capacity_)
         , data_(new T[capacity_])
     {
@@ -176,14 +183,14 @@ public:
 
     /// Return an iterator to the first element of the list.
     /// If the list is empty, the returned iterator will be equal to end().
-    Iterator begin() const
+    auto begin() const
     {
         return Iterator(data_);
     }
 
     /// Return an iterator to the element following the last element of the list.
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    Iterator end() const
+    auto end() const
     {
         return Iterator(data_ + size_); // not nullptr, because size_ <= capacity_
     }
@@ -191,6 +198,12 @@ public:
     /*
      * Examination
      */
+
+    /// Get the number of elements.
+    int size() const override
+    {
+        return size_;
+    }
 
     /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
     Iterator find(const T& element) const

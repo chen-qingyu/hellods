@@ -16,12 +16,11 @@ namespace hellods
 
 /// Stack implemented by doubly linked list.
 template <typename T>
-class LinkedStack : protected LinkedList<T>, virtual Stack<T>
+class LinkedStack : public Stack<T>
 {
-    using LinkedList<T>::MAX_CAPACITY;
-    using LinkedList<T>::size_;
-    using LinkedList<T>::header_;
-    using LinkedList<T>::trailer_;
+    using detail::Container::MAX_CAPACITY;
+
+    LinkedList<T> list_;
 
 public:
     /*
@@ -30,15 +29,13 @@ public:
 
     /// Create an empty stack.
     LinkedStack()
-        : LinkedList<T>()
-        , Stack<T>(0)
+        : list_()
     {
     }
 
     /// Create a stack based on the given initializer list.
     LinkedStack(const std::initializer_list<T>& il)
-        : LinkedList<T>(il)
-        , Stack<T>(int(il.size()))
+        : list_(il)
     {
     }
 
@@ -49,7 +46,7 @@ public:
     /// Check whether two stacks are equal.
     bool operator==(const LinkedStack& that) const
     {
-        return static_cast<const LinkedList<T>&>(*this) == static_cast<const LinkedList<T>&>(that);
+        return list_ == that.list_;
     }
 
     /*
@@ -59,8 +56,8 @@ public:
     /// Return the reference to the element at the top in the stack.
     T& top() override
     {
-        detail::check_empty(size());
-        return trailer_->pred_->data_;
+        detail::check_empty(list_.size_);
+        return list_.trailer_->pred_->data_;
     }
 
     using Stack<T>::top; // const
@@ -69,8 +66,11 @@ public:
      * Examination
      */
 
-    using LinkedList<T>::is_empty;
-    using LinkedList<T>::size;
+    /// Get the number of elements.
+    int size() const override
+    {
+        return list_.size_;
+    }
 
     /*
      * Manipulation
@@ -79,21 +79,21 @@ public:
     /// Push an element at the top of the stack.
     void push(const T& element) override
     {
-        detail::check_full(size_, MAX_CAPACITY);
-        LinkedList<T>::insert_node(trailer_, element);
+        detail::check_full(list_.size_, MAX_CAPACITY);
+        list_.insert_node(list_.trailer_, element);
     }
 
     /// Pop the top element of the stack.
     T pop() override
     {
-        detail::check_empty(size_);
-        return LinkedList<T>::remove_node(trailer_->pred_);
+        detail::check_empty(list_.size_);
+        return list_.remove_node(list_.trailer_->pred_);
     }
 
     /// Remove all of the elements from the stack.
     void clear() override
     {
-        LinkedList<T>::clear();
+        list_.clear();
     }
 
     /*
@@ -104,7 +104,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const LinkedStack& stack)
     {
         std::ostringstream oss;
-        oss << static_cast<const LinkedList<T>&>(stack);
+        oss << stack.list_;
         return os << "Stack" << oss.str().erase(0, 4);
     }
 };

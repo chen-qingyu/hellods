@@ -22,12 +22,6 @@ public:
      * Constructor / Destructor
      */
 
-    /// Constructor.
-    Queue(int size)
-        : detail::Container(size)
-    {
-    }
-
     /// Virtual destructor.
     virtual ~Queue() = default;
 

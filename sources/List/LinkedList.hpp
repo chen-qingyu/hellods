@@ -17,6 +17,13 @@ namespace hellods
 template <typename T>
 class LinkedList : public List<T>
 {
+    template <typename U>
+    friend class LinkedDeque;
+    template <typename U>
+    friend class LinkedQueue;
+    template <typename U>
+    friend class LinkedStack;
+
 protected:
     // Node of doubly linked list.
     struct Node
@@ -138,7 +145,9 @@ public:
 protected:
     using detail::Container::INIT_CAPACITY;
     using detail::Container::MAX_CAPACITY;
-    using detail::Container::size_;
+
+    // Number of elements.
+    int size_;
 
     // Pointer to the header (rank = -1).
     Node* header_;
@@ -176,7 +185,7 @@ public:
 
     /// Create an empty list.
     LinkedList()
-        : List<T>(0)
+        : size_(0)
         , header_(new Node(T()))
         , trailer_(new Node(T()))
         , latest_(-1)
@@ -270,14 +279,14 @@ public:
 
     /// Return an iterator to the first element of the list.
     /// If the list is empty, the returned iterator will be equal to end().
-    Iterator begin() const
+    auto begin() const
     {
         return Iterator(header_->succ_);
     }
 
     /// Return an iterator to the element following the last element of the list.
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    Iterator end() const
+    auto end() const
     {
         return Iterator(trailer_);
     }
@@ -285,6 +294,12 @@ public:
     /*
      * Examination
      */
+
+    /// Get the number of elements.
+    int size() const override
+    {
+        return size_;
+    }
 
     /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
     Iterator find(const T& element) const

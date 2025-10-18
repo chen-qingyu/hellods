@@ -16,31 +16,26 @@ namespace hellods
 
 /// Deque implemented by double linked list.
 template <typename T>
-class LinkedDeque : protected LinkedList<T>, virtual Deque<T>
+class LinkedDeque : public Deque<T>
 {
-    using LinkedList<T>::MAX_CAPACITY;
-    using LinkedList<T>::size_;
-    using LinkedList<T>::header_;
-    using LinkedList<T>::trailer_;
+    using detail::Container::MAX_CAPACITY;
+
+    LinkedList<T> list_;
 
 public:
-    using LinkedList<T>::Iterator;
-
     /*
      * Constructor / Destructor
      */
 
     /// Create an empty deque.
     LinkedDeque()
-        : LinkedList<T>()
-        , Deque<T>(0)
+        : list_()
     {
     }
 
     /// Create a deque based on the given initializer list.
     LinkedDeque(const std::initializer_list<T>& il)
-        : LinkedList<T>(il)
-        , Deque<T>(int(il.size()))
+        : list_(il)
     {
     }
 
@@ -51,7 +46,7 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const LinkedDeque& that) const
     {
-        return static_cast<const LinkedList<T>&>(*this) == static_cast<const LinkedList<T>&>(that);
+        return list_ == that.list_;
     }
 
     /*
@@ -59,15 +54,15 @@ public:
      */
 
     /// Return an iterator to the first element of the deque.
-    Iterator begin() const
+    auto begin() const
     {
-        return LinkedList<T>::begin();
+        return list_.begin();
     }
 
     /// Return an iterator to the element following the last element of the deque.
-    Iterator end() const
+    auto end() const
     {
-        return LinkedList<T>::end();
+        return list_.end();
     }
 
     /*
@@ -77,8 +72,8 @@ public:
     /// Return the reference to the element at the front in the deque.
     T& front() override
     {
-        detail::check_empty(size());
-        return header_->succ_->data_;
+        detail::check_empty(list_.size_);
+        return list_.header_->succ_->data_;
     }
 
     using Deque<T>::front; // const
@@ -86,8 +81,8 @@ public:
     /// Return the reference to the element at the back in the deque.
     T& back() override
     {
-        detail::check_empty(size());
-        return trailer_->pred_->data_;
+        detail::check_empty(list_.size_);
+        return list_.trailer_->pred_->data_;
     }
 
     using Deque<T>::back; // const
@@ -96,45 +91,48 @@ public:
      * Examination
      */
 
-    using LinkedList<T>::is_empty;
-    using LinkedList<T>::size;
+    /// Get the number of elements.
+    int size() const override
+    {
+        return list_.size_;
+    }
 
     /*
      * Manipulation
      */
 
     /// Push front, insert an element at the front of the deque.
-    void push_front(const T& element)
+    void push_front(const T& element) override
     {
-        detail::check_full(size_, MAX_CAPACITY);
-        LinkedList<T>::insert_node(header_->succ_, element);
+        detail::check_full(list_.size_, MAX_CAPACITY);
+        list_.insert_node(list_.header_->succ_, element);
     }
 
     /// Push back, insert an element at the back of the deque.
-    void push_back(const T& element)
+    void push_back(const T& element) override
     {
-        detail::check_full(size_, MAX_CAPACITY);
-        LinkedList<T>::insert_node(trailer_, element);
+        detail::check_full(list_.size_, MAX_CAPACITY);
+        list_.insert_node(list_.trailer_, element);
     }
 
     /// Pop front, pop the front element of the deque.
-    T pop_front()
+    T pop_front() override
     {
-        detail::check_empty(size_);
-        return LinkedList<T>::remove_node(header_->succ_);
+        detail::check_empty(list_.size_);
+        return list_.remove_node(list_.header_->succ_);
     }
 
     /// Pop back, pop the back element of the deque.
-    T pop_back()
+    T pop_back() override
     {
-        detail::check_empty(size_);
-        return LinkedList<T>::remove_node(trailer_->pred_);
+        detail::check_empty(list_.size_);
+        return list_.remove_node(list_.trailer_->pred_);
     }
 
     /// Remove all of the elements from the deque.
-    void clear()
+    void clear() override
     {
-        LinkedList<T>::clear();
+        list_.clear();
     }
 
     /*

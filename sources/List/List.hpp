@@ -22,12 +22,6 @@ public:
      * Constructor / Destructor
      */
 
-    /// Constructor.
-    List(int size)
-        : detail::Container(size)
-    {
-    }
-
     /// Virtual destructor.
     virtual ~List() = default;
 

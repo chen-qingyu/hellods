@@ -16,8 +16,10 @@ namespace hellods
 
 /// Queue implemented by array.
 template <typename T>
-class ArrayQueue : protected ArrayDeque<T>, virtual Queue<T>
+class ArrayQueue : public Queue<T>
 {
+    ArrayDeque<T> deque_;
+
 public:
     /*
      * Constructor / Destructor
@@ -25,15 +27,13 @@ public:
 
     /// Create an empty queue.
     ArrayQueue()
-        : ArrayDeque<T>()
-        , Queue<T>(0)
+        : deque_()
     {
     }
 
     /// Create a queue based on the given initializer list.
     ArrayQueue(const std::initializer_list<T>& il)
-        : ArrayDeque<T>(il)
-        , Queue<T>(int(il.size()))
+        : deque_(il)
     {
     }
 
@@ -44,7 +44,7 @@ public:
     /// Check whether two queues are equal.
     bool operator==(const ArrayQueue& that) const
     {
-        return static_cast<const ArrayDeque<T>&>(*this) == static_cast<const ArrayDeque<T>&>(that);
+        return deque_ == that.deque_;
     }
 
     /*
@@ -54,7 +54,7 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front() override
     {
-        return ArrayDeque<T>::front();
+        return deque_.front();
     }
 
     using Queue<T>::front; // const
@@ -63,8 +63,11 @@ public:
      * Examination
      */
 
-    using ArrayDeque<T>::is_empty;
-    using ArrayDeque<T>::size;
+    /// Get the number of elements.
+    int size() const override
+    {
+        return deque_.size_;
+    }
 
     /*
      * Manipulation
@@ -73,19 +76,19 @@ public:
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element) override
     {
-        ArrayDeque<T>::push_back(element);
+        deque_.push_back(element);
     }
 
     /// Dequeue, pop the front element of the queue.
     T dequeue() override
     {
-        return ArrayDeque<T>::pop_front();
+        return deque_.pop_front();
     }
 
     /// Remove all of the elements from the queue.
     void clear() override
     {
-        ArrayDeque<T>::clear();
+        deque_.clear();
     }
 
     /*
@@ -96,7 +99,7 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const ArrayQueue& queue)
     {
         std::ostringstream oss;
-        oss << static_cast<const ArrayDeque<T>&>(queue);
+        oss << queue.deque_;
         return os << "Queue" << oss.str().erase(0, 5);
     }
 };
