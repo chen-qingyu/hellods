@@ -50,7 +50,7 @@ static inline void check_full(int size, int capacity)
 
 // Print function template for std::pair.
 template <typename K, typename V>
-std::ostream& operator<<(std::ostream& os, const std::pair<const K, V>& pair)
+std::ostream& operator<<(std::ostream& os, const std::pair<K, V>& pair)
 {
     return os << pair.first << ": " << pair.second;
 }
