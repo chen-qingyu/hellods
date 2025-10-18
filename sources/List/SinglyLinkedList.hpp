@@ -234,19 +234,7 @@ public:
     /// Append the specified element to the list.
     void append(const T& element) override
     {
-        // check
-        detail::check_full(size_, MAX_CAPACITY);
-
-        // insert and resize
-        auto current = header_;
-        while (current->succ_ != nullptr)
-        {
-            current = current->succ_;
-        }
-        auto node = new Node(element);
-        current->succ_ = node;
-
-        ++size_;
+        insert(size_, element);
     }
 
     /// Insert the specified element at the specified position in the list.

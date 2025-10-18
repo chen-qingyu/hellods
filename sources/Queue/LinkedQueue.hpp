@@ -18,7 +18,6 @@ namespace hellods
 template <typename T>
 class LinkedQueue : public Queue<T>
 {
-    using detail::Container::INIT_CAPACITY;
     using detail::Container::MAX_CAPACITY;
 
     LinkedList<T> list_;
