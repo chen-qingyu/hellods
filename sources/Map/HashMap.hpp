@@ -24,8 +24,13 @@ protected:
         // The pair of the key-value.
         std::pair<const K, V> pair_;
 
-        // State of the key-value pair.
-        bool full_;
+        // State of the key-value pair: 0 = empty, 1 = occupied, 2 = deleted
+        enum State
+        {
+            EMPTY = 0,
+            OCCUPIED = 1,
+            DELETED = 2
+        } state_;
 
         // For convenient.
         const K& key_ = pair_.first;
@@ -72,7 +77,7 @@ public:
             , buffer_begin_(begin)
             , buffer_end_(end)
         {
-            while (current_ != buffer_end_ && !current_->full_)
+            while (current_ != buffer_end_ && current_->state_ != Pair::OCCUPIED)
             {
                 ++current_;
             }
@@ -102,7 +107,7 @@ public:
 
         Iterator& operator++()
         {
-            while (++current_ != buffer_end_ && !current_->full_)
+            while (++current_ != buffer_end_ && current_->state_ != Pair::OCCUPIED)
             {
             }
             return *this;
@@ -117,7 +122,7 @@ public:
 
         Iterator& operator--()
         {
-            while (--current_ != buffer_begin_ && !current_->full_)
+            while (--current_ != buffer_begin_ && current_->state_ != Pair::OCCUPIED)
             {
             }
             return *this;
@@ -139,7 +144,7 @@ protected:
         int new_pos = current_pos;
         int conflict_cnt = 0;
 
-        while (data_[new_pos].full_ && !Eq()(data_[new_pos].key_, key))
+        while (data_[new_pos].state_ != Pair::EMPTY && !Eq()(data_[new_pos].key_, key))
         {
             if (++conflict_cnt % 2)
             {
@@ -215,7 +220,7 @@ protected:
         Pair* new_data = new Pair[new_capacity];
         for (int i = 0; i < new_capacity; i++)
         {
-            new_data[i].full_ = false;
+            new_data[i].state_ = Pair::EMPTY;
         }
 
         // move elements (rehash)
@@ -224,7 +229,7 @@ protected:
         size_ = 0;
         for (int i = 0; i < old_capacity; i++)
         {
-            if (old_data[i].full_)
+            if (old_data[i].state_ == Pair::OCCUPIED)
             {
                 insert(old_data[i].key_, old_data[i].value_);
             }
@@ -247,7 +252,7 @@ public:
     {
         for (int i = 0; i < capacity_; i++)
         {
-            data_[i].full_ = false;
+            data_[i].state_ = Pair::EMPTY;
         }
     }
 
@@ -300,7 +305,7 @@ public:
     {
         int pos = find_pos(key);
 
-        if (!data_[pos].full_)
+        if (data_[pos].state_ != Pair::OCCUPIED)
         {
             throw std::runtime_error("Error: The key-value pair does not exist.");
         }
@@ -338,13 +343,13 @@ public:
     Iterator find(const K& key) const
     {
         int pos = find_pos(key);
-        return data_[pos].full_ ? Iterator(data_ + pos, data_, data_ + capacity_) : end();
+        return data_[pos].state_ == Pair::OCCUPIED ? Iterator(data_ + pos, data_, data_ + capacity_) : end();
     }
 
     /// Determine whether a key is in the map.
     bool contains(const K& key) const
     {
-        return data_[find_pos(key)].full_;
+        return data_[find_pos(key)].state_ == Pair::OCCUPIED;
     }
 
     /*
@@ -358,12 +363,12 @@ public:
 
         int pos = find_pos(key);
 
-        if (data_[pos].full_)
+        if (data_[pos].state_ == Pair::OCCUPIED)
         {
             return false;
         }
 
-        data_[pos].full_ = true;
+        data_[pos].state_ = Pair::OCCUPIED;
         const_cast<K&>(data_[pos].key_) = key;
         data_[pos].value_ = value;
 
@@ -382,12 +387,12 @@ public:
     {
         int pos = find_pos(key);
 
-        if (!data_[pos].full_)
+        if (data_[pos].state_ != Pair::OCCUPIED)
         {
             return false;
         }
 
-        data_[pos].full_ = false;
+        data_[pos].state_ = Pair::DELETED;
         size_--;
         return true;
     }
@@ -399,7 +404,7 @@ public:
         {
             for (int i = 0; i < capacity_; ++i)
             {
-                data_[i].full_ = false;
+                data_[i].state_ = Pair::EMPTY;
             }
             size_ = 0;
         }

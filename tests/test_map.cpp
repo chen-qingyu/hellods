@@ -98,6 +98,25 @@ void test()
     some.clear(); // double clear
     REQUIRE(some == empty);
 
+    // Test expansion
+    Map large;
+    for (int i = 0; i < 100; i++)
+    {
+        REQUIRE(large.insert(i, std::to_string(i)) == true);
+    }
+    REQUIRE(large.size() == 100);
+    for (int i = 0; i < 100; i++)
+    {
+        REQUIRE(large.contains(i) == true);
+        REQUIRE(large[i] == std::to_string(i));
+    }
+    for (int i = 0; i < 100; i++)
+    {
+        REQUIRE(large.remove(i) == true);
+    }
+    REQUIRE(large.size() == 0);
+    REQUIRE(large.is_empty() == true);
+
     // Print
     std::ostringstream oss;
 
