@@ -77,7 +77,7 @@ public:
     /// Push an element at the top of the stack.
     void push(const T& element) override
     {
-        list_.insert(list_.size_, element);
+        list_.append(element);
     }
 
     /// Pop the top element of the stack.
