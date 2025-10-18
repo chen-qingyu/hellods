@@ -16,9 +16,8 @@ namespace hellods
 {
 
 template <typename T, typename Cmp = std::greater<T>>
-class BinaryHeap : private ArrayList<T>
+class BinaryHeap : protected ArrayList<T>
 {
-protected:
     using ArrayList<T>::MAX_CAPACITY;
     using ArrayList<T>::size_;
     using ArrayList<T>::capacity_;
@@ -85,17 +84,8 @@ public:
      * Examination
      */
 
-    /// Get the number of elements of the heap.
-    int size() const
-    {
-        return ArrayList<T>::size();
-    }
-
-    /// Check if the heap is empty.
-    bool is_empty() const
-    {
-        return ArrayList<T>::is_empty();
-    }
+    using ArrayList<T>::size;
+    using ArrayList<T>::is_empty;
 
     /// Peek the top element in the heap.
     const T& peek() const

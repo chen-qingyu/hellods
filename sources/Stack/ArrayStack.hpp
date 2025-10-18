@@ -16,13 +16,13 @@ namespace hellods
 
 /// Stack implemented by array list.
 template <typename T>
-class ArrayStack : private ArrayList<T>, virtual Stack<T>
+class ArrayStack : protected ArrayList<T>, virtual Stack<T>
 {
     using ArrayList<T>::data_;
 
 public:
-    using detail::Container::is_empty;
-    using detail::Container::size;
+    using ArrayList<T>::is_empty;
+    using ArrayList<T>::size;
 
     /*
      * Constructor / Destructor

@@ -262,7 +262,7 @@ public:
         return p_latest_->data_;
     }
 
-    using List<T>::operator[];
+    using List<T>::operator[]; // const
 
     /*
      * Iterator

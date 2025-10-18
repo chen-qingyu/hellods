@@ -16,17 +16,16 @@ namespace hellods
 
 /// Queue implemented by doubly linked list.
 template <typename T>
-class LinkedQueue : private LinkedList<T>, virtual Queue<T>
+class LinkedQueue : protected LinkedList<T>, virtual Queue<T>
 {
-protected:
     using LinkedList<T>::MAX_CAPACITY;
     using LinkedList<T>::size_;
     using LinkedList<T>::header_;
     using LinkedList<T>::trailer_;
 
 public:
-    using detail::Container::is_empty;
-    using detail::Container::size;
+    using LinkedList<T>::is_empty;
+    using LinkedList<T>::size;
 
     /*
      * Constructor / Destructor

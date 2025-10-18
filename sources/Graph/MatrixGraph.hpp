@@ -29,7 +29,7 @@ public:
     /// A value of edge type indicating that this edge does not exist.
     static const E NO_EDGE = INT_MAX;
 
-private:
+protected:
     // Adjacency matrix.
     E** matrix_;
 

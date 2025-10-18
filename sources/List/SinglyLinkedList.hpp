@@ -17,7 +17,7 @@ namespace hellods
 template <typename T>
 class SinglyLinkedList : public List<T>
 {
-private:
+protected:
     // Node of singly linked list.
     struct Node
     {
@@ -92,7 +92,7 @@ public:
         }
     };
 
-private:
+protected:
     using detail::Container::INIT_CAPACITY;
     using detail::Container::MAX_CAPACITY;
     using detail::Container::size_;
@@ -189,7 +189,7 @@ public:
         return current->data_;
     }
 
-    using List<T>::operator[];
+    using List<T>::operator[]; // const
 
     /*
      * Iterator

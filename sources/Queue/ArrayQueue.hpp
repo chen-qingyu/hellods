@@ -16,11 +16,11 @@ namespace hellods
 
 /// Queue implemented by array.
 template <typename T>
-class ArrayQueue : private ArrayDeque<T>, virtual Queue<T>
+class ArrayQueue : protected ArrayDeque<T>, virtual Queue<T>
 {
 public:
-    using detail::Container::is_empty;
-    using detail::Container::size;
+    using ArrayDeque<T>::is_empty;
+    using ArrayDeque<T>::size;
 
     /*
      * Constructor / Destructor

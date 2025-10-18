@@ -17,7 +17,7 @@ namespace hellods
 template <typename K, typename V, typename Hash = std::hash<K>, typename Eq = std::equal_to<K>>
 class HashMap : public detail::Container
 {
-private:
+protected:
     // Hash map pair.
     struct Pair
     {
@@ -32,7 +32,7 @@ private:
         V& value_ = pair_.second;
     };
 
-private:
+protected:
     // Initial capacity for hash map.
     static const int INIT_PRIME_CAPACITY = 7;
 
@@ -131,7 +131,7 @@ public:
         }
     };
 
-private:
+protected:
     // Find the position for key.
     int find_pos(const K& key) const
     {

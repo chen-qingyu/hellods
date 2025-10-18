@@ -22,7 +22,7 @@ class RedBlackTree : public BinarySearchTree<T>
     using BinarySearchTree<T>::end_;
     using BinarySearchTree<T>::root_;
 
-private:
+protected:
     // Rotate right.
     void rotate_right(Node*& current)
     {

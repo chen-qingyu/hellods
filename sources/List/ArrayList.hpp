@@ -168,7 +168,7 @@ public:
         return data_[index];
     }
 
-    using List<T>::operator[];
+    using List<T>::operator[]; // const
 
     /*
      * Iterator

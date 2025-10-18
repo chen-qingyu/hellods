@@ -16,9 +16,8 @@ namespace hellods
 
 /// Deque implemented by double linked list.
 template <typename T>
-class LinkedDeque : private LinkedList<T>, virtual Deque<T>
+class LinkedDeque : protected LinkedList<T>, virtual Deque<T>
 {
-protected:
     using LinkedList<T>::MAX_CAPACITY;
     using LinkedList<T>::size_;
     using LinkedList<T>::header_;
@@ -26,8 +25,8 @@ protected:
 
 public:
     using LinkedList<T>::Iterator;
-    using detail::Container::is_empty;
-    using detail::Container::size;
+    using LinkedList<T>::is_empty;
+    using LinkedList<T>::size;
 
     /*
      * Constructor / Destructor

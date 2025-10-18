@@ -18,9 +18,9 @@ namespace hellods
 template <typename T>
 class ArrayDeque : public Deque<T>
 {
-    using detail::Container::INIT_CAPACITY;
-    using detail::Container::MAX_CAPACITY;
-    using detail::Container::size_;
+    using Deque<T>::INIT_CAPACITY;
+    using Deque<T>::MAX_CAPACITY;
+    using Deque<T>::size_;
 
 public:
     /// Deque iterator class.
@@ -110,7 +110,7 @@ public:
         }
     };
 
-private:
+protected:
     // Index of front in ring buffer. data[front] is the first element, except size == 0.
     int front_;
 
