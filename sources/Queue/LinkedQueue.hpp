@@ -24,9 +24,6 @@ class LinkedQueue : protected LinkedList<T>, virtual Queue<T>
     using LinkedList<T>::trailer_;
 
 public:
-    using LinkedList<T>::is_empty;
-    using LinkedList<T>::size;
-
     /*
      * Constructor / Destructor
      */
@@ -67,6 +64,13 @@ public:
     }
 
     using Queue<T>::front; // const
+
+    /*
+     * Examination
+     */
+
+    using LinkedList<T>::is_empty;
+    using LinkedList<T>::size;
 
     /*
      * Manipulation

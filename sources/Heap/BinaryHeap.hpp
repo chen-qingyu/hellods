@@ -81,11 +81,8 @@ public:
     }
 
     /*
-     * Examination
+     * Access
      */
-
-    using ArrayList<T>::size;
-    using ArrayList<T>::is_empty;
 
     /// Peek the top element in the heap.
     const T& peek() const
@@ -93,6 +90,13 @@ public:
         detail::check_empty(size());
         return data_[0];
     }
+
+    /*
+     * Examination
+     */
+
+    using ArrayList<T>::size;
+    using ArrayList<T>::is_empty;
 
     /*
      * Manipulation

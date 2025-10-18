@@ -24,9 +24,6 @@ class LinkedStack : protected LinkedList<T>, virtual Stack<T>
     using LinkedList<T>::trailer_;
 
 public:
-    using LinkedList<T>::is_empty;
-    using LinkedList<T>::size;
-
     /*
      * Constructor / Destructor
      */
@@ -67,6 +64,13 @@ public:
     }
 
     using Stack<T>::top; // const
+
+    /*
+     * Examination
+     */
+
+    using LinkedList<T>::is_empty;
+    using LinkedList<T>::size;
 
     /*
      * Manipulation

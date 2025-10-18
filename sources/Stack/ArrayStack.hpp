@@ -21,9 +21,6 @@ class ArrayStack : protected ArrayList<T>, virtual Stack<T>
     using ArrayList<T>::data_;
 
 public:
-    using ArrayList<T>::is_empty;
-    using ArrayList<T>::size;
-
     /*
      * Constructor / Destructor
      */
@@ -64,6 +61,13 @@ public:
     }
 
     using Stack<T>::top; // const
+
+    /*
+     * Examination
+     */
+
+    using ArrayList<T>::is_empty;
+    using ArrayList<T>::size;
 
     /*
      * Manipulation

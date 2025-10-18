@@ -25,8 +25,6 @@ class LinkedDeque : protected LinkedList<T>, virtual Deque<T>
 
 public:
     using LinkedList<T>::Iterator;
-    using LinkedList<T>::is_empty;
-    using LinkedList<T>::size;
 
     /*
      * Constructor / Destructor
@@ -93,6 +91,13 @@ public:
     }
 
     using Deque<T>::back; // const
+
+    /*
+     * Examination
+     */
+
+    using LinkedList<T>::is_empty;
+    using LinkedList<T>::size;
 
     /*
      * Manipulation

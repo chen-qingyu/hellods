@@ -19,9 +19,6 @@ template <typename T>
 class ArrayQueue : protected ArrayDeque<T>, virtual Queue<T>
 {
 public:
-    using ArrayDeque<T>::is_empty;
-    using ArrayDeque<T>::size;
-
     /*
      * Constructor / Destructor
      */
@@ -61,6 +58,13 @@ public:
     }
 
     using Queue<T>::front; // const
+
+    /*
+     * Examination
+     */
+
+    using ArrayDeque<T>::is_empty;
+    using ArrayDeque<T>::size;
 
     /*
      * Manipulation
