@@ -108,12 +108,12 @@ static ArrayList<Token> tokenize(const std::string& expr)
         if ((*it)[1].matched) // is number
         {
             double n = std::stod(it->str());
-            tokens.add(Token(Token::NUM, Token::Data(n)));
+            tokens.append(Token(Token::NUM, Token::Data(n)));
         }
         else if ((*it)[2].matched) // is operator
         {
             std::string op = it->str();
-            tokens.add(Token(Token::OP, Token::Data(op[0])));
+            tokens.append(Token(Token::OP, Token::Data(op[0])));
         }
         else if ((*it)[3].matched) // ignore space
         {
@@ -134,7 +134,7 @@ static ArrayList<Token> to_postfix(const ArrayList<Token>& tokens)
         switch (token.type)
         {
             case Token::NUM:
-                postfix.add(token); // 数字直接加入后缀表达式
+                postfix.append(token); // 数字直接加入后缀表达式
                 break;
 
             case Token::OP:
@@ -151,7 +151,7 @@ static ArrayList<Token> to_postfix(const ArrayList<Token>& tokens)
                     Token t;
                     while (!stk.is_empty() && (t = stk.pop()).data.op != '(') // 没匹配到对应的括号时
                     {
-                        postfix.add(t); // 运算符均加入后缀表达式
+                        postfix.append(t); // 运算符均加入后缀表达式
                     }
                     if (token.data.op != ')') // 当前运算符入栈（括号排除）
                     {
@@ -167,7 +167,7 @@ static ArrayList<Token> to_postfix(const ArrayList<Token>& tokens)
 
     while (!stk.is_empty()) // 栈中剩余运算符依次弹出加入后缀表达式
     {
-        postfix.add(stk.pop());
+        postfix.append(stk.pop());
     }
 
     return postfix;
