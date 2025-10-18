@@ -170,6 +170,12 @@ public:
         std::copy(il.begin(), il.end(), data_);
     }
 
+    /// Destroy the deque object.
+    ~ArrayDeque()
+    {
+        delete[] data_;
+    }
+
     /*
      * Comparison
      */
