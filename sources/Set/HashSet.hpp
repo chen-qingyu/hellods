@@ -15,7 +15,7 @@ namespace hellods
 
 /// Hash set.
 template <typename T, typename Hash = std::hash<T>, typename Eq = std::equal_to<T>>
-class HashSet : public detail::Container
+class HashSet
 {
 protected:
     // Dummy value type for internal map.
@@ -103,8 +103,7 @@ public:
 
     /// Create an empty set.
     HashSet()
-        : detail::Container(0)
-        , map_()
+        : map_()
     {
     }
 
@@ -125,7 +124,7 @@ public:
     /// Check whether two sets are equal.
     bool operator==(const HashSet& that) const
     {
-        if (size_ != that.size_)
+        if (map_.size() != that.map_.size())
         {
             return false;
         }
@@ -139,6 +138,22 @@ public:
         }
 
         return true;
+    }
+
+    /*
+     * Access
+     */
+
+    /// Get the number of elements of the set.
+    int size() const
+    {
+        return map_.size();
+    }
+
+    /// Check if the set is empty.
+    bool is_empty() const
+    {
+        return map_.is_empty();
     }
 
     /*
@@ -180,30 +195,19 @@ public:
     /// Insert a new item into the set. Return whether the item was newly inserted.
     bool insert(const T& item)
     {
-        bool inserted = map_.insert(item, Dummy());
-        if (inserted)
-        {
-            size_++;
-        }
-        return inserted;
+        return map_.insert(item, Dummy());
     }
 
     /// Remove the item corresponding to the item in the set. Return whether such a item was present.
     bool remove(const T& item)
     {
-        bool removed = map_.remove(item);
-        if (removed)
-        {
-            size_--;
-        }
-        return removed;
+        return map_.remove(item);
     }
 
     /// Remove all of the elements from the set.
     void clear()
     {
         map_.clear();
-        size_ = 0;
     }
 
     /*
