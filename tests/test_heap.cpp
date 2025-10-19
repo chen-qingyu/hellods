@@ -4,9 +4,10 @@
 
 using namespace hellods;
 
-template <typename Heap>
-void test()
+TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less<int>>))
 {
+    using Heap = TestType;
+
     // Constructor / Destructor
     Heap empty;
     Heap some = {1, 2, 3, 4, 5};
@@ -77,6 +78,36 @@ void test()
     some.clear(); // double clear
     REQUIRE(some == empty);
 
+    // Test with large number of elements
+    Heap large;
+    for (int i = 0; i < 100; ++i)
+    {
+        large.push(i);
+    }
+    REQUIRE(large.size() == 100);
+
+    if constexpr (std::is_same<Heap, BinaryHeap<int>>::value)
+    {
+        REQUIRE(large.peek() == 99);
+        for (int i = 99; i >= 0; --i)
+        {
+            REQUIRE(large.pop() == i);
+        }
+    }
+    else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value)
+    {
+        REQUIRE(large.peek() == 0);
+        for (int i = 0; i < 100; ++i)
+        {
+            REQUIRE(large.pop() == i);
+        }
+    }
+    else
+    {
+        FAIL();
+    }
+    REQUIRE(large.is_empty() == true);
+
     // Print
     std::ostringstream oss;
 
@@ -104,27 +135,12 @@ void test()
     oss.str("");
 }
 
-TEST_CASE("BinaryHeap")
+TEMPLATE_TEST_CASE("Heap with user-defined type", "[heap]", (BinaryHeap<EqLtType, std::less<EqLtType>>))
 {
-    test<BinaryHeap<int>>();                 // max-heap (default)
-    test<BinaryHeap<int, std::less<int>>>(); // min-heap
+    using Heap = TestType;
 
-    BinaryHeap<EqLtType, std::less<EqLtType>> empty;
-    BinaryHeap<EqLtType, std::less<EqLtType>> some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
+    Heap empty;
+    Heap some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 5);
-
-    BinaryHeap<int> large;
-    for (int i = 0; i < 1000; ++i)
-    {
-        large.push(i);
-    }
-    REQUIRE(large.size() == 1000);
-    REQUIRE(large.peek() == 999);
-
-    for (int i = 999; i >= 0; --i)
-    {
-        REQUIRE(large.pop() == i);
-    }
-    REQUIRE(large.is_empty() == true);
 }

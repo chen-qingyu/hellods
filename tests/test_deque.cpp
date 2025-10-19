@@ -5,9 +5,10 @@
 
 using namespace hellods;
 
-template <typename Deque>
-void test()
+TEMPLATE_TEST_CASE("Deque", "[deque]", ArrayDeque<int>, LinkedDeque<int>)
 {
+    using Deque = TestType;
+
     // Constructor / Destructor
     Deque empty;
     Deque some = {1, 2, 3, 4, 5};
@@ -77,22 +78,12 @@ void test()
     oss.str("");
 }
 
-TEST_CASE("ArrayDeque")
+TEMPLATE_TEST_CASE("Deque with user-defined type", "[deque]", ArrayDeque<EqType>, LinkedDeque<EqType>)
 {
-    test<ArrayDeque<int>>();
+    using Deque = TestType;
 
-    ArrayDeque<EqType> empty;
-    ArrayDeque<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}
-
-TEST_CASE("LinkedDeque")
-{
-    test<LinkedDeque<int>>();
-
-    LinkedDeque<EqType> empty;
-    LinkedDeque<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    Deque empty;
+    Deque some = {EqType(), EqType(), EqType(), EqType(), EqType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 5);
 }

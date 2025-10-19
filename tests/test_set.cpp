@@ -4,9 +4,10 @@
 
 using namespace hellods;
 
-template <typename Set>
-void test()
+TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>)
 {
+    using Set = TestType;
+
     // Constructor / Destructor
     Set empty;
     Set some = {1, 2, 3};
@@ -119,22 +120,12 @@ void test()
     oss.str("");
 }
 
-template <>
-struct std::hash<EqType> // explicit specialization
+TEMPLATE_TEST_CASE("Set with user-defined type", "[set]", HashSet<EqType>)
 {
-    std::size_t operator()(const EqType&) const
-    {
-        static std::size_t id = 0;
-        return id++;
-    }
-};
+    using Set = TestType;
 
-TEST_CASE("HashSet")
-{
-    test<HashSet<int>>();
-
-    HashSet<EqType> empty;
-    HashSet<EqType> some = {EqType(), EqType(), EqType()};
+    Set empty;
+    Set some = {EqType(), EqType(), EqType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 3);
 }

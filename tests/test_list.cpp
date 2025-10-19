@@ -6,9 +6,10 @@
 
 using namespace hellods;
 
-template <typename List>
-void test()
+TEMPLATE_TEST_CASE("List", "[list]", ArrayList<int>, LinkedList<int>, SinglyLinkedList<int>)
 {
+    using List = TestType;
+
     // Constructor / Destructor
     List empty;
     List some = {1, 2, 3, 4, 5};
@@ -119,32 +120,12 @@ void test()
     oss.str("");
 }
 
-TEST_CASE("ArrayList")
+TEMPLATE_TEST_CASE("List with user-defined type", "[list]", ArrayList<EqType>, LinkedList<EqType>, SinglyLinkedList<EqType>)
 {
-    test<ArrayList<int>>();
+    using List = TestType;
 
-    ArrayList<EqType> empty;
-    ArrayList<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}
-
-TEST_CASE("LinkedList")
-{
-    test<LinkedList<int>>();
-
-    LinkedList<EqType> empty;
-    LinkedList<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}
-
-TEST_CASE("SinglyLinkedList")
-{
-    test<SinglyLinkedList<int>>();
-
-    SinglyLinkedList<EqType> empty;
-    SinglyLinkedList<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    List empty;
+    List some = {EqType(), EqType(), EqType(), EqType(), EqType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 5);
 }

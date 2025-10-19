@@ -5,9 +5,10 @@
 
 using namespace hellods;
 
-template <typename Stack>
-void test()
+TEMPLATE_TEST_CASE("Stack", "[stack]", ArrayStack<int>, LinkedStack<int>)
 {
+    using Stack = TestType;
+
     // Constructor / Destructor
     Stack empty;
     Stack some = {1, 2, 3, 4, 5};
@@ -67,24 +68,12 @@ void test()
     oss.str("");
 }
 
-TEST_CASE("ArrayStack")
+TEMPLATE_TEST_CASE("Stack with user-defined type", "[stack]", ArrayStack<EqType>, LinkedStack<EqType>)
 {
-    test<ArrayStack<int>>();
-    test<ArrayStack<double>>();
+    using Stack = TestType;
 
-    ArrayStack<EqType> empty;
-    ArrayStack<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}
-
-TEST_CASE("LinkedStack")
-{
-    test<LinkedStack<int>>();
-    test<LinkedStack<double>>();
-
-    LinkedStack<EqType> empty;
-    LinkedStack<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    Stack empty;
+    Stack some = {EqType(), EqType(), EqType(), EqType(), EqType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 5);
 }

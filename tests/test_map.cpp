@@ -4,9 +4,10 @@
 
 using namespace hellods;
 
-template <typename Map>
-void test()
+TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>))
 {
+    using Map = TestType;
+
     // Constructor / Destructor
     Map empty;
     Map some = {{1, "one"}, {2, "two"}, {3, "three"}};
@@ -98,7 +99,7 @@ void test()
     some.clear(); // double clear
     REQUIRE(some == empty);
 
-    // Test expansion
+    // Test with large number of elements
     Map large;
     for (int i = 0; i < 100; i++)
     {
@@ -133,22 +134,12 @@ void test()
     oss.str("");
 }
 
-template <>
-struct std::hash<EqType> // explicit specialization
+TEMPLATE_TEST_CASE("Map with user-defined type", "[map]", (HashMap<EqType, EqType>))
 {
-    std::size_t operator()(const EqType&) const
-    {
-        static std::size_t id = 0;
-        return id++;
-    }
-};
+    using Map = TestType;
 
-TEST_CASE("HashMap")
-{
-    test<HashMap<int, std::string>>();
-
-    HashMap<EqType, EqType> empty;
-    HashMap<EqType, EqType> some = {{EqType(), EqType()}, {EqType(), EqType()}, {EqType(), EqType()}};
+    Map empty;
+    Map some = {{EqType(), EqType()}, {EqType(), EqType()}, {EqType(), EqType()}};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 3);
 }

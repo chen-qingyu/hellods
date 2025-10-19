@@ -5,9 +5,10 @@
 
 using namespace hellods;
 
-template <typename Queue>
-void test()
+TEMPLATE_TEST_CASE("Queue", "[queue]", ArrayQueue<int>, LinkedQueue<int>)
 {
+    using Queue = TestType;
+
     // Constructor / Destructor
     Queue empty;
     Queue some = {1, 2, 3, 4, 5};
@@ -67,24 +68,12 @@ void test()
     oss.str("");
 }
 
-TEST_CASE("ArrayQueue")
+TEMPLATE_TEST_CASE("Queue with user-defined type", "[queue]", ArrayQueue<EqType>, LinkedQueue<EqType>)
 {
-    test<ArrayQueue<int>>();
-    test<ArrayQueue<double>>();
+    using Queue = TestType;
 
-    ArrayQueue<EqType> empty;
-    ArrayQueue<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}
-
-TEST_CASE("LinkedQueue")
-{
-    test<LinkedQueue<int>>();
-    test<LinkedQueue<double>>();
-
-    LinkedQueue<EqType> empty;
-    LinkedQueue<EqType> some = {EqType(), EqType(), EqType(), EqType(), EqType()};
+    Queue empty;
+    Queue some = {EqType(), EqType(), EqType(), EqType(), EqType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 5);
 }

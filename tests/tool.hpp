@@ -1,3 +1,4 @@
+#include <catch2/catch_template_test_macros.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_exception.hpp>
 
@@ -22,5 +23,15 @@ struct EqLtType
     bool operator<(const EqLtType& that) const
     {
         return true;
+    }
+};
+
+template <>
+struct std::hash<EqType> // explicit specialization
+{
+    std::size_t operator()(const EqType&) const
+    {
+        static std::size_t id = 0;
+        return id++;
     }
 };

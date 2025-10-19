@@ -5,9 +5,10 @@
 
 using namespace hellods;
 
-template <typename Tree>
-void test()
+TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>)
 {
+    using Tree = TestType;
+
     // Constructor / Destructor
     Tree empty;
     Tree some = {3, 1, 5, 2, 4};
@@ -150,17 +151,12 @@ void test()
     oss.str("");
 }
 
-TEST_CASE("BinarySearchTree")
+TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqLtType>, RedBlackTree<EqLtType>)
 {
-    test<BinarySearchTree<int>>();
-}
+    using Tree = TestType;
 
-TEST_CASE("RedBlackTree")
-{
-    test<RedBlackTree<int>>();
-
-    RedBlackTree<EqLtType> empty;
-    RedBlackTree<EqLtType> some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
+    Tree empty;
+    Tree some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 5);
 }
