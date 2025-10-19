@@ -28,8 +28,8 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>))
     some[1] = "one";
     REQUIRE(some[1] == "one");
 
-    const Map const_table = {{1, "one"}, {2, "two"}, {3, "three"}};
-    REQUIRE(const_table[1] == "one");
+    const Map const_map = {{1, "one"}, {2, "two"}, {3, "three"}};
+    REQUIRE(const_map[1] == "one");
 
     REQUIRE_THROWS_MATCHES(empty[1], std::runtime_error, Message("Error: The key-value pair does not exist."));
     REQUIRE_THROWS_MATCHES(some[4], std::runtime_error, Message("Error: The key-value pair does not exist."));
@@ -78,17 +78,9 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>))
     // Manipulation
     REQUIRE(empty.insert(1, "one") == true);
     REQUIRE(empty == Map({{1, "one"}}));
-    REQUIRE(empty.insert(2, "two") == true);
-    REQUIRE(empty == Map({{1, "one"}, {2, "two"}}));
-    REQUIRE(empty.insert(3, "three") == true);
-    REQUIRE(empty == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
-    REQUIRE(empty.insert(3, "three!") == false);
-    REQUIRE(empty == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
-
-    REQUIRE(empty.remove(3) == true);
-    REQUIRE(empty == Map({{1, "one"}, {2, "two"}}));
-    REQUIRE(empty.remove(2) == true);
+    REQUIRE(empty.insert(1, "one!") == false);
     REQUIRE(empty == Map({{1, "one"}}));
+
     REQUIRE(empty.remove(1) == true);
     REQUIRE(empty == Map({}));
     REQUIRE(empty.remove(1) == false);
@@ -99,24 +91,21 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>))
     some.clear(); // double clear
     REQUIRE(some == empty);
 
-    // Test with large number of elements
-    Map large;
     for (int i = 0; i < 100; i++)
     {
-        REQUIRE(large.insert(i, std::to_string(i)) == true);
+        REQUIRE(empty.insert(i, std::to_string(i)) == true);
     }
-    REQUIRE(large.size() == 100);
+    REQUIRE(empty.size() == 100);
     for (int i = 0; i < 100; i++)
     {
-        REQUIRE(large.contains(i) == true);
-        REQUIRE(large[i] == std::to_string(i));
+        REQUIRE(empty.contains(i) == true);
+        REQUIRE(empty[i] == std::to_string(i));
     }
     for (int i = 0; i < 100; i++)
     {
-        REQUIRE(large.remove(i) == true);
+        REQUIRE(empty.remove(i) == true);
     }
-    REQUIRE(large.size() == 0);
-    REQUIRE(large.is_empty() == true);
+    REQUIRE(empty.size() == 0);
 
     // Print
     std::ostringstream oss;

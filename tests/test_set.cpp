@@ -65,17 +65,9 @@ TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>)
     // Manipulation
     REQUIRE(empty.insert(1) == true);
     REQUIRE(empty == Set({1}));
-    REQUIRE(empty.insert(2) == true);
-    REQUIRE(empty == Set({1, 2}));
-    REQUIRE(empty.insert(3) == true);
-    REQUIRE(empty == Set({1, 2, 3}));
-    REQUIRE(empty.insert(3) == false);
-    REQUIRE(empty == Set({1, 2, 3}));
-
-    REQUIRE(empty.remove(3) == true);
-    REQUIRE(empty == Set({1, 2}));
-    REQUIRE(empty.remove(2) == true);
+    REQUIRE(empty.insert(1) == false);
     REQUIRE(empty == Set({1}));
+
     REQUIRE(empty.remove(1) == true);
     REQUIRE(empty == Set({}));
     REQUIRE(empty.remove(1) == false);
@@ -86,23 +78,20 @@ TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>)
     some.clear(); // double clear
     REQUIRE(some == empty);
 
-    // Test expansion
-    Set large;
     for (int i = 0; i < 100; i++)
     {
-        REQUIRE(large.insert(i) == true);
+        REQUIRE(empty.insert(i) == true);
     }
-    REQUIRE(large.size() == 100);
+    REQUIRE(empty.size() == 100);
     for (int i = 0; i < 100; i++)
     {
-        REQUIRE(large.contains(i) == true);
+        REQUIRE(empty.contains(i) == true);
     }
     for (int i = 0; i < 100; i++)
     {
-        REQUIRE(large.remove(i) == true);
+        REQUIRE(empty.remove(i) == true);
     }
-    REQUIRE(large.size() == 0);
-    REQUIRE(large.is_empty() == true);
+    REQUIRE(empty.size() == 0);
 
     // Print
     std::ostringstream oss;

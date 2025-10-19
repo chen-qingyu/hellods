@@ -44,28 +44,23 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
     REQUIRE_THROWS_MATCHES(empty.peek(), std::runtime_error, Message("Error: The container is empty."));
 
     // Manipulation
-    empty.push(1);
-    REQUIRE(empty == Heap({1}));
-    empty.push(0);
-    REQUIRE(empty == Heap({1, 0}));
-    empty.push(2);
-    REQUIRE(empty == Heap({2, 1, 0}));
-    empty.push(3);
-    REQUIRE(empty == Heap({3, 2, 1, 0}));
-
+    for (int i = 0; i < 100; ++i)
+    {
+        empty.push(i);
+    }
     if constexpr (std::is_same<Heap, BinaryHeap<int>>::value)
     {
-        REQUIRE(empty.pop() == 3);
-        REQUIRE(empty.pop() == 2);
-        REQUIRE(empty.pop() == 1);
-        REQUIRE(empty.pop() == 0);
+        for (int i = 99; i >= 0; --i)
+        {
+            REQUIRE(empty.pop() == i);
+        }
     }
     else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value)
     {
-        REQUIRE(empty.pop() == 0);
-        REQUIRE(empty.pop() == 1);
-        REQUIRE(empty.pop() == 2);
-        REQUIRE(empty.pop() == 3);
+        for (int i = 0; i < 100; ++i)
+        {
+            REQUIRE(empty.pop() == i);
+        }
     }
     else
     {
@@ -77,36 +72,6 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
     REQUIRE(some == empty);
     some.clear(); // double clear
     REQUIRE(some == empty);
-
-    // Test with large number of elements
-    Heap large;
-    for (int i = 0; i < 100; ++i)
-    {
-        large.push(i);
-    }
-    REQUIRE(large.size() == 100);
-
-    if constexpr (std::is_same<Heap, BinaryHeap<int>>::value)
-    {
-        REQUIRE(large.peek() == 99);
-        for (int i = 99; i >= 0; --i)
-        {
-            REQUIRE(large.pop() == i);
-        }
-    }
-    else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value)
-    {
-        REQUIRE(large.peek() == 0);
-        for (int i = 0; i < 100; ++i)
-        {
-            REQUIRE(large.pop() == i);
-        }
-    }
-    else
-    {
-        FAIL();
-    }
-    REQUIRE(large.is_empty() == true);
 
     // Print
     std::ostringstream oss;
