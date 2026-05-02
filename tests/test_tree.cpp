@@ -5,6 +5,88 @@
 
 using namespace hellods;
 
+class InspectableRedBlackTree : public RedBlackTree<int>
+{
+    using Node = typename BinarySearchTree<int>::Node;
+    using BinarySearchTree<int>::end_;
+    using BinarySearchTree<int>::root_;
+
+    bool verify_node(Node* node, int black_count, int& black_height) const
+    {
+        if (node == nullptr)
+        {
+            black_count++;
+            if (black_height == -1)
+            {
+                black_height = black_count;
+            }
+            return black_count == black_height;
+        }
+
+        if (node->left_ != nullptr && node->left_->parent_ != node)
+        {
+            return false;
+        }
+        if (node->right_ != nullptr && node->right_->parent_ != node)
+        {
+            return false;
+        }
+        if (node->red_ && ((node->left_ != nullptr && node->left_->red_) ||
+                           (node->right_ != nullptr && node->right_->red_)))
+        {
+            return false;
+        }
+
+        if (node->red_ == false)
+        {
+            black_count++;
+        }
+
+        return verify_node(node->left_, black_count, black_height) &&
+               verify_node(node->right_, black_count, black_height);
+    }
+
+    bool verify_order() const
+    {
+        auto it = begin();
+        if (it == end())
+        {
+            return true;
+        }
+
+        int count = 1;
+        int previous = *it;
+        for (++it; it != end(); ++it)
+        {
+            if (!(previous < *it))
+            {
+                return false;
+            }
+            previous = *it;
+            count++;
+        }
+        return count == size();
+    }
+
+public:
+    using RedBlackTree<int>::RedBlackTree;
+
+    bool verify_invariants() const
+    {
+        if (root_ == nullptr)
+        {
+            return true;
+        }
+        if (root_->parent_ != end_ || root_->red_)
+        {
+            return false;
+        }
+
+        int black_height = -1;
+        return verify_node(root_, 0, black_height) && verify_order();
+    }
+};
+
 TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>)
 {
     using Tree = TestType;
@@ -159,4 +241,67 @@ TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqL
     Tree some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 5);
+}
+
+TEST_CASE("RedBlackTree keeps invariants after mixed operations", "[tree][rbtree]")
+{
+    InspectableRedBlackTree tree;
+
+    const int insertions[] = {10, 20, 30, 15, 25, 5, 1, 50, 60, 55, 52, 58, 40, 45, 42, 41};
+    int expected_size = 0;
+
+    for (const int value : insertions)
+    {
+        REQUIRE(tree.insert(value) == true);
+        expected_size++;
+        REQUIRE(tree.size() == expected_size);
+        REQUIRE(tree.verify_invariants() == true);
+    }
+
+    REQUIRE(tree.insert(25) == false);
+    REQUIRE(tree.size() == expected_size);
+    REQUIRE(tree.verify_invariants() == true);
+
+    const int removals[] = {1, 5, 50, 55, 20, 40, 10, 30, 60, 58, 52, 42, 41, 45, 25, 15};
+    for (const int value : removals)
+    {
+        REQUIRE(tree.remove(value) == true);
+        expected_size--;
+        REQUIRE(tree.size() == expected_size);
+        REQUIRE(tree.verify_invariants() == true);
+    }
+
+    REQUIRE(tree.is_empty() == true);
+    REQUIRE(tree.verify_invariants() == true);
+}
+
+TEST_CASE("RedBlackTree deletion regressions preserve invariants", "[tree][rbtree]")
+{
+    SECTION("Delete the root repeatedly")
+    {
+        InspectableRedBlackTree tree = {8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15};
+        const int removals[] = {8, 9, 10, 11, 12, 13, 14, 15, 7, 6, 5, 4, 3, 2, 1};
+
+        for (const int value : removals)
+        {
+            REQUIRE(tree.remove(value) == true);
+            REQUIRE(tree.verify_invariants() == true);
+        }
+
+        REQUIRE(tree.is_empty() == true);
+    }
+
+    SECTION("Delete nodes that require successor replacement")
+    {
+        InspectableRedBlackTree tree = {30, 15, 60, 7, 22, 45, 75, 17, 27, 37, 52, 70, 80, 16, 18};
+        const int removals[] = {15, 60, 30, 22, 45, 17, 18, 27, 7, 16, 37, 52, 70, 75, 80};
+
+        for (const int value : removals)
+        {
+            REQUIRE(tree.remove(value) == true);
+            REQUIRE(tree.verify_invariants() == true);
+        }
+
+        REQUIRE(tree.is_empty() == true);
+    }
 }

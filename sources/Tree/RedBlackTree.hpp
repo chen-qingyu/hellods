@@ -23,6 +23,71 @@ class RedBlackTree : public BinarySearchTree<T>
     using BinarySearchTree<T>::root_;
 
 protected:
+    using BinarySearchTree<T>::find_min;
+
+    // Check whether the node is red.
+    bool is_red(Node* node) const
+    {
+        return node != nullptr && node->red_;
+    }
+
+    // Check whether the node is black.
+    bool is_black(Node* node) const
+    {
+        return !is_red(node);
+    }
+
+    // Replace the subtree rooted at old_node with new_node.
+    void replace_node(Node* old_node, Node* new_node)
+    {
+        if (old_node->parent_ == end_)
+        {
+            end_->link_left(new_node);
+        }
+        else if (old_node->parent_->left_ == old_node)
+        {
+            old_node->parent_->link_left(new_node);
+        }
+        else
+        {
+            old_node->parent_->link_right(new_node);
+        }
+    }
+
+    // Rotate the subtree rooted at current to the left.
+    void rotate_left_at(Node* current)
+    {
+        if (current->parent_ == end_)
+        {
+            rotate_left(root_);
+        }
+        else if (current->parent_->left_ == current)
+        {
+            rotate_left(current->parent_->left_);
+        }
+        else
+        {
+            rotate_left(current->parent_->right_);
+        }
+    }
+
+    // Rotate the subtree rooted at current to the right.
+    void rotate_right_at(Node* current)
+    {
+        if (current->parent_ == end_)
+        {
+            rotate_right(root_);
+        }
+        else if (current->parent_->left_ == current)
+        {
+            rotate_right(current->parent_->left_);
+        }
+        else
+        {
+            rotate_right(current->parent_->right_);
+        }
+    }
+
     // Rotate right.
     void rotate_right(Node*& current)
     {
@@ -116,7 +181,7 @@ protected:
                 }
                 else // current is right child
                 {
-                    rotate_left(parent);
+                    rotate_left(grandpa->left_);
                     rotate_right(grandpa);
                 }
 
@@ -132,7 +197,7 @@ protected:
                 }
                 else
                 {
-                    rotate_right(parent);
+                    rotate_right(grandpa->right_);
                     rotate_left(grandpa);
                 }
 
@@ -212,6 +277,202 @@ protected:
         root_->red_ = false;
     }
 
+    // Solve double black node caused by deletion.
+    void solve_double_black(Node* current, Node* parent)
+    {
+        while (current != root_ && is_black(current))
+        {
+            if (parent == end_)
+            {
+                break;
+            }
+
+            if (current == parent->left_)
+            {
+                Node* sibling = parent->right_;
+
+                if (is_red(sibling))
+                {
+                    sibling->red_ = false;
+                    parent->red_ = true;
+                    rotate_left_at(parent);
+                    sibling = parent->right_;
+                }
+
+                if (is_black(sibling == nullptr ? nullptr : sibling->left_) &&
+                    is_black(sibling == nullptr ? nullptr : sibling->right_))
+                {
+                    if (sibling != nullptr)
+                    {
+                        sibling->red_ = true;
+                    }
+                    current = parent;
+                    parent = current->parent_;
+                }
+                else
+                {
+                    if (is_black(sibling == nullptr ? nullptr : sibling->right_))
+                    {
+                        if (sibling != nullptr)
+                        {
+                            if (sibling->left_ != nullptr)
+                            {
+                                sibling->left_->red_ = false;
+                            }
+                            sibling->red_ = true;
+                            rotate_right_at(sibling);
+                        }
+                        sibling = parent->right_;
+                    }
+
+                    sibling->red_ = parent->red_;
+                    parent->red_ = false;
+                    if (sibling->right_ != nullptr)
+                    {
+                        sibling->right_->red_ = false;
+                    }
+                    rotate_left_at(parent);
+                    current = root_;
+                }
+            }
+            else
+            {
+                Node* sibling = parent->left_;
+
+                if (is_red(sibling))
+                {
+                    sibling->red_ = false;
+                    parent->red_ = true;
+                    rotate_right_at(parent);
+                    sibling = parent->left_;
+                }
+
+                if (is_black(sibling == nullptr ? nullptr : sibling->left_) &&
+                    is_black(sibling == nullptr ? nullptr : sibling->right_))
+                {
+                    if (sibling != nullptr)
+                    {
+                        sibling->red_ = true;
+                    }
+                    current = parent;
+                    parent = current->parent_;
+                }
+                else
+                {
+                    if (is_black(sibling == nullptr ? nullptr : sibling->left_))
+                    {
+                        if (sibling != nullptr)
+                        {
+                            if (sibling->right_ != nullptr)
+                            {
+                                sibling->right_->red_ = false;
+                            }
+                            sibling->red_ = true;
+                            rotate_left_at(sibling);
+                        }
+                        sibling = parent->left_;
+                    }
+
+                    sibling->red_ = parent->red_;
+                    parent->red_ = false;
+                    if (sibling->left_ != nullptr)
+                    {
+                        sibling->left_->red_ = false;
+                    }
+                    rotate_right_at(parent);
+                    current = root_;
+                }
+            }
+        }
+
+        if (current != nullptr)
+        {
+            current->red_ = false;
+        }
+    }
+
+    // Remove node for red-black tree.
+    bool remove_rbnode(const T& element)
+    {
+        Node* node = root_;
+        while (node != nullptr)
+        {
+            if (element < node->data_)
+            {
+                node = node->left_;
+            }
+            else if (node->data_ < element)
+            {
+                node = node->right_;
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        if (node == nullptr)
+        {
+            return false;
+        }
+
+        Node* removed = node;
+        bool removed_red = removed->red_;
+        Node* current = nullptr;
+        Node* parent = end_;
+
+        if (node->left_ == nullptr)
+        {
+            current = node->right_;
+            parent = node->parent_;
+            replace_node(node, node->right_);
+        }
+        else if (node->right_ == nullptr)
+        {
+            current = node->left_;
+            parent = node->parent_;
+            replace_node(node, node->left_);
+        }
+        else
+        {
+            removed = find_min(node->right_);
+            removed_red = removed->red_;
+            current = removed->right_;
+
+            if (removed->parent_ == node)
+            {
+                parent = removed;
+            }
+            else
+            {
+                parent = removed->parent_;
+                replace_node(removed, removed->right_);
+                removed->link_right(node->right_);
+            }
+
+            replace_node(node, removed);
+            removed->link_left(node->left_);
+            removed->red_ = node->red_;
+        }
+
+        delete node;
+        size_--;
+
+        if (size_ == 0)
+        {
+            root_ = nullptr;
+            return true;
+        }
+
+        if (removed_red == false)
+        {
+            solve_double_black(current, parent);
+        }
+
+        root_->red_ = false;
+        return true;
+    }
+
 public:
     /*
      * Constructor / Destructor
@@ -248,10 +509,7 @@ public:
     /// Remove the specified element from the tree. Return whether such an element was present.
     bool remove(const T& element)
     {
-        // int old_size = size_;
-        // remove_rbnode(root_, element);
-        // return old_size != size_;
-        return BinarySearchTree<T>::remove(element);
+        return remove_rbnode(element);
     }
 };
 
