@@ -37,54 +37,56 @@ protected:
         return !is_red(node);
     }
 
+    // Return the reference slot that points to the subtree root.
+    Node*& slot(Node* node)
+    {
+        if (node->parent_ == end_)
+        {
+            return root_;
+        }
+        return node->parent_->left_ == node ? node->parent_->left_ : node->parent_->right_;
+    }
+
+    // Return the left or right child of the node.
+    Node* child(Node* node, bool on_left) const
+    {
+        if (node == nullptr)
+        {
+            return nullptr;
+        }
+        return on_left ? node->left_ : node->right_;
+    }
+
+    // Set the node color to black if the node exists.
+    void set_black(Node* node)
+    {
+        if (node != nullptr)
+        {
+            node->red_ = false;
+        }
+    }
+
+    // Rotate the subtree rooted at current in the given direction.
+    void rotate_at(Node* current, bool to_left)
+    {
+        Node*& current_slot = slot(current);
+        if (to_left)
+        {
+            rotate_left(current_slot);
+        }
+        else
+        {
+            rotate_right(current_slot);
+        }
+    }
+
     // Replace the subtree rooted at old_node with new_node.
     void replace_node(Node* old_node, Node* new_node)
     {
-        if (old_node->parent_ == end_)
+        slot(old_node) = new_node;
+        if (new_node != nullptr)
         {
-            end_->link_left(new_node);
-        }
-        else if (old_node->parent_->left_ == old_node)
-        {
-            old_node->parent_->link_left(new_node);
-        }
-        else
-        {
-            old_node->parent_->link_right(new_node);
-        }
-    }
-
-    // Rotate the subtree rooted at current to the left.
-    void rotate_left_at(Node* current)
-    {
-        if (current->parent_ == end_)
-        {
-            rotate_left(root_);
-        }
-        else if (current->parent_->left_ == current)
-        {
-            rotate_left(current->parent_->left_);
-        }
-        else
-        {
-            rotate_left(current->parent_->right_);
-        }
-    }
-
-    // Rotate the subtree rooted at current to the right.
-    void rotate_right_at(Node* current)
-    {
-        if (current->parent_ == end_)
-        {
-            rotate_right(root_);
-        }
-        else if (current->parent_->left_ == current)
-        {
-            rotate_right(current->parent_->left_);
-        }
-        else
-        {
-            rotate_right(current->parent_->right_);
+            new_node->parent_ = old_node->parent_;
         }
     }
 
@@ -127,19 +129,17 @@ protected:
     // Solve double red node.
     void solve_double_red(Node* current, Node* parent)
     {
-        Node* uncle = nullptr;   // parent's sibling
-        Node* grandpa = nullptr; // parent's parent
-
         while (true)
         {
-            uncle = (parent->parent_ != end_) ? parent->sibling() : nullptr;
-            grandpa = current->parent_->parent_;
+            Node* grandpa = current->parent_->parent_;
 
             // if grandpa is end_, break
             if (grandpa == end_)
             {
                 break;
             }
+
+            Node* uncle = parent->sibling();
 
             // state 1: if uncle is red
             if (uncle != nullptr && uncle->red_)
@@ -167,64 +167,55 @@ protected:
             }
 
             // state 2: if uncle is black or null
-            Node* fff = grandpa->parent_;
-            int flag = 0; // 0 means grandpa is end_, 1 is left child, 2 is right child
-            if (fff != end_)
-            {
-                flag = fff->left_ == grandpa ? 1 : 2;
-            }
-            if (parent == grandpa->left_)
-            {
-                if (current == parent->left_)
-                {
-                    rotate_right(grandpa);
-                }
-                else // current is right child
-                {
-                    rotate_left(grandpa->left_);
-                    rotate_right(grandpa);
-                }
+            bool parent_on_left = parent == grandpa->left_;
+            Node*& grandpa_slot = slot(grandpa);
 
-                // change color
-                grandpa->red_ = false;
+            if (current != child(parent, parent_on_left))
+            {
+                rotate_at(child(grandpa, parent_on_left), parent_on_left);
+            }
+
+            if (parent_on_left)
+            {
+                rotate_right(grandpa);
                 grandpa->right_->red_ = true;
             }
-            else // parent is right child
+            else
             {
-                if (parent->right_ == current)
-                {
-                    rotate_left(grandpa);
-                }
-                else
-                {
-                    rotate_right(grandpa->right_);
-                    rotate_left(grandpa);
-                }
-
-                // change color
-                grandpa->red_ = false;
+                rotate_left(grandpa);
                 grandpa->left_->red_ = true;
             }
 
-            // update root
-            if (flag == 0)
-            {
-                end_->link_left(grandpa);
-            }
-            else if (flag == 1)
-            {
-                fff->link_left(grandpa);
-            }
-            else if (flag == 2)
-            {
-                fff->link_right(grandpa);
-            }
+            grandpa->red_ = false;
+            grandpa_slot = grandpa;
             break;
         } // end while(true)
     }
 
+    // Find the node containing the specified element.
+    Node* find_node(const T& element) const
+    {
+        Node* node = root_;
+        while (node != nullptr)
+        {
+            if (element < node->data_)
+            {
+                node = node->left_;
+            }
+            else if (node->data_ < element)
+            {
+                node = node->right_;
+            }
+            else
+            {
+                return node;
+            }
+        }
+        return nullptr;
+    }
+
     // Insert node for red-black tree.
-    void insert_rbnode(Node*& node, const T& element)
+    bool insert_rbnode(Node*& node, const T& element)
     {
         Node* current = node; // from root_
         Node* parent = end_;  // root_'s parent is end_
@@ -235,7 +226,7 @@ protected:
             // if already has the element, do nothing
             if (element == current->data_)
             {
-                return;
+                return false;
             }
 
             parent = current;
@@ -251,7 +242,7 @@ protected:
         {
             current->red_ = false;
             end_->link_left(current);
-            return;
+            return true;
         }
 
         // current is not root
@@ -267,7 +258,7 @@ protected:
         // if parent is black, ok (current is red)
         if (parent->red_ == false)
         {
-            return;
+            return true;
         }
 
         // now, the level >= 3 (root is level 1), and parent is red, double red
@@ -275,6 +266,7 @@ protected:
 
         // root is black
         root_->red_ = false;
+        return true;
     }
 
     // Solve double black node caused by deletion.
@@ -287,129 +279,58 @@ protected:
                 break;
             }
 
-            if (current == parent->left_)
+            bool current_on_left = current == parent->left_;
+            Node* sibling = child(parent, !current_on_left);
+            Node* near_nephew = child(sibling, current_on_left);
+            Node* far_nephew = child(sibling, !current_on_left);
+
+            if (is_red(sibling))
             {
-                Node* sibling = parent->right_;
-
-                if (is_red(sibling))
-                {
-                    sibling->red_ = false;
-                    parent->red_ = true;
-                    rotate_left_at(parent);
-                    sibling = parent->right_;
-                }
-
-                if (is_black(sibling == nullptr ? nullptr : sibling->left_) &&
-                    is_black(sibling == nullptr ? nullptr : sibling->right_))
-                {
-                    if (sibling != nullptr)
-                    {
-                        sibling->red_ = true;
-                    }
-                    current = parent;
-                    parent = current->parent_;
-                }
-                else
-                {
-                    if (is_black(sibling == nullptr ? nullptr : sibling->right_))
-                    {
-                        if (sibling != nullptr)
-                        {
-                            if (sibling->left_ != nullptr)
-                            {
-                                sibling->left_->red_ = false;
-                            }
-                            sibling->red_ = true;
-                            rotate_right_at(sibling);
-                        }
-                        sibling = parent->right_;
-                    }
-
-                    sibling->red_ = parent->red_;
-                    parent->red_ = false;
-                    if (sibling->right_ != nullptr)
-                    {
-                        sibling->right_->red_ = false;
-                    }
-                    rotate_left_at(parent);
-                    current = root_;
-                }
+                sibling->red_ = false;
+                parent->red_ = true;
+                rotate_at(parent, current_on_left);
+                sibling = child(parent, !current_on_left);
+                near_nephew = child(sibling, current_on_left);
+                far_nephew = child(sibling, !current_on_left);
             }
-            else
+
+            if (is_black(near_nephew) && is_black(far_nephew))
             {
-                Node* sibling = parent->left_;
-
-                if (is_red(sibling))
+                if (sibling != nullptr)
                 {
-                    sibling->red_ = false;
-                    parent->red_ = true;
-                    rotate_right_at(parent);
-                    sibling = parent->left_;
+                    sibling->red_ = true;
                 }
-
-                if (is_black(sibling == nullptr ? nullptr : sibling->left_) &&
-                    is_black(sibling == nullptr ? nullptr : sibling->right_))
-                {
-                    if (sibling != nullptr)
-                    {
-                        sibling->red_ = true;
-                    }
-                    current = parent;
-                    parent = current->parent_;
-                }
-                else
-                {
-                    if (is_black(sibling == nullptr ? nullptr : sibling->left_))
-                    {
-                        if (sibling != nullptr)
-                        {
-                            if (sibling->right_ != nullptr)
-                            {
-                                sibling->right_->red_ = false;
-                            }
-                            sibling->red_ = true;
-                            rotate_left_at(sibling);
-                        }
-                        sibling = parent->left_;
-                    }
-
-                    sibling->red_ = parent->red_;
-                    parent->red_ = false;
-                    if (sibling->left_ != nullptr)
-                    {
-                        sibling->left_->red_ = false;
-                    }
-                    rotate_right_at(parent);
-                    current = root_;
-                }
+                current = parent;
+                parent = current->parent_;
+                continue;
             }
+
+            if (is_black(far_nephew))
+            {
+                if (sibling != nullptr)
+                {
+                    set_black(near_nephew);
+                    sibling->red_ = true;
+                    rotate_at(sibling, !current_on_left);
+                }
+                sibling = child(parent, !current_on_left);
+                far_nephew = child(sibling, !current_on_left);
+            }
+
+            sibling->red_ = parent->red_;
+            parent->red_ = false;
+            set_black(far_nephew);
+            rotate_at(parent, current_on_left);
+            current = root_;
         }
 
-        if (current != nullptr)
-        {
-            current->red_ = false;
-        }
+        set_black(current);
     }
 
     // Remove node for red-black tree.
     bool remove_rbnode(const T& element)
     {
-        Node* node = root_;
-        while (node != nullptr)
-        {
-            if (element < node->data_)
-            {
-                node = node->left_;
-            }
-            else if (node->data_ < element)
-            {
-                node = node->right_;
-            }
-            else
-            {
-                break;
-            }
-        }
+        Node* node = find_node(element);
 
         if (node == nullptr)
         {
@@ -501,9 +422,7 @@ public:
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
     bool insert(const T& element)
     {
-        int old_size = size_;
-        insert_rbnode(root_, element);
-        return old_size != size_;
+        return insert_rbnode(root_, element);
     }
 
     /// Remove the specified element from the tree. Return whether such an element was present.
