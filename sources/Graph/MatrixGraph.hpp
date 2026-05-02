@@ -282,6 +282,11 @@ public:
     /// Set the number of vertices in the graph.
     void set_vertex_number(int n)
     {
+        if (n < 0)
+        {
+            throw std::runtime_error("Error: Number of vertices cannot be negative.");
+        }
+
         free_matrix();
 
         size_ = n;
@@ -304,6 +309,9 @@ public:
     /// Link vertex `from` and vertex `to` with `weight`.
     void link(const V& from, const V& to, const E& weight)
     {
+        detail::check_bounds(from, 0, size_);
+        detail::check_bounds(to, 0, size_);
+
         matrix_[from][to] = weight;
         if constexpr (Directed == false)
         {
@@ -314,6 +322,9 @@ public:
     /// Disconnect the link from vertex `from` to vertex `to`.
     void unlink(const V& from, const V& to)
     {
+        detail::check_bounds(from, 0, size_);
+        detail::check_bounds(to, 0, size_);
+
         matrix_[from][to] = NO_EDGE;
         if constexpr (Directed == false)
         {
