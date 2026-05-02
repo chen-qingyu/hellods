@@ -93,6 +93,8 @@ protected:
     static constexpr int MAX_CAPACITY = INT_MAX - 1;
 
 public:
+    virtual ~Container() = default;
+
     // Get the number of elements of the container.
     virtual int size() const = 0;
 
