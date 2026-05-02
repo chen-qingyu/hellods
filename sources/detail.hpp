@@ -13,7 +13,7 @@
 #include <cmath>      // std::abs
 #include <concepts>   // std::convertible_to std::copyable std::default_initializable std::predicate
 #include <cstddef>    // std::size_t
-#include <functional> // std::std::greater std::hash std::equal_to
+#include <functional> // std::greater std::hash std::equal_to
 #include <iterator>   // std::input_iterator
 #include <ostream>    // std::ostream
 #include <sstream>    // std::ostringstream
