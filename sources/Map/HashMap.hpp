@@ -26,8 +26,10 @@ protected:
     // Hash map pair.
     struct Pair
     {
-        // The pair of the key-value.
-        std::pair<const K, V> pair_;
+        using ValueType = std::pair<const K, V>;
+
+        // The key-value pair stored in this slot.
+        ValueType* pair_;
 
         // State of the key-value pair: 0 = empty, 1 = occupied, 2 = deleted
         enum State
@@ -37,9 +39,47 @@ protected:
             DELETED = 2
         } state_;
 
-        // For convenient.
-        const K& key_ = pair_.first;
-        V& value_ = pair_.second;
+        Pair()
+            : pair_(nullptr)
+            , state_(EMPTY)
+        {
+        }
+
+        ~Pair()
+        {
+            clear();
+        }
+
+        const K& key() const
+        {
+            return pair_->first;
+        }
+
+        V& value()
+        {
+            return pair_->second;
+        }
+
+        const V& value() const
+        {
+            return pair_->second;
+        }
+
+        void reset(const K& key, const V& value)
+        {
+            clear();
+            pair_ = new ValueType(key, value);
+            state_ = OCCUPIED;
+        }
+
+        void clear()
+        {
+            if (pair_ != nullptr)
+            {
+                delete pair_;
+                pair_ = nullptr;
+            }
+        }
     };
 
 protected:
@@ -108,7 +148,7 @@ public:
 
         reference operator*() const
         {
-            return current_->pair_;
+            return *current_->pair_;
         }
 
         pointer operator->() const
@@ -151,15 +191,27 @@ public:
     using ConstIterator = BasicIterator<true>;
 
 protected:
-    // Find the position for key.
-    int find_pos(const K& key) const
+    int probe_pos(const K& key, bool for_insert) const
     {
         int current_pos = Hash()(key) % capacity_;
         int new_pos = current_pos;
         int conflict_cnt = 0;
+        int first_deleted = -1;
 
-        while (data_[new_pos].state_ != Pair::EMPTY && !Eq()(data_[new_pos].key_, key))
+        while (data_[new_pos].state_ != Pair::EMPTY)
         {
+            if (data_[new_pos].state_ == Pair::OCCUPIED)
+            {
+                if (Eq()(data_[new_pos].key(), key))
+                {
+                    return new_pos;
+                }
+            }
+            else if (for_insert && first_deleted == -1)
+            {
+                first_deleted = new_pos;
+            }
+
             if (++conflict_cnt % 2)
             {
                 new_pos = current_pos + (conflict_cnt + 1) * (conflict_cnt + 1) / 4;
@@ -178,7 +230,7 @@ protected:
             }
         }
 
-        return new_pos;
+        return for_insert ? (first_deleted == -1 ? new_pos : first_deleted) : -1;
     }
 
     // Calculate the next prime that > n.
@@ -245,7 +297,7 @@ protected:
         {
             if (old_data[i].state_ == Pair::OCCUPIED)
             {
-                insert(old_data[i].key_, old_data[i].value_);
+                insert(old_data[i].key(), old_data[i].value());
             }
         }
 
@@ -294,7 +346,7 @@ public:
         {
             if (that.data_[i].state_ == Pair::OCCUPIED)
             {
-                insert(that.data_[i].key_, that.data_[i].value_);
+                insert(that.data_[i].key(), that.data_[i].value());
             }
         }
     }
@@ -355,20 +407,27 @@ public:
     /// Return the reference of value for key if key is in the map, else throw exception.
     V& operator[](const K& key)
     {
-        int pos = find_pos(key);
+        int pos = probe_pos(key, false);
 
-        if (data_[pos].state_ != Pair::OCCUPIED)
+        if (pos == -1)
         {
             throw std::runtime_error("Error: The key-value pair does not exist.");
         }
 
-        return data_[pos].value_;
+        return data_[pos].value();
     }
 
     /// Return the const reference of value for key if key is in the map, else throw exception.
     const V& operator[](const K& key) const
     {
-        return const_cast<HashMap&>(*this)[key];
+        int pos = probe_pos(key, false);
+
+        if (pos == -1)
+        {
+            throw std::runtime_error("Error: The key-value pair does not exist.");
+        }
+
+        return data_[pos].value();
     }
 
     /*
@@ -410,20 +469,20 @@ public:
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
     Iterator find(const K& key)
     {
-        int pos = find_pos(key);
-        return data_[pos].state_ == Pair::OCCUPIED ? Iterator(data_ + pos, data_, data_ + capacity_) : end();
+        int pos = probe_pos(key, false);
+        return pos == -1 ? end() : Iterator(data_ + pos, data_, data_ + capacity_);
     }
 
     ConstIterator find(const K& key) const
     {
-        int pos = find_pos(key);
-        return data_[pos].state_ == Pair::OCCUPIED ? ConstIterator(data_ + pos, data_, data_ + capacity_) : end();
+        int pos = probe_pos(key, false);
+        return pos == -1 ? end() : ConstIterator(data_ + pos, data_, data_ + capacity_);
     }
 
     /// Determine whether a key is in the map.
     bool contains(const K& key) const
     {
-        return data_[find_pos(key)].state_ == Pair::OCCUPIED;
+        return probe_pos(key, false) != -1;
     }
 
     /*
@@ -435,16 +494,14 @@ public:
     {
         detail::check_full(size_, MAX_PRIME_CAPACITY >> 1);
 
-        int pos = find_pos(key);
+        int pos = probe_pos(key, true);
 
         if (data_[pos].state_ == Pair::OCCUPIED)
         {
             return false;
         }
 
-        data_[pos].state_ = Pair::OCCUPIED;
-        const_cast<K&>(data_[pos].key_) = key;
-        data_[pos].value_ = value;
+        data_[pos].reset(key, value);
 
         size_++;
 
@@ -459,13 +516,14 @@ public:
     /// Remove the key-value pair corresponding to the key in the map. Return whether such a key was present.
     bool remove(const K& key)
     {
-        int pos = find_pos(key);
+        int pos = probe_pos(key, false);
 
-        if (data_[pos].state_ != Pair::OCCUPIED)
+        if (pos == -1)
         {
             return false;
         }
 
+        data_[pos].clear();
         data_[pos].state_ = Pair::DELETED;
         size_--;
         return true;
@@ -478,6 +536,7 @@ public:
         {
             for (int i = 0; i < capacity_; ++i)
             {
+                data_[i].clear();
                 data_[i].state_ = Pair::EMPTY;
             }
             size_ = 0;
