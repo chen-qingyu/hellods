@@ -5,7 +5,7 @@
 
 using namespace hellods;
 
-TEST_CASE("MatrixGraph")
+TEST_CASE("MatrixGraph", "[graph]")
 {
     // Constructor / Destructor
     MatrixGraph empty;

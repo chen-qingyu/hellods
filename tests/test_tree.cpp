@@ -243,7 +243,7 @@ TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqL
     REQUIRE(some.size() == 5);
 }
 
-TEST_CASE("RedBlackTree keeps invariants after mixed operations", "[tree][rbtree]")
+TEST_CASE("RedBlackTree keeps invariants after mixed operations", "[tree]")
 {
     InspectableRedBlackTree tree;
 
@@ -275,7 +275,7 @@ TEST_CASE("RedBlackTree keeps invariants after mixed operations", "[tree][rbtree
     REQUIRE(tree.verify_invariants() == true);
 }
 
-TEST_CASE("RedBlackTree deletion regressions preserve invariants", "[tree][rbtree]")
+TEST_CASE("RedBlackTree deletion regressions preserve invariants", "[tree]")
 {
     SECTION("Delete the root repeatedly")
     {
