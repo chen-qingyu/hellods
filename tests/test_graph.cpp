@@ -1,7 +1,6 @@
 #include "tool.hpp"
 
 #include "../sources/Graph/MatrixGraph.hpp"
-#include "../sources/List/ArrayList.hpp"
 
 using namespace hellods;
 
@@ -98,8 +97,10 @@ TEST_CASE("MatrixGraph", "[graph]")
     buf.str("");
 
     auto [dist, path] = some.dijkstra(0);
-    REQUIRE(dist == ArrayList<MatrixGraph<>::E>({0, 2, 3, 1, 3, 6, 5}));
-    REQUIRE(path == ArrayList<MatrixGraph<>::V>({-1, 0, 3, 0, 3, 6, 3}));
+    REQUIRE(std::equal(dist, dist + some.size(), std::vector<int>{0, 2, 3, 1, 3, 6, 5}.begin()));
+    REQUIRE(std::equal(path, path + some.size(), std::vector<int>{-1, 0, 3, 0, 3, 6, 3}.begin()));
+    delete[] dist;
+    delete[] path;
 
     // Print
     std::ostringstream oss;

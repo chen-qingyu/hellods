@@ -10,7 +10,6 @@
 
 #include "../detail.hpp"
 
-#include "../List/ArrayList.hpp"
 #include "../Queue/ArrayQueue.hpp" // for breadth_first_search()
 
 namespace hellods
@@ -52,7 +51,7 @@ protected:
 
     // Depth-first search helper.
     template <typename F>
-    void dfs(const V& start, const F& action, ArrayList<bool>& visited) const
+    void dfs(const V& start, const F& action, bool* visited) const
     {
         action(start);
         visited[start] = true;
@@ -67,9 +66,9 @@ protected:
     }
 
     // Finds the vertex with the smallest distance in an unaccessed set of vertices.
-    V find_closest(const ArrayList<E>& dist, const ArrayList<bool>& visited) const
+    V find_closest(const E* dist, const bool* visited) const
     {
-        V min_v;
+        V min_v = -1;
         E min_dist = NO_EDGE;
 
         for (V v = 0; v < size_; v++)
@@ -197,13 +196,9 @@ public:
     {
         detail::check_bounds(start, 0, size_);
 
-        ArrayList<bool> visited;
-        for (int i = 0; i < size_; ++i)
-        {
-            visited.append(false);
-        }
-
+        bool* visited = new bool[size_]();
         dfs(start, action, visited);
+        delete[] visited;
     }
 
     /// Breadth-first search graph.
@@ -212,11 +207,7 @@ public:
     {
         detail::check_bounds(start, 0, size_);
 
-        ArrayList<bool> visited;
-        for (int i = 0; i < size_; ++i)
-        {
-            visited.append(false);
-        }
+        bool* visited = new bool[size_]();
 
         action(start);
         visited[start] = true;
@@ -236,22 +227,23 @@ public:
                 }
             }
         }
+
+        delete[] visited;
     }
 
-    /// The Dijkstra algorithm on the graph. Return distance and path.
-    std::pair<ArrayList<E>, ArrayList<V>> dijkstra(const V& start) const
+    /// The Dijkstra algorithm on the graph. Return distance and path (caller must delete[] both arrays).
+    std::pair<E*, V*> dijkstra(const V& start) const
     {
         detail::check_bounds(start, 0, size_);
 
         // init state
-        ArrayList<bool> visited;
-        ArrayList<E> dist;
-        ArrayList<V> path;
+        bool* visited = new bool[size_]();
+        E* dist = new E[size_];
+        V* path = new V[size_];
         for (V v = 0; v < size_; v++)
         {
-            visited.append(false);
-            dist.append(matrix_[start][v]);
-            path.append(dist[v] < NO_EDGE ? start : -1);
+            dist[v] = matrix_[start][v];
+            path[v] = dist[v] < NO_EDGE ? start : -1;
         }
 
         dist[start] = 0;
@@ -271,6 +263,9 @@ public:
                 {
                     if (matrix_[v1][v2] < 0)
                     {
+                        delete[] visited;
+                        delete[] dist;
+                        delete[] path;
                         throw std::runtime_error("Error: Cannot apply Dijkstra algorithm with a negative weighted egde.");
                     }
                     if (dist[v1] + matrix_[v1][v2] < dist[v2])
@@ -282,6 +277,7 @@ public:
             }
         }
 
+        delete[] visited;
         return {dist, path};
     }
 
