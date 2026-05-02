@@ -43,3 +43,9 @@ static_assert(kMoveConstructibleContainer<BinaryHeap<int>>);
 static_assert(kMoveConstructibleContainer<BinarySearchTree<int>>);
 static_assert(kMoveConstructibleContainer<RedBlackTree<int>>);
 static_assert(kMoveConstructibleContainer<MatrixGraph<>>);
+
+static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const ArrayList<int>&>().begin())>>);
+static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const LinkedList<int>&>().begin())>>);
+static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const SinglyLinkedList<int>&>().begin())>>);
+static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const ArrayDeque<int>&>().begin())>>);
+static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const HashMap<int, int>&>().begin())>>);

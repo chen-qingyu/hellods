@@ -8,6 +8,8 @@
 #ifndef HASHMAP_HPP
 #define HASHMAP_HPP
 
+#include <type_traits>
+
 #include "../detail.hpp"
 
 namespace hellods
@@ -63,22 +65,25 @@ public:
     ///
     /// Because the internal keys of the map have a fixed position,
     /// thus the iterator of the map does not support modification for key.
-    class Iterator
+    template <bool Const>
+    class BasicIterator
     {
         friend class HashMap;
 
     protected:
-        // Current data pointer.
-        Pair* current_;
+        using PairPtr = std::conditional_t<Const, const Pair*, Pair*>;
+        using Value = std::conditional_t<Const, const std::pair<const K, V>, std::pair<const K, V>>;
+
+        PairPtr current_;
 
         // Begin of the buffer.
-        Pair* buffer_begin_;
+        PairPtr buffer_begin_;
 
         // End of the buffer.
-        Pair* buffer_end_;
+        PairPtr buffer_end_;
 
         // Constructor.
-        Iterator(Pair* current, Pair* begin, Pair* end)
+        BasicIterator(PairPtr current, PairPtr begin, PairPtr end)
             : current_(current)
             , buffer_begin_(begin)
             , buffer_end_(end)
@@ -93,25 +98,25 @@ public:
         using iterator_category = std::input_iterator_tag;
         using value_type = std::pair<const K, V>;
         using difference_type = int;
-        using pointer = value_type*;
-        using reference = value_type&;
+        using pointer = Value*;
+        using reference = Value&;
 
-        bool operator==(const Iterator& that) const
+        bool operator==(const BasicIterator& that) const
         {
             return current_ == that.current_;
         }
 
-        std::pair<const K, V>& operator*() const
+        reference operator*() const
         {
             return current_->pair_;
         }
 
-        std::pair<const K, V>* operator->() const
+        pointer operator->() const
         {
             return &(operator*());
         }
 
-        Iterator& operator++()
+        BasicIterator& operator++()
         {
             while (++current_ != buffer_end_ && current_->state_ != Pair::OCCUPIED)
             {
@@ -119,14 +124,14 @@ public:
             return *this;
         }
 
-        Iterator operator++(int)
+        BasicIterator operator++(int)
         {
             auto it = *this;
             ++*this;
             return it;
         }
 
-        Iterator& operator--()
+        BasicIterator& operator--()
         {
             while (--current_ != buffer_begin_ && current_->state_ != Pair::OCCUPIED)
             {
@@ -134,13 +139,16 @@ public:
             return *this;
         }
 
-        Iterator operator--(int)
+        BasicIterator operator--(int)
         {
             auto it = *this;
             --*this;
             return it;
         }
     };
+
+    using Iterator = BasicIterator<false>;
+    using ConstIterator = BasicIterator<true>;
 
 protected:
     // Find the position for key.
@@ -367,15 +375,25 @@ public:
      */
 
     /// Return an iterator to the first element of the map.
-    auto begin() const
+    auto begin()
     {
         return Iterator(data_, data_, data_ + capacity_);
     }
 
+    auto begin() const
+    {
+        return ConstIterator(data_, data_, data_ + capacity_);
+    }
+
     /// Return an iterator to the element following the last element of the map.
-    auto end() const
+    auto end()
     {
         return Iterator(data_ + capacity_, data_, data_ + capacity_);
+    }
+
+    auto end() const
+    {
+        return ConstIterator(data_ + capacity_, data_, data_ + capacity_);
     }
 
     /*
@@ -389,10 +407,16 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
-    Iterator find(const K& key) const
+    Iterator find(const K& key)
     {
         int pos = find_pos(key);
         return data_[pos].state_ == Pair::OCCUPIED ? Iterator(data_ + pos, data_, data_ + capacity_) : end();
+    }
+
+    ConstIterator find(const K& key) const
+    {
+        int pos = find_pos(key);
+        return data_[pos].state_ == Pair::OCCUPIED ? ConstIterator(data_ + pos, data_, data_ + capacity_) : end();
     }
 
     /// Determine whether a key is in the map.

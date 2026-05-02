@@ -8,6 +8,8 @@
 #ifndef HASHSET_HPP
 #define HASHSET_HPP
 
+#include <type_traits>
+
 #include "../Map/HashMap.hpp"
 
 namespace hellods
@@ -33,16 +35,20 @@ public:
     ///
     /// Because the internal items of the set have a fixed position,
     /// thus the iterator of the set does not support modification for item.
-    class Iterator
+    template <bool Const>
+    class BasicIterator
     {
         friend class HashSet;
 
     protected:
-        // Internal map iterator.
-        HashMap<T, Dummy, Hash, Eq>::Iterator map_it_;
+        using MapIterator = std::conditional_t<Const,
+                                               typename HashMap<T, Dummy, Hash, Eq>::ConstIterator,
+                                               typename HashMap<T, Dummy, Hash, Eq>::Iterator>;
+
+        MapIterator map_it_;
 
         // Constructor.
-        Iterator(HashMap<T, Dummy, Hash, Eq>::Iterator it)
+        BasicIterator(MapIterator it)
             : map_it_(it)
         {
         }
@@ -51,10 +57,10 @@ public:
         using iterator_category = std::input_iterator_tag;
         using value_type = T;
         using difference_type = int;
-        using pointer = value_type*;
-        using reference = value_type&;
+        using pointer = const value_type*;
+        using reference = const value_type&;
 
-        bool operator==(const Iterator& that) const
+        bool operator==(const BasicIterator& that) const
         {
             return map_it_ == that.map_it_;
         }
@@ -69,32 +75,35 @@ public:
             return &(map_it_->first);
         }
 
-        Iterator& operator++()
+        BasicIterator& operator++()
         {
             ++map_it_;
             return *this;
         }
 
-        Iterator operator++(int)
+        BasicIterator operator++(int)
         {
             auto it = *this;
             ++*this;
             return it;
         }
 
-        Iterator& operator--()
+        BasicIterator& operator--()
         {
             --map_it_;
             return *this;
         }
 
-        Iterator operator--(int)
+        BasicIterator operator--(int)
         {
             auto it = *this;
             --*this;
             return it;
         }
     };
+
+    using Iterator = BasicIterator<false>;
+    using ConstIterator = BasicIterator<true>;
 
 public:
     /*
@@ -151,15 +160,25 @@ public:
      */
 
     /// Return an iterator to the first element of the set.
-    auto begin() const
+    auto begin()
     {
         return Iterator(map_.begin());
     }
 
+    auto begin() const
+    {
+        return ConstIterator(map_.begin());
+    }
+
     /// Return an iterator to the element following the last element of the set.
-    auto end() const
+    auto end()
     {
         return Iterator(map_.end());
+    }
+
+    auto end() const
+    {
+        return ConstIterator(map_.end());
     }
 
     /*
@@ -173,9 +192,14 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified item, or end() if the set does not contains the item.
-    Iterator find(const T& item) const
+    Iterator find(const T& item)
     {
         return Iterator(map_.find(item));
+    }
+
+    ConstIterator find(const T& item) const
+    {
+        return ConstIterator(map_.find(item));
     }
 
     /// Determine whether a item is in the set.

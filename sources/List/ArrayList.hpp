@@ -8,6 +8,8 @@
 #ifndef ARRAYLIST_HPP
 #define ARRAYLIST_HPP
 
+#include <type_traits>
+
 #include "List.hpp"
 
 namespace hellods
@@ -23,17 +25,18 @@ class ArrayList : public List<T>
     friend class BinaryHeap;
 
 public:
-    /// List iterator class.
-    class Iterator
+    template <bool Const>
+    class BasicIterator
     {
         friend class ArrayList;
 
     protected:
-        // Current data pointer.
-        T* current_;
+        using Value = std::conditional_t<Const, const T, T>;
+
+        Value* current_;
 
         // Create an iterator that point to the current data of list.
-        Iterator(T* current)
+        BasicIterator(Value* current)
             : current_(current)
         {
         }
@@ -42,36 +45,36 @@ public:
         using iterator_category = std::input_iterator_tag;
         using value_type = T;
         using difference_type = int;
-        using pointer = value_type*;
-        using reference = value_type&;
+        using pointer = Value*;
+        using reference = Value&;
 
         /// Dereference.
-        T& operator*() const
+        reference operator*() const
         {
             return *current_;
         }
 
         /// Get current pointer.
-        T* operator->() const
+        pointer operator->() const
         {
             return current_;
         }
 
         /// Check if two iterators are same.
-        bool operator==(const Iterator& that) const
+        bool operator==(const BasicIterator& that) const
         {
             return current_ == that.current_;
         }
 
         /// Increment the iterator: ++it.
-        Iterator& operator++()
+        BasicIterator& operator++()
         {
             ++current_;
             return *this;
         }
 
         /// Increment the iterator: it++.
-        Iterator operator++(int)
+        BasicIterator operator++(int)
         {
             auto it = *this;
             ++current_;
@@ -79,20 +82,23 @@ public:
         }
 
         /// Decrement the iterator: --it.
-        Iterator& operator--()
+        BasicIterator& operator--()
         {
             --current_;
             return *this;
         }
 
         /// Decrement the iterator: it--.
-        Iterator operator--(int)
+        BasicIterator operator--(int)
         {
             auto it = *this;
             --current_;
             return it;
         }
     };
+
+    using Iterator = BasicIterator<false>;
+    using ConstIterator = BasicIterator<true>;
 
 protected:
     using detail::Container::INIT_CAPACITY;
@@ -197,16 +203,26 @@ public:
 
     /// Return an iterator to the first element of the list.
     /// If the list is empty, the returned iterator will be equal to end().
-    auto begin() const
+    auto begin()
     {
         return Iterator(data_);
     }
 
+    auto begin() const
+    {
+        return ConstIterator(data_);
+    }
+
     /// Return an iterator to the element following the last element of the list.
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    auto end() const
+    auto end()
     {
         return Iterator(data_ + size_); // not nullptr, because size_ <= capacity_
+    }
+
+    auto end() const
+    {
+        return ConstIterator(data_ + size_); // not nullptr, because size_ <= capacity_
     }
 
     /*
@@ -220,7 +236,12 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
-    Iterator find(const T& element) const
+    Iterator find(const T& element)
+    {
+        return std::find(begin(), end(), element);
+    }
+
+    ConstIterator find(const T& element) const
     {
         return std::find(begin(), end(), element);
     }

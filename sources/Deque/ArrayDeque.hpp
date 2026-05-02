@@ -8,6 +8,8 @@
 #ifndef ARRAYDEQUE_HPP
 #define ARRAYDEQUE_HPP
 
+#include <type_traits>
+
 #include "../detail.hpp"
 #include "Deque.hpp"
 
@@ -22,23 +24,24 @@ class ArrayDeque : public Deque<T>
     friend class ArrayQueue;
 
 public:
-    /// Deque iterator class.
-    class Iterator
+    template <bool Const>
+    class BasicIterator
     {
         friend class ArrayDeque;
 
     protected:
-        // Current data pointer.
-        T* current_;
+        using Value = std::conditional_t<Const, const T, T>;
+
+        Value* current_;
 
         // Begin of the ring buffer.
-        T* buffer_begin_;
+        Value* buffer_begin_;
 
         // End of the ring buffer.
-        T* buffer_end_;
+        Value* buffer_end_;
 
         // Create an iterator that point to the current data of list.
-        Iterator(T* current, T* begin, T* end)
+        BasicIterator(Value* current, Value* begin, Value* end)
             : current_(current)
             , buffer_begin_(begin)
             , buffer_end_(end)
@@ -49,29 +52,29 @@ public:
         using iterator_category = std::input_iterator_tag;
         using value_type = T;
         using difference_type = int;
-        using pointer = value_type*;
-        using reference = value_type&;
+        using pointer = Value*;
+        using reference = Value&;
 
         /// Dereference.
-        T& operator*() const
+        reference operator*() const
         {
             return *current_;
         }
 
         /// Get current pointer.
-        T* operator->() const
+        pointer operator->() const
         {
             return current_;
         }
 
         /// Check if two iterators are same.
-        bool operator==(const Iterator& that) const
+        bool operator==(const BasicIterator& that) const
         {
             return current_ == that.current_;
         }
 
         /// Increment the iterator: ++it.
-        Iterator& operator++()
+        BasicIterator& operator++()
         {
             ++current_;
             if (current_ == buffer_end_)
@@ -82,7 +85,7 @@ public:
         }
 
         /// Increment the iterator: it++.
-        Iterator operator++(int)
+        BasicIterator operator++(int)
         {
             auto it = *this;
             ++*this;
@@ -90,7 +93,7 @@ public:
         }
 
         /// Decrement the iterator: --it.
-        Iterator& operator--()
+        BasicIterator& operator--()
         {
             if (current_ == buffer_begin_)
             {
@@ -101,13 +104,16 @@ public:
         }
 
         /// Decrement the iterator: it--.
-        Iterator operator--(int)
+        BasicIterator operator--(int)
         {
             auto it = *this;
             --*this;
             return it;
         }
     };
+
+    using Iterator = BasicIterator<false>;
+    using ConstIterator = BasicIterator<true>;
 
 protected:
     using detail::Container::INIT_CAPACITY;
@@ -235,15 +241,25 @@ public:
      */
 
     /// Return an iterator to the first element of the list.
-    auto begin() const
+    auto begin()
     {
         return Iterator(data_ + front_, data_, data_ + capacity_);
     }
 
+    auto begin() const
+    {
+        return ConstIterator(data_ + front_, data_, data_ + capacity_);
+    }
+
     /// Return an iterator to the element following the last element of the list.
-    auto end() const
+    auto end()
     {
         return Iterator(data_ + access(size_), data_, data_ + capacity_);
+    }
+
+    auto end() const
+    {
+        return ConstIterator(data_ + access(size_), data_, data_ + capacity_);
     }
 
     /*

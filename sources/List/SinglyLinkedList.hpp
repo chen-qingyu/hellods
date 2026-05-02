@@ -8,6 +8,8 @@
 #ifndef SINGLYLINKEDLIST_HPP
 #define SINGLYLINKEDLIST_HPP
 
+#include <type_traits>
+
 #include "List.hpp"
 
 namespace hellods
@@ -36,17 +38,19 @@ protected:
     };
 
 public:
-    /// List iterator class.
-    class Iterator
+    template <bool Const>
+    class BasicIterator
     {
         friend class SinglyLinkedList;
 
     protected:
-        // Current node pointer.
-        Node* current_;
+        using NodePtr = std::conditional_t<Const, const Node*, Node*>;
+        using Value = std::conditional_t<Const, const T, T>;
+
+        NodePtr current_;
 
         // Create an iterator that point to the current node of list.
-        Iterator(Node* current)
+        BasicIterator(NodePtr current)
             : current_(current)
         {
         }
@@ -55,42 +59,45 @@ public:
         using iterator_category = std::input_iterator_tag;
         using value_type = T;
         using difference_type = int;
-        using pointer = value_type*;
-        using reference = value_type&;
+        using pointer = Value*;
+        using reference = Value&;
 
         /// Dereference.
-        T& operator*() const
+        reference operator*() const
         {
             return current_->data_;
         }
 
         /// Get current pointer.
-        T* operator->() const
+        pointer operator->() const
         {
             return &current_->data_;
         }
 
         /// Check if two iterators are same.
-        bool operator==(const Iterator& that) const
+        bool operator==(const BasicIterator& that) const
         {
             return current_ == that.current_;
         }
 
         /// Increment the iterator: ++it.
-        Iterator& operator++()
+        BasicIterator& operator++()
         {
             current_ = current_->succ_;
             return *this;
         }
 
         /// Increment the iterator: it++.
-        Iterator operator++(int)
+        BasicIterator operator++(int)
         {
             auto it = *this;
             current_ = current_->succ_;
             return it;
         }
     };
+
+    using Iterator = BasicIterator<false>;
+    using ConstIterator = BasicIterator<true>;
 
 protected:
     using detail::Container::INIT_CAPACITY;
@@ -211,16 +218,26 @@ public:
 
     /// Return an iterator to the first element of the list.
     /// If the list is empty, the returned iterator will be equal to end().
-    auto begin() const
+    auto begin()
     {
         return Iterator(header_->succ_);
     }
 
+    auto begin() const
+    {
+        return ConstIterator(header_->succ_);
+    }
+
     /// Return an iterator to the element following the last element of the list.
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    auto end() const
+    auto end()
     {
         return Iterator(nullptr);
+    }
+
+    auto end() const
+    {
+        return ConstIterator(nullptr);
     }
 
     /*
@@ -234,7 +251,12 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
-    Iterator find(const T& element) const
+    Iterator find(const T& element)
+    {
+        return std::find(begin(), end(), element);
+    }
+
+    ConstIterator find(const T& element) const
     {
         return std::find(begin(), end(), element);
     }
