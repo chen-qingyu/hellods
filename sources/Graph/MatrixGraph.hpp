@@ -10,6 +10,7 @@
 
 #include "../detail.hpp"
 
+#include "../List/ArrayList.hpp"
 #include "../Queue/ArrayQueue.hpp" // for breadth_first_search()
 
 namespace hellods
@@ -51,7 +52,7 @@ protected:
 
     // Depth-first search helper.
     template <typename F>
-    void dfs(const V& start, const F& action, std::vector<bool>& visited) const
+    void dfs(const V& start, const F& action, ArrayList<bool>& visited) const
     {
         action(start);
         visited[start] = true;
@@ -66,7 +67,7 @@ protected:
     }
 
     // Finds the vertex with the smallest distance in an unaccessed set of vertices.
-    V find_closest(std::vector<V>& dist, std::vector<bool>& visited) const
+    V find_closest(const ArrayList<E>& dist, const ArrayList<bool>& visited) const
     {
         V min_v;
         E min_dist = NO_EDGE;
@@ -196,7 +197,11 @@ public:
     {
         detail::check_bounds(start, 0, size_);
 
-        auto visited = std::vector<bool>(size_, false);
+        ArrayList<bool> visited;
+        for (int i = 0; i < size_; ++i)
+        {
+            visited.append(false);
+        }
 
         dfs(start, action, visited);
     }
@@ -207,7 +212,11 @@ public:
     {
         detail::check_bounds(start, 0, size_);
 
-        auto visited = std::vector<bool>(size_, false);
+        ArrayList<bool> visited;
+        for (int i = 0; i < size_; ++i)
+        {
+            visited.append(false);
+        }
 
         action(start);
         visited[start] = true;
@@ -230,18 +239,19 @@ public:
     }
 
     /// The Dijkstra algorithm on the graph. Return distance and path.
-    std::pair<std::vector<E>, std::vector<V>> dijkstra(const V& start) const
+    std::pair<ArrayList<E>, ArrayList<V>> dijkstra(const V& start) const
     {
         detail::check_bounds(start, 0, size_);
 
         // init state
-        auto visited = std::vector<bool>(size_, false);
-        std::vector<V> dist(size_);
-        std::vector<V> path(size_);
+        ArrayList<bool> visited;
+        ArrayList<E> dist;
+        ArrayList<V> path;
         for (V v = 0; v < size_; v++)
         {
-            dist[v] = matrix_[start][v];
-            path[v] = dist[v] < NO_EDGE ? start : -1;
+            visited.append(false);
+            dist.append(matrix_[start][v]);
+            path.append(dist[v] < NO_EDGE ? start : -1);
         }
 
         dist[start] = 0;
