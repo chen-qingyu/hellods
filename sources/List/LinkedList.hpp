@@ -392,6 +392,10 @@ public:
 
         // insert
         insert_node(current, element);
+
+        // reset cache
+        latest_ = -1;
+        p_latest_ = header_;
     }
 
     /// Remove and return the element at the specified position in the list.
@@ -420,12 +424,9 @@ public:
             }
         }
 
-        // reset state of the latest accessed element if it was removed
-        if (current == p_latest_)
-        {
-            latest_ = -1;
-            p_latest_ = header_;
-        }
+        // reset cache
+        latest_ = -1;
+        p_latest_ = header_;
 
         // remove and return data
         return remove_node(current);
