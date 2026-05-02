@@ -8,8 +8,6 @@
 #ifndef HASHSET_HPP
 #define HASHSET_HPP
 
-#include <type_traits>
-
 #include "../Map/HashMap.hpp"
 
 namespace hellods
@@ -17,6 +15,7 @@ namespace hellods
 
 /// Hash set.
 template <typename T, typename Hash = std::hash<T>, typename Eq = std::equal_to<T>>
+    requires detail::HashKey<T, Hash, Eq>
 class HashSet : public detail::Container
 {
 protected:

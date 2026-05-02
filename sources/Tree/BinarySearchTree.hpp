@@ -16,7 +16,7 @@ namespace hellods
 {
 
 /// Binary search tree.
-template <typename T>
+template <detail::OrderedElement T>
 class BinarySearchTree : public detail::Container
 {
 protected:

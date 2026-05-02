@@ -15,7 +15,8 @@
 namespace hellods
 {
 
-template <typename T, typename Cmp = std::greater<T>>
+template <detail::StoredElement T, typename Cmp = std::greater<T>>
+    requires detail::ComparatorFor<T, Cmp>
 class BinaryHeap : public detail::Container
 {
     using detail::Container::MAX_CAPACITY;
@@ -82,6 +83,7 @@ public:
 
     /// Check whether two heaps are equal.
     bool operator==(const BinaryHeap& that) const
+        requires detail::HashKey<T, std::hash<T>, std::equal_to<T>>
     {
         if (list_.size_ != that.list_.size_ || (!is_empty() && peek() != that.peek()))
         {

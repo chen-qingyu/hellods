@@ -14,7 +14,7 @@ namespace hellods
 {
 
 /// Red-black tree.
-template <typename T>
+template <detail::OrderedElement T>
 class RedBlackTree : public BinarySearchTree<T>
 {
     using BinarySearchTree<T>::Node;

@@ -15,7 +15,7 @@ namespace hellods
 {
 
 /// Stack implemented by doubly linked list.
-template <typename T>
+template <detail::StoredElement T>
 class LinkedStack : public Stack<T>
 {
     using detail::Container::MAX_CAPACITY;
@@ -51,6 +51,7 @@ public:
 
     /// Check whether two stacks are equal.
     bool operator==(const LinkedStack& that) const
+        requires detail::LinearElement<T>
     {
         return list_ == that.list_;
     }

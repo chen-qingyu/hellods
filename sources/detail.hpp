@@ -11,6 +11,8 @@
 #include <algorithm>  // std::copy
 #include <climits>    // INT_MAX
 #include <cmath>      // std::abs
+#include <concepts>   // std::convertible_to std::copyable std::default_initializable std::predicate
+#include <cstddef>    // std::size_t
 #include <functional> // std::std::greater std::hash std::equal_to
 #include <iterator>   // std::input_iterator
 #include <ostream>    // std::ostream
@@ -20,6 +22,28 @@
 
 namespace hellods::detail
 {
+
+template <typename T>
+concept StoredElement = std::default_initializable<T> && std::copyable<T>;
+
+template <typename T>
+concept LinearElement = StoredElement<T> && std::equality_comparable<T>;
+
+template <typename T>
+concept OrderedElement = StoredElement<T> && std::equality_comparable<T> && requires(const T& lhs, const T& rhs) {
+    { lhs < rhs } -> std::convertible_to<bool>;
+};
+
+template <typename T, typename Cmp>
+concept ComparatorFor = std::predicate<Cmp, const T&, const T&>;
+
+template <typename K, typename Hash, typename Eq>
+concept HashKey =
+    StoredElement<K> &&
+    std::predicate<Eq, const K&, const K&> &&
+    requires(Hash hash, const K& key) {
+        { hash(key) } -> std::convertible_to<std::size_t>;
+    };
 
 // Check whether the index is valid (begin <= pos < end).
 static inline void check_bounds(int pos, int begin, int end)

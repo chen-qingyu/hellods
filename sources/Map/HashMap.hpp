@@ -8,18 +8,18 @@
 #ifndef HASHMAP_HPP
 #define HASHMAP_HPP
 
-#include <type_traits>
-
 #include "../detail.hpp"
 
 namespace hellods
 {
 
 /// Hash map.
-template <typename K, typename V, typename Hash = std::hash<K>, typename Eq = std::equal_to<K>>
+template <typename K, detail::StoredElement V, typename Hash = std::hash<K>, typename Eq = std::equal_to<K>>
+    requires detail::HashKey<K, Hash, Eq>
 class HashMap : public detail::Container
 {
     template <typename U, typename Hash, typename Eq>
+        requires detail::HashKey<U, Hash, Eq>
     friend class HashSet;
 
 protected:
@@ -329,6 +329,7 @@ public:
 
     /// Check whether two maps are equal.
     bool operator==(const HashMap& that) const
+        requires detail::LinearElement<V>
     {
         if (size_ != that.size_)
         {

@@ -8,22 +8,20 @@
 #ifndef LINKEDLIST_HPP
 #define LINKEDLIST_HPP
 
-#include <type_traits>
-
 #include "List.hpp"
 
 namespace hellods
 {
 
 /// List implemented by doubly linked list.
-template <typename T>
+template <detail::StoredElement T>
 class LinkedList : public List<T>
 {
-    template <typename U>
+    template <detail::StoredElement U>
     friend class LinkedDeque;
-    template <typename U>
+    template <detail::StoredElement U>
     friend class LinkedQueue;
-    template <typename U>
+    template <detail::StoredElement U>
     friend class LinkedStack;
 
 protected:
@@ -256,6 +254,7 @@ public:
 
     /// Check whether two lists are equal.
     bool operator==(const LinkedList& that) const
+        requires detail::LinearElement<T>
     {
         return size_ == that.size_ && std::equal(begin(), end(), that.begin());
     }
@@ -340,11 +339,13 @@ public:
 
     /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
     Iterator find(const T& element)
+        requires detail::LinearElement<T>
     {
         return std::find(begin(), end(), element);
     }
 
     ConstIterator find(const T& element) const
+        requires detail::LinearElement<T>
     {
         return std::find(begin(), end(), element);
     }

@@ -8,8 +8,6 @@
 #ifndef ARRAYDEQUE_HPP
 #define ARRAYDEQUE_HPP
 
-#include <type_traits>
-
 #include "../detail.hpp"
 #include "Deque.hpp"
 
@@ -17,10 +15,10 @@ namespace hellods
 {
 
 /// Deque implemented by array.
-template <typename T>
+template <detail::StoredElement T>
 class ArrayDeque : public Deque<T>
 {
-    template <typename U>
+    template <detail::StoredElement U>
     friend class ArrayQueue;
 
 public:
@@ -219,6 +217,7 @@ public:
 
     /// Check whether two deques are equal.
     bool operator==(const ArrayDeque& that) const
+        requires detail::LinearElement<T>
     {
         if (size_ != that.size_)
         {

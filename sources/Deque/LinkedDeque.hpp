@@ -15,7 +15,7 @@ namespace hellods
 {
 
 /// Deque implemented by double linked list.
-template <typename T>
+template <detail::StoredElement T>
 class LinkedDeque : public Deque<T>
 {
     using detail::Container::MAX_CAPACITY;
@@ -51,6 +51,7 @@ public:
 
     /// Check whether two queues are equal.
     bool operator==(const LinkedDeque& that) const
+        requires detail::LinearElement<T>
     {
         return list_ == that.list_;
     }

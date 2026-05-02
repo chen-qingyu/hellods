@@ -1,5 +1,7 @@
 #include <type_traits>
 
+#include "tool.hpp"
+
 #include "../sources/Deque/ArrayDeque.hpp"
 #include "../sources/Deque/LinkedDeque.hpp"
 #include "../sources/Graph/MatrixGraph.hpp"
@@ -19,6 +21,8 @@
 
 using namespace hellods;
 
+namespace dsd = hellods::detail;
+
 template <typename T>
 constexpr bool kMoveConstructibleContainer =
     std::is_copy_constructible_v<T> &&
@@ -26,7 +30,10 @@ constexpr bool kMoveConstructibleContainer =
     std::is_move_constructible_v<T> &&
     !std::is_move_assignable_v<T>;
 
-static_assert(std::has_virtual_destructor_v<detail::Container>);
+template <typename T>
+constexpr bool kConstBeginReference = std::is_const_v<std::remove_reference_t<decltype(*std::declval<const T&>().begin())>>;
+
+static_assert(std::has_virtual_destructor_v<dsd::Container>);
 
 static_assert(kMoveConstructibleContainer<ArrayList<int>>);
 static_assert(kMoveConstructibleContainer<LinkedList<int>>);
@@ -44,8 +51,19 @@ static_assert(kMoveConstructibleContainer<BinarySearchTree<int>>);
 static_assert(kMoveConstructibleContainer<RedBlackTree<int>>);
 static_assert(kMoveConstructibleContainer<MatrixGraph<>>);
 
-static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const ArrayList<int>&>().begin())>>);
-static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const LinkedList<int>&>().begin())>>);
-static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const SinglyLinkedList<int>&>().begin())>>);
-static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const ArrayDeque<int>&>().begin())>>);
-static_assert(std::is_const_v<std::remove_reference_t<decltype(*std::declval<const HashMap<int, int>&>().begin())>>);
+static_assert(dsd::StoredElement<EqType>);
+static_assert(dsd::LinearElement<EqType>);
+static_assert(!dsd::OrderedElement<EqType>);
+static_assert(dsd::OrderedElement<EqLtType>);
+static_assert(dsd::HashKey<EqType, std::hash<EqType>, std::equal_to<EqType>>);
+static_assert(!dsd::HashKey<EqLtType, std::hash<EqLtType>, std::equal_to<EqLtType>>);
+static_assert(dsd::StoredElement<int>);
+static_assert(std::equality_comparable<EqType>);
+static_assert(dsd::ComparatorFor<int, std::greater<int>>);
+static_assert(dsd::ComparatorFor<EqLtType, std::less<EqLtType>>);
+
+static_assert(kConstBeginReference<ArrayList<int>>);
+static_assert(kConstBeginReference<LinkedList<int>>);
+static_assert(kConstBeginReference<SinglyLinkedList<int>>);
+static_assert(kConstBeginReference<ArrayDeque<int>>);
+static_assert(kConstBeginReference<HashMap<int, int>>);
