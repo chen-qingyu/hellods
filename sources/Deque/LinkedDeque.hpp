@@ -39,6 +39,12 @@ public:
     {
     }
 
+    LinkedDeque(const LinkedDeque&) = default;
+    LinkedDeque(LinkedDeque&&) = default;
+
+    LinkedDeque& operator=(const LinkedDeque&) = delete;
+    LinkedDeque& operator=(LinkedDeque&&) = delete;
+
     /*
      * Comparison
      */

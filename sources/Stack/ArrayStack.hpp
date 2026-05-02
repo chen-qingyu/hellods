@@ -37,6 +37,12 @@ public:
     {
     }
 
+    ArrayStack(const ArrayStack&) = default;
+    ArrayStack(ArrayStack&&) = default;
+
+    ArrayStack& operator=(const ArrayStack&) = delete;
+    ArrayStack& operator=(ArrayStack&&) = delete;
+
     /*
      * Comparison
      */

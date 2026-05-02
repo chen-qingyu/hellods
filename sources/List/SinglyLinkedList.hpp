@@ -156,6 +156,18 @@ public:
         }
     }
 
+    /// Move constructor.
+    SinglyLinkedList(SinglyLinkedList&& that)
+        : size_(that.size_)
+        , header_(that.header_)
+    {
+        that.size_ = 0;
+        that.header_ = new Node(T());
+    }
+
+    SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
+    SinglyLinkedList& operator=(SinglyLinkedList&&) = delete;
+
     /// Destroy the list object.
     ~SinglyLinkedList()
     {

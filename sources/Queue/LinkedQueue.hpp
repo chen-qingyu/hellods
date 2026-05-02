@@ -39,6 +39,12 @@ public:
     {
     }
 
+    LinkedQueue(const LinkedQueue&) = default;
+    LinkedQueue(LinkedQueue&&) = default;
+
+    LinkedQueue& operator=(const LinkedQueue&) = delete;
+    LinkedQueue& operator=(LinkedQueue&&) = delete;
+
     /*
      * Comparison
      */

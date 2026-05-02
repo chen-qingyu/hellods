@@ -381,6 +381,34 @@ public:
         }
     }
 
+    /// Copy constructor.
+    BinarySearchTree(const BinarySearchTree& that)
+        : BinarySearchTree()
+    {
+        for (const auto& element : that)
+        {
+            insert(element);
+        }
+    }
+
+    /// Move constructor.
+    BinarySearchTree(BinarySearchTree&& that)
+        : BinarySearchTree()
+    {
+        size_ = that.size_;
+        root_ = that.root_;
+        if (root_ != nullptr)
+        {
+            root_->parent_ = end_;
+        }
+
+        that.size_ = 0;
+        that.root_ = nullptr;
+    }
+
+    BinarySearchTree& operator=(const BinarySearchTree&) = delete;
+    BinarySearchTree& operator=(BinarySearchTree&&) = delete;
+
     /// Destroy the tree object.
     ~BinarySearchTree()
     {

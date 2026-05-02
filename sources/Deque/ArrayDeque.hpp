@@ -185,6 +185,22 @@ public:
         std::copy(that.data_, that.data_ + capacity_, data_);
     }
 
+    /// Move constructor.
+    ArrayDeque(ArrayDeque&& that)
+        : front_(that.front_)
+        , size_(that.size_)
+        , capacity_(that.capacity_)
+        , data_(that.data_)
+    {
+        that.front_ = 0;
+        that.size_ = 0;
+        that.capacity_ = INIT_CAPACITY;
+        that.data_ = new T[that.capacity_];
+    }
+
+    ArrayDeque& operator=(const ArrayDeque&) = delete;
+    ArrayDeque& operator=(ArrayDeque&&) = delete;
+
     /// Destroy the deque object.
     ~ArrayDeque()
     {

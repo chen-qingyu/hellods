@@ -291,6 +291,24 @@ public:
         }
     }
 
+    /// Move constructor.
+    HashMap(HashMap&& that)
+        : size_(that.size_)
+        , capacity_(that.capacity_)
+        , data_(that.data_)
+    {
+        that.size_ = 0;
+        that.capacity_ = INIT_PRIME_CAPACITY;
+        that.data_ = new Pair[that.capacity_];
+        for (int i = 0; i < that.capacity_; ++i)
+        {
+            that.data_[i].state_ = Pair::EMPTY;
+        }
+    }
+
+    HashMap& operator=(const HashMap&) = delete;
+    HashMap& operator=(HashMap&&) = delete;
+
     /// Destroy the map object.
     ~HashMap()
     {

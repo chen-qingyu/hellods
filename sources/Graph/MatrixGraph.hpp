@@ -102,6 +102,34 @@ public:
         set_vertex_number(n);
     }
 
+    /// Copy constructor.
+    MatrixGraph(const MatrixGraph& that)
+        : MatrixGraph()
+    {
+        if (that.size_ == 0)
+        {
+            return;
+        }
+
+        set_vertex_number(that.size_);
+        for (V v1 = 0; v1 < size_; ++v1)
+        {
+            std::copy(that.matrix_[v1], that.matrix_[v1] + size_, matrix_[v1]);
+        }
+    }
+
+    /// Move constructor.
+    MatrixGraph(MatrixGraph&& that)
+        : size_(that.size_)
+        , matrix_(that.matrix_)
+    {
+        that.size_ = 0;
+        that.matrix_ = nullptr;
+    }
+
+    MatrixGraph& operator=(const MatrixGraph&) = delete;
+    MatrixGraph& operator=(MatrixGraph&&) = delete;
+
     /// Destroy the graph object.
     ~MatrixGraph()
     {

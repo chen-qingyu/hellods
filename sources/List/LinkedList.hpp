@@ -215,6 +215,26 @@ public:
         }
     }
 
+    /// Move constructor.
+    LinkedList(LinkedList&& that)
+        : size_(that.size_)
+        , header_(that.header_)
+        , trailer_(that.trailer_)
+        , latest_(that.latest_)
+        , p_latest_(that.p_latest_)
+    {
+        that.size_ = 0;
+        that.header_ = new Node(T());
+        that.trailer_ = new Node(T());
+        that.header_->succ_ = that.trailer_;
+        that.trailer_->pred_ = that.header_;
+        that.latest_ = -1;
+        that.p_latest_ = that.header_;
+    }
+
+    LinkedList& operator=(const LinkedList&) = delete;
+    LinkedList& operator=(LinkedList&&) = delete;
+
     /// Destroy the list object.
     ~LinkedList()
     {

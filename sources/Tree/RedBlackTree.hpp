@@ -415,6 +415,21 @@ public:
         }
     }
 
+    /// Copy constructor.
+    RedBlackTree(const RedBlackTree& that)
+        : RedBlackTree()
+    {
+        for (const auto& element : that)
+        {
+            insert(element);
+        }
+    }
+
+    RedBlackTree(RedBlackTree&&) = default;
+
+    RedBlackTree& operator=(const RedBlackTree&) = delete;
+    RedBlackTree& operator=(RedBlackTree&&) = delete;
+
     /*
      * Manipulation
      */

@@ -117,11 +117,11 @@ public:
         }
     }
 
-    /// Copy constructor.
-    HashSet(const HashSet& that)
-        : map_(that.map_)
-    {
-    }
+    HashSet(const HashSet&) = default;
+    HashSet(HashSet&&) = default;
+
+    HashSet& operator=(const HashSet&) = delete;
+    HashSet& operator=(HashSet&&) = delete;
 
     /*
      * Comparison

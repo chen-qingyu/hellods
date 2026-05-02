@@ -70,6 +70,12 @@ public:
         }
     }
 
+    BinaryHeap(const BinaryHeap&) = default;
+    BinaryHeap(BinaryHeap&&) = default;
+
+    BinaryHeap& operator=(const BinaryHeap&) = delete;
+    BinaryHeap& operator=(BinaryHeap&&) = delete;
+
     /*
      * Comparison
      */

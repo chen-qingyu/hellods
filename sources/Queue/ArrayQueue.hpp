@@ -37,6 +37,12 @@ public:
     {
     }
 
+    ArrayQueue(const ArrayQueue&) = default;
+    ArrayQueue(ArrayQueue&&) = default;
+
+    ArrayQueue& operator=(const ArrayQueue&) = delete;
+    ArrayQueue& operator=(ArrayQueue&&) = delete;
+
     /*
      * Comparison
      */

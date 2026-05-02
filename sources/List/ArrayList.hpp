@@ -148,6 +148,20 @@ public:
         std::copy(that.begin(), that.end(), data_);
     }
 
+    /// Move constructor.
+    ArrayList(ArrayList&& that)
+        : size_(that.size_)
+        , capacity_(that.capacity_)
+        , data_(that.data_)
+    {
+        that.size_ = 0;
+        that.capacity_ = INIT_CAPACITY;
+        that.data_ = new T[that.capacity_];
+    }
+
+    ArrayList& operator=(const ArrayList&) = delete;
+    ArrayList& operator=(ArrayList&&) = delete;
+
     /// Destroy the list object.
     ~ArrayList()
     {

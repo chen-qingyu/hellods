@@ -39,6 +39,12 @@ public:
     {
     }
 
+    LinkedStack(const LinkedStack&) = default;
+    LinkedStack(LinkedStack&&) = default;
+
+    LinkedStack& operator=(const LinkedStack&) = delete;
+    LinkedStack& operator=(LinkedStack&&) = delete;
+
     /*
      * Comparison
      */
