@@ -10,8 +10,6 @@
 
 #include "../List/ArrayList.hpp"
 
-#include "../Map/HashMap.hpp" // for operator==()
-
 namespace hellods
 {
 
@@ -83,22 +81,25 @@ public:
 
     /// Check whether two heaps are equal.
     bool operator==(const BinaryHeap& that) const
-        requires detail::HashKey<T, std::hash<T>, std::equal_to<T>>
     {
-        if (list_.size_ != that.list_.size_ || (!is_empty() && peek() != that.peek()))
+        if (list_.size_ != that.list_.size_)
         {
             return false;
         }
 
-        // count elements in each heap
-        HashMap<T, int> this_map, that_map;
-        for (int i = 0; i < list_.size_; i++)
-        {
-            this_map.contains(list_.data_[i]) ? ++this_map[list_.data_[i]] : this_map.insert(list_.data_[i], 1);
-            that_map.contains(that.list_.data_[i]) ? ++that_map[that.list_.data_[i]] : that_map.insert(that.list_.data_[i], 1);
-        }
+        // copy raw data to temporary arrays, sort, then compare element by element
+        T* this_data = new T[list_.size_];
+        std::copy(list_.data_, list_.data_ + list_.size_, this_data);
+        std::sort(this_data, this_data + list_.size_, Cmp{});
 
-        return this_map == that_map;
+        T* that_data = new T[that.list_.size_];
+        std::copy(that.list_.data_, that.list_.data_ + that.list_.size_, that_data);
+        std::sort(that_data, that_data + that.list_.size_, Cmp{});
+
+        bool equal = std::equal(this_data, this_data + list_.size_, that_data);
+        delete[] this_data;
+        delete[] that_data;
+        return equal;
     }
 
     /*
