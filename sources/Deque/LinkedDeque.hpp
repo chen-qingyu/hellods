@@ -18,8 +18,6 @@ namespace hellods
 template <detail::StoredElement T>
 class LinkedDeque : public Deque<T>
 {
-    using detail::Container::MAX_CAPACITY;
-
     LinkedList<T> list_;
 
 public:
@@ -79,8 +77,8 @@ public:
     /// Return the reference to the element at the front in the deque.
     T& front() override
     {
-        detail::check_empty(list_.size_);
-        return list_.header_->succ_->data_;
+        detail::check_empty(list_.size());
+        return list_[0];
     }
 
     using Deque<T>::front; // const
@@ -88,8 +86,8 @@ public:
     /// Return the reference to the element at the back in the deque.
     T& back() override
     {
-        detail::check_empty(list_.size_);
-        return list_.trailer_->pred_->data_;
+        detail::check_empty(list_.size());
+        return list_[list_.size() - 1];
     }
 
     using Deque<T>::back; // const
@@ -101,7 +99,7 @@ public:
     /// Get the number of elements.
     int size() const override
     {
-        return list_.size_;
+        return list_.size();
     }
 
     /*
@@ -111,29 +109,25 @@ public:
     /// Push front, insert an element at the front of the deque.
     void push_front(const T& element) override
     {
-        detail::check_full(list_.size_, MAX_CAPACITY);
-        list_.insert_node(list_.header_->succ_, element);
+        list_.insert(0, element);
     }
 
     /// Push back, insert an element at the back of the deque.
     void push_back(const T& element) override
     {
-        detail::check_full(list_.size_, MAX_CAPACITY);
-        list_.insert_node(list_.trailer_, element);
+        list_.append(element);
     }
 
     /// Pop front, pop the front element of the deque.
     T pop_front() override
     {
-        detail::check_empty(list_.size_);
-        return list_.remove_node(list_.header_->succ_);
+        return list_.remove(0);
     }
 
     /// Pop back, pop the back element of the deque.
     T pop_back() override
     {
-        detail::check_empty(list_.size_);
-        return list_.remove_node(list_.trailer_->pred_);
+        return list_.remove(list_.size() - 1);
     }
 
     /// Remove all of the elements from the deque.

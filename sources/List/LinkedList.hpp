@@ -17,13 +17,6 @@ namespace hellods
 template <detail::StoredElement T>
 class LinkedList : public List<T>
 {
-    template <detail::StoredElement U>
-    friend class LinkedDeque;
-    template <detail::StoredElement U>
-    friend class LinkedQueue;
-    template <detail::StoredElement U>
-    friend class LinkedStack;
-
 protected:
     // Node of doubly linked list.
     struct Node

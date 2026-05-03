@@ -18,8 +18,6 @@ namespace hellods
 template <detail::StoredElement T>
 class LinkedStack : public Stack<T>
 {
-    using detail::Container::MAX_CAPACITY;
-
     LinkedList<T> list_;
 
 public:
@@ -63,8 +61,8 @@ public:
     /// Return the reference to the element at the top in the stack.
     T& top() override
     {
-        detail::check_empty(list_.size_);
-        return list_.trailer_->pred_->data_;
+        detail::check_empty(list_.size());
+        return list_[list_.size() - 1];
     }
 
     using Stack<T>::top; // const
@@ -76,7 +74,7 @@ public:
     /// Get the number of elements.
     int size() const override
     {
-        return list_.size_;
+        return list_.size();
     }
 
     /*
@@ -86,15 +84,13 @@ public:
     /// Push an element at the top of the stack.
     void push(const T& element) override
     {
-        detail::check_full(list_.size_, MAX_CAPACITY);
-        list_.insert_node(list_.trailer_, element);
+        list_.append(element);
     }
 
     /// Pop the top element of the stack.
     T pop() override
     {
-        detail::check_empty(list_.size_);
-        return list_.remove_node(list_.trailer_->pred_);
+        return list_.remove(list_.size() - 1);
     }
 
     /// Remove all of the elements from the stack.

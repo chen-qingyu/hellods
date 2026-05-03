@@ -61,8 +61,8 @@ public:
     /// Return the reference to the element at the top in the stack.
     T& top() override
     {
-        detail::check_empty(list_.size_);
-        return list_.data_[list_.size_ - 1];
+        detail::check_empty(list_.size());
+        return list_[list_.size() - 1];
     }
 
     using Stack<T>::top; // const
@@ -74,7 +74,7 @@ public:
     /// Get the number of elements.
     int size() const override
     {
-        return list_.size_;
+        return list_.size();
     }
 
     /*
@@ -90,7 +90,7 @@ public:
     /// Pop the top element of the stack.
     T pop() override
     {
-        return list_.remove(list_.size_ - 1);
+        return list_.remove(list_.size() - 1);
     }
 
     /// Remove all of the elements from the stack.

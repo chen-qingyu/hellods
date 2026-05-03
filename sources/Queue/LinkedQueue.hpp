@@ -18,8 +18,6 @@ namespace hellods
 template <detail::StoredElement T>
 class LinkedQueue : public Queue<T>
 {
-    using detail::Container::MAX_CAPACITY;
-
     LinkedList<T> list_;
 
 public:
@@ -63,8 +61,8 @@ public:
     /// Return the reference to the element at the front in the queue.
     T& front() override
     {
-        detail::check_empty(list_.size_);
-        return list_.header_->succ_->data_;
+        detail::check_empty(list_.size());
+        return list_[0];
     }
 
     using Queue<T>::front; // const
@@ -76,7 +74,7 @@ public:
     /// Get the number of elements.
     int size() const override
     {
-        return list_.size_;
+        return list_.size();
     }
 
     /*
@@ -86,15 +84,13 @@ public:
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element) override
     {
-        detail::check_full(list_.size_, MAX_CAPACITY);
-        list_.insert_node(list_.trailer_, element);
+        list_.append(element);
     }
 
     /// Dequeue, pop the front element of the queue.
     T dequeue() override
     {
-        detail::check_empty(list_.size_);
-        return list_.remove_node(list_.header_->succ_);
+        return list_.remove(0);
     }
 
     /// Remove all of the elements from the queue.

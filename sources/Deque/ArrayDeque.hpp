@@ -18,9 +18,6 @@ namespace hellods
 template <detail::StoredElement T>
 class ArrayDeque : public Deque<T>
 {
-    template <detail::StoredElement U>
-    friend class ArrayQueue;
-
 public:
     template <bool Const>
     class BasicIterator

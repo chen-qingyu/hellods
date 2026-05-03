@@ -73,7 +73,7 @@ public:
     /// Get the number of elements.
     int size() const override
     {
-        return deque_.size_;
+        return deque_.size();
     }
 
     /*
