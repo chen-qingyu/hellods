@@ -231,8 +231,8 @@ public:
         delete[] visited;
     }
 
-    /// The Dijkstra algorithm on the graph. Return distance and path (caller must delete[] both arrays).
-    std::pair<E*, V*> dijkstra(const V& start) const
+    /// The Dijkstra algorithm on the graph. Return distance and path.
+    std::pair<std::unique_ptr<E[]>, std::unique_ptr<V[]>> dijkstra(const V& start) const
     {
         detail::check_bounds(start, 0, size_);
         for (V v1 = 0; v1 < size_; ++v1)
@@ -247,9 +247,9 @@ public:
         }
 
         // init state
-        bool* visited = new bool[size_]();
-        E* dist = new E[size_];
-        V* path = new V[size_];
+        auto visited = std::make_unique<bool[]>(size_);
+        auto dist = std::make_unique<E[]>(size_);
+        auto path = std::make_unique<V[]>(size_);
         for (V v = 0; v < size_; v++)
         {
             dist[v] = matrix_[start][v];
@@ -261,7 +261,7 @@ public:
 
         while (true)
         {
-            V v1 = find_closest(dist, visited);
+            V v1 = find_closest(dist.get(), visited.get());
             if (v1 == -1)
             {
                 break;
@@ -280,8 +280,7 @@ public:
             }
         }
 
-        delete[] visited;
-        return {dist, path};
+        return {std::move(dist), std::move(path)};
     }
 
     /*
