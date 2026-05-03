@@ -235,6 +235,16 @@ public:
     std::pair<E*, V*> dijkstra(const V& start) const
     {
         detail::check_bounds(start, 0, size_);
+        for (V v1 = 0; v1 < size_; ++v1)
+        {
+            for (V v2 = 0; v2 < size_; ++v2)
+            {
+                if (matrix_[v1][v2] < 0)
+                {
+                    throw std::runtime_error("Error: Cannot apply Dijkstra algorithm with a negative weighted edge.");
+                }
+            }
+        }
 
         // init state
         bool* visited = new bool[size_]();
@@ -261,13 +271,6 @@ public:
             {
                 if (!visited[v2] && matrix_[v1][v2] < NO_EDGE)
                 {
-                    if (matrix_[v1][v2] < 0)
-                    {
-                        delete[] visited;
-                        delete[] dist;
-                        delete[] path;
-                        throw std::runtime_error("Error: Cannot apply Dijkstra algorithm with a negative weighted egde.");
-                    }
                     if (dist[v1] + matrix_[v1][v2] < dist[v2])
                     {
                         dist[v2] = dist[v1] + matrix_[v1][v2];
