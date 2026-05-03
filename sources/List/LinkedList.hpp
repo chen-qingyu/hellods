@@ -154,10 +154,10 @@ protected:
     Node* trailer_;
 
     // Index of the latest accessed element. For operator[]().
-    int latest_;
+    mutable int latest_;
 
     // Pointer to the latest accessed element. For operator[]().
-    Node* p_latest_;
+    mutable Node* p_latest_;
 
     // Clear the stored data.
     void clear_data()
