@@ -138,7 +138,7 @@ public:
     /// Check whether two sets are equal.
     bool operator==(const HashSet& that) const
     {
-        if (map_.size_ != that.map_.size_)
+        if (map_.size() != that.map_.size())
         {
             return false;
         }
@@ -187,7 +187,7 @@ public:
     /// Get the number of elements.
     int size() const override
     {
-        return map_.size_;
+        return map_.size();
     }
 
     /// Return an iterator to the first occurrence of the specified item, or end() if the set does not contains the item.

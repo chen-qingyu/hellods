@@ -18,10 +18,6 @@ template <typename K, detail::StoredElement V, typename Hash = std::hash<K>, typ
     requires detail::HashKey<K, Hash, Eq>
 class HashMap : public detail::Container
 {
-    template <typename U, typename Hash, typename Eq>
-        requires detail::HashKey<U, Hash, Eq>
-    friend class HashSet;
-
 protected:
     // Hash map pair.
     struct Pair
