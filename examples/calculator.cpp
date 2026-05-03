@@ -94,8 +94,8 @@ static ArrayList<Token> tokenize(const std::string& expr)
 {
     ArrayList<Token> tokens;
 
-    std::string NUM = R"([-+]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][-+]?\d+)?)";
-    std::string OP = R"([+\-*/()])";
+    std::string NUM = R"(\d+(?:\.\d*)?(?:[eE][-+]?\d+)?|\.\d+(?:[eE][-+]?\d+)?)";
+    std::string OP = R"([-+*/()])";
     std::string WS = R"(\s+)";
 
     std::regex re("(" + NUM + ")|(" + OP + ")|(" + WS + ")");
@@ -135,15 +135,27 @@ static ArrayList<Token> to_postfix(const ArrayList<Token>& tokens)
                 break;
 
             case Token::OP:
-                if (token.data.op == '(' ||
-                    token.data.op == '*' ||
-                    token.data.op == '/') // 若token优先级高于栈顶除左括号外的运算符（左括号可视作优先级无限大）
+                if (token.data.op == '(')
                 {
-                    stk.push(token); // 直接入栈
+                    stk.push(token); // 左括号直接入栈
+                }
+                else if (token.data.op == '*' ||
+                         token.data.op == '/') // 优先级较高：先弹出栈顶同优先级的运算符（左结合），再入栈
+                {
+                    while (!stk.is_empty())
+                    {
+                        Token top = stk.top();
+                        if (top.data.op != '*' && top.data.op != '/')
+                        {
+                            break;
+                        }
+                        postfix.append(stk.pop());
+                    }
+                    stk.push(token);
                 }
                 else if (token.data.op == ')' ||
                          token.data.op == '+' ||
-                         token.data.op == '-') // 否则，token优先级小于等于栈顶运算符，则依次弹出栈顶运算符（右括号可视作优先级无限小）
+                         token.data.op == '-') // 优先级较低：弹出栈中所有运算符直到 '('，再入栈（除非是右括号）
                 {
                     Token t;
                     while (!stk.is_empty() && (t = stk.pop()).data.op != '(') // 没匹配到对应的括号时
