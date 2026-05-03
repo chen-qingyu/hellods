@@ -9,6 +9,7 @@
 #define DETAIL_HPP
 
 #include <algorithm>  // std::copy
+#include <cassert>    // assert
 #include <climits>    // INT_MAX
 #include <cmath>      // std::abs
 #include <concepts>   // std::convertible_to std::copyable std::default_initializable std::predicate

@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "tool.hpp"
 
 #include "../sources/Graph/MatrixGraph.hpp"
