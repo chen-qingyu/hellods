@@ -88,18 +88,15 @@ public:
         }
 
         // copy raw data to temporary arrays, sort, then compare element by element
-        T* this_data = new T[list_.size_];
-        std::copy(list_.data_, list_.data_ + list_.size_, this_data);
-        std::sort(this_data, this_data + list_.size_, Cmp{});
+        auto this_data = std::make_unique<T[]>(list_.size_);
+        std::copy(list_.data_, list_.data_ + list_.size_, this_data.get());
+        std::sort(this_data.get(), this_data.get() + list_.size_, Cmp{});
 
-        T* that_data = new T[that.list_.size_];
-        std::copy(that.list_.data_, that.list_.data_ + that.list_.size_, that_data);
-        std::sort(that_data, that_data + that.list_.size_, Cmp{});
+        auto that_data = std::make_unique<T[]>(that.list_.size_);
+        std::copy(that.list_.data_, that.list_.data_ + that.list_.size_, that_data.get());
+        std::sort(that_data.get(), that_data.get() + that.list_.size_, Cmp{});
 
-        bool equal = std::equal(this_data, this_data + list_.size_, that_data);
-        delete[] this_data;
-        delete[] that_data;
-        return equal;
+        return std::equal(this_data.get(), this_data.get() + list_.size_, that_data.get());
     }
 
     /*
