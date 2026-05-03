@@ -107,6 +107,9 @@ protected:
     // Pointer to the header (rank = -1).
     Node* header_;
 
+    // Pointer to the tail (last element, rank = size - 1), nullptr if empty.
+    Node* tail_;
+
     // Clear the stored data.
     void clear_data()
     {
@@ -119,6 +122,7 @@ protected:
 
         size_ = 0;
         header_->succ_ = nullptr;
+        tail_ = nullptr;
     }
 
 public:
@@ -130,6 +134,7 @@ public:
     SinglyLinkedList()
         : size_(0)
         , header_(new Node(T()))
+        , tail_(nullptr)
     {
     }
 
@@ -137,6 +142,7 @@ public:
     SinglyLinkedList(const std::initializer_list<T>& il)
         : size_(int(il.size()))
         , header_(new Node(T()))
+        , tail_(nullptr)
     {
         Node* current = header_;
         for (auto it = il.begin(); it != il.end(); ++it)
@@ -145,12 +151,14 @@ public:
             current->succ_ = node;
             current = node;
         }
+        tail_ = current;
     }
 
     /// Copy constructor.
     SinglyLinkedList(const SinglyLinkedList& that)
         : size_(that.size_)
         , header_(new Node(T()))
+        , tail_(nullptr)
     {
         Node* current = header_;
         for (auto it = that.begin(); it != that.end(); ++it)
@@ -159,15 +167,18 @@ public:
             current->succ_ = node;
             current = node;
         }
+        tail_ = current;
     }
 
     /// Move constructor.
     SinglyLinkedList(SinglyLinkedList&& that)
         : size_(that.size_)
         , header_(that.header_)
+        , tail_(that.tail_)
     {
         that.size_ = 0;
         that.header_ = new Node(T());
+        that.tail_ = nullptr;
     }
 
     SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
@@ -269,7 +280,19 @@ public:
     /// Append the specified element to the list.
     void append(const T& element) override
     {
-        insert(size_, element);
+        detail::check_full(size_, MAX_CAPACITY);
+
+        auto node = new Node(element);
+        if (tail_ == nullptr)
+        {
+            header_->succ_ = node;
+        }
+        else
+        {
+            tail_->succ_ = node;
+        }
+        tail_ = node;
+        ++size_;
     }
 
     /// Insert the specified element at the specified position in the list.
@@ -289,6 +312,12 @@ public:
         // insert
         auto node = new Node(element, current->succ_);
         current->succ_ = node;
+
+        // if inserted at the end, update tail
+        if (index == size_)
+        {
+            tail_ = node;
+        }
 
         // resize
         ++size_;
@@ -315,6 +344,12 @@ public:
         auto node = current->succ_;
         current->succ_ = node->succ_;
         delete node;
+
+        // if removed the last element, update tail
+        if (index == size_ - 1)
+        {
+            tail_ = (current == header_) ? nullptr : current;
+        }
 
         // resize
         --size_;
