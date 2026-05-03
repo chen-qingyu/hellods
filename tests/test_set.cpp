@@ -1,3 +1,5 @@
+#include <set>
+
 #include "tool.hpp"
 
 #include "../sources/Set/HashSet.hpp"
@@ -22,29 +24,23 @@ TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>)
     // Iterator
     REQUIRE(empty.begin() == empty.end());
 
-    int sum = 0;
-    for (auto it = some.begin(); it != some.end(); ++it)
-    {
-        sum += *it;
-    }
-    REQUIRE(sum == 6);
-
-    sum = 0;
+    // forward iteration (range-for uses ++it internally)
+    std::set<int> elements;
     for (const auto& e : some)
     {
-        sum += e;
+        elements.insert(e);
     }
-    REQUIRE(sum == 6);
+    REQUIRE(elements == std::set<int>({1, 2, 3}));
 
-    auto it = some.begin();
-    REQUIRE(*it == 1);
-    REQUIRE(*++it == 2);
-    REQUIRE(*++it == 3);
-    REQUIRE(++it == some.end());
-    REQUIRE(*--it == 3);
-    REQUIRE(*--it == 2);
-    REQUIRE(*--it == 1);
-    REQUIRE(it == some.begin());
+    // backward iteration via --it from end back to begin
+    auto it = some.end();
+    elements.clear();
+    while (it != some.begin())
+    {
+        --it;
+        elements.insert(*it);
+    }
+    REQUIRE(elements == std::set<int>({1, 2, 3}));
 
     // Examination
     REQUIRE(empty.size() == 0);

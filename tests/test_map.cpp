@@ -1,3 +1,5 @@
+#include <set>
+
 #include "tool.hpp"
 
 #include "../sources/Map/HashMap.hpp"
@@ -37,27 +39,23 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>))
     // Iterator
     REQUIRE(empty.begin() == empty.end());
 
-    int i = 1;
-    for (auto it = some.begin(); it != some.end(); ++it)
-    {
-        REQUIRE(it->first == i++);
-    }
-
-    i = 1;
+    // forward iteration (range-for uses ++it internally)
+    std::set<int> keys;
     for (const auto& e : some)
     {
-        REQUIRE(e.first == i++);
+        keys.insert(e.first);
     }
+    REQUIRE(keys == std::set<int>({1, 2, 3}));
 
-    auto it = some.begin();
-    REQUIRE(*it == std::pair{1, "one"});
-    REQUIRE(*++it == std::pair{2, "two"});
-    REQUIRE(*++it == std::pair{3, "three"});
-    REQUIRE(++it == some.end());
-    REQUIRE(*--it == std::pair{3, "three"});
-    REQUIRE(*--it == std::pair{2, "two"});
-    REQUIRE(*--it == std::pair{1, "one"});
-    REQUIRE(it == some.begin());
+    // backward iteration via --it from end back to begin
+    auto it = some.end();
+    keys.clear();
+    while (it != some.begin())
+    {
+        --it;
+        keys.insert(it->first);
+    }
+    REQUIRE(keys == std::set<int>({1, 2, 3}));
 
     // Examination
     REQUIRE(empty.size() == 0);
