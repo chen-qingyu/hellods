@@ -27,14 +27,11 @@ static bool check_parentheses(const std::string& expr)
         }
         else if (c == ')')
         {
-            if (stk.top() == '(')
+            if (stk.is_empty() || stk.top() != '(')
             {
-                stk.pop();
+                return false; // mismatch: no matching '('
             }
-            else // mismatch
-            {
-                return false;
-            }
+            stk.pop();
         }
     }
     return stk.is_empty();
