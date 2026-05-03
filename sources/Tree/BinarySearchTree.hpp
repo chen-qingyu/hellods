@@ -77,6 +77,15 @@ protected:
     };
 
 public:
+    /// Traverse option.
+    enum TraverseOption
+    {
+        PreOrder,
+        InOrder,
+        PostOrder,
+        LevelOrder
+    };
+
     /// Tree iterator class.
     ///
     /// Walk the tree in ascending order. This means that begin() is the smallest element.
@@ -219,8 +228,6 @@ protected:
             delete node;
         }
     }
-
-    enum TraverseOption;
 
     // Traverse the tree in specified order.
     template <typename F>
@@ -473,15 +480,6 @@ public:
         }
         return current->data_;
     }
-
-    /// Traverse option.
-    enum TraverseOption
-    {
-        PreOrder,
-        InOrder,
-        PostOrder,
-        LevelOrder
-    };
 
     /// Traverse the tree.
     template <typename F>

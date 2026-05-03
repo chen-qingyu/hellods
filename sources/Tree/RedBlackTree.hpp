@@ -17,12 +17,11 @@ namespace hellods
 template <detail::OrderedElement T>
 class RedBlackTree : public BinarySearchTree<T>
 {
-    using BinarySearchTree<T>::Node;
+protected:
+    using typename BinarySearchTree<T>::Node;
     using BinarySearchTree<T>::size_;
     using BinarySearchTree<T>::end_;
     using BinarySearchTree<T>::root_;
-
-protected:
     using BinarySearchTree<T>::find_min;
 
     // Check whether the node is red.

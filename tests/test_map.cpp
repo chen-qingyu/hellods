@@ -65,7 +65,7 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>))
     REQUIRE(some.is_empty() == false);
 
     REQUIRE(empty.find(1) == empty.end());
-    REQUIRE(*some.find(2) == std::pair{2, "two"});
+    REQUIRE(*some.find(2) == std::pair<const int, std::string>{2, "two"});
     REQUIRE(some.find(4) == some.end());
 
     REQUIRE(empty.contains(1) == false);
