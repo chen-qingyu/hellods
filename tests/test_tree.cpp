@@ -1,5 +1,6 @@
 #include "tool.hpp"
 
+#include "../sources/Tree/AVLTree.hpp"
 #include "../sources/Tree/BinarySearchTree.hpp"
 #include "../sources/Tree/RedBlackTree.hpp"
 
@@ -87,7 +88,89 @@ public:
     }
 };
 
-TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>)
+class InspectableAVLTree : public AVLTree<int>
+{
+    using Node = typename BinarySearchTree<int>::Node;
+    using BinarySearchTree<int>::end_;
+    using BinarySearchTree<int>::root_;
+
+    bool verify_balance(Node* node) const
+    {
+        if (node == nullptr)
+        {
+            return true;
+        }
+
+        // Check parent pointers
+        if (node->left_ != nullptr && node->left_->parent_ != node)
+        {
+            return false;
+        }
+        if (node->right_ != nullptr && node->right_->parent_ != node)
+        {
+            return false;
+        }
+
+        // Check height consistency
+        int left_h = node->left_ == nullptr ? 0 : node->left_->height_;
+        int right_h = node->right_ == nullptr ? 0 : node->right_->height_;
+        int expected = 1 + std::max(left_h, right_h);
+        if (node->height_ != expected)
+        {
+            return false;
+        }
+
+        // Check balance factor
+        int bf = left_h - right_h;
+        if (bf < -1 || bf > 1)
+        {
+            return false;
+        }
+
+        return verify_balance(node->left_) && verify_balance(node->right_);
+    }
+
+    bool verify_order() const
+    {
+        auto it = begin();
+        if (it == end())
+        {
+            return true;
+        }
+
+        int count = 1;
+        int previous = *it;
+        for (++it; it != end(); ++it)
+        {
+            if (!(previous < *it))
+            {
+                return false;
+            }
+            previous = *it;
+            count++;
+        }
+        return count == size();
+    }
+
+public:
+    using AVLTree<int>::AVLTree;
+
+    bool verify_invariants() const
+    {
+        if (root_ == nullptr)
+        {
+            return true;
+        }
+        if (root_->parent_ != end_)
+        {
+            return false;
+        }
+
+        return verify_balance(root_) && verify_order();
+    }
+};
+
+TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, AVLTree<int>)
 {
     using Tree = TestType;
 
@@ -226,6 +309,10 @@ TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>)
     {
         REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
     }
+    else if constexpr (std::is_same<Tree, AVLTree<int>>::value)
+    {
+        REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
+    }
     else
     {
         FAIL();
@@ -233,7 +320,7 @@ TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>)
     oss.str("");
 }
 
-TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqLtType>, RedBlackTree<EqLtType>)
+TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqLtType>, RedBlackTree<EqLtType>, AVLTree<EqLtType>)
 {
     using Tree = TestType;
 
@@ -303,5 +390,91 @@ TEST_CASE("RedBlackTree deletion regressions preserve invariants", "[tree]")
         }
 
         REQUIRE(tree.is_empty() == true);
+    }
+}
+
+TEST_CASE("AVLTree keeps balanced after mixed operations", "[tree]")
+{
+    InspectableAVLTree tree;
+
+    const int insertions[] = {10, 20, 30, 15, 25, 5, 1, 50, 60, 55, 52, 58, 40, 45, 42, 41};
+    int expected_size = 0;
+
+    for (const int value : insertions)
+    {
+        REQUIRE(tree.insert(value) == true);
+        expected_size++;
+        REQUIRE(tree.size() == expected_size);
+        REQUIRE(tree.verify_invariants() == true);
+    }
+
+    REQUIRE(tree.insert(25) == false);
+    REQUIRE(tree.size() == expected_size);
+    REQUIRE(tree.verify_invariants() == true);
+
+    const int removals[] = {1, 5, 50, 55, 20, 40, 10, 30, 60, 58, 52, 42, 41, 45, 25, 15};
+    for (const int value : removals)
+    {
+        REQUIRE(tree.remove(value) == true);
+        expected_size--;
+        REQUIRE(tree.size() == expected_size);
+        REQUIRE(tree.verify_invariants() == true);
+    }
+
+    REQUIRE(tree.is_empty() == true);
+    REQUIRE(tree.verify_invariants() == true);
+}
+
+TEST_CASE("AVLTree insertion and removal stress test", "[tree]")
+{
+    InspectableAVLTree tree;
+
+    SECTION("Ascending insertion (worst case for BST)")
+    {
+        for (int i = 0; i < 100; ++i)
+        {
+            REQUIRE(tree.insert(i) == true);
+            REQUIRE(tree.verify_invariants() == true);
+        }
+        REQUIRE(tree.size() == 100);
+
+        for (int i = 0; i < 100; ++i)
+        {
+            REQUIRE(tree.remove(i) == true);
+            REQUIRE(tree.verify_invariants() == true);
+        }
+        REQUIRE(tree.is_empty() == true);
+    }
+
+    SECTION("Descending insertion (worst case for BST)")
+    {
+        for (int i = 99; i >= 0; --i)
+        {
+            REQUIRE(tree.insert(i) == true);
+            REQUIRE(tree.verify_invariants() == true);
+        }
+        REQUIRE(tree.size() == 100);
+
+        for (int i = 99; i >= 0; --i)
+        {
+            REQUIRE(tree.remove(i) == true);
+            REQUIRE(tree.verify_invariants() == true);
+        }
+        REQUIRE(tree.is_empty() == true);
+    }
+
+    SECTION("Alternating insertion")
+    {
+        for (int i = 0; i < 50; ++i)
+        {
+            REQUIRE(tree.insert(i) == true);
+            REQUIRE(tree.insert(99 - i) == true);
+            REQUIRE(tree.verify_invariants() == true);
+        }
+        REQUIRE(tree.size() == 100);
+
+        tree.clear();
+        REQUIRE(tree.is_empty() == true);
+        REQUIRE(tree.verify_invariants() == true);
     }
 }

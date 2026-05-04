@@ -38,13 +38,17 @@ protected:
         // Color of node, for red-black tree.
         bool red_;
 
+        // Height of node, for AVL tree (leaf height = 1).
+        int height_;
+
         // Create a node with given element.
-        Node(const T& data, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr, bool red = true)
+        Node(const T& data, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr, bool red = true, int height = 1)
             : data_(data)
             , parent_(parent)
             , left_(left)
             , right_(right)
             , red_(red)
+            , height_(height)
         {
         }
 
