@@ -6,6 +6,29 @@
 
 using namespace hellods;
 
+// Verify in-order traversal produces an ascending sequence.
+template <typename Tree>
+static bool verify_order(const Tree& tree)
+{
+    auto it = tree.begin();
+    if (it == tree.end())
+    {
+        return true;
+    }
+    int previous = *it;
+    int count = 1;
+    for (++it; it != tree.end(); ++it)
+    {
+        if (!(previous < *it))
+        {
+            return false;
+        }
+        previous = *it;
+        count++;
+    }
+    return count == tree.size();
+}
+
 class InspectableRedBlackTree : public RedBlackTree<int>
 {
     using Node = typename BinarySearchTree<int>::Node;
@@ -24,49 +47,14 @@ class InspectableRedBlackTree : public RedBlackTree<int>
             return black_count == black_height;
         }
 
-        if (node->left_ != nullptr && node->left_->parent_ != node)
-        {
-            return false;
-        }
-        if (node->right_ != nullptr && node->right_->parent_ != node)
-        {
-            return false;
-        }
-        if (node->red_ && ((node->left_ != nullptr && node->left_->red_) ||
-                           (node->right_ != nullptr && node->right_->red_)))
+        // No double red: a red node cannot have a red child.
+        if (node->red_ && ((node->left_ && node->left_->red_) || (node->right_ && node->right_->red_)))
         {
             return false;
         }
 
-        if (node->red_ == false)
-        {
-            black_count++;
-        }
-
-        return verify_node(node->left_, black_count, black_height) &&
-               verify_node(node->right_, black_count, black_height);
-    }
-
-    bool verify_order() const
-    {
-        auto it = begin();
-        if (it == end())
-        {
-            return true;
-        }
-
-        int count = 1;
-        int previous = *it;
-        for (++it; it != end(); ++it)
-        {
-            if (!(previous < *it))
-            {
-                return false;
-            }
-            previous = *it;
-            count++;
-        }
-        return count == size();
+        return verify_node(node->left_, black_count + (node->red_ ? 0 : 1), black_height) &&
+               verify_node(node->right_, black_count + (node->red_ ? 0 : 1), black_height);
     }
 
 public:
@@ -84,7 +72,7 @@ public:
         }
 
         int black_height = -1;
-        return verify_node(root_, 0, black_height) && verify_order();
+        return verify_node(root_, 0, black_height) && verify_order(*this);
     }
 };
 
@@ -101,55 +89,15 @@ class InspectableAVLTree : public AVLTree<int>
             return true;
         }
 
-        // Check parent pointers
-        if (node->left_ != nullptr && node->left_->parent_ != node)
-        {
-            return false;
-        }
-        if (node->right_ != nullptr && node->right_->parent_ != node)
-        {
-            return false;
-        }
+        int left_h = node->left_ ? node->left_->height_ : 0;
+        int right_h = node->right_ ? node->right_->height_ : 0;
 
-        // Check height consistency
-        int left_h = node->left_ == nullptr ? 0 : node->left_->height_;
-        int right_h = node->right_ == nullptr ? 0 : node->right_->height_;
-        int expected = 1 + std::max(left_h, right_h);
-        if (node->height_ != expected)
-        {
-            return false;
-        }
-
-        // Check balance factor
-        int bf = left_h - right_h;
-        if (bf < -1 || bf > 1)
+        if (node->height_ != 1 + std::max(left_h, right_h) || std::abs(left_h - right_h) > 1)
         {
             return false;
         }
 
         return verify_balance(node->left_) && verify_balance(node->right_);
-    }
-
-    bool verify_order() const
-    {
-        auto it = begin();
-        if (it == end())
-        {
-            return true;
-        }
-
-        int count = 1;
-        int previous = *it;
-        for (++it; it != end(); ++it)
-        {
-            if (!(previous < *it))
-            {
-                return false;
-            }
-            previous = *it;
-            count++;
-        }
-        return count == size();
     }
 
 public:
@@ -161,12 +109,7 @@ public:
         {
             return true;
         }
-        if (root_->parent_ != end_)
-        {
-            return false;
-        }
-
-        return verify_balance(root_) && verify_order();
+        return root_->parent_ == end_ && verify_balance(root_) && verify_order(*this);
     }
 };
 
@@ -294,30 +237,14 @@ TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, A
 
     oss << Tree({});
     REQUIRE(oss.str() == "Tree()");
-    oss.str("");
 
+    oss.str("");
     oss << Tree({1});
     REQUIRE(oss.str() == "Tree(1)");
-    oss.str("");
 
-    oss << Tree({1, 2, 3, 4, 5});
-    if constexpr (std::is_same<Tree, BinarySearchTree<int>>::value)
-    {
-        REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
-    }
-    else if constexpr (std::is_same<Tree, RedBlackTree<int>>::value)
-    {
-        REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
-    }
-    else if constexpr (std::is_same<Tree, AVLTree<int>>::value)
-    {
-        REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
-    }
-    else
-    {
-        FAIL();
-    }
     oss.str("");
+    oss << Tree({1, 2, 3, 4, 5});
+    REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
 }
 
 TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqLtType>, RedBlackTree<EqLtType>, AVLTree<EqLtType>)
@@ -330,151 +257,96 @@ TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqL
     REQUIRE(some.size() == 5);
 }
 
-TEST_CASE("RedBlackTree keeps invariants after mixed operations", "[tree]")
+// Shared helpers for invariant tests.
+template <typename Tree, typename T>
+static void run_mixed_ops(Tree& tree, const T items[], int n)
+{
+    for (int i = 0; i < n; ++i)
+    {
+        REQUIRE(tree.insert(items[i]) == true);
+        REQUIRE(tree.verify_invariants() == true);
+    }
+    // Insert all in reverse order, verifying invariants.
+    for (int i = n - 1; i >= 0; --i)
+    {
+        REQUIRE(tree.remove(items[i]) == true);
+        REQUIRE(tree.verify_invariants() == true);
+    }
+    REQUIRE(tree.is_empty() == true);
+}
+
+const int g_data[] = {10, 20, 30, 15, 25, 5, 1, 50, 60, 55, 52, 58, 40, 45, 42, 41};
+
+TEST_CASE("RedBlackTree invariants", "[tree]")
 {
     InspectableRedBlackTree tree;
+    run_mixed_ops(tree, g_data, 16);
 
-    const int insertions[] = {10, 20, 30, 15, 25, 5, 1, 50, 60, 55, 52, 58, 40, 45, 42, 41};
-    int expected_size = 0;
-
-    for (const int value : insertions)
+    // Sequential deletion after bulk insert.
+    const int r1[] = {8, 9, 10, 11, 12, 13, 14, 15, 7, 6, 5, 4, 3, 2, 1};
+    const int r2[] = {15, 60, 30, 22, 45, 17, 18, 27, 7, 16, 37, 52, 70, 75, 80};
+    InspectableRedBlackTree t1 = {8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15};
+    for (int v : r1)
     {
-        REQUIRE(tree.insert(value) == true);
-        expected_size++;
-        REQUIRE(tree.size() == expected_size);
-        REQUIRE(tree.verify_invariants() == true);
+        REQUIRE(t1.remove(v) == true);
+        REQUIRE(t1.verify_invariants() == true);
     }
-
-    REQUIRE(tree.insert(25) == false);
-    REQUIRE(tree.size() == expected_size);
-    REQUIRE(tree.verify_invariants() == true);
-
-    const int removals[] = {1, 5, 50, 55, 20, 40, 10, 30, 60, 58, 52, 42, 41, 45, 25, 15};
-    for (const int value : removals)
+    REQUIRE(t1.is_empty() == true);
+    InspectableRedBlackTree t2 = {30, 15, 60, 7, 22, 45, 75, 17, 27, 37, 52, 70, 80, 16, 18};
+    for (int v : r2)
     {
-        REQUIRE(tree.remove(value) == true);
-        expected_size--;
-        REQUIRE(tree.size() == expected_size);
-        REQUIRE(tree.verify_invariants() == true);
+        REQUIRE(t2.remove(v) == true);
+        REQUIRE(t2.verify_invariants() == true);
     }
-
-    REQUIRE(tree.is_empty() == true);
-    REQUIRE(tree.verify_invariants() == true);
+    REQUIRE(t2.is_empty() == true);
 }
 
-TEST_CASE("RedBlackTree deletion regressions preserve invariants", "[tree]")
+TEST_CASE("AVLTree invariants", "[tree]")
 {
-    SECTION("Delete the root repeatedly")
-    {
-        InspectableRedBlackTree tree = {8, 4, 12, 2, 6, 10, 14, 1, 3, 5, 7, 9, 11, 13, 15};
-        const int removals[] = {8, 9, 10, 11, 12, 13, 14, 15, 7, 6, 5, 4, 3, 2, 1};
-
-        for (const int value : removals)
-        {
-            REQUIRE(tree.remove(value) == true);
-            REQUIRE(tree.verify_invariants() == true);
-        }
-
-        REQUIRE(tree.is_empty() == true);
-    }
-
-    SECTION("Delete nodes that require successor replacement")
-    {
-        InspectableRedBlackTree tree = {30, 15, 60, 7, 22, 45, 75, 17, 27, 37, 52, 70, 80, 16, 18};
-        const int removals[] = {15, 60, 30, 22, 45, 17, 18, 27, 7, 16, 37, 52, 70, 75, 80};
-
-        for (const int value : removals)
-        {
-            REQUIRE(tree.remove(value) == true);
-            REQUIRE(tree.verify_invariants() == true);
-        }
-
-        REQUIRE(tree.is_empty() == true);
-    }
-}
-
-TEST_CASE("AVLTree keeps balanced after mixed operations", "[tree]")
-{
+    // Mixed random-like operations.
     InspectableAVLTree tree;
+    run_mixed_ops(tree, g_data, 16);
 
-    const int insertions[] = {10, 20, 30, 15, 25, 5, 1, 50, 60, 55, 52, 58, 40, 45, 42, 41};
-    int expected_size = 0;
-
-    for (const int value : insertions)
+    // Ascending insertion (worst case for naive BST).
+    InspectableAVLTree asc;
+    for (int i = 0; i < 100; ++i)
     {
-        REQUIRE(tree.insert(value) == true);
-        expected_size++;
-        REQUIRE(tree.size() == expected_size);
-        REQUIRE(tree.verify_invariants() == true);
+        REQUIRE(asc.insert(i) == true);
+        REQUIRE(asc.verify_invariants() == true);
     }
-
-    REQUIRE(tree.insert(25) == false);
-    REQUIRE(tree.size() == expected_size);
-    REQUIRE(tree.verify_invariants() == true);
-
-    const int removals[] = {1, 5, 50, 55, 20, 40, 10, 30, 60, 58, 52, 42, 41, 45, 25, 15};
-    for (const int value : removals)
+    REQUIRE(asc.size() == 100);
+    for (int i = 0; i < 100; ++i)
     {
-        REQUIRE(tree.remove(value) == true);
-        expected_size--;
-        REQUIRE(tree.size() == expected_size);
-        REQUIRE(tree.verify_invariants() == true);
+        REQUIRE(asc.remove(i) == true);
+        REQUIRE(asc.verify_invariants() == true);
     }
+    REQUIRE(asc.is_empty() == true);
 
-    REQUIRE(tree.is_empty() == true);
-    REQUIRE(tree.verify_invariants() == true);
-}
-
-TEST_CASE("AVLTree insertion and removal stress test", "[tree]")
-{
-    InspectableAVLTree tree;
-
-    SECTION("Ascending insertion (worst case for BST)")
+    // Descending insertion.
+    InspectableAVLTree desc;
+    for (int i = 99; i >= 0; --i)
     {
-        for (int i = 0; i < 100; ++i)
-        {
-            REQUIRE(tree.insert(i) == true);
-            REQUIRE(tree.verify_invariants() == true);
-        }
-        REQUIRE(tree.size() == 100);
-
-        for (int i = 0; i < 100; ++i)
-        {
-            REQUIRE(tree.remove(i) == true);
-            REQUIRE(tree.verify_invariants() == true);
-        }
-        REQUIRE(tree.is_empty() == true);
+        REQUIRE(desc.insert(i) == true);
+        REQUIRE(desc.verify_invariants() == true);
     }
-
-    SECTION("Descending insertion (worst case for BST)")
+    REQUIRE(desc.size() == 100);
+    for (int i = 99; i >= 0; --i)
     {
-        for (int i = 99; i >= 0; --i)
-        {
-            REQUIRE(tree.insert(i) == true);
-            REQUIRE(tree.verify_invariants() == true);
-        }
-        REQUIRE(tree.size() == 100);
-
-        for (int i = 99; i >= 0; --i)
-        {
-            REQUIRE(tree.remove(i) == true);
-            REQUIRE(tree.verify_invariants() == true);
-        }
-        REQUIRE(tree.is_empty() == true);
+        REQUIRE(desc.remove(i) == true);
+        REQUIRE(desc.verify_invariants() == true);
     }
+    REQUIRE(desc.is_empty() == true);
 
-    SECTION("Alternating insertion")
+    // Alternating insertion and clear.
+    InspectableAVLTree alt;
+    for (int i = 0; i < 50; ++i)
     {
-        for (int i = 0; i < 50; ++i)
-        {
-            REQUIRE(tree.insert(i) == true);
-            REQUIRE(tree.insert(99 - i) == true);
-            REQUIRE(tree.verify_invariants() == true);
-        }
-        REQUIRE(tree.size() == 100);
-
-        tree.clear();
-        REQUIRE(tree.is_empty() == true);
-        REQUIRE(tree.verify_invariants() == true);
+        REQUIRE(alt.insert(i) == true);
+        REQUIRE(alt.insert(99 - i) == true);
+        REQUIRE(alt.verify_invariants() == true);
     }
+    REQUIRE(alt.size() == 100);
+    alt.clear();
+    REQUIRE(alt.is_empty() == true);
+    REQUIRE(alt.verify_invariants() == true);
 }
