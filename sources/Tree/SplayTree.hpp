@@ -30,9 +30,6 @@ protected:
     using RedBlackTree<T>::size_;
     using RedBlackTree<T>::end_;
     using RedBlackTree<T>::root_;
-    using RedBlackTree<T>::slot;
-    using RedBlackTree<T>::rotate_at;
-
     using typename BinarySearchTree<T>::Iterator;
 
     // Splay the given node to the root of the tree.
@@ -48,7 +45,7 @@ protected:
             if (g == end_)
             {
                 // Zig: node's parent is the root.
-                rotate_at(p, node_on_right);
+                this->rotate_at(p, node_on_right);
             }
             else
             {
@@ -57,14 +54,14 @@ protected:
                 if (node_on_right == p_on_right)
                 {
                     // Zig-Zig: node and parent are both left (or both right) children.
-                    rotate_at(g, p_on_right);
-                    rotate_at(p, node_on_right);
+                    this->rotate_at(g, p_on_right);
+                    this->rotate_at(p, node_on_right);
                 }
                 else
                 {
                     // Zig-Zag: node and parent are in opposite directions.
-                    rotate_at(p, node_on_right);
-                    rotate_at(g, p_on_right);
+                    this->rotate_at(p, node_on_right);
+                    this->rotate_at(g, p_on_right);
                 }
             }
         }
@@ -143,8 +140,6 @@ public:
      * Examination
      */
 
-    using BinarySearchTree<T>::end;
-
     /// Return an iterator to the specified element, or end() if the tree does
     /// not contain the element. The accessed element (or the last accessed node)
     /// is splayed to the root.
@@ -152,7 +147,7 @@ public:
     {
         if (root_ == nullptr)
         {
-            return end();
+            return this->end();
         }
 
         Node* node = root_;
@@ -181,14 +176,14 @@ public:
             splay(last);
         }
 
-        return end();
+        return this->end();
     }
 
     /// Determine whether an element is in the tree.
     /// The accessed element (or the last accessed node) is splayed to the root.
     bool contains(const T& element)
     {
-        return find(element) != end();
+        return find(element) != this->end();
     }
 
     /*
