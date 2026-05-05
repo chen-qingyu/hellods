@@ -19,66 +19,16 @@ template <typename K, detail::StoredElement V, typename Hash = std::hash<K>, typ
 class HashMap : public detail::Container
 {
 protected:
-    // Hash map pair.
-    struct Pair
+    // State of the slot: 0 = empty, 1 = occupied, 2 = deleted
+    enum State
     {
-        using ValueType = std::pair<const K, V>;
-
-        // The key-value pair stored in this slot.
-        ValueType* pair_;
-
-        // State of the key-value pair: 0 = empty, 1 = occupied, 2 = deleted
-        enum State
-        {
-            EMPTY = 0,
-            OCCUPIED = 1,
-            DELETED = 2
-        } state_;
-
-        Pair()
-            : pair_(nullptr)
-            , state_(EMPTY)
-        {
-        }
-
-        ~Pair()
-        {
-            clear();
-        }
-
-        const K& key() const
-        {
-            return pair_->first;
-        }
-
-        V& value()
-        {
-            return pair_->second;
-        }
-
-        const V& value() const
-        {
-            return pair_->second;
-        }
-
-        void reset(const K& key, const V& value)
-        {
-            clear();
-            pair_ = new ValueType(key, value);
-            state_ = OCCUPIED;
-        }
-
-        void clear()
-        {
-            if (pair_ != nullptr)
-            {
-                delete pair_;
-                pair_ = nullptr;
-            }
-        }
+        EMPTY = 0,
+        OCCUPIED = 1,
+        DELETED = 2
     };
 
-protected:
+    using Slot = std::pair<detail::MapEntry<K, V>, State>;
+
     // Initial capacity for hash map.
     static const int INIT_PRIME_CAPACITY = 7;
 
@@ -91,8 +41,8 @@ protected:
     // Available capacity.
     int capacity_;
 
-    // Pointer to the pairs.
-    Pair* data_;
+    // Pointer to the slots.
+    Slot* data_;
 
 public:
     /// Map iterator class.
@@ -107,24 +57,24 @@ public:
         friend class HashMap;
 
     protected:
-        using PairPtr = std::conditional_t<Const, const Pair*, Pair*>;
-        using Value = std::conditional_t<Const, const std::pair<const K, V>, std::pair<const K, V>>;
+        using SlotPtr = std::conditional_t<Const, const Slot*, Slot*>;
+        using Entry = std::conditional_t<Const, const detail::MapEntry<K, V>, detail::MapEntry<K, V>>;
 
-        PairPtr current_;
+        SlotPtr current_;
 
         // Begin of the buffer.
-        PairPtr buffer_begin_;
+        SlotPtr buffer_begin_;
 
         // End of the buffer.
-        PairPtr buffer_end_;
+        SlotPtr buffer_end_;
 
         // Constructor.
-        BasicIterator(PairPtr current, PairPtr begin, PairPtr end)
+        BasicIterator(SlotPtr current, SlotPtr begin, SlotPtr end)
             : current_(current)
             , buffer_begin_(begin)
             , buffer_end_(end)
         {
-            while (current_ != buffer_end_ && current_->state_ != Pair::OCCUPIED)
+            while (current_ != buffer_end_ && current_->second != OCCUPIED)
             {
                 ++current_;
             }
@@ -132,10 +82,10 @@ public:
 
     public:
         using iterator_category = std::input_iterator_tag;
-        using value_type = std::pair<const K, V>;
+        using value_type = detail::MapEntry<K, V>;
         using difference_type = int;
-        using pointer = Value*;
-        using reference = Value&;
+        using pointer = Entry*;
+        using reference = Entry&;
 
         bool operator==(const BasicIterator& that) const
         {
@@ -144,17 +94,17 @@ public:
 
         reference operator*() const
         {
-            return *current_->pair_;
+            return current_->first;
         }
 
         pointer operator->() const
         {
-            return &(operator*());
+            return &current_->first;
         }
 
         BasicIterator& operator++()
         {
-            while (++current_ != buffer_end_ && current_->state_ != Pair::OCCUPIED)
+            while (++current_ != buffer_end_ && current_->second != OCCUPIED)
             {
             }
             return *this;
@@ -169,7 +119,7 @@ public:
 
         BasicIterator& operator--()
         {
-            while (--current_ != buffer_begin_ && current_->state_ != Pair::OCCUPIED)
+            while (--current_ != buffer_begin_ && current_->second != OCCUPIED)
             {
             }
             return *this;
@@ -194,11 +144,11 @@ protected:
         int conflict_cnt = 0;
         int first_deleted = -1;
 
-        while (data_[new_pos].state_ != Pair::EMPTY)
+        while (data_[new_pos].second != EMPTY)
         {
-            if (data_[new_pos].state_ == Pair::OCCUPIED)
+            if (data_[new_pos].second == OCCUPIED)
             {
-                if (Eq()(data_[new_pos].key(), key))
+                if (Eq()(data_[new_pos].first.key(), key))
                 {
                     return new_pos;
                 }
@@ -273,17 +223,13 @@ protected:
     void expand_capacity()
     {
         int old_capacity = capacity_;
-        Pair* old_data = data_;
+        Slot* old_data = data_;
 
         // expand to the next prime greater than twice the current capacity
         int new_capacity = next_prime(capacity_ * 2);
 
-        // create new pairs
-        Pair* new_data = new Pair[new_capacity];
-        for (int i = 0; i < new_capacity; i++)
-        {
-            new_data[i].state_ = Pair::EMPTY;
-        }
+        // create new slots (value-initialized: state zeroed to EMPTY)
+        Slot* new_data = new Slot[new_capacity]();
 
         // move elements (rehash)
         data_ = new_data;
@@ -291,13 +237,13 @@ protected:
         size_ = 0;
         for (int i = 0; i < old_capacity; i++)
         {
-            if (old_data[i].state_ == Pair::OCCUPIED)
+            if (old_data[i].second == OCCUPIED)
             {
-                insert(old_data[i].key(), old_data[i].value());
+                insert(old_data[i].first.key(), old_data[i].first.value());
             }
         }
 
-        // free old pairs
+        // free old slots
         delete[] old_data;
     }
 
@@ -310,12 +256,8 @@ public:
     HashMap()
         : size_(0)
         , capacity_(INIT_PRIME_CAPACITY)
-        , data_(new Pair[capacity_])
+        , data_(new Slot[capacity_]())
     {
-        for (int i = 0; i < capacity_; i++)
-        {
-            data_[i].state_ = Pair::EMPTY;
-        }
     }
 
     /// Create a map based on the given initializer list.
@@ -332,17 +274,13 @@ public:
     HashMap(const HashMap& that)
         : size_(0)
         , capacity_(that.capacity_)
-        , data_(new Pair[capacity_])
+        , data_(new Slot[capacity_]())
     {
-        for (int i = 0; i < capacity_; ++i)
-        {
-            data_[i].state_ = Pair::EMPTY;
-        }
         for (int i = 0; i < that.capacity_; ++i)
         {
-            if (that.data_[i].state_ == Pair::OCCUPIED)
+            if (that.data_[i].second == OCCUPIED)
             {
-                insert(that.data_[i].key(), that.data_[i].value());
+                insert(that.data_[i].first.key(), that.data_[i].first.value());
             }
         }
     }
@@ -355,11 +293,7 @@ public:
     {
         that.size_ = 0;
         that.capacity_ = INIT_PRIME_CAPACITY;
-        that.data_ = new Pair[that.capacity_];
-        for (int i = 0; i < that.capacity_; ++i)
-        {
-            that.data_[i].state_ = Pair::EMPTY;
-        }
+        that.data_ = new Slot[that.capacity_]();
     }
 
     HashMap& operator=(const HashMap&) = delete;
@@ -384,10 +318,10 @@ public:
             return false;
         }
 
-        for (const auto& pair : *this)
+        for (const auto& entry : *this)
         {
-            auto it = that.find(pair.first);
-            if (it == that.end() || pair.second != it->second)
+            auto it = that.find(entry.key());
+            if (it == that.end() || entry.value() != it->value())
             {
                 return false;
             }
@@ -410,7 +344,7 @@ public:
             throw std::runtime_error("Error: The key-value pair does not exist.");
         }
 
-        return data_[pos].value();
+        return data_[pos].first.value();
     }
 
     /// Return the const reference of value for key if key is in the map, else throw exception.
@@ -423,7 +357,7 @@ public:
             throw std::runtime_error("Error: The key-value pair does not exist.");
         }
 
-        return data_[pos].value();
+        return data_[pos].first.value();
     }
 
     /*
@@ -492,12 +426,12 @@ public:
 
         int pos = probe_pos(key, true);
 
-        if (data_[pos].state_ == Pair::OCCUPIED)
+        if (data_[pos].second == OCCUPIED)
         {
             return false;
         }
 
-        data_[pos].reset(key, value);
+        data_[pos] = {{key, value}, OCCUPIED};
 
         size_++;
 
@@ -519,8 +453,7 @@ public:
             return false;
         }
 
-        data_[pos].clear();
-        data_[pos].state_ = Pair::DELETED;
+        data_[pos].second = DELETED;
         size_--;
         return true;
     }
@@ -532,8 +465,7 @@ public:
         {
             for (int i = 0; i < capacity_; ++i)
             {
-                data_[i].clear();
-                data_[i].state_ = Pair::EMPTY;
+                data_[i].second = EMPTY;
             }
             size_ = 0;
         }

@@ -74,11 +74,52 @@ static inline void check_full(int size, int capacity)
     }
 }
 
-// Print function template for std::pair.
+// Internal key-value entry shared by HashMap, TreeMap, etc.
 template <typename K, typename V>
-std::ostream& operator<<(std::ostream& os, const std::pair<K, V>& pair)
+struct MapEntry
 {
-    return os << pair.first << ": " << pair.second;
+    K key_;
+    V value_;
+
+    MapEntry() = default;
+
+    MapEntry(const K& key, const V& value)
+        : key_(key)
+        , value_(value)
+    {
+    }
+
+    const K& key() const
+    {
+        return key_;
+    }
+
+    V& value()
+    {
+        return value_;
+    }
+
+    const V& value() const
+    {
+        return value_;
+    }
+
+    // For tree ordering: compare by key only.
+    bool operator<(const MapEntry& rhs) const
+    {
+        return key_ < rhs.key_;
+    }
+
+    bool operator==(const MapEntry& rhs) const
+    {
+        return key_ == rhs.key_;
+    }
+};
+
+template <typename K, typename V>
+std::ostream& operator<<(std::ostream& os, const MapEntry<K, V>& entry)
+{
+    return os << entry.key() << ": " << entry.value();
 }
 
 // Print helper for range [`first`, `last`).

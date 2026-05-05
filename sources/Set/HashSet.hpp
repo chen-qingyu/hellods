@@ -66,12 +66,12 @@ public:
 
         const T& operator*() const
         {
-            return map_it_->first;
+            return map_it_->key();
         }
 
         const T* operator->() const
         {
-            return &(map_it_->first);
+            return &(map_it_->key());
         }
 
         BasicIterator& operator++()

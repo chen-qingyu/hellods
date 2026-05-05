@@ -44,7 +44,7 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, st
     std::set<int> keys;
     for (const auto& e : some)
     {
-        keys.insert(e.first);
+        keys.insert(e.key());
     }
     REQUIRE(keys == std::set<int>({1, 2, 3}));
 
@@ -54,7 +54,7 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, st
     while (it != some.begin())
     {
         --it;
-        keys.insert(it->first);
+        keys.insert(it->key());
     }
     REQUIRE(keys == std::set<int>({1, 2, 3}));
 
@@ -66,7 +66,8 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, st
     REQUIRE(some.is_empty() == false);
 
     REQUIRE(empty.find(1) == empty.end());
-    REQUIRE(*some.find(2) == std::pair<const int, std::string>{2, "two"});
+    REQUIRE(some.find(2)->key() == 2);
+    REQUIRE(some.find(2)->value() == "two");
     REQUIRE(some.find(4) == some.end());
 
     REQUIRE(empty.contains(1) == false);
