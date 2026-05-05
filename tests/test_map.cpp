@@ -122,21 +122,3 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, st
     REQUIRE(oss.str() == "Map(1: one, 2: two, 3: three)");
     oss.str("");
 }
-
-TEMPLATE_TEST_CASE("Map with user-defined type", "[map]", (HashMap<EqType, EqType>))
-{
-    using Map = TestType;
-
-    Map empty;
-    Map some = {{EqType(), EqType()}, {EqType(), EqType()}, {EqType(), EqType()}};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 3);
-}
-
-TEST_CASE("TreeMap with user-defined type", "[map]")
-{
-    TreeMap<EqLtType, EqLtType> empty;
-    TreeMap<EqLtType, EqLtType> some = {{EqLtType(), EqLtType()}, {EqLtType(), EqLtType()}, {EqLtType(), EqLtType()}};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 3);
-}

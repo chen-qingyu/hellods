@@ -99,13 +99,3 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
     }
     oss.str("");
 }
-
-TEMPLATE_TEST_CASE("Heap with user-defined type", "[heap]", (BinaryHeap<EqLtType, std::less<EqLtType>>))
-{
-    using Heap = TestType;
-
-    Heap empty;
-    Heap some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}

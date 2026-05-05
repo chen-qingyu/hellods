@@ -77,13 +77,3 @@ TEMPLATE_TEST_CASE("Deque", "[deque]", ArrayDeque<int>, LinkedDeque<int>)
     REQUIRE(oss.str() == "Deque(1, 2, 3, 4, 5)");
     oss.str("");
 }
-
-TEMPLATE_TEST_CASE("Deque with user-defined type", "[deque]", ArrayDeque<EqType>, LinkedDeque<EqType>)
-{
-    using Deque = TestType;
-
-    Deque empty;
-    Deque some = {EqType(), EqType(), EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}

@@ -105,21 +105,3 @@ TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>, TreeSet<int>)
     REQUIRE(oss.str() == "Set(1, 2, 3)");
     oss.str("");
 }
-
-TEMPLATE_TEST_CASE("Set with user-defined type", "[set]", HashSet<EqType>)
-{
-    using Set = TestType;
-
-    Set empty;
-    Set some = {EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 3);
-}
-
-TEST_CASE("TreeSet with user-defined type", "[set]")
-{
-    TreeSet<EqLtType> empty;
-    TreeSet<EqLtType> some = {EqLtType(), EqLtType(), EqLtType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 3);
-}

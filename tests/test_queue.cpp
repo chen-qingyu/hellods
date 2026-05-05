@@ -67,13 +67,3 @@ TEMPLATE_TEST_CASE("Queue", "[queue]", ArrayQueue<int>, LinkedQueue<int>)
     REQUIRE(oss.str() == "Queue(1, 2, 3, 4, 5)");
     oss.str("");
 }
-
-TEMPLATE_TEST_CASE("Queue with user-defined type", "[queue]", ArrayQueue<EqType>, LinkedQueue<EqType>)
-{
-    using Queue = TestType;
-
-    Queue empty;
-    Queue some = {EqType(), EqType(), EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}

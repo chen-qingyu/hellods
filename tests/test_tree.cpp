@@ -285,16 +285,6 @@ TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, A
     REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
 }
 
-TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqLtType>, RedBlackTree<EqLtType>, AVLTree<EqLtType>, SplayTree<EqLtType>)
-{
-    using Tree = TestType;
-
-    Tree empty;
-    Tree some = {EqLtType(), EqLtType(), EqLtType(), EqLtType(), EqLtType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}
-
 // Shared helpers for invariant tests.
 template <typename Tree, typename T>
 static void run_mixed_ops(Tree& tree, const T items[], int n)

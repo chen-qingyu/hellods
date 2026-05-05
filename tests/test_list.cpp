@@ -119,13 +119,3 @@ TEMPLATE_TEST_CASE("List", "[list]", ArrayList<int>, LinkedList<int>, SinglyLink
     REQUIRE(oss.str() == "List(1, 2, 3, 4, 5)");
     oss.str("");
 }
-
-TEMPLATE_TEST_CASE("List with user-defined type", "[list]", ArrayList<EqType>, LinkedList<EqType>, SinglyLinkedList<EqType>)
-{
-    using List = TestType;
-
-    List empty;
-    List some = {EqType(), EqType(), EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}

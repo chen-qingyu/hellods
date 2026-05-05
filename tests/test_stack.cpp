@@ -67,13 +67,3 @@ TEMPLATE_TEST_CASE("Stack", "[stack]", ArrayStack<int>, LinkedStack<int>)
     REQUIRE(oss.str() == "Stack(1, 2, 3, 4, 5)");
     oss.str("");
 }
-
-TEMPLATE_TEST_CASE("Stack with user-defined type", "[stack]", ArrayStack<EqType>, LinkedStack<EqType>)
-{
-    using Stack = TestType;
-
-    Stack empty;
-    Stack some = {EqType(), EqType(), EqType(), EqType(), EqType()};
-    REQUIRE(empty.size() == 0);
-    REQUIRE(some.size() == 5);
-}

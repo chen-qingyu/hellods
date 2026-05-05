@@ -23,8 +23,7 @@
 #include "../sources/detail.hpp"
 
 using namespace hellods;
-
-namespace dsd = hellods::detail;
+using namespace hellods::detail;
 
 template <typename T>
 constexpr bool kMoveConstructibleContainer =
@@ -36,7 +35,7 @@ constexpr bool kMoveConstructibleContainer =
 template <typename T>
 constexpr bool kConstBeginReference = std::is_const_v<std::remove_reference_t<decltype(*std::declval<const T&>().begin())>>;
 
-static_assert(std::has_virtual_destructor_v<dsd::Container>);
+static_assert(std::has_virtual_destructor_v<Container>);
 
 static_assert(kMoveConstructibleContainer<ArrayList<int>>);
 static_assert(kMoveConstructibleContainer<LinkedList<int>>);
@@ -57,16 +56,16 @@ static_assert(kMoveConstructibleContainer<MatrixGraph<>>);
 static_assert(kMoveConstructibleContainer<TreeSet<int>>);
 static_assert(kMoveConstructibleContainer<TreeMap<int, int>>);
 
-static_assert(dsd::StoredElement<EqType>);
-static_assert(dsd::LinearElement<EqType>);
-static_assert(!dsd::OrderedElement<EqType>);
-static_assert(dsd::OrderedElement<EqLtType>);
-static_assert(dsd::HashKey<EqType, std::hash<EqType>, std::equal_to<EqType>>);
-static_assert(!dsd::HashKey<EqLtType, std::hash<EqLtType>, std::equal_to<EqLtType>>);
-static_assert(dsd::StoredElement<int>);
+static_assert(StoredElement<EqType>);
+static_assert(LinearElement<EqType>);
+static_assert(!OrderedElement<EqType>);
+static_assert(OrderedElement<EqLtType>);
+static_assert(HashKey<EqType, std::hash<EqType>, std::equal_to<EqType>>);
+static_assert(!HashKey<EqLtType, std::hash<EqLtType>, std::equal_to<EqLtType>>);
+static_assert(StoredElement<int>);
 static_assert(std::equality_comparable<EqType>);
-static_assert(dsd::ComparatorFor<int, std::greater<int>>);
-static_assert(dsd::ComparatorFor<EqLtType, std::less<EqLtType>>);
+static_assert(ComparatorFor<int, std::greater<int>>);
+static_assert(ComparatorFor<EqLtType, std::less<EqLtType>>);
 
 static_assert(kConstBeginReference<ArrayList<int>>);
 static_assert(kConstBeginReference<LinkedList<int>>);
