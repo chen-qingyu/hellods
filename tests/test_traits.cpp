@@ -17,6 +17,7 @@
 #include "../sources/Stack/LinkedStack.hpp"
 #include "../sources/Tree/BinarySearchTree.hpp"
 #include "../sources/Tree/RedBlackTree.hpp"
+#include "../sources/Tree/SplayTree.hpp"
 #include "../sources/detail.hpp"
 
 using namespace hellods;
@@ -49,6 +50,7 @@ static_assert(kMoveConstructibleContainer<HashSet<int>>);
 static_assert(kMoveConstructibleContainer<BinaryHeap<int>>);
 static_assert(kMoveConstructibleContainer<BinarySearchTree<int>>);
 static_assert(kMoveConstructibleContainer<RedBlackTree<int>>);
+static_assert(kMoveConstructibleContainer<SplayTree<int>>);
 static_assert(kMoveConstructibleContainer<MatrixGraph<>>);
 
 static_assert(dsd::StoredElement<EqType>);

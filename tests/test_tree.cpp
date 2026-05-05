@@ -3,6 +3,7 @@
 #include "../sources/Tree/AVLTree.hpp"
 #include "../sources/Tree/BinarySearchTree.hpp"
 #include "../sources/Tree/RedBlackTree.hpp"
+#include "../sources/Tree/SplayTree.hpp"
 
 using namespace hellods;
 
@@ -113,7 +114,27 @@ public:
     }
 };
 
-TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, AVLTree<int>)
+class InspectableSplayTree : public SplayTree<int>
+{
+    using BinarySearchTree<int>::end_;
+    using BinarySearchTree<int>::root_;
+
+public:
+    using SplayTree<int>::SplayTree;
+
+    bool verify_invariants() const
+    {
+        return (root_ == nullptr || root_->parent_ == end_) && verify_order(*this);
+    }
+
+    int root_value() const
+    {
+        REQUIRE(root_ != nullptr);
+        return root_->data_;
+    }
+};
+
+TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, AVLTree<int>, SplayTree<int>)
 {
     using Tree = TestType;
 
@@ -176,21 +197,31 @@ TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, A
     auto action = [&](const auto& e)
     { buf << e << " "; };
 
-    some.traverse(Tree::PreOrder, action);
-    REQUIRE(buf.str() == "3 1 2 5 4 ");
-    buf.str("");
+    if constexpr (std::is_same_v<Tree, SplayTree<int>>)
+    {
+        // SplayTree's shape depends on splay order; only in-order is guaranteed.
+        some.traverse(Tree::InOrder, action);
+        REQUIRE(buf.str() == "1 2 3 4 5 ");
+        buf.str("");
+    }
+    else
+    {
+        some.traverse(Tree::PreOrder, action);
+        REQUIRE(buf.str() == "3 1 2 5 4 ");
+        buf.str("");
 
-    some.traverse(Tree::InOrder, action);
-    REQUIRE(buf.str() == "1 2 3 4 5 ");
-    buf.str("");
+        some.traverse(Tree::InOrder, action);
+        REQUIRE(buf.str() == "1 2 3 4 5 ");
+        buf.str("");
 
-    some.traverse(Tree::PostOrder, action);
-    REQUIRE(buf.str() == "2 1 4 5 3 ");
-    buf.str("");
+        some.traverse(Tree::PostOrder, action);
+        REQUIRE(buf.str() == "2 1 4 5 3 ");
+        buf.str("");
 
-    some.traverse(Tree::LevelOrder, action);
-    REQUIRE(buf.str() == "3 1 5 2 4 ");
-    buf.str("");
+        some.traverse(Tree::LevelOrder, action);
+        REQUIRE(buf.str() == "3 1 5 2 4 ");
+        buf.str("");
+    }
 
     REQUIRE(empty.find(1) == empty.end());
     REQUIRE(*some.find(1) == 1);
@@ -201,7 +232,14 @@ TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, A
     REQUIRE(empty.contains(1) == false);
     REQUIRE(empty.contains(0) == false);
 
-    REQUIRE(some.depth() == 3);
+    if constexpr (std::is_same_v<Tree, SplayTree<int>>)
+    {
+        REQUIRE(some.depth() >= 1);
+    }
+    else
+    {
+        REQUIRE(some.depth() == 3);
+    }
     REQUIRE(empty.depth() == 0);
 
     // Manipulation
@@ -247,7 +285,7 @@ TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, A
     REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
 }
 
-TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqLtType>, RedBlackTree<EqLtType>, AVLTree<EqLtType>)
+TEMPLATE_TEST_CASE("Tree with user-defined type", "[tree]", BinarySearchTree<EqLtType>, RedBlackTree<EqLtType>, AVLTree<EqLtType>, SplayTree<EqLtType>)
 {
     using Tree = TestType;
 
@@ -349,4 +387,61 @@ TEST_CASE("AVLTree invariants", "[tree]")
     alt.clear();
     REQUIRE(alt.is_empty() == true);
     REQUIRE(alt.verify_invariants() == true);
+}
+
+// Splay-specific verification not covered by the template test.
+TEST_CASE("SplayTree specific", "[tree]")
+{
+    InspectableSplayTree some = {3, 1, 5, 2, 4};
+
+    // Verify splay: after find, the accessed element becomes root.
+    some.find(5);
+    REQUIRE(some.root_value() == 5);
+    REQUIRE(some.min() == 1);
+    REQUIRE(some.max() == 5);
+    REQUIRE(some.verify_invariants() == true);
+
+    // Unsuccessful find splays the last accessed node to the root.
+    InspectableSplayTree miss = {10, 20};
+    REQUIRE(miss.find(15) == miss.end());
+    REQUIRE(miss.root_value() == 10);
+    REQUIRE(miss.verify_invariants() == true);
+
+    // Bulk insert + remove (ascending).
+    InspectableSplayTree bulk;
+    for (int i = 0; i < 100; ++i)
+    {
+        REQUIRE(bulk.insert(i) == true);
+        REQUIRE(bulk.root_value() == i);
+        REQUIRE(bulk.verify_invariants() == true);
+    }
+    REQUIRE(bulk.size() == 100);
+    int i = 0;
+    for (auto it = bulk.begin(); it != bulk.end(); ++it)
+    {
+        REQUIRE(*it == i++);
+    }
+    for (int i = 0; i < 100; ++i)
+    {
+        REQUIRE(bulk.remove(i) == true);
+        REQUIRE(bulk.verify_invariants() == true);
+    }
+    REQUIRE(bulk.is_empty() == true);
+
+    // Verify contains also splays.
+    InspectableSplayTree splay_check = {10, 20, 30, 40, 50};
+    REQUIRE(splay_check.contains(50) == true);
+    REQUIRE(splay_check.root_value() == 50);
+    REQUIRE(splay_check.min() == 10);
+    REQUIRE(splay_check.max() == 50);
+    REQUIRE(splay_check.verify_invariants() == true);
+
+    // Removing a node with two children keeps the tree ordered after re-rooting.
+    InspectableSplayTree remove_root = {10, 20, 30};
+    remove_root.find(20);
+    REQUIRE(remove_root.root_value() == 20);
+    REQUIRE(remove_root.remove(20) == true);
+    REQUIRE(remove_root.root_value() == 10);
+    REQUIRE(remove_root.verify_invariants() == true);
+    REQUIRE(remove_root.size() == 2);
 }

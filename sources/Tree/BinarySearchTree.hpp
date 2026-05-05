@@ -370,6 +370,12 @@ protected:
         return node == nullptr ? 0 : 1 + std::max(depth_node(node->left_), depth_node(node->right_));
     }
 
+    // Construct an iterator pointing to the given node.
+    Iterator make_iterator(Node* node) const
+    {
+        return Iterator(node);
+    }
+
 public:
     /*
      * Constructor / Destructor
