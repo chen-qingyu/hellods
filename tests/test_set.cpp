@@ -3,10 +3,11 @@
 #include "tool.hpp"
 
 #include "../sources/Set/HashSet.hpp"
+#include "../sources/Set/TreeSet.hpp"
 
 using namespace hellods;
 
-TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>)
+TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>, TreeSet<int>)
 {
     using Set = TestType;
 
@@ -111,6 +112,14 @@ TEMPLATE_TEST_CASE("Set with user-defined type", "[set]", HashSet<EqType>)
 
     Set empty;
     Set some = {EqType(), EqType(), EqType()};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 3);
+}
+
+TEST_CASE("TreeSet with user-defined type", "[set]")
+{
+    TreeSet<EqLtType> empty;
+    TreeSet<EqLtType> some = {EqLtType(), EqLtType(), EqLtType()};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 3);
 }
