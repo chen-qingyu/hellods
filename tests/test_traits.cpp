@@ -10,9 +10,11 @@
 #include "../sources/List/LinkedList.hpp"
 #include "../sources/List/SinglyLinkedList.hpp"
 #include "../sources/Map/HashMap.hpp"
+#include "../sources/Map/TreeMap.hpp"
 #include "../sources/Queue/ArrayQueue.hpp"
 #include "../sources/Queue/LinkedQueue.hpp"
 #include "../sources/Set/HashSet.hpp"
+#include "../sources/Set/TreeSet.hpp"
 #include "../sources/Stack/ArrayStack.hpp"
 #include "../sources/Stack/LinkedStack.hpp"
 #include "../sources/Tree/BinarySearchTree.hpp"
@@ -52,6 +54,8 @@ static_assert(kMoveConstructibleContainer<BinarySearchTree<int>>);
 static_assert(kMoveConstructibleContainer<RedBlackTree<int>>);
 static_assert(kMoveConstructibleContainer<SplayTree<int>>);
 static_assert(kMoveConstructibleContainer<MatrixGraph<>>);
+static_assert(kMoveConstructibleContainer<TreeSet<int>>);
+static_assert(kMoveConstructibleContainer<TreeMap<int, int>>);
 
 static_assert(dsd::StoredElement<EqType>);
 static_assert(dsd::LinearElement<EqType>);

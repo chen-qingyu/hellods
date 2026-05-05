@@ -3,10 +3,11 @@
 #include "tool.hpp"
 
 #include "../sources/Map/HashMap.hpp"
+#include "../sources/Map/TreeMap.hpp"
 
 using namespace hellods;
 
-TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>))
+TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, std::string>))
 {
     using Map = TestType;
 
@@ -127,6 +128,14 @@ TEMPLATE_TEST_CASE("Map with user-defined type", "[map]", (HashMap<EqType, EqTyp
 
     Map empty;
     Map some = {{EqType(), EqType()}, {EqType(), EqType()}, {EqType(), EqType()}};
+    REQUIRE(empty.size() == 0);
+    REQUIRE(some.size() == 3);
+}
+
+TEST_CASE("TreeMap with user-defined type", "[map]")
+{
+    TreeMap<EqLtType, EqLtType> empty;
+    TreeMap<EqLtType, EqLtType> some = {{EqLtType(), EqLtType()}, {EqLtType(), EqLtType()}, {EqLtType(), EqLtType()}};
     REQUIRE(empty.size() == 0);
     REQUIRE(some.size() == 3);
 }
