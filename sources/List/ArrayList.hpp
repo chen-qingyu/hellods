@@ -17,10 +17,6 @@ namespace hellods
 template <detail::StoredElement T>
 class ArrayList : public List<T>
 {
-    template <detail::StoredElement U, typename Cmp>
-        requires detail::ComparatorFor<U, Cmp>
-    friend class BinaryHeap;
-
 public:
     template <bool Const>
     class BasicIterator
