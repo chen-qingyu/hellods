@@ -24,6 +24,10 @@ protected:
     using BinarySearchTree<T>::root_;
     using BinarySearchTree<T>::set_root;
     using BinarySearchTree<T>::find_min;
+    using BinarySearchTree<T>::slot;
+    using BinarySearchTree<T>::rotate_at;
+    using BinarySearchTree<T>::rotate_left;
+    using BinarySearchTree<T>::rotate_right;
 
     // Check whether the node is red.
     bool is_red(Node* node) const
@@ -35,16 +39,6 @@ protected:
     bool is_black(Node* node) const
     {
         return !is_red(node);
-    }
-
-    // Return the reference slot that points to the subtree root.
-    Node*& slot(Node* node)
-    {
-        if (node->parent_ == end_)
-        {
-            return root_;
-        }
-        return node->parent_->left_ == node ? node->parent_->left_ : node->parent_->right_;
     }
 
     // Return the left or right child of the node.
@@ -66,21 +60,6 @@ protected:
         }
     }
 
-    // Rotate the subtree rooted at current in the given direction.
-    void rotate_at(Node* current, bool to_left)
-    {
-        Node*& current_slot = slot(current);
-        if (to_left)
-        {
-            rotate_left(current_slot);
-        }
-        else
-        {
-            rotate_right(current_slot);
-        }
-        set_root(root_);
-    }
-
     // Replace the subtree rooted at old_node with new_node.
     void replace_node(Node* old_node, Node* new_node)
     {
@@ -90,42 +69,6 @@ protected:
             new_node->parent_ = old_node->parent_;
         }
         set_root(root_);
-    }
-
-    // Rotate right.
-    void rotate_right(Node*& current)
-    {
-        /*
-               6       ->        4
-              / \               / \
-             4   7             3   6
-            / \                   / \
-           3   5                 5   7
-        */
-
-        Node* tmproot = current;             // -> 6
-        current = tmproot->left_;            // -> 4
-        current->parent_ = tmproot->parent_; // 4'p = 6'p
-        tmproot->link_left(current->right_); // 6'l = 5
-        current->link_right(tmproot);        // 4'r = 6
-    }
-
-    // Rotate left.
-    void rotate_left(Node*& current)
-    {
-        /*
-             4       ->        6
-            / \               / \
-           3   6             4   7
-              / \           / \
-             5   7         3   5
-        */
-
-        Node* tmproot = current;             // -> 4
-        current = tmproot->right_;           // -> 6
-        current->parent_ = tmproot->parent_; // 6'p = 4'p
-        tmproot->link_right(current->left_); // 4'r = 5
-        current->link_left(tmproot);         // 6'l = 4
     }
 
     // Solve double red node.

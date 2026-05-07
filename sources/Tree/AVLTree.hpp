@@ -57,16 +57,13 @@ protected:
     */
     Node* rotate_right(Node* y)
     {
-        Node* x = y->left_;
-        Node* B = x->right_;
+        Node* old_root = y;
+        this->BinarySearchTree<T>::rotate_right(y);
 
-        y->link_left(B);
-        x->link_right(y);
-
+        update_height(old_root);
         update_height(y);
-        update_height(x);
 
-        return x;
+        return y;
     }
 
     // Rotate left.
@@ -79,16 +76,13 @@ protected:
     */
     Node* rotate_left(Node* x)
     {
-        Node* y = x->right_;
-        Node* B = y->left_;
+        Node* old_root = x;
+        this->BinarySearchTree<T>::rotate_left(x);
 
-        x->link_right(B);
-        y->link_left(x);
-
+        update_height(old_root);
         update_height(x);
-        update_height(y);
 
-        return y;
+        return x;
     }
 
     // Rebalance the subtree rooted at the node.

@@ -8,7 +8,7 @@
 #ifndef SPLAYTREE_HPP
 #define SPLAYTREE_HPP
 
-#include "RedBlackTree.hpp"
+#include "BinarySearchTree.hpp"
 
 namespace hellods
 {
@@ -23,14 +23,15 @@ namespace hellods
 /// Unlike AVL or red-black trees, the splay tree stores no extra balancing
 /// data and relies only on rotation during each access.
 template <detail::OrderedElement T>
-class SplayTree : public RedBlackTree<T>
+class SplayTree : public BinarySearchTree<T>
 {
 protected:
-    using Node = typename RedBlackTree<T>::Node;
-    using RedBlackTree<T>::size_;
-    using RedBlackTree<T>::end_;
-    using RedBlackTree<T>::root_;
-    using RedBlackTree<T>::set_root;
+    using Node = typename BinarySearchTree<T>::Node;
+    using BinarySearchTree<T>::size_;
+    using BinarySearchTree<T>::end_;
+    using BinarySearchTree<T>::root_;
+    using BinarySearchTree<T>::set_root;
+    using BinarySearchTree<T>::rotate_at;
     using typename BinarySearchTree<T>::Iterator;
 
     // Splay the given node to the root of the tree.
@@ -110,7 +111,7 @@ public:
 
     /// Create a tree based on the given initializer list.
     SplayTree(const std::initializer_list<T>& il)
-        : RedBlackTree<T>()
+        : BinarySearchTree<T>()
     {
         for (auto it = il.begin(); it != il.end(); ++it)
         {
@@ -120,7 +121,7 @@ public:
 
     /// Copy constructor.
     SplayTree(const SplayTree& that)
-        : RedBlackTree<T>()
+        : BinarySearchTree<T>()
     {
         for (const auto& element : that)
         {
