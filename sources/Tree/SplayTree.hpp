@@ -30,6 +30,7 @@ protected:
     using RedBlackTree<T>::size_;
     using RedBlackTree<T>::end_;
     using RedBlackTree<T>::root_;
+    using RedBlackTree<T>::set_root;
     using typename BinarySearchTree<T>::Iterator;
 
     // Splay the given node to the root of the tree.
@@ -198,8 +199,7 @@ public:
     {
         if (root_ == nullptr)
         {
-            root_ = new Node(element);
-            root_->parent_ = end_;
+            set_root(new Node(element));
             size_++;
             return true;
         }
@@ -223,7 +223,7 @@ public:
             new_node->link_left(root_->left_);
             root_->link_left(nullptr);
             new_node->link_right(root_);
-            end_->link_left(new_node);
+            set_root(new_node);
         }
         else // element > root_->data_
         {
@@ -231,7 +231,7 @@ public:
             new_node->link_right(root_->right_);
             root_->link_right(nullptr);
             new_node->link_left(root_);
-            end_->link_left(new_node);
+            set_root(new_node);
         }
 
         return true;
@@ -258,14 +258,14 @@ public:
         if (root_->left_ == nullptr)
         {
             // Replace root with its right child.
-            end_->link_left(root_->right_);
+            set_root(root_->right_);
             delete to_delete;
             size_--;
         }
         else if (root_->right_ == nullptr)
         {
             // Replace root with its left child.
-            end_->link_left(root_->left_);
+            set_root(root_->left_);
             delete to_delete;
             size_--;
         }
@@ -279,7 +279,7 @@ public:
             size_--;
 
             // Make L the new root.
-            end_->link_left(L);
+            set_root(L);
 
             // Find the maximum node in L and splay it to the root.
             Node* max = L;

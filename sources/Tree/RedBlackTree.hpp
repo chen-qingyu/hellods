@@ -22,6 +22,7 @@ protected:
     using BinarySearchTree<T>::size_;
     using BinarySearchTree<T>::end_;
     using BinarySearchTree<T>::root_;
+    using BinarySearchTree<T>::set_root;
     using BinarySearchTree<T>::find_min;
 
     // Check whether the node is red.
@@ -77,6 +78,7 @@ protected:
         {
             rotate_right(current_slot);
         }
+        set_root(root_);
     }
 
     // Replace the subtree rooted at old_node with new_node.
@@ -87,6 +89,7 @@ protected:
         {
             new_node->parent_ = old_node->parent_;
         }
+        set_root(root_);
     }
 
     // Rotate right.
@@ -187,6 +190,7 @@ protected:
 
             grandpa->red_ = false;
             grandpa_slot = grandpa;
+            set_root(root_);
             break;
         } // end while(true)
     }
@@ -240,7 +244,7 @@ protected:
         if (parent == end_)
         {
             current->red_ = false;
-            end_->link_left(current);
+            set_root(current);
             return true;
         }
 
@@ -380,7 +384,7 @@ protected:
 
         if (size_ == 0)
         {
-            root_ = nullptr;
+            set_root(nullptr);
             return true;
         }
 

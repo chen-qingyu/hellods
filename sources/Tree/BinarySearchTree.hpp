@@ -220,7 +220,18 @@ protected:
     Node* end_;
 
     // Pointer to the root.
-    Node*& root_ = end_->left_;
+    Node* root_;
+
+    // Replace the root node.
+    void set_root(Node* node)
+    {
+        root_ = node;
+        end_->left_ = node;
+        if (node != nullptr)
+        {
+            node->parent_ = end_;
+        }
+    }
 
     // Destroy the subtree rooted at that node recursively.
     void destroy(Node* node)
@@ -381,16 +392,8 @@ protected:
     {
         std::swap(size_, that.size_);
         std::swap(root_, that.root_);
-
-        if (root_ != nullptr)
-        {
-            root_->parent_ = end_;
-        }
-
-        if (that.root_ != nullptr)
-        {
-            that.root_->parent_ = that.end_;
-        }
+        set_root(root_);
+        that.set_root(that.root_);
     }
 
 public:
@@ -402,6 +405,7 @@ public:
     BinarySearchTree()
         : size_(0)
         , end_(new Node(T()))
+        , root_(nullptr)
     {
     }
 
@@ -430,14 +434,10 @@ public:
         : BinarySearchTree()
     {
         size_ = that.size_;
-        root_ = that.root_;
-        if (root_ != nullptr)
-        {
-            root_->parent_ = end_;
-        }
+        set_root(that.root_);
 
         that.size_ = 0;
-        that.root_ = nullptr;
+        that.set_root(nullptr);
     }
 
     BinarySearchTree& operator=(BinarySearchTree that)
@@ -449,7 +449,8 @@ public:
     /// Destroy the tree object.
     ~BinarySearchTree()
     {
-        destroy(end_);
+        destroy(root_);
+        delete end_;
     }
 
     /*
@@ -560,7 +561,7 @@ public:
     bool insert(const T& element)
     {
         int old_size = size_;
-        end_->link_left(insert_node(root_, element));
+        set_root(insert_node(root_, element));
         return old_size != size_;
     }
 
@@ -568,7 +569,7 @@ public:
     bool remove(const T& element)
     {
         int old_size = size_;
-        end_->link_left(remove_node(root_, element));
+        set_root(remove_node(root_, element));
         return old_size != size_;
     }
 
@@ -579,7 +580,7 @@ public:
         {
             size_ = 0;
             destroy(root_);
-            root_ = nullptr;
+            set_root(nullptr);
         }
     }
 

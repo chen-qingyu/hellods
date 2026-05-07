@@ -26,6 +26,7 @@ protected:
     using BinarySearchTree<T>::size_;
     using BinarySearchTree<T>::end_;
     using BinarySearchTree<T>::root_;
+    using BinarySearchTree<T>::set_root;
     using BinarySearchTree<T>::find_min;
 
     // Return the height of the node (nullptr has height 0).
@@ -252,7 +253,7 @@ public:
     bool insert(const T& element)
     {
         int old_size = size_;
-        end_->link_left(insert_avlnode(root_, element));
+        set_root(insert_avlnode(root_, element));
         return old_size != size_;
     }
 
@@ -260,7 +261,7 @@ public:
     bool remove(const T& element)
     {
         int old_size = size_;
-        end_->link_left(remove_avlnode(root_, element));
+        set_root(remove_avlnode(root_, element));
         return old_size != size_;
     }
 };
