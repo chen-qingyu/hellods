@@ -380,7 +380,17 @@ protected:
     void swap(BinarySearchTree& that)
     {
         std::swap(size_, that.size_);
-        std::swap(end_, that.end_);
+        std::swap(root_, that.root_);
+
+        if (root_ != nullptr)
+        {
+            root_->parent_ = end_;
+        }
+
+        if (that.root_ != nullptr)
+        {
+            that.root_->parent_ = that.end_;
+        }
     }
 
 public:
