@@ -29,10 +29,7 @@ public:
      */
 
     /// Create an empty map.
-    TreeMap()
-        : tree_()
-    {
-    }
+    TreeMap() = default;
 
     /// Create a map based on the given initializer list.
     TreeMap(const std::initializer_list<std::pair<const K, V>>& il)
@@ -44,14 +41,8 @@ public:
         }
     }
 
-    /// Copy constructor.
-    TreeMap(const TreeMap& that)
-        : tree_(that.tree_)
-    {
-    }
-
-    /// Move constructor.
-    TreeMap(TreeMap&& that) = default;
+    TreeMap(const TreeMap&) = default;
+    TreeMap(TreeMap&&) = default;
 
     TreeMap& operator=(const TreeMap&) = default;
     TreeMap& operator=(TreeMap&&) = default;

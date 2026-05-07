@@ -53,10 +53,7 @@ public:
      */
 
     /// Create an empty heap.
-    BinaryHeap()
-        : list_()
-    {
-    }
+    BinaryHeap() = default;
 
     /// Create a heap based on the given initializer list.
     BinaryHeap(const std::initializer_list<T>& il)

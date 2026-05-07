@@ -26,10 +26,7 @@ public:
      */
 
     /// Create an empty queue.
-    ArrayQueue()
-        : deque_()
-    {
-    }
+    ArrayQueue() = default;
 
     /// Create a queue based on the given initializer list.
     ArrayQueue(const std::initializer_list<T>& il)

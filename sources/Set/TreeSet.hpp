@@ -27,10 +27,7 @@ public:
      */
 
     /// Create an empty set.
-    TreeSet()
-        : tree_()
-    {
-    }
+    TreeSet() = default;
 
     /// Create a set based on the given initializer list.
     TreeSet(const std::initializer_list<T>& il)

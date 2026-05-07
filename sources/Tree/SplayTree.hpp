@@ -106,10 +106,7 @@ public:
      */
 
     /// Create an empty tree.
-    SplayTree()
-        : RedBlackTree<T>()
-    {
-    }
+    SplayTree() = default;
 
     /// Create a tree based on the given initializer list.
     SplayTree(const std::initializer_list<T>& il)

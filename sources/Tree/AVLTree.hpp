@@ -211,10 +211,7 @@ public:
      */
 
     /// Create an empty tree.
-    AVLTree()
-        : BinarySearchTree<T>()
-    {
-    }
+    AVLTree() = default;
 
     /// Create a tree based on the given initializer list.
     AVLTree(const std::initializer_list<T>& il)

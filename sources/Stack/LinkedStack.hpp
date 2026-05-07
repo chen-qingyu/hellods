@@ -26,10 +26,7 @@ public:
      */
 
     /// Create an empty stack.
-    LinkedStack()
-        : list_()
-    {
-    }
+    LinkedStack() = default;
 
     /// Create a stack based on the given initializer list.
     LinkedStack(const std::initializer_list<T>& il)

@@ -403,10 +403,7 @@ public:
      */
 
     /// Create an empty tree.
-    RedBlackTree()
-        : BinarySearchTree<T>()
-    {
-    }
+    RedBlackTree() = default;
 
     /// Create a tree based on the given initializer list.
     RedBlackTree(const std::initializer_list<T>& il)

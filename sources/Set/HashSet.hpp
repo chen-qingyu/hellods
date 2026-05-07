@@ -110,10 +110,7 @@ public:
      */
 
     /// Create an empty set.
-    HashSet()
-        : map_()
-    {
-    }
+    HashSet() = default;
 
     /// Create a set based on the given initializer list.
     HashSet(const std::initializer_list<T>& il)

@@ -26,10 +26,7 @@ public:
      */
 
     /// Create an empty queue.
-    LinkedQueue()
-        : list_()
-    {
-    }
+    LinkedQueue() = default;
 
     /// Create a queue based on the given initializer list.
     LinkedQueue(const std::initializer_list<T>& il)

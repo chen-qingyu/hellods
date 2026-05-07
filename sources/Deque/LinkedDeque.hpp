@@ -26,10 +26,7 @@ public:
      */
 
     /// Create an empty deque.
-    LinkedDeque()
-        : list_()
-    {
-    }
+    LinkedDeque() = default;
 
     /// Create a deque based on the given initializer list.
     LinkedDeque(const std::initializer_list<T>& il)

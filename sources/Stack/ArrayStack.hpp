@@ -26,10 +26,7 @@ public:
      */
 
     /// Create an empty stack.
-    ArrayStack()
-        : list_()
-    {
-    }
+    ArrayStack() = default;
 
     /// Create a stack based on the given initializer list.
     ArrayStack(const std::initializer_list<T>& il)
