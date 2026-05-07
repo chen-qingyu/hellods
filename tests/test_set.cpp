@@ -11,9 +11,27 @@ TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>, TreeSet<int>)
 {
     using Set = TestType;
 
-    // Constructor / Destructor
+    // Lifecycle
     Set empty;
     Set some = {1, 2, 3};
+
+    Set copy = some; // Copy constructor
+    REQUIRE(copy == Set({1, 2, 3}));
+
+    copy = empty; // Copy assignment
+    REQUIRE(copy == Set());
+    copy = some;
+    REQUIRE(copy == Set({1, 2, 3}));
+    copy = copy;
+    REQUIRE(copy == Set({1, 2, 3}));
+
+    Set mv = std::move(copy); // Move constructor
+    REQUIRE(mv == Set({1, 2, 3}));
+
+    copy = std::move(mv); // Move assignment
+    REQUIRE(copy == Set({1, 2, 3}));
+    copy = std::move(copy);
+    REQUIRE(copy == Set({1, 2, 3}));
 
     // Comparison
     REQUIRE(empty == Set());

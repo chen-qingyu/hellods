@@ -9,9 +9,27 @@ TEMPLATE_TEST_CASE("Deque", "[deque]", ArrayDeque<int>, LinkedDeque<int>)
 {
     using Deque = TestType;
 
-    // Constructor / Destructor
+    // Lifecycle
     Deque empty;
     Deque some = {1, 2, 3, 4, 5};
+
+    Deque copy = some; // Copy constructor
+    REQUIRE(copy == Deque({1, 2, 3, 4, 5}));
+
+    copy = empty; // Copy assignment
+    REQUIRE(copy == Deque());
+    copy = some;
+    REQUIRE(copy == Deque({1, 2, 3, 4, 5}));
+    copy = copy;
+    REQUIRE(copy == Deque({1, 2, 3, 4, 5}));
+
+    Deque mv = std::move(copy); // Move constructor
+    REQUIRE(mv == Deque({1, 2, 3, 4, 5}));
+
+    copy = std::move(mv); // Move assignment
+    REQUIRE(copy == Deque({1, 2, 3, 4, 5}));
+    copy = std::move(copy);
+    REQUIRE(copy == Deque({1, 2, 3, 4, 5}));
 
     // Comparison
     REQUIRE(empty == Deque());

@@ -8,9 +8,27 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
 {
     using Heap = TestType;
 
-    // Constructor / Destructor
+    // Lifecycle
     Heap empty;
     Heap some = {1, 2, 3, 4, 5};
+
+    Heap copy = some; // Copy constructor
+    REQUIRE(copy == Heap({1, 2, 3, 4, 5}));
+
+    copy = empty; // Copy assignment
+    REQUIRE(copy == Heap());
+    copy = some;
+    REQUIRE(copy == Heap({1, 2, 3, 4, 5}));
+    copy = copy;
+    REQUIRE(copy == Heap({1, 2, 3, 4, 5}));
+
+    Heap mv = std::move(copy); // Move constructor
+    REQUIRE(mv == Heap({1, 2, 3, 4, 5}));
+
+    copy = std::move(mv); // Move assignment
+    REQUIRE(copy == Heap({1, 2, 3, 4, 5}));
+    copy = std::move(copy);
+    REQUIRE(copy == Heap({1, 2, 3, 4, 5}));
 
     // Comparison
     REQUIRE(empty == Heap());

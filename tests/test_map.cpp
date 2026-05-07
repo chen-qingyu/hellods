@@ -11,9 +11,27 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, st
 {
     using Map = TestType;
 
-    // Constructor / Destructor
+    // Lifecycle
     Map empty;
     Map some = {{1, "one"}, {2, "two"}, {3, "three"}};
+
+    Map copy = some; // Copy constructor
+    REQUIRE(copy == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
+
+    copy = empty; // Copy assignment
+    REQUIRE(copy == Map());
+    copy = some;
+    REQUIRE(copy == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
+    copy = copy;
+    REQUIRE(copy == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
+
+    Map mv = std::move(copy); // Move constructor
+    REQUIRE(mv == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
+
+    copy = std::move(mv); // Move assignment
+    REQUIRE(copy == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
+    copy = std::move(copy);
+    REQUIRE(copy == Map({{1, "one"}, {2, "two"}, {3, "three"}}));
 
     // Comparison
     REQUIRE(empty == Map());

@@ -138,9 +138,27 @@ TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, A
 {
     using Tree = TestType;
 
-    // Constructor / Destructor
+    // Lifecycle
     Tree empty;
     Tree some = {3, 1, 5, 2, 4};
+
+    Tree copy = some; // Copy constructor
+    REQUIRE(copy == Tree({3, 1, 5, 2, 4}));
+
+    copy = empty; // Copy assignment
+    REQUIRE(copy == Tree());
+    copy = some;
+    REQUIRE(copy == Tree({3, 1, 5, 2, 4}));
+    copy = copy;
+    REQUIRE(copy == Tree({3, 1, 5, 2, 4}));
+
+    Tree mv = std::move(copy); // Move constructor
+    REQUIRE(mv == Tree({3, 1, 5, 2, 4}));
+
+    copy = std::move(mv); // Move assignment
+    REQUIRE(copy == Tree({3, 1, 5, 2, 4}));
+    copy = std::move(copy);
+    REQUIRE(copy == Tree({3, 1, 5, 2, 4}));
 
     // Comparison
     REQUIRE(empty == Tree());

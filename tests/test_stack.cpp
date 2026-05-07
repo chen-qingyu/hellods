@@ -9,9 +9,27 @@ TEMPLATE_TEST_CASE("Stack", "[stack]", ArrayStack<int>, LinkedStack<int>)
 {
     using Stack = TestType;
 
-    // Constructor / Destructor
+    // Lifecycle
     Stack empty;
     Stack some = {1, 2, 3, 4, 5};
+
+    Stack copy = some; // Copy constructor
+    REQUIRE(copy == Stack({1, 2, 3, 4, 5}));
+
+    copy = empty; // Copy assignment
+    REQUIRE(copy == Stack());
+    copy = some;
+    REQUIRE(copy == Stack({1, 2, 3, 4, 5}));
+    copy = copy;
+    REQUIRE(copy == Stack({1, 2, 3, 4, 5}));
+
+    Stack mv = std::move(copy); // Move constructor
+    REQUIRE(mv == Stack({1, 2, 3, 4, 5}));
+
+    copy = std::move(mv); // Move assignment
+    REQUIRE(copy == Stack({1, 2, 3, 4, 5}));
+    copy = std::move(copy);
+    REQUIRE(copy == Stack({1, 2, 3, 4, 5}));
 
     // Comparison
     REQUIRE(empty == Stack());

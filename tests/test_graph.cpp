@@ -8,9 +8,27 @@ using namespace hellods;
 
 TEST_CASE("MatrixGraph", "[graph]")
 {
-    // Constructor / Destructor
+    // Lifecycle
     MatrixGraph empty;
     MatrixGraph some(7);
+
+    MatrixGraph copy = some; // Copy constructor
+    REQUIRE(copy == MatrixGraph(7));
+
+    copy = empty; // Copy assignment
+    REQUIRE(copy == MatrixGraph());
+    copy = some;
+    REQUIRE(copy == MatrixGraph(7));
+    copy = copy;
+    REQUIRE(copy == MatrixGraph(7));
+
+    MatrixGraph mv = std::move(copy); // Move constructor
+    REQUIRE(mv == MatrixGraph(7));
+
+    copy = std::move(mv); // Move assignment
+    REQUIRE(copy == MatrixGraph(7));
+    copy = std::move(copy);
+    REQUIRE(copy == MatrixGraph(7));
 
     // Comparison
     REQUIRE(empty == MatrixGraph());

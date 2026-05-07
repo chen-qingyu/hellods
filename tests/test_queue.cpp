@@ -9,9 +9,27 @@ TEMPLATE_TEST_CASE("Queue", "[queue]", ArrayQueue<int>, LinkedQueue<int>)
 {
     using Queue = TestType;
 
-    // Constructor / Destructor
+    // Lifecycle
     Queue empty;
     Queue some = {1, 2, 3, 4, 5};
+
+    Queue copy = some; // Copy constructor
+    REQUIRE(copy == Queue({1, 2, 3, 4, 5}));
+
+    copy = empty; // Copy assignment
+    REQUIRE(copy == Queue());
+    copy = some;
+    REQUIRE(copy == Queue({1, 2, 3, 4, 5}));
+    copy = copy;
+    REQUIRE(copy == Queue({1, 2, 3, 4, 5}));
+
+    Queue mv = std::move(copy); // Move constructor
+    REQUIRE(mv == Queue({1, 2, 3, 4, 5}));
+
+    copy = std::move(mv); // Move assignment
+    REQUIRE(copy == Queue({1, 2, 3, 4, 5}));
+    copy = std::move(copy);
+    REQUIRE(copy == Queue({1, 2, 3, 4, 5}));
 
     // Comparison
     REQUIRE(empty == Queue());

@@ -10,11 +10,26 @@ TEMPLATE_TEST_CASE("List", "[list]", ArrayList<int>, LinkedList<int>, SinglyLink
 {
     using List = TestType;
 
-    // Constructor / Destructor
+    // Lifecycle
     List empty;
     List some = {1, 2, 3, 4, 5};
 
-    List copy = some;
+    List copy = some; // Copy constructor
+    REQUIRE(copy == List({1, 2, 3, 4, 5}));
+
+    copy = empty; // Copy assignment
+    REQUIRE(copy == List());
+    copy = some;
+    REQUIRE(copy == List({1, 2, 3, 4, 5}));
+    copy = copy;
+    REQUIRE(copy == List({1, 2, 3, 4, 5}));
+
+    List mv = std::move(copy); // Move constructor
+    REQUIRE(mv == List({1, 2, 3, 4, 5}));
+
+    copy = std::move(mv); // Move assignment
+    REQUIRE(copy == List({1, 2, 3, 4, 5}));
+    copy = std::move(copy);
     REQUIRE(copy == List({1, 2, 3, 4, 5}));
 
     // Comparison
