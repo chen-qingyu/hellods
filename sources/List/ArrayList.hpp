@@ -120,9 +120,17 @@ protected:
         data_ = new_data;
     }
 
+    // Swap with another list.
+    void swap(ArrayList& that)
+    {
+        std::swap(size_, that.size_);
+        std::swap(capacity_, that.capacity_);
+        std::swap(data_, that.data_);
+    }
+
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty list.
@@ -162,8 +170,11 @@ public:
         that.data_ = new T[that.capacity_];
     }
 
-    ArrayList& operator=(const ArrayList&) = delete;
-    ArrayList& operator=(ArrayList&&) = delete;
+    ArrayList& operator=(ArrayList that)
+    {
+        swap(that);
+        return *this;
+    }
 
     /// Destroy the list object.
     ~ArrayList()

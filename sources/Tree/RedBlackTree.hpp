@@ -395,7 +395,7 @@ protected:
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty tree.
@@ -426,8 +426,11 @@ public:
 
     RedBlackTree(RedBlackTree&&) = default;
 
-    RedBlackTree& operator=(const RedBlackTree&) = delete;
-    RedBlackTree& operator=(RedBlackTree&&) = delete;
+    RedBlackTree& operator=(RedBlackTree that)
+    {
+        this->BinarySearchTree<T>::swap(that);
+        return *this;
+    }
 
     /*
      * Manipulation

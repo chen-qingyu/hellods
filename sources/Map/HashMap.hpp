@@ -247,9 +247,17 @@ protected:
         delete[] old_data;
     }
 
+    // Swap with another map.
+    void swap(HashMap& that)
+    {
+        std::swap(size_, that.size_);
+        std::swap(capacity_, that.capacity_);
+        std::swap(data_, that.data_);
+    }
+
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty map.
@@ -296,8 +304,11 @@ public:
         that.data_ = new Slot[that.capacity_]();
     }
 
-    HashMap& operator=(const HashMap&) = delete;
-    HashMap& operator=(HashMap&&) = delete;
+    HashMap& operator=(HashMap that)
+    {
+        swap(that);
+        return *this;
+    }
 
     /// Destroy the map object.
     ~HashMap()

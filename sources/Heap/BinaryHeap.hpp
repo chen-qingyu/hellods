@@ -49,7 +49,7 @@ class BinaryHeap : public detail::Container
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty heap.
@@ -72,8 +72,8 @@ public:
     BinaryHeap(const BinaryHeap&) = default;
     BinaryHeap(BinaryHeap&&) = default;
 
-    BinaryHeap& operator=(const BinaryHeap&) = delete;
-    BinaryHeap& operator=(BinaryHeap&&) = delete;
+    BinaryHeap& operator=(const BinaryHeap&) = default;
+    BinaryHeap& operator=(BinaryHeap&&) = default;
 
     /*
      * Comparison

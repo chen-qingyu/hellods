@@ -22,7 +22,7 @@ class LinkedDeque : public Deque<T>
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty deque.
@@ -40,8 +40,8 @@ public:
     LinkedDeque(const LinkedDeque&) = default;
     LinkedDeque(LinkedDeque&&) = default;
 
-    LinkedDeque& operator=(const LinkedDeque&) = delete;
-    LinkedDeque& operator=(LinkedDeque&&) = delete;
+    LinkedDeque& operator=(const LinkedDeque&) = default;
+    LinkedDeque& operator=(LinkedDeque&&) = default;
 
     /*
      * Comparison

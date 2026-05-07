@@ -22,7 +22,7 @@ class ArrayQueue : public Queue<T>
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty queue.
@@ -40,8 +40,8 @@ public:
     ArrayQueue(const ArrayQueue&) = default;
     ArrayQueue(ArrayQueue&&) = default;
 
-    ArrayQueue& operator=(const ArrayQueue&) = delete;
-    ArrayQueue& operator=(ArrayQueue&&) = delete;
+    ArrayQueue& operator=(const ArrayQueue&) = default;
+    ArrayQueue& operator=(ArrayQueue&&) = default;
 
     /*
      * Comparison

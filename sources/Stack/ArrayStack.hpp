@@ -22,7 +22,7 @@ class ArrayStack : public Stack<T>
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty stack.
@@ -40,8 +40,8 @@ public:
     ArrayStack(const ArrayStack&) = default;
     ArrayStack(ArrayStack&&) = default;
 
-    ArrayStack& operator=(const ArrayStack&) = delete;
-    ArrayStack& operator=(ArrayStack&&) = delete;
+    ArrayStack& operator=(const ArrayStack&) = default;
+    ArrayStack& operator=(ArrayStack&&) = default;
 
     /*
      * Comparison

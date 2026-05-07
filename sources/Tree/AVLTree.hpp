@@ -206,7 +206,7 @@ protected:
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty tree.
@@ -238,8 +238,11 @@ public:
     /// Move constructor.
     AVLTree(AVLTree&& that) = default;
 
-    AVLTree& operator=(const AVLTree&) = delete;
-    AVLTree& operator=(AVLTree&&) = delete;
+    AVLTree& operator=(AVLTree that)
+    {
+        this->BinarySearchTree<T>::swap(that);
+        return *this;
+    }
 
     /*
      * Manipulation

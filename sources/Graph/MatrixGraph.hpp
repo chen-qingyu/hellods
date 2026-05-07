@@ -49,6 +49,13 @@ protected:
         }
     }
 
+    // Swap with another graph.
+    void swap(MatrixGraph& that)
+    {
+        std::swap(size_, that.size_);
+        std::swap(matrix_, that.matrix_);
+    }
+
     // Depth-first search helper.
     template <typename F>
     void dfs(const V& start, const F& action, bool* visited) const
@@ -85,7 +92,7 @@ protected:
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty graph.
@@ -127,8 +134,11 @@ public:
         that.matrix_ = nullptr;
     }
 
-    MatrixGraph& operator=(const MatrixGraph&) = delete;
-    MatrixGraph& operator=(MatrixGraph&&) = delete;
+    MatrixGraph& operator=(MatrixGraph that)
+    {
+        swap(that);
+        return *this;
+    }
 
     /// Destroy the graph object.
     ~MatrixGraph()

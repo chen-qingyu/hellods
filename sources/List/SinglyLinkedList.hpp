@@ -125,9 +125,17 @@ protected:
         tail_ = nullptr;
     }
 
+    // Swap with another list.
+    void swap(SinglyLinkedList& that)
+    {
+        std::swap(size_, that.size_);
+        std::swap(header_, that.header_);
+        std::swap(tail_, that.tail_);
+    }
+
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty list.
@@ -181,8 +189,11 @@ public:
         that.tail_ = nullptr;
     }
 
-    SinglyLinkedList& operator=(const SinglyLinkedList&) = delete;
-    SinglyLinkedList& operator=(SinglyLinkedList&&) = delete;
+    SinglyLinkedList& operator=(SinglyLinkedList that)
+    {
+        swap(that);
+        return *this;
+    }
 
     /// Destroy the list object.
     ~SinglyLinkedList()

@@ -22,7 +22,7 @@ class LinkedQueue : public Queue<T>
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty queue.
@@ -40,8 +40,8 @@ public:
     LinkedQueue(const LinkedQueue&) = default;
     LinkedQueue(LinkedQueue&&) = default;
 
-    LinkedQueue& operator=(const LinkedQueue&) = delete;
-    LinkedQueue& operator=(LinkedQueue&&) = delete;
+    LinkedQueue& operator=(const LinkedQueue&) = default;
+    LinkedQueue& operator=(LinkedQueue&&) = default;
 
     /*
      * Comparison

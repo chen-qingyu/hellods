@@ -26,35 +26,35 @@ using namespace hellods;
 using namespace hellods::detail;
 
 template <typename T>
-constexpr bool kMoveConstructibleContainer =
+constexpr bool kFullFeaturedContainer =
     std::is_copy_constructible_v<T> &&
-    !std::is_copy_assignable_v<T> &&
+    std::is_copy_assignable_v<T> &&
     std::is_move_constructible_v<T> &&
-    !std::is_move_assignable_v<T>;
+    std::is_move_assignable_v<T>;
 
 template <typename T>
 constexpr bool kConstBeginReference = std::is_const_v<std::remove_reference_t<decltype(*std::declval<const T&>().begin())>>;
 
 static_assert(std::has_virtual_destructor_v<Container>);
 
-static_assert(kMoveConstructibleContainer<ArrayList<int>>);
-static_assert(kMoveConstructibleContainer<LinkedList<int>>);
-static_assert(kMoveConstructibleContainer<SinglyLinkedList<int>>);
-static_assert(kMoveConstructibleContainer<ArrayDeque<int>>);
-static_assert(kMoveConstructibleContainer<LinkedDeque<int>>);
-static_assert(kMoveConstructibleContainer<ArrayQueue<int>>);
-static_assert(kMoveConstructibleContainer<LinkedQueue<int>>);
-static_assert(kMoveConstructibleContainer<ArrayStack<int>>);
-static_assert(kMoveConstructibleContainer<LinkedStack<int>>);
-static_assert(kMoveConstructibleContainer<HashMap<int, int>>);
-static_assert(kMoveConstructibleContainer<HashSet<int>>);
-static_assert(kMoveConstructibleContainer<BinaryHeap<int>>);
-static_assert(kMoveConstructibleContainer<BinarySearchTree<int>>);
-static_assert(kMoveConstructibleContainer<RedBlackTree<int>>);
-static_assert(kMoveConstructibleContainer<SplayTree<int>>);
-static_assert(kMoveConstructibleContainer<MatrixGraph<>>);
-static_assert(kMoveConstructibleContainer<TreeSet<int>>);
-static_assert(kMoveConstructibleContainer<TreeMap<int, int>>);
+static_assert(kFullFeaturedContainer<ArrayList<int>>);
+static_assert(kFullFeaturedContainer<LinkedList<int>>);
+static_assert(kFullFeaturedContainer<SinglyLinkedList<int>>);
+static_assert(kFullFeaturedContainer<ArrayDeque<int>>);
+static_assert(kFullFeaturedContainer<LinkedDeque<int>>);
+static_assert(kFullFeaturedContainer<ArrayQueue<int>>);
+static_assert(kFullFeaturedContainer<LinkedQueue<int>>);
+static_assert(kFullFeaturedContainer<ArrayStack<int>>);
+static_assert(kFullFeaturedContainer<LinkedStack<int>>);
+static_assert(kFullFeaturedContainer<HashMap<int, int>>);
+static_assert(kFullFeaturedContainer<HashSet<int>>);
+static_assert(kFullFeaturedContainer<BinaryHeap<int>>);
+static_assert(kFullFeaturedContainer<BinarySearchTree<int>>);
+static_assert(kFullFeaturedContainer<RedBlackTree<int>>);
+static_assert(kFullFeaturedContainer<SplayTree<int>>);
+static_assert(kFullFeaturedContainer<MatrixGraph<>>);
+static_assert(kFullFeaturedContainer<TreeSet<int>>);
+static_assert(kFullFeaturedContainer<TreeMap<int, int>>);
 
 static_assert(StoredElement<EqType>);
 static_assert(LinearElement<EqType>);

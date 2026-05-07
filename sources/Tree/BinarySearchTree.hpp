@@ -376,9 +376,16 @@ protected:
         return Iterator(node);
     }
 
+    // Swap with another tree.
+    void swap(BinarySearchTree& that)
+    {
+        std::swap(size_, that.size_);
+        std::swap(end_, that.end_);
+    }
+
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty tree.
@@ -423,8 +430,11 @@ public:
         that.root_ = nullptr;
     }
 
-    BinarySearchTree& operator=(const BinarySearchTree&) = delete;
-    BinarySearchTree& operator=(BinarySearchTree&&) = delete;
+    BinarySearchTree& operator=(BinarySearchTree that)
+    {
+        swap(that);
+        return *this;
+    }
 
     /// Destroy the tree object.
     ~BinarySearchTree()

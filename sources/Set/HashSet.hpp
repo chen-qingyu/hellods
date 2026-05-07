@@ -106,7 +106,7 @@ public:
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty set.
@@ -128,8 +128,8 @@ public:
     HashSet(const HashSet&) = default;
     HashSet(HashSet&&) = default;
 
-    HashSet& operator=(const HashSet&) = delete;
-    HashSet& operator=(HashSet&&) = delete;
+    HashSet& operator=(const HashSet&) = default;
+    HashSet& operator=(HashSet&&) = default;
 
     /*
      * Comparison

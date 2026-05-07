@@ -22,7 +22,7 @@ class LinkedStack : public Stack<T>
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty stack.
@@ -40,8 +40,8 @@ public:
     LinkedStack(const LinkedStack&) = default;
     LinkedStack(LinkedStack&&) = default;
 
-    LinkedStack& operator=(const LinkedStack&) = delete;
-    LinkedStack& operator=(LinkedStack&&) = delete;
+    LinkedStack& operator=(const LinkedStack&) = default;
+    LinkedStack& operator=(LinkedStack&&) = default;
 
     /*
      * Comparison

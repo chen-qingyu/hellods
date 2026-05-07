@@ -19,7 +19,7 @@ class List : public detail::Container
 {
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Virtual destructor.

@@ -25,7 +25,7 @@ public:
     using ConstIterator = Iterator;
 
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty map.
@@ -53,8 +53,8 @@ public:
     /// Move constructor.
     TreeMap(TreeMap&& that) = default;
 
-    TreeMap& operator=(const TreeMap&) = delete;
-    TreeMap& operator=(TreeMap&&) = delete;
+    TreeMap& operator=(const TreeMap&) = default;
+    TreeMap& operator=(TreeMap&&) = default;
 
     /*
      * Comparison

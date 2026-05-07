@@ -19,7 +19,7 @@ class Deque : public detail::Container
 {
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Virtual destructor.

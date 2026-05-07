@@ -101,7 +101,7 @@ protected:
 
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty tree.
@@ -133,8 +133,11 @@ public:
     /// Move constructor.
     SplayTree(SplayTree&& that) = default;
 
-    SplayTree& operator=(const SplayTree&) = delete;
-    SplayTree& operator=(SplayTree&&) = delete;
+    SplayTree& operator=(SplayTree that)
+    {
+        this->BinarySearchTree<T>::swap(that);
+        return *this;
+    }
 
     /*
      * Examination

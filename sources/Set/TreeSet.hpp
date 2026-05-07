@@ -23,7 +23,7 @@ public:
     using Iterator = typename Tree::Iterator;
 
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty set.
@@ -45,8 +45,8 @@ public:
     TreeSet(const TreeSet&) = default;
     TreeSet(TreeSet&&) = default;
 
-    TreeSet& operator=(const TreeSet&) = delete;
-    TreeSet& operator=(TreeSet&&) = delete;
+    TreeSet& operator=(const TreeSet&) = default;
+    TreeSet& operator=(TreeSet&&) = default;
 
     /*
      * Comparison

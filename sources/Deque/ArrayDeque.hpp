@@ -152,9 +152,18 @@ protected:
         front_ = 0;
     }
 
+    // Swap with another deque.
+    void swap(ArrayDeque& that)
+    {
+        std::swap(front_, that.front_);
+        std::swap(size_, that.size_);
+        std::swap(capacity_, that.capacity_);
+        std::swap(data_, that.data_);
+    }
+
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty deque.
@@ -199,8 +208,11 @@ public:
         that.data_ = new T[that.capacity_];
     }
 
-    ArrayDeque& operator=(const ArrayDeque&) = delete;
-    ArrayDeque& operator=(ArrayDeque&&) = delete;
+    ArrayDeque& operator=(ArrayDeque that)
+    {
+        swap(that);
+        return *this;
+    }
 
     /// Destroy the deque object.
     ~ArrayDeque()

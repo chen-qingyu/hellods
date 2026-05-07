@@ -176,9 +176,19 @@ protected:
         p_latest_ = header_;
     }
 
+    // Swap with another list.
+    void swap(LinkedList& that)
+    {
+        std::swap(size_, that.size_);
+        std::swap(header_, that.header_);
+        std::swap(trailer_, that.trailer_);
+        std::swap(latest_, that.latest_);
+        std::swap(p_latest_, that.p_latest_);
+    }
+
 public:
     /*
-     * Constructor / Destructor
+     * Lifecycle
      */
 
     /// Create an empty list.
@@ -230,8 +240,11 @@ public:
         that.p_latest_ = that.header_;
     }
 
-    LinkedList& operator=(const LinkedList&) = delete;
-    LinkedList& operator=(LinkedList&&) = delete;
+    LinkedList& operator=(LinkedList that)
+    {
+        swap(that);
+        return *this;
+    }
 
     /// Destroy the list object.
     ~LinkedList()
