@@ -8,86 +8,119 @@
 #ifndef MATRIXGRAPH_HPP
 #define MATRIXGRAPH_HPP
 
-#include "../detail.hpp"
-
-#include "../Queue/ArrayQueue.hpp" // for breadth_first_search()
+#include "../List/ArrayList.hpp"
+#include "../Map/HashMap.hpp"
+#include "../Queue/ArrayQueue.hpp"
 
 namespace hellods
 {
 
 /// Graph implemented by adjacency matrix. Default is directed graph.
-template <bool Directed = true>
+template <typename V = int, typename E = int, bool Directed = true>
+    requires detail::HashKey<V, std::hash<V>, std::equal_to<V>>
 class MatrixGraph : public detail::Container
 {
-public:
-    /// Vertex type.
-    using V = int;
-
-    /// Edge type.
-    using E = int;
-
-    /// A value of edge type indicating that this edge does not exist.
-    static const E NO_EDGE = INT_MAX;
-
 protected:
-    // Number of elements.
+    using detail::Container::INIT_CAPACITY;
+    using detail::Container::MAX_CAPACITY;
+
+    // Number of vertices.
     int size_;
 
-    // Adjacency matrix.
-    E** matrix_;
+    // Allocated capacity (matrix is capacity_ x capacity_ flat array).
+    int capacity_;
 
-    // Free matrix memory.
-    void free_matrix()
+    // Adjacency matrix: flat array of size capacity_ * capacity_.
+    // Entry (i, j) is at matrix_[i * capacity_ + j].
+    std::optional<E>* matrix_;
+
+    // Map from vertex to internal index.
+    HashMap<V, int> vertex_to_idx_;
+
+    // Inverse map: internal index to vertex.
+    ArrayList<V> idx_to_vertex_;
+
+    // Get internal index of a vertex, throws if not found.
+    int index(const V& v) const
     {
-        if (matrix_ != nullptr)
+        auto it = vertex_to_idx_.find(v);
+        if (it == vertex_to_idx_.end())
         {
-            for (int i = 0; i < size_; i++)
-            {
-                delete[] matrix_[i];
-            }
-            delete[] matrix_;
+            throw std::runtime_error("Error: Vertex does not exist.");
         }
+        return it->value();
+    }
+
+    // Access matrix entry by internal indices.
+    std::optional<E>& at(int i, int j)
+    {
+        return matrix_[i * capacity_ + j];
+    }
+
+    const std::optional<E>& at(int i, int j) const
+    {
+        return matrix_[i * capacity_ + j];
+    }
+
+    // Expand capacity (doubles). Active region (size_ x size_) is preserved.
+    void expand_capacity()
+    {
+        int old_cap = capacity_;
+        capacity_ = (capacity_ < MAX_CAPACITY / 2) ? capacity_ * 2 : MAX_CAPACITY;
+
+        auto* new_matrix = new std::optional<E>[capacity_ * capacity_]();
+
+        // Copy active region
+        for (int i = 0; i < size_; i++)
+        {
+            for (int j = 0; j < size_; j++)
+            {
+                new_matrix[i * capacity_ + j] = std::move(matrix_[i * old_cap + j]);
+            }
+        }
+
+        delete[] matrix_;
+        matrix_ = new_matrix;
     }
 
     // Swap with another graph.
     void swap(MatrixGraph& that)
     {
         std::swap(size_, that.size_);
+        std::swap(capacity_, that.capacity_);
         std::swap(matrix_, that.matrix_);
+        std::swap(vertex_to_idx_, that.vertex_to_idx_);
+        std::swap(idx_to_vertex_, that.idx_to_vertex_);
     }
 
-    // Depth-first search helper.
+    // Depth-first search helper (internal indices).
     template <typename F>
-    void dfs(const V& start, const F& action, bool* visited) const
+    void dfs(int start, const F& action, bool* visited) const
     {
-        action(start);
+        action(idx_to_vertex_[start]);
         visited[start] = true;
 
-        for (V v = 0; v < size_; v++)
+        for (int v = 0; v < size_; v++)
         {
-            if (is_adjacent(start, v) && !visited[v])
+            if (at(start, v).has_value() && !visited[v])
             {
                 dfs(v, action, visited);
             }
         }
     }
 
-    // Finds the vertex with the smallest distance in an unaccessed set of vertices.
-    V find_closest(const E* dist, const bool* visited) const
+    // Find the closest unvisited vertex (Dijkstra helper).
+    int find_closest(const std::optional<E>* dist, const bool* visited) const
     {
-        V min_v = -1;
-        E min_dist = NO_EDGE;
-
-        for (V v = 0; v < size_; v++)
+        int min_v = -1;
+        for (int v = 0; v < size_; v++)
         {
-            if (!visited[v] && dist[v] < min_dist)
+            if (!visited[v] && dist[v].has_value() && (min_v == -1 || dist[v].value() < dist[min_v].value()))
             {
-                min_dist = dist[v];
                 min_v = v;
             }
         }
-
-        return min_dist < NO_EDGE ? min_v : -1;
+        return min_v;
     }
 
 public:
@@ -98,40 +131,52 @@ public:
     /// Create an empty graph.
     MatrixGraph()
         : size_(0)
-        , matrix_(nullptr)
+        , capacity_(INIT_CAPACITY)
+        , matrix_(new std::optional<E>[capacity_ * capacity_]())
+        , vertex_to_idx_()
+        , idx_to_vertex_()
     {
     }
 
-    /// Create a graph with n vertices.
-    MatrixGraph(int n)
-        : MatrixGraph()
+    /// Create a graph with the given vertices.
+    MatrixGraph(std::initializer_list<V> vs)
+        : size_(0)
+        , capacity_(std::max(INIT_CAPACITY, static_cast<int>(vs.size())))
+        , matrix_(new std::optional<E>[capacity_ * capacity_]())
+        , vertex_to_idx_()
+        , idx_to_vertex_()
     {
-        set_vertex_number(n);
+        for (const auto& v : vs)
+        {
+            add_vertex(v);
+        }
     }
 
     /// Copy constructor.
     MatrixGraph(const MatrixGraph& that)
-        : MatrixGraph()
+        : size_(that.size_)
+        , capacity_(that.capacity_)
+        , matrix_(new std::optional<E>[capacity_ * capacity_]())
+        , vertex_to_idx_(that.vertex_to_idx_)
+        , idx_to_vertex_(that.idx_to_vertex_)
     {
-        if (that.size_ == 0)
+        for (int i = 0; i < capacity_ * capacity_; i++)
         {
-            return;
-        }
-
-        set_vertex_number(that.size_);
-        for (V v1 = 0; v1 < size_; ++v1)
-        {
-            std::copy(that.matrix_[v1], that.matrix_[v1] + size_, matrix_[v1]);
+            matrix_[i] = that.matrix_[i];
         }
     }
 
     /// Move constructor.
     MatrixGraph(MatrixGraph&& that)
         : size_(that.size_)
+        , capacity_(that.capacity_)
         , matrix_(that.matrix_)
+        , vertex_to_idx_(std::move(that.vertex_to_idx_))
+        , idx_to_vertex_(std::move(that.idx_to_vertex_))
     {
         that.size_ = 0;
-        that.matrix_ = nullptr;
+        that.capacity_ = INIT_CAPACITY;
+        that.matrix_ = new std::optional<E>[that.capacity_ * that.capacity_]();
     }
 
     MatrixGraph& operator=(MatrixGraph that)
@@ -143,7 +188,7 @@ public:
     /// Destroy the graph object.
     ~MatrixGraph()
     {
-        free_matrix();
+        delete[] matrix_;
     }
 
     /*
@@ -153,16 +198,16 @@ public:
     /// Check whether two graphs are equal.
     bool operator==(const MatrixGraph& that) const
     {
-        if (size() != that.size())
+        if (size_ != that.size_)
         {
             return false;
         }
 
-        for (V v1 = 0; v1 < size_; v1++)
+        for (int i = 0; i < size_; i++)
         {
-            for (V v2 = 0; v2 < size_; v2++)
+            for (int j = 0; j < size_; j++)
             {
-                if (matrix_[v1][v2] != that.matrix_[v1][v2])
+                if (at(i, j) != that.at(i, j))
                 {
                     return false;
                 }
@@ -176,177 +221,188 @@ public:
      * Examination
      */
 
-    /// Get the number of elements.
+    /// Get the number of vertices.
     int size() const override
     {
         return size_;
     }
 
-    /// Return the distance from vertex `from` to vertex `to`.
-    E distance(const V& from, const V& to) const
+    /// Return the distance from vertex `from` to vertex `to`, or nullopt if no edge exists.
+    std::optional<E> distance(const V& from, const V& to) const
     {
-        detail::check_bounds(from, 0, size_);
-        detail::check_bounds(to, 0, size_);
-
-        return matrix_[from][to];
+        return at(index(from), index(to));
     }
 
     /// Determine if vertex `from` has a link to vertex `to`.
     bool is_adjacent(const V& from, const V& to) const
     {
-        detail::check_bounds(from, 0, size_);
-        detail::check_bounds(to, 0, size_);
-
-        return matrix_[from][to] != NO_EDGE;
+        return at(index(from), index(to)).has_value();
     }
 
     /// Depth-first search graph.
     template <typename F>
     void depth_first_search(const V& start, const F& action) const
     {
-        detail::check_bounds(start, 0, size_);
+        int start_idx = index(start);
 
-        bool* visited = new bool[size_]();
-        dfs(start, action, visited);
-        delete[] visited;
+        auto visited = std::make_unique<bool[]>(size_);
+        dfs(start_idx, action, visited.get());
     }
 
     /// Breadth-first search graph.
     template <typename F>
     void breadth_first_search(const V& start, const F& action) const
     {
-        detail::check_bounds(start, 0, size_);
+        int start_idx = index(start);
 
-        bool* visited = new bool[size_]();
+        auto visited = std::make_unique<bool[]>(size_);
 
         action(start);
-        visited[start] = true;
+        visited[start_idx] = true;
 
-        ArrayQueue<V> queue;
-        queue.enqueue(start);
+        ArrayQueue<int> queue;
+        queue.enqueue(start_idx);
         while (!queue.is_empty())
         {
-            V v1 = queue.dequeue();
-            for (V v2 = 0; v2 < size_; v2++)
+            int v1 = queue.dequeue();
+            for (int v2 = 0; v2 < size_; v2++)
             {
-                if (!visited[v2] && is_adjacent(v1, v2))
+                if (!visited[v2] && at(v1, v2).has_value())
                 {
-                    action(v2);
+                    action(idx_to_vertex_[v2]);
                     visited[v2] = true;
                     queue.enqueue(v2);
                 }
             }
         }
-
-        delete[] visited;
     }
 
     /// The Dijkstra algorithm on the graph. Return distance and path.
-    std::pair<std::unique_ptr<E[]>, std::unique_ptr<V[]>> dijkstra(const V& start) const
+    /// dist[i] = nullopt if vertex at index i is unreachable.
+    /// path[i] = nullopt if vertex at index i has no predecessor (start or unreachable).
+    std::pair<std::unique_ptr<std::optional<E>[]>, std::unique_ptr<std::optional<V>[]>> dijkstra(const V& start) const
     {
-        detail::check_bounds(start, 0, size_);
-        for (V v1 = 0; v1 < size_; ++v1)
+        int start_idx = index(start);
+
+        // Check for negative weights
+        for (int i = 0; i < size_; ++i)
         {
-            for (V v2 = 0; v2 < size_; ++v2)
+            for (int j = 0; j < size_; ++j)
             {
-                if (matrix_[v1][v2] < 0)
+                if (at(i, j).has_value() && at(i, j).value() < E(0))
                 {
                     throw std::runtime_error("Error: Cannot apply Dijkstra algorithm with a negative weighted edge.");
                 }
             }
         }
 
-        // init state
+        // Init state
         auto visited = std::make_unique<bool[]>(size_);
-        auto dist = std::make_unique<E[]>(size_);
-        auto path = std::make_unique<V[]>(size_);
-        for (V v = 0; v < size_; v++)
+        auto dist = std::make_unique<std::optional<E>[]>(size_);
+        auto path = std::make_unique<int[]>(size_);
+
+        for (int v = 0; v < size_; v++)
         {
-            dist[v] = matrix_[start][v];
-            path[v] = dist[v] < NO_EDGE ? start : -1;
+            dist[v] = at(start_idx, v); // may be nullopt
+            path[v] = dist[v].has_value() ? start_idx : -1;
         }
 
-        dist[start] = 0;
-        visited[start] = true;
+        dist[start_idx] = E(0);
+        visited[start_idx] = true;
 
         while (true)
         {
-            V v1 = find_closest(dist.get(), visited.get());
+            int v1 = find_closest(dist.get(), visited.get());
             if (v1 == -1)
             {
                 break;
             }
             visited[v1] = true;
-            for (V v2 = 0; v2 < size_; v2++)
+
+            for (int v2 = 0; v2 < size_; v2++)
             {
-                if (!visited[v2] && matrix_[v1][v2] < NO_EDGE)
+                if (!visited[v2] && at(v1, v2).has_value())
                 {
-                    if (dist[v1] + matrix_[v1][v2] < dist[v2])
+                    E new_dist = dist[v1].value() + at(v1, v2).value();
+                    if (!dist[v2].has_value() || new_dist < dist[v2].value())
                     {
-                        dist[v2] = dist[v1] + matrix_[v1][v2];
+                        dist[v2] = new_dist;
                         path[v2] = v1;
                     }
                 }
             }
         }
 
-        return {std::move(dist), std::move(path)};
+        // Convert path from internal indices back to V (nullopt = no predecessor)
+        auto result_path = std::make_unique<std::optional<V>[]>(size_);
+        for (int i = 0; i < size_; i++)
+        {
+            if (path[i] != -1)
+            {
+                result_path[i] = idx_to_vertex_[path[i]];
+            }
+        }
+
+        return {std::move(dist), std::move(result_path)};
     }
 
     /*
      * Manipulation
      */
 
-    /// Set the number of vertices in the graph.
-    void set_vertex_number(int n)
+    /// Add a vertex. Return whether it was newly inserted (false if already exists).
+    bool add_vertex(const V& v)
     {
-        if (n < 0)
+        if (vertex_to_idx_.contains(v))
         {
-            throw std::runtime_error("Error: Number of vertices cannot be negative.");
+            return false;
         }
 
-        free_matrix();
-
-        size_ = n;
-
-        matrix_ = new E*[n];
-        for (int i = 0; i < n; i++)
+        if (size_ == capacity_)
         {
-            matrix_[i] = new E[n];
+            expand_capacity();
         }
 
-        for (V v1 = 0; v1 < n; v1++)
+        int idx = size_;
+        vertex_to_idx_.insert(v, idx);
+        idx_to_vertex_.append(v);
+        size_++;
+
+        return true;
+    }
+
+    /// Add multiple vertices at once.
+    void add_vertices(std::initializer_list<V> vs)
+    {
+        for (const auto& v : vs)
         {
-            for (V v2 = 0; v2 < n; v2++)
-            {
-                matrix_[v1][v2] = NO_EDGE;
-            }
+            add_vertex(v);
         }
     }
 
     /// Link vertex `from` and vertex `to` with `weight`.
     void link(const V& from, const V& to, const E& weight)
     {
-        detail::check_bounds(from, 0, size_);
-        detail::check_bounds(to, 0, size_);
+        int i = index(from);
+        int j = index(to);
 
-        matrix_[from][to] = weight;
-        if constexpr (Directed == false)
+        at(i, j) = weight;
+        if constexpr (!Directed)
         {
-            matrix_[to][from] = weight;
+            at(j, i) = weight;
         }
     }
 
     /// Disconnect the link from vertex `from` to vertex `to`.
     void unlink(const V& from, const V& to)
     {
-        detail::check_bounds(from, 0, size_);
-        detail::check_bounds(to, 0, size_);
+        int i = index(from);
+        int j = index(to);
 
-        matrix_[from][to] = NO_EDGE;
-        if constexpr (Directed == false)
+        at(i, j).reset();
+        if constexpr (!Directed)
         {
-            matrix_[to][from] = NO_EDGE;
+            at(j, i).reset();
         }
     }
 
@@ -355,9 +411,12 @@ public:
     {
         if (size_ != 0)
         {
-            free_matrix();
             size_ = 0;
-            matrix_ = nullptr;
+            capacity_ = INIT_CAPACITY;
+            delete[] matrix_;
+            matrix_ = new std::optional<E>[capacity_ * capacity_]();
+            vertex_to_idx_.clear();
+            idx_to_vertex_.clear();
         }
     }
 
@@ -369,14 +428,14 @@ public:
     friend std::ostream& operator<<(std::ostream& os, const MatrixGraph& graph)
     {
         os << "Graph(\n";
-        for (V v1 = 0; v1 < graph.size(); v1++)
+        for (int i = 0; i < graph.size_; i++)
         {
-            os << v1 << " -> ";
-            for (V v2 = 0; v2 < graph.size(); v2++)
+            os << graph.idx_to_vertex_[i] << " -> ";
+            for (int j = 0; j < graph.size_; j++)
             {
-                if (graph.is_adjacent(v1, v2))
+                if (graph.at(i, j).has_value())
                 {
-                    os << v2 << "(" << graph.distance(v1, v2) << ") ";
+                    os << graph.idx_to_vertex_[j] << "(" << graph.at(i, j).value() << ") ";
                 }
             }
             os << "\n";

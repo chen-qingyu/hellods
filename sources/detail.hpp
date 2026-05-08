@@ -17,6 +17,7 @@
 #include <functional> // std::greater std::hash std::equal_to
 #include <iterator>   // std::input_iterator
 #include <memory>     // std::make_unique
+#include <optional>   // std::optional std::nullopt
 #include <ostream>    // std::ostream
 #include <sstream>    // std::ostringstream
 #include <stdexcept>  // std::runtime_error

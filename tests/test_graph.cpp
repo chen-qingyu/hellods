@@ -1,44 +1,44 @@
-#include <vector>
-
 #include "tool.hpp"
 
 #include "../sources/Graph/MatrixGraph.hpp"
 
 using namespace hellods;
 
-TEST_CASE("MatrixGraph", "[graph]")
+TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>)
 {
-    // Lifecycle
-    MatrixGraph empty;
-    MatrixGraph some(7);
+    using Graph = TestType;
 
-    MatrixGraph copy = some; // Copy constructor
-    REQUIRE(copy == MatrixGraph(7));
+    // Lifecycle
+    Graph empty;
+    Graph some = {0, 1, 2, 3, 4, 5, 6};
+
+    Graph copy = some; // Copy constructor
+    REQUIRE(copy == Graph({0, 1, 2, 3, 4, 5, 6}));
 
     copy = empty; // Copy assignment
-    REQUIRE(copy == MatrixGraph());
+    REQUIRE(copy == Graph());
     copy = some;
-    REQUIRE(copy == MatrixGraph(7));
+    REQUIRE(copy == Graph({0, 1, 2, 3, 4, 5, 6}));
     copy = copy;
-    REQUIRE(copy == MatrixGraph(7));
+    REQUIRE(copy == Graph({0, 1, 2, 3, 4, 5, 6}));
 
-    MatrixGraph mv = std::move(copy); // Move constructor
-    REQUIRE(mv == MatrixGraph(7));
+    Graph mv = std::move(copy); // Move constructor
+    REQUIRE(mv == Graph({0, 1, 2, 3, 4, 5, 6}));
 
     copy = std::move(mv); // Move assignment
-    REQUIRE(copy == MatrixGraph(7));
+    REQUIRE(copy == Graph({0, 1, 2, 3, 4, 5, 6}));
     copy = std::move(copy);
-    REQUIRE(copy == MatrixGraph(7));
+    REQUIRE(copy == Graph({0, 1, 2, 3, 4, 5, 6}));
 
     // Comparison
-    REQUIRE(empty == MatrixGraph());
-    REQUIRE(some == MatrixGraph(7));
+    REQUIRE(empty == Graph());
+    REQUIRE(some == Graph({0, 1, 2, 3, 4, 5, 6}));
     REQUIRE(empty != some);
-    REQUIRE(some != MatrixGraph(6));
+    REQUIRE(some != Graph({0, 1, 2, 3, 4, 5}));
 
     // Manipulation & Comparison
-    MatrixGraph g1(2);
-    MatrixGraph g2(2);
+    Graph g1 = {0, 1};
+    Graph g2 = {0, 1};
     g1.link(0, 1, 1000);
     g2.link(0, 1, 1000);
     REQUIRE(g1 == g2);
@@ -54,11 +54,11 @@ TEST_CASE("MatrixGraph", "[graph]")
     REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
 
-    REQUIRE_THROWS_MATCHES(empty.is_adjacent(0, 1), std::runtime_error, Message("Error: Index out of range."));
+    REQUIRE_THROWS_MATCHES(empty.is_adjacent(0, 1), std::runtime_error, Message("Error: Vertex does not exist."));
     REQUIRE(some.is_adjacent(0, 1) == false);
 
-    REQUIRE_THROWS_MATCHES(empty.distance(0, 1), std::runtime_error, Message("Error: Index out of range."));
-    REQUIRE(some.distance(0, 1) == MatrixGraph<>::NO_EDGE);
+    REQUIRE_THROWS_MATCHES(empty.distance(0, 1), std::runtime_error, Message("Error: Vertex does not exist."));
+    REQUIRE(some.distance(0, 1) == std::nullopt);
 
     // Manipulation & Examination
     some.link(0, 1, 2);
@@ -93,8 +93,8 @@ TEST_CASE("MatrixGraph", "[graph]")
     REQUIRE(some.is_adjacent(0, 1) == true);
     REQUIRE(some.is_adjacent(0, 6) == false);
     REQUIRE(some.is_adjacent(6, 0) == false);
-    REQUIRE(some.distance(0, 1) == 2);
-    REQUIRE(some.distance(0, 6) == MatrixGraph<>::NO_EDGE);
+    REQUIRE(some.distance(0, 1) == std::optional<int>(2));
+    REQUIRE(some.distance(0, 6) == std::nullopt);
 
     some.link(0, 6, 99);
     REQUIRE(some.is_adjacent(0, 6) == true);
@@ -117,8 +117,20 @@ TEST_CASE("MatrixGraph", "[graph]")
     buf.str("");
 
     auto [dist, path] = some.dijkstra(0);
-    REQUIRE(std::equal(dist.get(), dist.get() + some.size(), std::vector<int>{0, 2, 3, 1, 3, 6, 5}.begin()));
-    REQUIRE(std::equal(path.get(), path.get() + some.size(), std::vector<int>{-1, 0, 3, 0, 3, 6, 3}.begin()));
+    REQUIRE(dist[0] == std::optional<int>(0));
+    REQUIRE(dist[1] == std::optional<int>(2));
+    REQUIRE(dist[2] == std::optional<int>(3));
+    REQUIRE(dist[3] == std::optional<int>(1));
+    REQUIRE(dist[4] == std::optional<int>(3));
+    REQUIRE(dist[5] == std::optional<int>(6));
+    REQUIRE(dist[6] == std::optional<int>(5));
+    REQUIRE(path[0] == std::nullopt);
+    REQUIRE(path[1] == std::optional<int>(0));
+    REQUIRE(path[2] == std::optional<int>(3));
+    REQUIRE(path[3] == std::optional<int>(0));
+    REQUIRE(path[4] == std::optional<int>(3));
+    REQUIRE(path[5] == std::optional<int>(6));
+    REQUIRE(path[6] == std::optional<int>(3));
 
     // Print
     std::ostringstream oss;
