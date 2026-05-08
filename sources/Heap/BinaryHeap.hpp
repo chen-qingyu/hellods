@@ -141,7 +141,7 @@ public:
 
         T element = std::move(list_[0]);
         list_[0] = list_[list_.size() - 1];
-        list_.remove(list_.size() - 1);
+        list_.pop();
         proc_down(0);
 
         return element;

@@ -124,7 +124,7 @@ public:
     /// Pop back, pop the back element of the deque.
     T pop_back() override
     {
-        return list_.remove(list_.size() - 1);
+        return list_.pop();
     }
 
     /// Remove all of the elements from the deque.

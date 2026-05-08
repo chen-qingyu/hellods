@@ -87,7 +87,7 @@ public:
     /// Pop the top element of the stack.
     T pop() override
     {
-        return list_.remove(list_.size() - 1);
+        return list_.pop();
     }
 
     /// Remove all of the elements from the stack.
