@@ -51,6 +51,12 @@ public:
     /// Remove and return the element at the specified position in the list.
     virtual T remove(int index) = 0;
 
+    /// Remove and return the last element in the list.
+    virtual T pop()
+    {
+        return remove(size() - 1);
+    }
+
     /// Remove all of the elements from the list.
     virtual void clear() = 0;
 };

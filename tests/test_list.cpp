@@ -114,6 +114,12 @@ TEMPLATE_TEST_CASE("List", "[list]", ArrayList<int>, LinkedList<int>, SinglyLink
     REQUIRE(empty.remove(0) == 3);
     REQUIRE_THROWS_MATCHES(empty.remove(0), std::runtime_error, Message("Error: The container is empty."));
 
+    tmp = {1, 2, 3};
+    REQUIRE(tmp.pop() == 3);
+    REQUIRE(tmp.pop() == 2);
+    REQUIRE(tmp.pop() == 1);
+    REQUIRE_THROWS_MATCHES(tmp.pop(), std::runtime_error, Message("Error: The container is empty."));
+
     some.clear();
     REQUIRE(some == empty);
     some.clear(); // double clear
