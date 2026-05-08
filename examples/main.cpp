@@ -11,6 +11,7 @@
 
 void simulate_bank_queuing(int win_num, int serv_time);
 double calculator(const std::string& expr);
+void metro_planner();
 
 // 从标准输入读取一个整数，支持验证。失败时返回默认值。
 static int read_int(const std::string& prompt, bool require_positive = false)
@@ -80,6 +81,7 @@ int main()
     {
         std::cout << "\n1. Calculator (infix expression evaluation)\n";
         std::cout << "2. Bank Queuing (multi-window simulation)\n";
+        std::cout << "3. Metro Planner (Chengdu Metro route planning)\n";
         std::cout << "0. Exit\n";
 
         int choice = read_int("Choose: ");
@@ -92,6 +94,10 @@ int main()
 
             case 2:
                 run_bank_queuing();
+                break;
+
+            case 3:
+                metro_planner();
                 break;
 
             case 0:
