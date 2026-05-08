@@ -116,21 +116,21 @@ TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>)
     REQUIRE(buf.str() == "0 1 3 4 2 5 6 ");
     buf.str("");
 
-    auto [dist, path] = some.dijkstra(0);
-    REQUIRE(dist[0] == std::optional<int>(0));
-    REQUIRE(dist[1] == std::optional<int>(2));
-    REQUIRE(dist[2] == std::optional<int>(3));
-    REQUIRE(dist[3] == std::optional<int>(1));
-    REQUIRE(dist[4] == std::optional<int>(3));
-    REQUIRE(dist[5] == std::optional<int>(6));
-    REQUIRE(dist[6] == std::optional<int>(5));
-    REQUIRE(path[0] == std::nullopt);
-    REQUIRE(path[1] == std::optional<int>(0));
-    REQUIRE(path[2] == std::optional<int>(3));
-    REQUIRE(path[3] == std::optional<int>(0));
-    REQUIRE(path[4] == std::optional<int>(3));
-    REQUIRE(path[5] == std::optional<int>(6));
-    REQUIRE(path[6] == std::optional<int>(3));
+    auto sp = some.dijkstra(0);
+    REQUIRE(sp.dist(0) == std::optional<int>(0));
+    REQUIRE(sp.dist(1) == std::optional<int>(2));
+    REQUIRE(sp.dist(2) == std::optional<int>(3));
+    REQUIRE(sp.dist(3) == std::optional<int>(1));
+    REQUIRE(sp.dist(4) == std::optional<int>(3));
+    REQUIRE(sp.dist(5) == std::optional<int>(6));
+    REQUIRE(sp.dist(6) == std::optional<int>(5));
+    REQUIRE(sp.prev(0) == std::nullopt);
+    REQUIRE(sp.prev(1) == std::optional<int>(0));
+    REQUIRE(sp.prev(2) == std::optional<int>(3));
+    REQUIRE(sp.prev(3) == std::optional<int>(0));
+    REQUIRE(sp.prev(4) == std::optional<int>(3));
+    REQUIRE(sp.prev(5) == std::optional<int>(6));
+    REQUIRE(sp.prev(6) == std::optional<int>(3));
 
     // Print
     std::ostringstream oss;

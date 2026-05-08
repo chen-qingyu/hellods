@@ -123,6 +123,28 @@ protected:
         return min_v;
     }
 
+    /// Result of the Dijkstra shortest path algorithm.
+    /// Query by vertex: sp.dist(v), sp.prev(v).
+    struct ShortestPath
+    {
+        HashMap<V, std::optional<E>> dist_;
+        HashMap<V, std::optional<V>> prev_;
+
+        /// Shortest distance from start to vertex v (nullopt if unreachable).
+        std::optional<E> dist(const V& v) const
+        {
+            auto it = dist_.find(v);
+            return it == dist_.end() ? std::nullopt : it->value();
+        }
+
+        /// Predecessor of vertex v on the shortest path (nullopt if start or unreachable).
+        std::optional<V> prev(const V& v) const
+        {
+            auto it = prev_.find(v);
+            return it == prev_.end() ? std::nullopt : it->value();
+        }
+    };
+
 public:
     /*
      * Lifecycle
@@ -277,10 +299,8 @@ public:
         }
     }
 
-    /// The Dijkstra algorithm on the graph. Return distance and path.
-    /// dist[i] = nullopt if vertex at index i is unreachable.
-    /// path[i] = nullopt if vertex at index i has no predecessor (start or unreachable).
-    std::pair<std::unique_ptr<std::optional<E>[]>, std::unique_ptr<std::optional<V>[]>> dijkstra(const V& start) const
+    /// The Dijkstra algorithm on the graph. Return shortest paths from start.
+    ShortestPath dijkstra(const V& start) const
     {
         int start_idx = index(start);
 
@@ -333,17 +353,19 @@ public:
             }
         }
 
-        // Convert path from internal indices back to V (nullopt = no predecessor)
-        auto result_path = std::make_unique<std::optional<V>[]>(size_);
+        // Build result maps (only insert valid predecessors; absent = nullopt)
+        ShortestPath result;
         for (int i = 0; i < size_; i++)
         {
+            result.dist_.insert(idx_to_vertex_[i], dist[i]);
+
             if (path[i] != -1)
             {
-                result_path[i] = idx_to_vertex_[path[i]];
+                result.prev_.insert(idx_to_vertex_[i], idx_to_vertex_[path[i]]);
             }
         }
 
-        return {std::move(dist), std::move(result_path)};
+        return result;
     }
 
     /*
