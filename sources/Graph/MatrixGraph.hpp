@@ -8,8 +8,9 @@
 #ifndef MATRIXGRAPH_HPP
 #define MATRIXGRAPH_HPP
 
+#include "Graph.hpp"
+
 #include "../List/ArrayList.hpp"
-#include "../Map/HashMap.hpp"
 #include "../Queue/ArrayQueue.hpp"
 
 namespace hellods
@@ -18,7 +19,7 @@ namespace hellods
 /// Graph implemented by adjacency matrix. Default is directed graph.
 template <typename V = int, typename E = int, bool Directed = true>
     requires detail::HashKey<V, std::hash<V>, std::equal_to<V>>
-class MatrixGraph : public detail::Container
+class MatrixGraph : public Graph<V, E, Directed>
 {
 protected:
     using detail::Container::INIT_CAPACITY;
@@ -109,43 +110,9 @@ protected:
         }
     }
 
-    // Find the closest unvisited vertex (Dijkstra helper).
-    int find_closest(const std::optional<E>* dist, const bool* visited) const
-    {
-        int min_v = -1;
-        for (int v = 0; v < size_; v++)
-        {
-            if (!visited[v] && dist[v].has_value() && (min_v == -1 || dist[v].value() < dist[min_v].value()))
-            {
-                min_v = v;
-            }
-        }
-        return min_v;
-    }
-
-    /// Result of the Dijkstra shortest path algorithm.
-    /// Query by vertex: sp.dist(v), sp.prev(v).
-    struct ShortestPath
-    {
-        HashMap<V, std::optional<E>> dist_;
-        HashMap<V, std::optional<V>> prev_;
-
-        /// Shortest distance from start to vertex v (nullopt if unreachable).
-        std::optional<E> dist(const V& v) const
-        {
-            auto it = dist_.find(v);
-            return it == dist_.end() ? std::nullopt : it->value();
-        }
-
-        /// Predecessor of vertex v on the shortest path (nullopt if start or unreachable).
-        std::optional<V> prev(const V& v) const
-        {
-            auto it = prev_.find(v);
-            return it == prev_.end() ? std::nullopt : it->value();
-        }
-    };
-
 public:
+    using ShortestPath = typename Graph<V, E, Directed>::ShortestPath;
+
     /*
      * Lifecycle
      */
@@ -168,10 +135,7 @@ public:
         , vertex_to_idx_()
         , idx_to_vertex_()
     {
-        for (const auto& v : vs)
-        {
-            add_vertex(v);
-        }
+        this->add_vertices(vs);
     }
 
     /// Copy constructor.
@@ -220,14 +184,14 @@ public:
     /// Check whether two graphs are equal.
     bool operator==(const MatrixGraph& that) const
     {
-        if (size_ != that.size_)
+        if (size_ != that.size_ || idx_to_vertex_ != that.idx_to_vertex_)
         {
             return false;
         }
 
-        for (int i = 0; i < size_; i++)
+        for (int i = 0; i < size_; ++i)
         {
-            for (int j = 0; j < size_; j++)
+            for (int j = 0; j < size_; ++j)
             {
                 if (at(i, j) != that.at(i, j))
                 {
@@ -250,20 +214,13 @@ public:
     }
 
     /// Return the distance from vertex `from` to vertex `to`, or nullopt if no edge exists.
-    std::optional<E> distance(const V& from, const V& to) const
+    std::optional<E> distance(const V& from, const V& to) const override
     {
         return at(index(from), index(to));
     }
 
-    /// Determine if vertex `from` has a link to vertex `to`.
-    bool is_adjacent(const V& from, const V& to) const
-    {
-        return at(index(from), index(to)).has_value();
-    }
-
     /// Depth-first search graph.
-    template <typename F>
-    void depth_first_search(const V& start, const F& action) const
+    void depth_first_search(const V& start, const std::function<void(const V&)>& action) const override
     {
         int start_idx = index(start);
 
@@ -272,14 +229,13 @@ public:
     }
 
     /// Breadth-first search graph.
-    template <typename F>
-    void breadth_first_search(const V& start, const F& action) const
+    void breadth_first_search(const V& start, const std::function<void(const V&)>& action) const override
     {
         int start_idx = index(start);
 
         auto visited = std::make_unique<bool[]>(size_);
 
-        action(start);
+        action(idx_to_vertex_[start_idx]);
         visited[start_idx] = true;
 
         ArrayQueue<int> queue;
@@ -300,7 +256,7 @@ public:
     }
 
     /// The Dijkstra algorithm on the graph. Return shortest paths from start.
-    ShortestPath dijkstra(const V& start) const
+    ShortestPath dijkstra(const V& start) const override
     {
         int start_idx = index(start);
 
@@ -332,7 +288,15 @@ public:
 
         while (true)
         {
-            int v1 = find_closest(dist.get(), visited.get());
+            int v1 = -1;
+            for (int v = 0; v < size_; ++v)
+            {
+                if (!visited[v] && dist[v].has_value() && (v1 == -1 || dist[v].value() < dist[v1].value()))
+                {
+                    v1 = v;
+                }
+            }
+
             if (v1 == -1)
             {
                 break;
@@ -353,12 +317,10 @@ public:
             }
         }
 
-        // Build result maps (only insert valid predecessors; absent = nullopt)
         ShortestPath result;
-        for (int i = 0; i < size_; i++)
+        for (int i = 0; i < size_; ++i)
         {
             result.dist_.insert(idx_to_vertex_[i], dist[i]);
-
             if (path[i] != -1)
             {
                 result.prev_.insert(idx_to_vertex_[i], idx_to_vertex_[path[i]]);
@@ -373,7 +335,7 @@ public:
      */
 
     /// Add a vertex. Return whether it was newly inserted (false if already exists).
-    bool add_vertex(const V& v)
+    bool add_vertex(const V& v) override
     {
         if (vertex_to_idx_.contains(v))
         {
@@ -393,17 +355,8 @@ public:
         return true;
     }
 
-    /// Add multiple vertices at once.
-    void add_vertices(std::initializer_list<V> vs)
-    {
-        for (const auto& v : vs)
-        {
-            add_vertex(v);
-        }
-    }
-
     /// Link vertex `from` and vertex `to` with `weight`.
-    void link(const V& from, const V& to, const E& weight)
+    void link(const V& from, const V& to, const E& weight) override
     {
         int i = index(from);
         int j = index(to);
@@ -416,7 +369,7 @@ public:
     }
 
     /// Disconnect the link from vertex `from` to vertex `to`.
-    void unlink(const V& from, const V& to)
+    void unlink(const V& from, const V& to) override
     {
         int i = index(from);
         int j = index(to);
@@ -429,7 +382,7 @@ public:
     }
 
     /// Clear this graph.
-    void clear()
+    void clear() override
     {
         if (size_ != 0)
         {

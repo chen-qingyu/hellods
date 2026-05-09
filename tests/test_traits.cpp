@@ -4,6 +4,7 @@
 
 #include "../sources/Deque/ArrayDeque.hpp"
 #include "../sources/Deque/LinkedDeque.hpp"
+#include "../sources/Graph/ListGraph.hpp"
 #include "../sources/Graph/MatrixGraph.hpp"
 #include "../sources/Heap/BinaryHeap.hpp"
 #include "../sources/List/ArrayList.hpp"
@@ -52,6 +53,7 @@ static_assert(kFullFeaturedContainer<BinaryHeap<int>>);
 static_assert(kFullFeaturedContainer<BinarySearchTree<int>>);
 static_assert(kFullFeaturedContainer<RedBlackTree<int>>);
 static_assert(kFullFeaturedContainer<SplayTree<int>>);
+static_assert(kFullFeaturedContainer<ListGraph<>>);
 static_assert(kFullFeaturedContainer<MatrixGraph<>>);
 static_assert(kFullFeaturedContainer<TreeSet<int>>);
 static_assert(kFullFeaturedContainer<TreeMap<int, int>>);

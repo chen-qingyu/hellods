@@ -1,10 +1,11 @@
 #include "tool.hpp"
 
+#include "../sources/Graph/ListGraph.hpp"
 #include "../sources/Graph/MatrixGraph.hpp"
 
 using namespace hellods;
 
-TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>)
+TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>, ListGraph<>)
 {
     using Graph = TestType;
 
