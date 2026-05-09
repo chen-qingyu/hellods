@@ -405,7 +405,7 @@ public:
         int edges = 0;
         for (int i = 0; i < graph.size_; ++i)
         {
-            for (int j = 0; j < graph.size_; ++j)
+            for (int j = (Directed ? 0 : i); j < graph.size_; ++j)
             {
                 if (graph.at(i, j).has_value())
                 {
@@ -413,40 +413,87 @@ public:
                 }
             }
         }
-        if constexpr (!Directed)
-        {
-            edges /= 2;
-        }
 
         os << "Graph {\n"
            << "  type: " << (Directed ? "directed" : "undirected") << "\n"
            << "  vertices: " << graph.size_ << "\n"
            << "  edges: " << edges << "\n";
 
-        for (int i = 0; i < graph.size_; ++i)
+        if constexpr (Directed)
         {
-            os << "  " << graph.idx_to_vertex_[i] << ": [";
-
-            bool first = true;
-            for (int j = 0; j < graph.size_; ++j)
+            for (int i = 0; i < graph.size_; ++i)
             {
-                if (!graph.at(i, j).has_value())
+                os << "  " << graph.idx_to_vertex_[i] << ": [";
+
+                bool first = true;
+                for (int j = 0; j < graph.size_; ++j)
                 {
-                    continue;
+                    if (!graph.at(i, j).has_value())
+                    {
+                        continue;
+                    }
+
+                    if (!first)
+                    {
+                        os << ", ";
+                    }
+                    first = false;
+                    os << graph.idx_to_vertex_[j] << "(w=" << graph.at(i, j).value() << ")";
                 }
 
-                if (!first)
-                {
-                    os << ", ";
-                }
-                first = false;
-                os << graph.idx_to_vertex_[j] << "(w=" << graph.at(i, j).value() << ")";
+                os << "]\n";
             }
-
-            os << "]\n";
+        }
+        else
+        {
+            for (int i = 0; i < graph.size_; ++i)
+            {
+                for (int j = i; j < graph.size_; ++j)
+                {
+                    if (graph.at(i, j).has_value())
+                    {
+                        os << "  " << graph.idx_to_vertex_[i] << " -- " << graph.idx_to_vertex_[j]
+                           << "(w=" << graph.at(i, j).value() << ")\n";
+                    }
+                }
+            }
         }
 
         return os << "}";
+    }
+
+    /// Export the graph as Graphviz DOT.
+    std::string to_dot() const override
+    {
+        auto quote = [](const auto& value)
+        {
+            std::ostringstream oss;
+            oss << '"' << value << '"';
+            return oss.str();
+        };
+
+        std::ostringstream oss;
+        oss << (Directed ? "digraph G {\n" : "graph G {\n");
+
+        for (int i = 0; i < size_; ++i)
+        {
+            oss << "  " << quote(idx_to_vertex_[i]) << ";\n";
+        }
+
+        const char* connector = Directed ? " -> " : " -- ";
+        for (int i = 0; i < size_; ++i)
+        {
+            for (int j = (Directed ? 0 : i); j < size_; ++j)
+            {
+                if (at(i, j).has_value())
+                {
+                    oss << "  " << quote(idx_to_vertex_[i]) << connector << quote(idx_to_vertex_[j])
+                        << " [label=\"" << at(i, j).value() << "\"];\n";
+                }
+            }
+        }
+
+        return oss << "}", oss.str();
     }
 };
 

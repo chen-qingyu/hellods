@@ -347,11 +347,20 @@ public:
         int edges = 0;
         for (int i = 0; i < graph.adjacency_.size(); ++i)
         {
-            edges += graph.adjacency_[i].size();
-        }
-        if constexpr (!Directed)
-        {
-            edges /= 2;
+            if constexpr (Directed)
+            {
+                edges += graph.adjacency_[i].size();
+            }
+            else
+            {
+                for (int j = 0; j < graph.adjacency_[i].size(); ++j)
+                {
+                    if (i <= graph.adjacency_[i][j].to_)
+                    {
+                        ++edges;
+                    }
+                }
+            }
         }
 
         os << "Graph {\n"
@@ -359,24 +368,82 @@ public:
            << "  vertices: " << graph.idx_to_vertex_.size() << "\n"
            << "  edges: " << edges << "\n";
 
-        for (int i = 0; i < graph.idx_to_vertex_.size(); ++i)
+        if constexpr (Directed)
         {
-            os << "  " << graph.idx_to_vertex_[i] << ": [";
-
-            const auto& edges = graph.adjacency_[i];
-            for (int j = 0; j < edges.size(); ++j)
+            for (int i = 0; i < graph.idx_to_vertex_.size(); ++i)
             {
-                if (j != 0)
-                {
-                    os << ", ";
-                }
-                os << graph.idx_to_vertex_[edges[j].to_] << "(w=" << edges[j].weight_ << ")";
-            }
+                os << "  " << graph.idx_to_vertex_[i] << ": [";
 
-            os << "]\n";
+                const auto& edges = graph.adjacency_[i];
+                for (int j = 0; j < edges.size(); ++j)
+                {
+                    if (j != 0)
+                    {
+                        os << ", ";
+                    }
+                    os << graph.idx_to_vertex_[edges[j].to_] << "(w=" << edges[j].weight_ << ")";
+                }
+
+                os << "]\n";
+            }
+        }
+        else
+        {
+            for (int i = 0; i < graph.idx_to_vertex_.size(); ++i)
+            {
+                const auto& edges = graph.adjacency_[i];
+                for (int j = 0; j < edges.size(); ++j)
+                {
+                    if (i <= edges[j].to_)
+                    {
+                        os << "  " << graph.idx_to_vertex_[i] << " -- " << graph.idx_to_vertex_[edges[j].to_]
+                           << "(w=" << edges[j].weight_ << ")\n";
+                    }
+                }
+            }
         }
 
         return os << "}";
+    }
+
+    /// Export the graph as Graphviz DOT.
+    std::string to_dot() const override
+    {
+        auto quote = [](const auto& value)
+        {
+            std::ostringstream oss;
+            oss << '"' << value << '"';
+            return oss.str();
+        };
+
+        std::ostringstream oss;
+        oss << (Directed ? "digraph G {\n" : "graph G {\n");
+
+        for (int i = 0; i < idx_to_vertex_.size(); ++i)
+        {
+            oss << "  " << quote(idx_to_vertex_[i]) << ";\n";
+        }
+
+        const char* connector = Directed ? " -> " : " -- ";
+        for (int i = 0; i < adjacency_.size(); ++i)
+        {
+            const auto& edges = adjacency_[i];
+            for (int j = 0; j < edges.size(); ++j)
+            {
+                if constexpr (!Directed)
+                {
+                    if (i > edges[j].to_)
+                    {
+                        continue;
+                    }
+                }
+
+                oss << "  " << quote(idx_to_vertex_[i]) << connector << quote(idx_to_vertex_[edges[j].to_])
+                    << " [label=\"" << edges[j].weight_ << "\"];\n";
+            }
+        }
+
+        return oss << "}", oss.str();
     }
 };
 

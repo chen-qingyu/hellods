@@ -156,9 +156,65 @@ TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>, ListGraph<>)
             "}");
     oss.str("");
 
+    REQUIRE(some.to_dot() ==
+            "digraph G {\n"
+            "  \"0\";\n"
+            "  \"1\";\n"
+            "  \"2\";\n"
+            "  \"3\";\n"
+            "  \"4\";\n"
+            "  \"5\";\n"
+            "  \"6\";\n"
+            "  \"0\" -> \"1\" [label=\"2\"];\n"
+            "  \"0\" -> \"3\" [label=\"1\"];\n"
+            "  \"1\" -> \"3\" [label=\"3\"];\n"
+            "  \"1\" -> \"4\" [label=\"10\"];\n"
+            "  \"2\" -> \"0\" [label=\"4\"];\n"
+            "  \"2\" -> \"5\" [label=\"5\"];\n"
+            "  \"3\" -> \"2\" [label=\"2\"];\n"
+            "  \"3\" -> \"4\" [label=\"2\"];\n"
+            "  \"3\" -> \"5\" [label=\"8\"];\n"
+            "  \"3\" -> \"6\" [label=\"4\"];\n"
+            "  \"4\" -> \"6\" [label=\"6\"];\n"
+            "  \"6\" -> \"5\" [label=\"1\"];\n"
+            "}");
+
     // Manipulation
     some.clear();
     REQUIRE(some == empty);
     some.clear(); // double clear
     REQUIRE(some == empty);
+}
+
+TEMPLATE_TEST_CASE("Undirected graph print and dot", "[graph]", (MatrixGraph<int, int, false>), (ListGraph<int, int, false>))
+{
+    using Graph = TestType;
+
+    Graph g = {0, 1, 2, 3};
+    g.link(0, 1, 2);
+    g.link(1, 2, 3);
+    g.link(2, 3, 4);
+
+    std::ostringstream oss;
+    oss << g;
+    REQUIRE(oss.str() ==
+            "Graph {\n"
+            "  type: undirected\n"
+            "  vertices: 4\n"
+            "  edges: 3\n"
+            "  0 -- 1(w=2)\n"
+            "  1 -- 2(w=3)\n"
+            "  2 -- 3(w=4)\n"
+            "}");
+
+    REQUIRE(g.to_dot() ==
+            "graph G {\n"
+            "  \"0\";\n"
+            "  \"1\";\n"
+            "  \"2\";\n"
+            "  \"3\";\n"
+            "  \"0\" -- \"1\" [label=\"2\"];\n"
+            "  \"1\" -- \"2\" [label=\"3\"];\n"
+            "  \"2\" -- \"3\" [label=\"4\"];\n"
+            "}");
 }
