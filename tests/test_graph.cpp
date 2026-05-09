@@ -137,20 +137,23 @@ TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>, ListGraph<>)
     std::ostringstream oss;
 
     oss << empty;
-    REQUIRE(oss.str() == "Graph(\n)");
+    REQUIRE(oss.str() == "Graph {\n  type: directed\n  vertices: 0\n  edges: 0\n}");
     oss.str("");
 
     oss << some;
-    REQUIRE(oss.str() == "\
-Graph(\n\
-0 -> 1(2) 3(1) \n\
-1 -> 3(3) 4(10) \n\
-2 -> 0(4) 5(5) \n\
-3 -> 2(2) 4(2) 5(8) 6(4) \n\
-4 -> 6(6) \n\
-5 -> \n\
-6 -> 5(1) \n\
-)");
+    REQUIRE(oss.str() ==
+            "Graph {\n"
+            "  type: directed\n"
+            "  vertices: 7\n"
+            "  edges: 12\n"
+            "  0: [1(w=2), 3(w=1)]\n"
+            "  1: [3(w=3), 4(w=10)]\n"
+            "  2: [0(w=4), 5(w=5)]\n"
+            "  3: [2(w=2), 4(w=2), 5(w=8), 6(w=4)]\n"
+            "  4: [6(w=6)]\n"
+            "  5: []\n"
+            "  6: [5(w=1)]\n"
+            "}");
     oss.str("");
 
     // Manipulation

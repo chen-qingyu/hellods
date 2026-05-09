@@ -402,20 +402,51 @@ public:
     /// Print the graph.
     friend std::ostream& operator<<(std::ostream& os, const MatrixGraph& graph)
     {
-        os << "Graph(\n";
-        for (int i = 0; i < graph.size_; i++)
+        int edges = 0;
+        for (int i = 0; i < graph.size_; ++i)
         {
-            os << graph.idx_to_vertex_[i] << " -> ";
-            for (int j = 0; j < graph.size_; j++)
+            for (int j = 0; j < graph.size_; ++j)
             {
                 if (graph.at(i, j).has_value())
                 {
-                    os << graph.idx_to_vertex_[j] << "(" << graph.at(i, j).value() << ") ";
+                    ++edges;
                 }
             }
-            os << "\n";
         }
-        return os << ")";
+        if constexpr (!Directed)
+        {
+            edges /= 2;
+        }
+
+        os << "Graph {\n"
+           << "  type: " << (Directed ? "directed" : "undirected") << "\n"
+           << "  vertices: " << graph.size_ << "\n"
+           << "  edges: " << edges << "\n";
+
+        for (int i = 0; i < graph.size_; ++i)
+        {
+            os << "  " << graph.idx_to_vertex_[i] << ": [";
+
+            bool first = true;
+            for (int j = 0; j < graph.size_; ++j)
+            {
+                if (!graph.at(i, j).has_value())
+                {
+                    continue;
+                }
+
+                if (!first)
+                {
+                    os << ", ";
+                }
+                first = false;
+                os << graph.idx_to_vertex_[j] << "(w=" << graph.at(i, j).value() << ")";
+            }
+
+            os << "]\n";
+        }
+
+        return os << "}";
     }
 };
 

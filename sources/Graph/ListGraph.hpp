@@ -344,18 +344,39 @@ public:
     /// Print the graph.
     friend std::ostream& operator<<(std::ostream& os, const ListGraph& graph)
     {
-        os << "Graph(\n";
+        int edges = 0;
+        for (int i = 0; i < graph.adjacency_.size(); ++i)
+        {
+            edges += graph.adjacency_[i].size();
+        }
+        if constexpr (!Directed)
+        {
+            edges /= 2;
+        }
+
+        os << "Graph {\n"
+           << "  type: " << (Directed ? "directed" : "undirected") << "\n"
+           << "  vertices: " << graph.idx_to_vertex_.size() << "\n"
+           << "  edges: " << edges << "\n";
+
         for (int i = 0; i < graph.idx_to_vertex_.size(); ++i)
         {
-            os << graph.idx_to_vertex_[i] << " -> ";
+            os << "  " << graph.idx_to_vertex_[i] << ": [";
+
             const auto& edges = graph.adjacency_[i];
             for (int j = 0; j < edges.size(); ++j)
             {
-                os << graph.idx_to_vertex_[edges[j].to_] << "(" << edges[j].weight_ << ") ";
+                if (j != 0)
+                {
+                    os << ", ";
+                }
+                os << graph.idx_to_vertex_[edges[j].to_] << "(w=" << edges[j].weight_ << ")";
             }
-            os << "\n";
+
+            os << "]\n";
         }
-        return os << ")";
+
+        return os << "}";
     }
 };
 
