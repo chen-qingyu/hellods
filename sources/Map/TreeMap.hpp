@@ -9,6 +9,7 @@
 #define TREEMAP_HPP
 
 #include "../Tree/RedBlackTree.hpp"
+#include "Map.hpp"
 
 namespace hellods
 {
@@ -16,14 +17,11 @@ namespace hellods
 /// Map implemented by tree.
 template <typename K, detail::StoredElement V, typename Tree = RedBlackTree<detail::MapEntry<K, V>>>
     requires detail::OrderedElement<K>
-class TreeMap : public detail::Container
+class TreeMap : public Map<K, V>
 {
     Tree tree_;
 
 public:
-    using Iterator = typename Tree::Iterator;
-    using ConstIterator = Iterator;
-
     /*
      * Lifecycle
      */
@@ -80,7 +78,7 @@ public:
      */
 
     /// Return the reference of value for key if key is in the map, else throw exception.
-    V& operator[](const K& key)
+    V& operator[](const K& key) override
     {
         auto it = tree_.find(detail::MapEntry<K, V>{key, V()});
         if (it == tree_.end())
@@ -91,7 +89,7 @@ public:
     }
 
     /// Return the const reference of value for key if key is in the map, else throw exception.
-    const V& operator[](const K& key) const
+    const V& operator[](const K& key) const override
     {
         auto it = tree_.find(detail::MapEntry<K, V>{key, V()});
         if (it == tree_.end())
@@ -106,13 +104,23 @@ public:
      */
 
     /// Return an iterator to the first element of the map.
-    auto begin() const
+    Map<K, V>::Iterator begin() override
+    {
+        return tree_.begin();
+    }
+
+    Map<K, V>::Iterator begin() const override
     {
         return tree_.begin();
     }
 
     /// Return an iterator to the element following the last element of the map.
-    auto end() const
+    Map<K, V>::Iterator end() override
+    {
+        return tree_.end();
+    }
+
+    Map<K, V>::Iterator end() const override
     {
         return tree_.end();
     }
@@ -128,18 +136,13 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
-    Iterator find(const K& key)
-    {
-        return tree_.find(detail::MapEntry<K, V>{key, V()});
-    }
-
-    Iterator find(const K& key) const
+    Map<K, V>::Iterator find(const K& key) const override
     {
         return tree_.find(detail::MapEntry<K, V>{key, V()});
     }
 
     /// Determine whether a key is in the map.
-    bool contains(const K& key) const
+    bool contains(const K& key) const override
     {
         return tree_.contains(detail::MapEntry<K, V>{key, V()});
     }
@@ -149,19 +152,19 @@ public:
      */
 
     /// Insert a new key-value pair into the map. Return whether the pair was newly inserted.
-    bool insert(const K& key, const V& value)
+    bool insert(const K& key, const V& value) override
     {
         return tree_.insert(detail::MapEntry<K, V>{key, value});
     }
 
     /// Remove the key-value pair corresponding to the key in the map. Return whether such a key was present.
-    bool remove(const K& key)
+    bool remove(const K& key) override
     {
         return tree_.remove(detail::MapEntry<K, V>{key, V()});
     }
 
     /// Remove all of the elements from the map.
-    void clear()
+    void clear() override
     {
         tree_.clear();
     }

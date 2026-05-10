@@ -9,6 +9,7 @@
 #define HASHSET_HPP
 
 #include "../Map/HashMap.hpp"
+#include "Set.hpp"
 
 namespace hellods
 {
@@ -16,7 +17,7 @@ namespace hellods
 /// Hash set.
 template <typename T, typename Hash = std::hash<T>, typename Eq = std::equal_to<T>>
     requires detail::HashKey<T, Hash, Eq>
-class HashSet : public detail::Container
+class HashSet : public Set<T>
 {
 protected:
     // Dummy value type for internal map.
@@ -31,11 +32,8 @@ public:
     /// Set iterator class.
     ///
     /// Walk the set in random order.
-    ///
-    /// Because the internal items of the set have a fixed position,
-    /// thus the iterator of the set does not support modification for item.
     template <bool Const>
-    class BasicIterator
+    class Iter
     {
         friend class HashSet;
 
@@ -47,62 +45,34 @@ public:
         MapIterator map_it_;
 
         // Constructor.
-        BasicIterator(MapIterator it)
+        Iter(MapIterator it)
             : map_it_(it)
         {
         }
 
     public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = T;
-        using difference_type = int;
-        using pointer = const value_type*;
-        using reference = const value_type&;
-
-        bool operator==(const BasicIterator& that) const
-        {
-            return map_it_ == that.map_it_;
-        }
-
         const T& operator*() const
         {
             return map_it_->key();
         }
 
-        const T* operator->() const
+        bool operator==(const Iter& that) const
         {
-            return &(map_it_->key());
+            return map_it_ == that.map_it_;
         }
 
-        BasicIterator& operator++()
+        Iter& operator++()
         {
             ++map_it_;
             return *this;
         }
 
-        BasicIterator operator++(int)
-        {
-            auto it = *this;
-            ++*this;
-            return it;
-        }
-
-        BasicIterator& operator--()
+        Iter& operator--()
         {
             --map_it_;
             return *this;
         }
-
-        BasicIterator operator--(int)
-        {
-            auto it = *this;
-            --*this;
-            return it;
-        }
     };
-
-    using Iterator = BasicIterator<false>;
-    using ConstIterator = BasicIterator<true>;
 
 public:
     /*
@@ -156,25 +126,25 @@ public:
      */
 
     /// Return an iterator to the first element of the set.
-    auto begin()
+    Set<T>::Iterator begin() override
     {
-        return Iterator(map_.begin());
+        return typename Set<T>::Iterator(Iter<true>(map_.begin()));
     }
 
-    auto begin() const
+    Set<T>::Iterator begin() const override
     {
-        return ConstIterator(map_.begin());
+        return typename Set<T>::Iterator(Iter<true>(map_.begin()));
     }
 
     /// Return an iterator to the element following the last element of the set.
-    auto end()
+    Set<T>::Iterator end() override
     {
-        return Iterator(map_.end());
+        return typename Set<T>::Iterator(Iter<true>(map_.end()));
     }
 
-    auto end() const
+    Set<T>::Iterator end() const override
     {
-        return ConstIterator(map_.end());
+        return typename Set<T>::Iterator(Iter<true>(map_.end()));
     }
 
     /*
@@ -188,18 +158,13 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified item, or end() if the set does not contains the item.
-    Iterator find(const T& item)
+    Set<T>::Iterator find(const T& item) const override
     {
-        return Iterator(map_.find(item));
-    }
-
-    ConstIterator find(const T& item) const
-    {
-        return ConstIterator(map_.find(item));
+        return typename Set<T>::Iterator(Iter<true>(map_.find(item)));
     }
 
     /// Determine whether a item is in the set.
-    bool contains(const T& item) const
+    bool contains(const T& item) const override
     {
         return map_.contains(item);
     }
@@ -209,19 +174,19 @@ public:
      */
 
     /// Insert a new item into the set. Return whether the item was newly inserted.
-    bool insert(const T& item)
+    bool insert(const T& item) override
     {
         return map_.insert(item, Dummy());
     }
 
     /// Remove the item corresponding to the item in the set. Return whether such a item was present.
-    bool remove(const T& item)
+    bool remove(const T& item) override
     {
         return map_.remove(item);
     }
 
     /// Remove all of the elements from the set.
-    void clear()
+    void clear() override
     {
         map_.clear();
     }

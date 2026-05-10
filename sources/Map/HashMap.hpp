@@ -8,7 +8,7 @@
 #ifndef HASHMAP_HPP
 #define HASHMAP_HPP
 
-#include "../detail.hpp"
+#include "Map.hpp"
 
 namespace hellods
 {
@@ -16,7 +16,7 @@ namespace hellods
 /// Hash map.
 template <typename K, detail::StoredElement V, typename Hash = std::hash<K>, typename Eq = std::equal_to<K>>
     requires detail::HashKey<K, Hash, Eq>
-class HashMap : public detail::Container
+class HashMap : public Map<K, V>
 {
 protected:
     // State of the slot: 0 = empty, 1 = occupied, 2 = deleted
@@ -48,17 +48,14 @@ public:
     /// Map iterator class.
     ///
     /// Walk the map in random order.
-    ///
-    /// Because the internal keys of the map have a fixed position,
-    /// thus the iterator of the map does not support modification for key.
     template <bool Const>
-    class BasicIterator
+    class Iter
     {
         friend class HashMap;
 
     protected:
         using SlotPtr = std::conditional_t<Const, const Slot*, Slot*>;
-        using Entry = std::conditional_t<Const, const detail::MapEntry<K, V>, detail::MapEntry<K, V>>;
+        using Value = std::conditional_t<Const, const detail::MapEntry<K, V>, detail::MapEntry<K, V>>;
 
         SlotPtr current_;
 
@@ -69,7 +66,7 @@ public:
         SlotPtr buffer_end_;
 
         // Constructor.
-        BasicIterator(SlotPtr current, SlotPtr begin, SlotPtr end)
+        Iter(SlotPtr current, SlotPtr begin, SlotPtr end)
             : current_(current)
             , buffer_begin_(begin)
             , buffer_end_(end)
@@ -81,28 +78,17 @@ public:
         }
 
     public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = detail::MapEntry<K, V>;
-        using difference_type = int;
-        using pointer = Entry*;
-        using reference = Entry&;
-
-        bool operator==(const BasicIterator& that) const
-        {
-            return current_ == that.current_;
-        }
-
-        reference operator*() const
+        Value& operator*() const
         {
             return current_->first;
         }
 
-        pointer operator->() const
+        bool operator==(const Iter& that) const
         {
-            return &current_->first;
+            return current_ == that.current_;
         }
 
-        BasicIterator& operator++()
+        Iter& operator++()
         {
             while (++current_ != buffer_end_ && current_->second != OCCUPIED)
             {
@@ -110,31 +96,14 @@ public:
             return *this;
         }
 
-        BasicIterator operator++(int)
-        {
-            auto it = *this;
-            ++*this;
-            return it;
-        }
-
-        BasicIterator& operator--()
+        Iter& operator--()
         {
             while (--current_ != buffer_begin_ && current_->second != OCCUPIED)
             {
             }
             return *this;
         }
-
-        BasicIterator operator--(int)
-        {
-            auto it = *this;
-            --*this;
-            return it;
-        }
     };
-
-    using Iterator = BasicIterator<false>;
-    using ConstIterator = BasicIterator<true>;
 
 protected:
     int probe_pos(const K& key, bool for_insert) const
@@ -346,7 +315,7 @@ public:
      */
 
     /// Return the reference of value for key if key is in the map, else throw exception.
-    V& operator[](const K& key)
+    V& operator[](const K& key) override
     {
         int pos = probe_pos(key, false);
 
@@ -359,7 +328,7 @@ public:
     }
 
     /// Return the const reference of value for key if key is in the map, else throw exception.
-    const V& operator[](const K& key) const
+    const V& operator[](const K& key) const override
     {
         int pos = probe_pos(key, false);
 
@@ -376,25 +345,25 @@ public:
      */
 
     /// Return an iterator to the first element of the map.
-    auto begin()
+    Map<K, V>::Iterator begin() override
     {
-        return Iterator(data_, data_, data_ + capacity_);
+        return typename Map<K, V>::Iterator(Iter<true>(data_, data_, data_ + capacity_));
     }
 
-    auto begin() const
+    Map<K, V>::Iterator begin() const override
     {
-        return ConstIterator(data_, data_, data_ + capacity_);
+        return typename Map<K, V>::ConstIterator(Iter<true>(data_, data_, data_ + capacity_));
     }
 
     /// Return an iterator to the element following the last element of the map.
-    auto end()
+    Map<K, V>::Iterator end() override
     {
-        return Iterator(data_ + capacity_, data_, data_ + capacity_);
+        return typename Map<K, V>::Iterator(Iter<true>(data_ + capacity_, data_, data_ + capacity_));
     }
 
-    auto end() const
+    Map<K, V>::Iterator end() const override
     {
-        return ConstIterator(data_ + capacity_, data_, data_ + capacity_);
+        return typename Map<K, V>::ConstIterator(Iter<true>(data_ + capacity_, data_, data_ + capacity_));
     }
 
     /*
@@ -408,20 +377,14 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
-    Iterator find(const K& key)
+    Map<K, V>::Iterator find(const K& key) const override
     {
         int pos = probe_pos(key, false);
-        return pos == -1 ? end() : Iterator(data_ + pos, data_, data_ + capacity_);
-    }
-
-    ConstIterator find(const K& key) const
-    {
-        int pos = probe_pos(key, false);
-        return pos == -1 ? end() : ConstIterator(data_ + pos, data_, data_ + capacity_);
+        return pos == -1 ? end() : Map<K, V>::Iterator(Iter<true>(data_ + pos, data_, data_ + capacity_));
     }
 
     /// Determine whether a key is in the map.
-    bool contains(const K& key) const
+    bool contains(const K& key) const override
     {
         return probe_pos(key, false) != -1;
     }
@@ -431,7 +394,7 @@ public:
      */
 
     /// Insert a new key-value pair into the map. Return whether the pair was newly inserted.
-    bool insert(const K& key, const V& value)
+    bool insert(const K& key, const V& value) override
     {
         detail::check_full(size_, MAX_PRIME_CAPACITY >> 1);
 
@@ -455,7 +418,7 @@ public:
     }
 
     /// Remove the key-value pair corresponding to the key in the map. Return whether such a key was present.
-    bool remove(const K& key)
+    bool remove(const K& key) override
     {
         int pos = probe_pos(key, false);
 
@@ -470,7 +433,7 @@ public:
     }
 
     /// Remove all of the elements from the map.
-    void clear()
+    void clear() override
     {
         if (size_ != 0)
         {

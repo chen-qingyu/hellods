@@ -9,19 +9,18 @@
 #define TREESET_HPP
 
 #include "../Tree/RedBlackTree.hpp"
+#include "Set.hpp"
 
 namespace hellods
 {
 
 /// Set implemented by tree.
 template <detail::OrderedElement T, typename Tree = RedBlackTree<T>>
-class TreeSet : public detail::Container
+class TreeSet : public Set<T>
 {
     Tree tree_;
 
 public:
-    using Iterator = typename Tree::Iterator;
-
     /*
      * Lifecycle
      */
@@ -60,23 +59,23 @@ public:
      */
 
     /// Return an iterator to the first element of the set.
-    auto begin()
+    Set<T>::Iterator begin() override
     {
         return tree_.begin();
     }
 
-    auto begin() const
+    Set<T>::Iterator begin() const override
     {
         return tree_.begin();
     }
 
     /// Return an iterator to the element following the last element of the set.
-    auto end()
+    Set<T>::Iterator end() override
     {
         return tree_.end();
     }
 
-    auto end() const
+    Set<T>::Iterator end() const override
     {
         return tree_.end();
     }
@@ -92,18 +91,13 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified item, or end() if the set does not contains the item.
-    Iterator find(const T& item)
-    {
-        return tree_.find(item);
-    }
-
-    Iterator find(const T& item) const
+    Set<T>::Iterator find(const T& item) const override
     {
         return tree_.find(item);
     }
 
     /// Determine whether a item is in the set.
-    bool contains(const T& item) const
+    bool contains(const T& item) const override
     {
         return tree_.contains(item);
     }
@@ -113,19 +107,19 @@ public:
      */
 
     /// Insert a new item into the set. Return whether the item was newly inserted.
-    bool insert(const T& item)
+    bool insert(const T& item) override
     {
         return tree_.insert(item);
     }
 
     /// Remove the item corresponding to the item in the set. Return whether such a item was present.
-    bool remove(const T& item)
+    bool remove(const T& item) override
     {
         return tree_.remove(item);
     }
 
     /// Remove all of the elements from the set.
-    void clear()
+    void clear() override
     {
         tree_.clear();
     }
