@@ -17,81 +17,8 @@ namespace hellods
 template <detail::StoredElement T>
 class ArrayList : public List<T>
 {
-public:
-    template <bool Const>
-    class BasicIterator
-    {
-        friend class ArrayList;
-
-    protected:
-        using Value = std::conditional_t<Const, const T, T>;
-
-        Value* current_;
-
-        // Create an iterator that point to the current data of list.
-        BasicIterator(Value* current)
-            : current_(current)
-        {
-        }
-
-    public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = T;
-        using difference_type = int;
-        using pointer = Value*;
-        using reference = Value&;
-
-        /// Dereference.
-        reference operator*() const
-        {
-            return *current_;
-        }
-
-        /// Get current pointer.
-        pointer operator->() const
-        {
-            return current_;
-        }
-
-        /// Check if two iterators are same.
-        bool operator==(const BasicIterator& that) const
-        {
-            return current_ == that.current_;
-        }
-
-        /// Increment the iterator: ++it.
-        BasicIterator& operator++()
-        {
-            ++current_;
-            return *this;
-        }
-
-        /// Increment the iterator: it++.
-        BasicIterator operator++(int)
-        {
-            auto it = *this;
-            ++current_;
-            return it;
-        }
-
-        /// Decrement the iterator: --it.
-        BasicIterator& operator--()
-        {
-            --current_;
-            return *this;
-        }
-
-        /// Decrement the iterator: it--.
-        BasicIterator operator--(int)
-        {
-            auto it = *this;
-            --current_;
-            return it;
-        }
-    };
-
-    using Iterator = BasicIterator<false>;
-    using ConstIterator = BasicIterator<true>;
+protected:
+    // T* is itself a valid input iterator — no wrapper class needed.
 
 protected:
     using detail::Container::INIT_CAPACITY;
@@ -208,26 +135,26 @@ public:
 
     /// Return an iterator to the first element of the list.
     /// If the list is empty, the returned iterator will be equal to end().
-    auto begin()
+    List<T>::Iterator begin() override
     {
-        return Iterator(data_);
+        return List<T>::Iterator(data_);
     }
 
-    auto begin() const
+    List<T>::ConstIterator begin() const override
     {
-        return ConstIterator(data_);
+        return List<T>::ConstIterator(data_);
     }
 
     /// Return an iterator to the element following the last element of the list.
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    auto end()
+    List<T>::Iterator end() override
     {
-        return Iterator(data_ + size_); // not nullptr, because size_ <= capacity_
+        return List<T>::Iterator(data_ + size_);
     }
 
-    auto end() const
+    List<T>::ConstIterator end() const override
     {
-        return ConstIterator(data_ + size_); // not nullptr, because size_ <= capacity_
+        return List<T>::ConstIterator(data_ + size_);
     }
 
     /*
@@ -238,19 +165,6 @@ public:
     int size() const override
     {
         return size_;
-    }
-
-    /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
-    Iterator find(const T& element)
-        requires detail::LinearElement<T>
-    {
-        return std::find(begin(), end(), element);
-    }
-
-    ConstIterator find(const T& element) const
-        requires detail::LinearElement<T>
-    {
-        return std::find(begin(), end(), element);
     }
 
     /*

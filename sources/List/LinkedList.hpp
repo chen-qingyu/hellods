@@ -63,82 +63,51 @@ protected:
         return element;
     }
 
-public:
+protected:
     template <bool Const>
-    class BasicIterator
+    class Iter
     {
         friend class LinkedList;
 
     protected:
-        using NodePtr = std::conditional_t<Const, const Node*, Node*>;
         using Value = std::conditional_t<Const, const T, T>;
+        using NodePtr = std::conditional_t<Const, const Node*, Node*>;
 
         NodePtr current_;
 
         // Create an iterator that point to the current node of list.
-        BasicIterator(NodePtr current)
+        Iter(NodePtr current)
             : current_(current)
         {
         }
 
     public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = T;
-        using difference_type = int;
-        using pointer = Value*;
-        using reference = Value&;
-
         /// Dereference.
-        reference operator*() const
+        Value& operator*() const
         {
             return current_->data_;
         }
 
-        /// Get current pointer.
-        pointer operator->() const
-        {
-            return &current_->data_;
-        }
-
         /// Check if two iterators are same.
-        bool operator==(const BasicIterator& that) const
+        bool operator==(const Iter& that) const
         {
             return current_ == that.current_;
         }
 
-        /// Increment the iterator: ++it.
-        BasicIterator& operator++()
+        /// Increment the iterator.
+        Iter& operator++()
         {
             current_ = current_->succ_;
             return *this;
         }
 
-        /// Increment the iterator: it++.
-        BasicIterator operator++(int)
-        {
-            auto it = *this;
-            current_ = current_->succ_;
-            return it;
-        }
-
-        /// Decrement the iterator: --it.
-        BasicIterator& operator--()
+        /// Decrement the iterator.
+        Iter& operator--()
         {
             current_ = current_->pred_;
             return *this;
-        }
-
-        /// Decrement the iterator: it--.
-        BasicIterator operator--(int)
-        {
-            auto it = *this;
-            current_ = current_->pred_;
-            return it;
         }
     };
-
-    using Iterator = BasicIterator<false>;
-    using ConstIterator = BasicIterator<true>;
 
 protected:
     using detail::Container::INIT_CAPACITY;
@@ -311,26 +280,26 @@ public:
 
     /// Return an iterator to the first element of the list.
     /// If the list is empty, the returned iterator will be equal to end().
-    auto begin()
+    List<T>::Iterator begin() override
     {
-        return Iterator(header_->succ_);
+        return List<T>::Iterator(Iter<false>(header_->succ_));
     }
 
-    auto begin() const
+    List<T>::ConstIterator begin() const override
     {
-        return ConstIterator(header_->succ_);
+        return List<T>::ConstIterator(Iter<true>(header_->succ_));
     }
 
     /// Return an iterator to the element following the last element of the list.
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    auto end()
+    List<T>::Iterator end() override
     {
-        return Iterator(trailer_);
+        return List<T>::Iterator(Iter<false>(trailer_));
     }
 
-    auto end() const
+    List<T>::ConstIterator end() const override
     {
-        return ConstIterator(trailer_);
+        return List<T>::ConstIterator(Iter<true>(trailer_));
     }
 
     /*
@@ -341,19 +310,6 @@ public:
     int size() const override
     {
         return size_;
-    }
-
-    /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contains the element.
-    Iterator find(const T& element)
-        requires detail::LinearElement<T>
-    {
-        return std::find(begin(), end(), element);
-    }
-
-    ConstIterator find(const T& element) const
-        requires detail::LinearElement<T>
-    {
-        return std::find(begin(), end(), element);
     }
 
     /*

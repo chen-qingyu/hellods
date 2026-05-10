@@ -56,13 +56,23 @@ public:
      */
 
     /// Return an iterator to the first element of the deque.
-    auto begin() const
+    Deque<T>::Iterator begin() override
+    {
+        return list_.begin();
+    }
+
+    Deque<T>::ConstIterator begin() const override
     {
         return list_.begin();
     }
 
     /// Return an iterator to the element following the last element of the deque.
-    auto end() const
+    Deque<T>::Iterator end() override
+    {
+        return list_.end();
+    }
+
+    Deque<T>::ConstIterator end() const override
     {
         return list_.end();
     }

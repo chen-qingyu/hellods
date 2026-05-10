@@ -18,6 +18,9 @@ template <typename T>
 class Deque : public detail::Container
 {
 public:
+    using Iterator = detail::BasicIterator<T, false>;
+    using ConstIterator = detail::BasicIterator<T, true>;
+
     /*
      * Lifecycle
      */
@@ -46,6 +49,22 @@ public:
     {
         return const_cast<Deque&>(*this).back();
     }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the deque.
+    virtual Iterator begin() = 0;
+
+    /// Return a const iterator to the first element of the deque.
+    virtual ConstIterator begin() const = 0;
+
+    /// Return an iterator to the element following the last element of the deque.
+    virtual Iterator end() = 0;
+
+    /// Return a const iterator to the element following the last element of the deque.
+    virtual ConstIterator end() const = 0;
 
     /*
      * Manipulation

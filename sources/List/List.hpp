@@ -18,6 +18,9 @@ template <typename T>
 class List : public detail::Container
 {
 public:
+    using Iterator = detail::BasicIterator<T, false>;
+    using ConstIterator = detail::BasicIterator<T, true>;
+
     /*
      * Lifecycle
      */
@@ -36,6 +39,39 @@ public:
     virtual const T& operator[](int index) const
     {
         return const_cast<List&>(*this)[index];
+    }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the list.
+    virtual Iterator begin() = 0;
+
+    /// Return a const iterator to the first element of the list.
+    virtual ConstIterator begin() const = 0;
+
+    /// Return an iterator to the element following the last element of the list.
+    virtual Iterator end() = 0;
+
+    /// Return a const iterator to the element following the last element of the list.
+    virtual ConstIterator end() const = 0;
+
+    /*
+     * Examination
+     */
+
+    /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contain the element.
+    Iterator find(const T& element)
+        requires detail::LinearElement<T>
+    {
+        return std::find(begin(), end(), element);
+    }
+
+    ConstIterator find(const T& element) const
+        requires detail::LinearElement<T>
+    {
+        return std::find(begin(), end(), element);
     }
 
     /*

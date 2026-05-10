@@ -18,9 +18,8 @@ namespace hellods
 template <detail::StoredElement T>
 class ArrayDeque : public Deque<T>
 {
-public:
     template <bool Const>
-    class BasicIterator
+    class Iter
     {
         friend class ArrayDeque;
 
@@ -35,8 +34,8 @@ public:
         // End of the ring buffer.
         Value* buffer_end_;
 
-        // Create an iterator that point to the current data of list.
-        BasicIterator(Value* current, Value* begin, Value* end)
+        // Create an iterator that point to the current data of deque.
+        Iter(Value* current, Value* begin, Value* end)
             : current_(current)
             , buffer_begin_(begin)
             , buffer_end_(end)
@@ -44,32 +43,20 @@ public:
         }
 
     public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = T;
-        using difference_type = int;
-        using pointer = Value*;
-        using reference = Value&;
-
         /// Dereference.
-        reference operator*() const
+        Value& operator*() const
         {
             return *current_;
         }
 
-        /// Get current pointer.
-        pointer operator->() const
-        {
-            return current_;
-        }
-
         /// Check if two iterators are same.
-        bool operator==(const BasicIterator& that) const
+        bool operator==(const Iter& that) const
         {
             return current_ == that.current_;
         }
 
-        /// Increment the iterator: ++it.
-        BasicIterator& operator++()
+        /// Increment the iterator.
+        Iter& operator++()
         {
             ++current_;
             if (current_ == buffer_end_)
@@ -79,16 +66,8 @@ public:
             return *this;
         }
 
-        /// Increment the iterator: it++.
-        BasicIterator operator++(int)
-        {
-            auto it = *this;
-            ++*this;
-            return it;
-        }
-
-        /// Decrement the iterator: --it.
-        BasicIterator& operator--()
+        /// Decrement the iterator.
+        Iter& operator--()
         {
             if (current_ == buffer_begin_)
             {
@@ -97,18 +76,7 @@ public:
             --current_;
             return *this;
         }
-
-        /// Decrement the iterator: it--.
-        BasicIterator operator--(int)
-        {
-            auto it = *this;
-            --*this;
-            return it;
-        }
     };
-
-    using Iterator = BasicIterator<false>;
-    using ConstIterator = BasicIterator<true>;
 
 protected:
     using detail::Container::INIT_CAPACITY;
@@ -248,26 +216,26 @@ public:
      * Iterator
      */
 
-    /// Return an iterator to the first element of the list.
-    auto begin()
+    /// Return an iterator to the first element of the deque.
+    Deque<T>::Iterator begin() override
     {
-        return Iterator(data_ + front_, data_, data_ + capacity_);
+        return Deque<T>::Iterator(Iter<false>(data_ + front_, data_, data_ + capacity_));
     }
 
-    auto begin() const
+    Deque<T>::ConstIterator begin() const override
     {
-        return ConstIterator(data_ + front_, data_, data_ + capacity_);
+        return Deque<T>::ConstIterator(Iter<true>(data_ + front_, data_, data_ + capacity_));
     }
 
-    /// Return an iterator to the element following the last element of the list.
-    auto end()
+    /// Return an iterator to the element following the last element of the deque.
+    Deque<T>::Iterator end() override
     {
-        return Iterator(data_ + access(size_), data_, data_ + capacity_);
+        return Deque<T>::Iterator(Iter<false>(data_ + access(size_), data_, data_ + capacity_));
     }
 
-    auto end() const
+    Deque<T>::ConstIterator end() const override
     {
-        return ConstIterator(data_ + access(size_), data_, data_ + capacity_);
+        return Deque<T>::ConstIterator(Iter<true>(data_ + access(size_), data_, data_ + capacity_));
     }
 
     /*
