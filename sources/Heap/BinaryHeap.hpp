@@ -9,13 +9,14 @@
 #define BINARYHEAP_HPP
 
 #include "../List/ArrayList.hpp"
+#include "Heap.hpp"
 
 namespace hellods
 {
 
 template <detail::StoredElement T, typename Cmp = std::greater<T>>
     requires detail::ComparatorFor<T, Cmp>
-class BinaryHeap : public detail::Container
+class BinaryHeap : public Heap<T>
 {
     using detail::Container::MAX_CAPACITY;
 
@@ -101,7 +102,7 @@ public:
      */
 
     /// Peek the top element in the heap.
-    const T& peek() const
+    const T& peek() const override
     {
         detail::check_empty(list_.size());
         return list_[0];
@@ -122,7 +123,7 @@ public:
      */
 
     /// Push an element onto the heap.
-    void push(const T& element)
+    void push(const T& element) override
     {
         detail::check_full(list_.size(), MAX_CAPACITY);
 
@@ -135,7 +136,7 @@ public:
     }
 
     /// Remove the top element from the heap and return it.
-    T pop()
+    T pop() override
     {
         detail::check_empty(list_.size());
 
@@ -148,7 +149,7 @@ public:
     }
 
     /// Remove all of the elements from the heap.
-    void clear()
+    void clear() override
     {
         list_.clear();
     }
