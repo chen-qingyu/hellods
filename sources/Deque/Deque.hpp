@@ -18,8 +18,8 @@ template <typename T>
 class Deque : public detail::Container
 {
 public:
-    using Iterator = detail::BasicIterator<T, false>;
-    using ConstIterator = detail::BasicIterator<T, true>;
+    using Iterator = detail::BasicIterator<T, false, std::bidirectional_iterator_tag>;
+    using ConstIterator = detail::BasicIterator<T, true, std::bidirectional_iterator_tag>;
 
     /*
      * Lifecycle

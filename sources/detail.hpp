@@ -176,7 +176,7 @@ public:
 // Type-erased bidirectional iterator.
 // Wraps any concrete iterator via type erasure; forward-only iterators
 // (e.g. SinglyLinkedList) throw on operator-- at runtime.
-template <typename T, bool Const>
+template <typename T, bool Const, typename Category = std::input_iterator_tag>
 class BasicIterator
 {
 public:
@@ -258,7 +258,7 @@ protected:
     std::unique_ptr<Concept> ptr_;
 
 public:
-    using iterator_category = std::input_iterator_tag;
+    using iterator_category = Category;
     using value_type = T;
     using difference_type = int;
     using pointer = PtrType;

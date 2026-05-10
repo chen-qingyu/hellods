@@ -28,7 +28,7 @@ public:
     };
 
     /// Iterator type — const access only (tree order must not be modified).
-    using Iterator = detail::BasicIterator<T, true>;
+    using Iterator = detail::BasicIterator<T, true, std::bidirectional_iterator_tag>;
     using ConstIterator = Iterator;
 
     /*
