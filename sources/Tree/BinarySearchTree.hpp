@@ -8,7 +8,7 @@
 #ifndef BINARYSEARCHTREE_HPP
 #define BINARYSEARCHTREE_HPP
 
-#include "../detail.hpp"
+#include "Tree.hpp"
 
 #include "../Queue/ArrayQueue.hpp" // for traverse()
 
@@ -17,7 +17,7 @@ namespace hellods
 
 /// Binary search tree.
 template <detail::OrderedElement T>
-class BinarySearchTree : public detail::Container
+class BinarySearchTree : public Tree<T>
 {
 protected:
     // Tree node.
@@ -96,7 +96,7 @@ public:
     ///
     /// Because the internal elements of the tree have a fixed order,
     /// thus the iterator of the tree only supports access and does not support modification.
-    class Iterator
+    class Iter
     {
         friend class BinarySearchTree;
 
@@ -105,7 +105,7 @@ public:
         Node* current_;
 
         // Constructor.
-        Iterator(Node* current)
+        Iter(Node* current)
             : current_(current)
         {
         }
@@ -155,58 +155,30 @@ public:
         }
 
     public:
-        using iterator_category = std::input_iterator_tag;
-        using value_type = T;
-        using difference_type = int;
-        using pointer = value_type*;
-        using reference = value_type&;
-
         /// Dereference.
         const T& operator*() const
         {
             return current_->data_;
         }
 
-        /// Get current pointer.
-        const T* operator->() const
-        {
-            return &current_->data_;
-        }
-
         /// Check if two iterators are same.
-        bool operator==(const Iterator& that) const
+        bool operator==(const Iter& that) const
         {
             return current_ == that.current_;
         }
 
-        /// Increment the iterator: ++it.
-        Iterator& operator++()
+        /// Increment the iterator.
+        Iter& operator++()
         {
             next();
             return *this;
         }
 
-        /// Increment the iterator: it++.
-        Iterator operator++(int)
-        {
-            auto it = *this;
-            next();
-            return it;
-        }
-
-        /// Decrement the iterator: --it.
-        Iterator& operator--()
+        /// Decrement the iterator.
+        Iter& operator--()
         {
             previous();
             return *this;
-        }
-
-        /// Decrement the iterator: it--.
-        Iterator operator--(int)
-        {
-            auto it = *this;
-            previous();
-            return it;
         }
     };
 
@@ -443,9 +415,9 @@ protected:
     }
 
     // Construct an iterator pointing to the given node.
-    Iterator make_iterator(Node* node) const
+    Tree<T>::Iterator make_iterator(Node* node) const
     {
-        return Iterator(node);
+        return Tree<T>::Iterator(Iter(node));
     }
 
     // Swap with another tree.
@@ -531,17 +503,17 @@ public:
     /// Return an iterator to the first element of the tree.
     ///
     /// If the tree is empty, the returned iterator will be equal to end().
-    auto begin() const
+    Tree<T>::Iterator begin() const override
     {
-        return Iterator(find_min(root_));
+        return Tree<T>::Iterator(Iter(find_min(root_)));
     }
 
     /// Return an iterator to the element following the last element of the tree.
     ///
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    auto end() const
+    Tree<T>::Iterator end() const override
     {
-        return Iterator(end_);
+        return Tree<T>::Iterator(Iter(end_));
     }
 
     /*
@@ -580,8 +552,8 @@ public:
         traverse_node(root_, order, action);
     }
 
-    /// Return an iterator to the specified element, or end() if the tree does not contains the element.
-    Iterator find(const T& element) const
+    /// Return an iterator to the specified element, or end() if the tree does not contain the element.
+    Tree<T>::Iterator find(const T& element) const override
     {
         Node* current = root_;
         while (current)
@@ -596,7 +568,7 @@ public:
             }
             else
             {
-                return Iterator(current);
+                return Tree<T>::Iterator(Iter(current));
             }
         }
         return end();
