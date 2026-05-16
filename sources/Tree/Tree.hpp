@@ -49,6 +49,9 @@ public:
     /// Return the depth of the tree.
     virtual int depth() const = 0;
 
+    /// Traverse the tree in the specified order.
+    virtual void traverse(TraverseOption order, const std::function<void(const T&)>& action) const = 0;
+
     /// Return an iterator to the first occurrence of the specified element, or end() if the tree does not contain the element.
     virtual Iterator find(const T& element) const = 0;
 

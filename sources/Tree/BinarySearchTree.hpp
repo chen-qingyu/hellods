@@ -102,15 +102,6 @@ protected:
     };
 
 public:
-    /// Traverse option.
-    enum TraverseOption
-    {
-        PreOrder,
-        InOrder,
-        PostOrder,
-        LevelOrder
-    };
-
     /// Tree iterator class.
     ///
     /// Walk the tree in ascending order. This means that begin() is the smallest element.
@@ -299,38 +290,37 @@ protected:
     }
 
     // Traverse the tree in specified order.
-    template <typename F>
-    void traverse_node(Node* node, TraverseOption order, const F& action) const
+    void traverse_node(Node* node, typename Tree<T>::TraverseOption order, const std::function<void(const T&)>& action) const
     {
         if (node)
         {
             switch (order)
             {
-                case PreOrder:
+                case Tree<T>::PreOrder:
                 {
                     action(node->data());
-                    traverse_node(node->left_, PreOrder, action);
-                    traverse_node(node->right_, PreOrder, action);
+                    traverse_node(node->left_, Tree<T>::PreOrder, action);
+                    traverse_node(node->right_, Tree<T>::PreOrder, action);
                     break;
                 }
 
-                case InOrder:
+                case Tree<T>::InOrder:
                 {
-                    traverse_node(node->left_, InOrder, action);
+                    traverse_node(node->left_, Tree<T>::InOrder, action);
                     action(node->data());
-                    traverse_node(node->right_, InOrder, action);
+                    traverse_node(node->right_, Tree<T>::InOrder, action);
                     break;
                 }
 
-                case PostOrder:
+                case Tree<T>::PostOrder:
                 {
-                    traverse_node(node->left_, PostOrder, action);
-                    traverse_node(node->right_, PostOrder, action);
+                    traverse_node(node->left_, Tree<T>::PostOrder, action);
+                    traverse_node(node->right_, Tree<T>::PostOrder, action);
                     action(node->data());
                     break;
                 }
 
-                case LevelOrder:
+                case Tree<T>::LevelOrder:
                 {
                     ArrayQueue<Node*> queue;
                     queue.enqueue(node);
@@ -567,8 +557,7 @@ public:
     }
 
     /// Traverse the tree.
-    template <typename F>
-    void traverse(TraverseOption order, const F& action) const
+    void traverse(typename Tree<T>::TraverseOption order, const std::function<void(const T&)>& action) const override
     {
         traverse_node(root_, order, action);
     }
