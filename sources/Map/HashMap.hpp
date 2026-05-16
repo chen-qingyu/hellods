@@ -388,12 +388,6 @@ public:
         return pos == -1 ? end() : typename Map<K, V>::ConstIterator(Iter<true>(data_ + pos, data_, data_ + capacity_));
     }
 
-    /// Determine whether a key is in the map.
-    bool contains(const K& key) const override
-    {
-        return probe_pos(key, false) != -1;
-    }
-
     /*
      * Manipulation
      */

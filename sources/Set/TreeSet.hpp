@@ -86,12 +86,6 @@ public:
         return tree_.find(item);
     }
 
-    /// Determine whether a item is in the set.
-    bool contains(const T& item) const override
-    {
-        return tree_.contains(item);
-    }
-
     /*
      * Manipulation
      */

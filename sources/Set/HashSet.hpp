@@ -108,7 +108,7 @@ public:
 
         for (const auto& item : that)
         {
-            if (!contains(item))
+            if (!this->contains(item))
             {
                 return false;
             }
@@ -147,12 +147,6 @@ public:
     Set<T>::Iterator find(const T& item) const override
     {
         return typename Set<T>::Iterator(Iter(map_.find(item)));
-    }
-
-    /// Determine whether a item is in the set.
-    bool contains(const T& item) const override
-    {
-        return map_.contains(item);
     }
 
     /*

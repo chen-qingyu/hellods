@@ -584,12 +584,6 @@ public:
         return end();
     }
 
-    /// Determine whether an element is in the tree.
-    bool contains(const T& element) const
-    {
-        return find(element) != end();
-    }
-
     /// Return the maximum depth of the tree. Empty tree depth is 0.
     int depth() const override
     {

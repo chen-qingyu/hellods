@@ -162,12 +162,6 @@ public:
         return tree_.find(detail::MapEntry<K, V>{key});
     }
 
-    /// Determine whether a key is in the map.
-    bool contains(const K& key) const override
-    {
-        return tree_.find(detail::MapEntry<K, V>{key}) != tree_.end();
-    }
-
     /*
      * Manipulation
      */
