@@ -15,14 +15,11 @@ namespace hellods
 
 /// Abstract list interface.
 template <typename T>
-class List : public detail::Iterable<detail::BasicIterator<T, false, std::bidirectional_iterator_tag>,
-                                     detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>
+class List : public detail::Iterable<T>
 {
 public:
-    using Base = detail::Iterable<detail::BasicIterator<T, false, std::bidirectional_iterator_tag>,
-                                  detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>;
-    using typename Base::ConstIterator;
-    using typename Base::Iterator;
+    using typename detail::Iterable<T>::ConstIterator;
+    using typename detail::Iterable<T>::Iterator;
 
     /*
      * Lifecycle

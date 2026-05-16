@@ -15,15 +15,12 @@ namespace hellods
 
 /// Abstract map interface.
 template <typename K, typename V>
-class Map : public detail::Iterable<detail::BasicIterator<detail::MapEntry<K, V>, false, std::bidirectional_iterator_tag>,
-                                    detail::BasicIterator<detail::MapEntry<K, V>, true, std::bidirectional_iterator_tag>>
+class Map : public detail::Iterable<detail::MapEntry<K, V>>
 {
 public:
     using Entry = detail::MapEntry<K, V>;
-    using Base = detail::Iterable<detail::BasicIterator<Entry, false, std::bidirectional_iterator_tag>,
-                                  detail::BasicIterator<Entry, true, std::bidirectional_iterator_tag>>;
-    using typename Base::ConstIterator;
-    using typename Base::Iterator;
+    using typename detail::Iterable<Entry>::ConstIterator;
+    using typename detail::Iterable<Entry>::Iterator;
 
     /*
      * Lifecycle

@@ -18,11 +18,10 @@ namespace hellods
 /// Abstract graph interface. Default is directed graph.
 template <typename V = int, typename E = int, bool Directed = true>
     requires detail::HashKey<V, std::hash<V>, std::equal_to<V>>
-class Graph : public detail::ConstIterable<detail::BasicIterator<V, true, std::bidirectional_iterator_tag>>
+class Graph : public detail::ConstIterable<V>
 {
 public:
-    using Base = detail::ConstIterable<detail::BasicIterator<V, true, std::bidirectional_iterator_tag>>;
-    using typename Base::Iterator;
+    using typename detail::ConstIterable<V>::Iterator;
 
     /// Result of the Dijkstra shortest path algorithm.
     /// Query by vertex: sp.dist(v), sp.prev(v).

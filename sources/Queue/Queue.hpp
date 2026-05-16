@@ -15,11 +15,10 @@ namespace hellods
 
 /// Abstract queue interface.
 template <typename T>
-class Queue : public detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>
+class Queue : public detail::ConstIterable<T>
 {
 public:
-    using Base = detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>;
-    using typename Base::Iterator;
+    using typename detail::ConstIterable<T>::Iterator;
 
     /*
      * Lifecycle

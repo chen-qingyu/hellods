@@ -15,11 +15,10 @@ namespace hellods
 
 /// Abstract heap interface.
 template <typename T>
-class Heap : public detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>
+class Heap : public detail::ConstIterable<T>
 {
 public:
-    using Base = detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>;
-    using typename Base::Iterator;
+    using typename detail::ConstIterable<T>::Iterator;
 
     /*
      * Lifecycle

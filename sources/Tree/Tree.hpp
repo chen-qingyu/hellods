@@ -15,11 +15,10 @@ namespace hellods
 
 /// Abstract tree interface.
 template <detail::OrderedElement T>
-class Tree : public detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>
+class Tree : public detail::ConstIterable<T>
 {
 public:
-    using Base = detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>;
-    using typename Base::Iterator;
+    using typename detail::ConstIterable<T>::Iterator;
 
     /// Traverse option.
     enum TraverseOption

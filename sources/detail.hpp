@@ -188,34 +188,10 @@ public:
     virtual void clear() = 0;
 };
 
-template <typename Iter>
-class ConstIterable : public Container
-{
-public:
-    using Iterator = Iter;
-    using ConstIterator = Iter;
-
-    virtual Iterator begin() const = 0;
-    virtual Iterator end() const = 0;
-};
-
-template <typename Iter, typename ConstIter>
-class Iterable : public ConstIterable<ConstIter>
-{
-public:
-    using ConstIterable<ConstIter>::begin;
-    using ConstIterable<ConstIter>::end;
-    using Iterator = Iter;
-    using ConstIterator = ConstIter;
-
-    virtual Iterator begin() = 0;
-    virtual Iterator end() = 0;
-};
-
 // Type-erased bidirectional iterator.
 // Wraps any concrete iterator via type erasure; forward-only iterators
 // (e.g. SinglyLinkedList) throw on operator-- at runtime.
-template <typename T, bool Const, typename Category = std::input_iterator_tag>
+template <typename T, bool Const, typename Category = std::bidirectional_iterator_tag>
 class BasicIterator
 {
 public:
@@ -377,6 +353,32 @@ public:
         ptr_->retreat();
         return tmp;
     }
+};
+
+// Iterable base: provides const begin/end. T is the element type for BasicIterator.
+template <typename T>
+class ConstIterable : public Container
+{
+public:
+    using Iterator = BasicIterator<T, true>;
+    using ConstIterator = Iterator;
+
+    virtual Iterator begin() const = 0;
+    virtual Iterator end() const = 0;
+};
+
+// Iterable base: adds mutable begin/end on top of ConstIterable.
+template <typename T>
+class Iterable : public ConstIterable<T>
+{
+public:
+    using ConstIterable<T>::begin;
+    using ConstIterable<T>::end;
+    using Iterator = BasicIterator<T, false>;
+    using ConstIterator = BasicIterator<T, true>;
+
+    virtual Iterator begin() = 0;
+    virtual Iterator end() = 0;
 };
 
 } // namespace hellods::detail
