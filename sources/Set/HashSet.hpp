@@ -170,16 +170,6 @@ public:
     {
         map_.clear();
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the set.
-    friend std::ostream& operator<<(std::ostream& os, const HashSet& set)
-    {
-        return detail::print(os, set.begin(), set.end(), "Set");
-    }
 };
 
 } // namespace hellods

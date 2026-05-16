@@ -169,16 +169,6 @@ public:
     {
         return list_.end();
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the heap.
-    friend std::ostream& operator<<(std::ostream& os, const BinaryHeap& heap)
-    {
-        return detail::print(os, heap.begin(), heap.end(), "Heap");
-    }
 };
 
 } // namespace hellods

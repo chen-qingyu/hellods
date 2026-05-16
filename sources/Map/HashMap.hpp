@@ -443,16 +443,6 @@ public:
             size_ = 0;
         }
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the map.
-    friend std::ostream& operator<<(std::ostream& os, const HashMap& map)
-    {
-        return detail::print(os, map.begin(), map.end(), "Map");
-    }
 };
 
 } // namespace hellods

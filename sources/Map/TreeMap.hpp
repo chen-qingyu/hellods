@@ -188,16 +188,6 @@ public:
     {
         tree_.clear();
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the map.
-    friend std::ostream& operator<<(std::ostream& os, const TreeMap& map)
-    {
-        return detail::print(os, map.tree_.begin(), map.tree_.end(), "Map");
-    }
 };
 
 } // namespace hellods

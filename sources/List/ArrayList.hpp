@@ -236,16 +236,6 @@ public:
         // Managing the pointer is the user's responsibility.
         size_ = 0;
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the list.
-    friend std::ostream& operator<<(std::ostream& os, const ArrayList& list)
-    {
-        return detail::print(os, list.begin(), list.end(), "List");
-    }
 };
 
 } // namespace hellods

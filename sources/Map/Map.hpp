@@ -29,6 +29,12 @@ public:
     /// Virtual destructor.
     ~Map() override = default;
 
+    /// Return the type name for printing.
+    const char* name() const override
+    {
+        return "Map";
+    }
+
     /*
      * Access
      */

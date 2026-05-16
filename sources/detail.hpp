@@ -101,13 +101,12 @@ struct MapEntry
     {
         return key_ == rhs.key_;
     }
-};
 
-template <typename K, typename V>
-std::ostream& operator<<(std::ostream& os, const MapEntry<K, V>& entry)
-{
-    return os << entry.key() << ": " << entry.value();
-}
+    friend std::ostream& operator<<(std::ostream& os, const MapEntry& entry)
+    {
+        return os << entry.key() << ": " << entry.value();
+    }
+};
 
 // Print helper for range [`first`, `last`).
 template <std::input_iterator InputIt>
@@ -339,6 +338,15 @@ public:
 
     virtual Iterator begin() const = 0;
     virtual Iterator end() const = 0;
+
+    /// Return the type name for printing (e.g. "List", "Map").
+    virtual const char* name() const = 0;
+
+    /// Print the container.
+    friend std::ostream& operator<<(std::ostream& os, const ConstIterable& container)
+    {
+        return print(os, container.begin(), container.end(), container.name());
+    }
 };
 
 // Iterable base: adds mutable begin/end on top of ConstIterable.

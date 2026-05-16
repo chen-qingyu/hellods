@@ -107,16 +107,6 @@ public:
     {
         tree_.clear();
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the set.
-    friend std::ostream& operator<<(std::ostream& os, const TreeSet& set)
-    {
-        return detail::print(os, set.begin(), set.end(), "Set");
-    }
 };
 
 } // namespace hellods

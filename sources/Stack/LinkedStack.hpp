@@ -112,16 +112,6 @@ public:
     {
         list_.clear();
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the stack.
-    friend std::ostream& operator<<(std::ostream& os, const LinkedStack& stack)
-    {
-        return detail::print(os, stack.begin(), stack.end(), "Stack");
-    }
 };
 
 } // namespace hellods

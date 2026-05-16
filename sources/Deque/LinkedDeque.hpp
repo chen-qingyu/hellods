@@ -141,16 +141,6 @@ public:
     {
         list_.clear();
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the deque.
-    friend std::ostream& operator<<(std::ostream& os, const LinkedDeque& deque)
-    {
-        return detail::print(os, deque.begin(), deque.end(), "Deque");
-    }
 };
 
 } // namespace hellods

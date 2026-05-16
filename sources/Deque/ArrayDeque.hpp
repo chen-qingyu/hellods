@@ -333,16 +333,6 @@ public:
         size_ = 0;
         front_ = 0;
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the deque.
-    friend std::ostream& operator<<(std::ostream& os, const ArrayDeque& deque)
-    {
-        return detail::print(os, deque.begin(), deque.end(), "Deque");
-    }
 };
 
 } // namespace hellods

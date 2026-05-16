@@ -27,6 +27,12 @@ public:
     /// Virtual destructor.
     ~Set() override = default;
 
+    /// Return the type name for printing.
+    const char* name() const override
+    {
+        return "Set";
+    }
+
     /*
      * Search
      */

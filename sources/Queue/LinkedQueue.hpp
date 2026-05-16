@@ -112,16 +112,6 @@ public:
     {
         list_.clear();
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the queue.
-    friend std::ostream& operator<<(std::ostream& os, const LinkedQueue& queue)
-    {
-        return detail::print(os, queue.begin(), queue.end(), "Queue");
-    }
 };
 
 } // namespace hellods

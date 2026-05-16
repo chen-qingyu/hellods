@@ -401,16 +401,6 @@ public:
             clear_data();
         }
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the list.
-    friend std::ostream& operator<<(std::ostream& os, const LinkedList& list)
-    {
-        return detail::print(os, list.begin(), list.end(), "List");
-    }
 };
 
 } // namespace hellods

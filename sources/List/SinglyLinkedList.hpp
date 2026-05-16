@@ -340,16 +340,6 @@ public:
             clear_data();
         }
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the list.
-    friend std::ostream& operator<<(std::ostream& os, const SinglyLinkedList& list)
-    {
-        return detail::print(os, list.begin(), list.end(), "List");
-    }
 };
 
 } // namespace hellods

@@ -111,16 +111,6 @@ public:
     {
         deque_.clear();
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the queue.
-    friend std::ostream& operator<<(std::ostream& os, const ArrayQueue& queue)
-    {
-        return detail::print(os, queue.begin(), queue.end(), "Queue");
-    }
 };
 
 } // namespace hellods

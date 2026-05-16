@@ -28,6 +28,12 @@ public:
     /// Virtual destructor.
     ~Deque() override = default;
 
+    /// Return the type name for printing.
+    const char* name() const override
+    {
+        return "Deque";
+    }
+
     /*
      * Access
      */

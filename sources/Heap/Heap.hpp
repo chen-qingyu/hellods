@@ -27,6 +27,12 @@ public:
     /// Virtual destructor.
     ~Heap() override = default;
 
+    /// Return the type name for printing.
+    const char* name() const override
+    {
+        return "Heap";
+    }
+
     /*
      * Access
      */

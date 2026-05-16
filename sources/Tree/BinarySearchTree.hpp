@@ -620,16 +620,6 @@ public:
             set_root(nullptr);
         }
     }
-
-    /*
-     * Print
-     */
-
-    /// Print the tree.
-    friend std::ostream& operator<<(std::ostream& os, const BinarySearchTree& tree)
-    {
-        return detail::print(os, tree.begin(), tree.end(), "Tree");
-    }
 };
 
 } // namespace hellods

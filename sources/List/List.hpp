@@ -28,6 +28,12 @@ public:
     /// Virtual destructor.
     ~List() override = default;
 
+    /// Return the type name for printing.
+    const char* name() const override
+    {
+        return "List";
+    }
+
     /*
      * Access
      */
