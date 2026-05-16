@@ -25,7 +25,7 @@ public:
      */
 
     /// Virtual destructor.
-    virtual ~Stack() = default;
+    ~Stack() override = default;
 
     /*
      * Access

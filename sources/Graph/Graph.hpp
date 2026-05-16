@@ -48,7 +48,7 @@ public:
      */
 
     /// Virtual destructor.
-    virtual ~Graph() = default;
+    ~Graph() override = default;
 
     /*
      * Examination

@@ -25,7 +25,7 @@ public:
      */
 
     /// Virtual destructor.
-    virtual ~Queue() = default;
+    ~Queue() override = default;
 
     /*
      * Access

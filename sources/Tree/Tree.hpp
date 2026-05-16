@@ -34,7 +34,7 @@ public:
      */
 
     /// Virtual destructor.
-    virtual ~Tree() = default;
+    ~Tree() override = default;
 
     /*
      * Examination

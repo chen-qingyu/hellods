@@ -27,7 +27,7 @@ public:
      */
 
     /// Virtual destructor.
-    virtual ~Map() = default;
+    ~Map() override = default;
 
     /*
      * Access

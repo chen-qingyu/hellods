@@ -26,7 +26,7 @@ public:
      */
 
     /// Virtual destructor.
-    virtual ~List() = default;
+    ~List() override = default;
 
     /*
      * Access

@@ -25,7 +25,7 @@ public:
      */
 
     /// Virtual destructor.
-    virtual ~Set() = default;
+    ~Set() override = default;
 
     /*
      * Search

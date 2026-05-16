@@ -25,7 +25,7 @@ public:
      */
 
     /// Virtual destructor.
-    virtual ~Heap() = default;
+    ~Heap() override = default;
 
     /*
      * Access

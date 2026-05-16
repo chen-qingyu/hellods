@@ -26,7 +26,7 @@ public:
      */
 
     /// Virtual destructor.
-    virtual ~Deque() = default;
+    ~Deque() override = default;
 
     /*
      * Access
