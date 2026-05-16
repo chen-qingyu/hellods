@@ -87,6 +87,15 @@ struct Token
 
         return os;
     }
+
+    bool operator==(const Token& that) const
+    {
+        if (type != that.type)
+        {
+            return false;
+        }
+        return type == NUM ? data.num == that.data.num : data.op == that.data.op;
+    }
 };
 
 // 表达式字符串解析为 Token 序列，O(N)
