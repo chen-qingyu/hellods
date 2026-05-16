@@ -21,6 +21,7 @@
 #include <ostream>    // std::ostream
 #include <sstream>    // std::ostringstream
 #include <stdexcept>  // std::runtime_error
+#include <string>     // std::string
 #include <utility>    // std::initializer_list std::move
 
 namespace hellods::detail
