@@ -109,6 +109,22 @@ protected:
         }
     }
 
+    // Iterate each unique edge with a callback (from, to, weight).
+    template <typename F>
+    void for_each_edge(F&& callback) const
+    {
+        for (int i = 0; i < size_; ++i)
+        {
+            for (int j = (Directed ? 0 : i); j < size_; ++j)
+            {
+                if (at(i, j).has_value())
+                {
+                    callback(i, j, at(i, j).value());
+                }
+            }
+        }
+    }
+
 public:
     using ShortestPath = typename Graph<V, E, Directed>::ShortestPath;
     using Iterator = typename Graph<V, E, Directed>::Iterator;
@@ -346,6 +362,81 @@ public:
         return result;
     }
 
+    /// Export the graph as ASCII art.
+    std::string to_ascii() const override
+    {
+        std::ostringstream oss;
+
+        int edges = 0;
+        for_each_edge([&](int, int, const E&)
+                      { ++edges; });
+
+        oss << "Graph {\n"
+            << "  type: " << (Directed ? "directed" : "undirected") << "\n"
+            << "  vertices: " << size_ << "\n"
+            << "  edges: " << edges << "\n";
+
+        if constexpr (Directed)
+        {
+            for (int i = 0; i < size_; ++i)
+            {
+                oss << "  " << idx_to_vertex_[i] << ": [";
+
+                bool first = true;
+                for (int j = 0; j < size_; ++j)
+                {
+                    if (!at(i, j).has_value())
+                    {
+                        continue;
+                    }
+
+                    if (!first)
+                    {
+                        oss << ", ";
+                    }
+                    first = false;
+                    oss << idx_to_vertex_[j] << "(w=" << at(i, j).value() << ")";
+                }
+
+                oss << "]\n";
+            }
+        }
+        else
+        {
+            for_each_edge([&](int i, int j, const E& w)
+                          { oss << "  " << idx_to_vertex_[i] << " -- " << idx_to_vertex_[j] << "(w=" << w << ")\n"; });
+        }
+
+        oss << "}";
+        return oss.str();
+    }
+
+    /// Export the graph as Graphviz DOT.
+    std::string to_dot() const override
+    {
+        auto quote = [](const auto& v)
+        {
+            std::ostringstream oss;
+            oss << '"' << v << '"';
+            return oss.str();
+        };
+
+        std::ostringstream oss;
+        oss << (Directed ? "digraph G {\n" : "graph G {\n");
+
+        for (int i = 0; i < size_; ++i)
+        {
+            oss << "  " << quote(idx_to_vertex_[i]) << ";\n";
+        }
+
+        const char* connector = Directed ? " -> " : " -- ";
+        for_each_edge([&](int i, int j, const E& w)
+                      { oss << "  " << quote(idx_to_vertex_[i]) << connector << quote(idx_to_vertex_[j])
+                            << " [label=\"" << w << "\"];\n"; });
+
+        return oss << "}", oss.str();
+    }
+
     /*
      * Manipulation
      */
@@ -409,107 +500,6 @@ public:
             vertex_to_idx_.clear();
             idx_to_vertex_.clear();
         }
-    }
-
-    /*
-     * Print
-     */
-
-    /// Print the graph.
-    friend std::ostream& operator<<(std::ostream& os, const MatrixGraph& graph)
-    {
-        int edges = 0;
-        for (int i = 0; i < graph.size_; ++i)
-        {
-            for (int j = (Directed ? 0 : i); j < graph.size_; ++j)
-            {
-                if (graph.at(i, j).has_value())
-                {
-                    ++edges;
-                }
-            }
-        }
-
-        os << "Graph {\n"
-           << "  type: " << (Directed ? "directed" : "undirected") << "\n"
-           << "  vertices: " << graph.size_ << "\n"
-           << "  edges: " << edges << "\n";
-
-        if constexpr (Directed)
-        {
-            for (int i = 0; i < graph.size_; ++i)
-            {
-                os << "  " << graph.idx_to_vertex_[i] << ": [";
-
-                bool first = true;
-                for (int j = 0; j < graph.size_; ++j)
-                {
-                    if (!graph.at(i, j).has_value())
-                    {
-                        continue;
-                    }
-
-                    if (!first)
-                    {
-                        os << ", ";
-                    }
-                    first = false;
-                    os << graph.idx_to_vertex_[j] << "(w=" << graph.at(i, j).value() << ")";
-                }
-
-                os << "]\n";
-            }
-        }
-        else
-        {
-            for (int i = 0; i < graph.size_; ++i)
-            {
-                for (int j = i; j < graph.size_; ++j)
-                {
-                    if (graph.at(i, j).has_value())
-                    {
-                        os << "  " << graph.idx_to_vertex_[i] << " -- " << graph.idx_to_vertex_[j]
-                           << "(w=" << graph.at(i, j).value() << ")\n";
-                    }
-                }
-            }
-        }
-
-        return os << "}";
-    }
-
-    /// Export the graph as Graphviz DOT.
-    std::string to_dot() const override
-    {
-        auto quote = [](const auto& value)
-        {
-            std::ostringstream oss;
-            oss << '"' << value << '"';
-            return oss.str();
-        };
-
-        std::ostringstream oss;
-        oss << (Directed ? "digraph G {\n" : "graph G {\n");
-
-        for (int i = 0; i < size_; ++i)
-        {
-            oss << "  " << quote(idx_to_vertex_[i]) << ";\n";
-        }
-
-        const char* connector = Directed ? " -> " : " -- ";
-        for (int i = 0; i < size_; ++i)
-        {
-            for (int j = (Directed ? 0 : i); j < size_; ++j)
-            {
-                if (at(i, j).has_value())
-                {
-                    oss << "  " << quote(idx_to_vertex_[i]) << connector << quote(idx_to_vertex_[j])
-                        << " [label=\"" << at(i, j).value() << "\"];\n";
-                }
-            }
-        }
-
-        return oss << "}", oss.str();
     }
 };
 

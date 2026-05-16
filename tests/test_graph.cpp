@@ -139,14 +139,9 @@ TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>, ListGraph<>)
     REQUIRE(sp.prev(6) == std::optional<int>(3));
 
     // Print
-    std::ostringstream oss;
+    REQUIRE(empty.to_ascii() == "Graph {\n  type: directed\n  vertices: 0\n  edges: 0\n}");
 
-    oss << empty;
-    REQUIRE(oss.str() == "Graph {\n  type: directed\n  vertices: 0\n  edges: 0\n}");
-    oss.str("");
-
-    oss << some;
-    REQUIRE(oss.str() ==
+    REQUIRE(some.to_ascii() ==
             "Graph {\n"
             "  type: directed\n"
             "  vertices: 7\n"
@@ -159,7 +154,6 @@ TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>, ListGraph<>)
             "  5: []\n"
             "  6: [5(w=1)]\n"
             "}");
-    oss.str("");
 
     REQUIRE(some.to_dot() ==
             "digraph G {\n"
@@ -200,9 +194,7 @@ TEMPLATE_TEST_CASE("Undirected graph print and dot", "[graph]", (MatrixGraph<int
     g.link(1, 2, 3);
     g.link(2, 3, 4);
 
-    std::ostringstream oss;
-    oss << g;
-    REQUIRE(oss.str() ==
+    REQUIRE(g.to_ascii() ==
             "Graph {\n"
             "  type: undirected\n"
             "  vertices: 4\n"
@@ -222,4 +214,11 @@ TEMPLATE_TEST_CASE("Undirected graph print and dot", "[graph]", (MatrixGraph<int
             "  \"1\" -- \"2\" [label=\"3\"];\n"
             "  \"2\" -- \"3\" [label=\"4\"];\n"
             "}");
+
+    // Print via operator<<
+    std::ostringstream oss;
+
+    oss << g;
+    REQUIRE(oss.str() == "Graph(0, 1, 2, 3)");
+    oss.str("");
 }

@@ -77,6 +77,9 @@ public:
     /// The Dijkstra algorithm on the graph. Return shortest paths from start.
     virtual ShortestPath dijkstra(const V& start) const = 0;
 
+    /// Export the graph as ASCII art.
+    virtual std::string to_ascii() const = 0;
+
     /// Export the graph as Graphviz DOT.
     virtual std::string to_dot() const = 0;
 

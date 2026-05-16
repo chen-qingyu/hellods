@@ -93,6 +93,27 @@ protected:
         }
     }
 
+    // Iterate each unique edge with a callback (from, to, weight).
+    template <typename F>
+    void for_each_edge(F&& callback) const
+    {
+        for (int i = 0; i < adjacency_.size(); ++i)
+        {
+            const auto& edges = adjacency_[i];
+            for (int j = 0; j < edges.size(); ++j)
+            {
+                if constexpr (Directed)
+                {
+                    callback(i, edges[j].to_, edges[j].weight_);
+                }
+                else if (i <= edges[j].to_)
+                {
+                    callback(i, edges[j].to_, edges[j].weight_);
+                }
+            }
+        }
+    }
+
 public:
     using ShortestPath = typename Graph<V, E, Directed>::ShortestPath;
     using Iterator = typename Graph<V, E, Directed>::Iterator;
@@ -300,6 +321,75 @@ public:
         return result;
     }
 
+    /// Export the graph as ASCII art.
+    std::string to_ascii() const override
+    {
+        std::ostringstream oss;
+
+        int edges = 0;
+        for_each_edge([&](int, int, const E&)
+                      { ++edges; });
+
+        oss << "Graph {\n"
+            << "  type: " << (Directed ? "directed" : "undirected") << "\n"
+            << "  vertices: " << idx_to_vertex_.size() << "\n"
+            << "  edges: " << edges << "\n";
+
+        if constexpr (Directed)
+        {
+            for (int i = 0; i < idx_to_vertex_.size(); ++i)
+            {
+                oss << "  " << idx_to_vertex_[i] << ": [";
+
+                const auto& edge_list = adjacency_[i];
+                for (int j = 0; j < edge_list.size(); ++j)
+                {
+                    if (j != 0)
+                    {
+                        oss << ", ";
+                    }
+                    oss << idx_to_vertex_[edge_list[j].to_] << "(w=" << edge_list[j].weight_ << ")";
+                }
+
+                oss << "]\n";
+            }
+        }
+        else
+        {
+            for_each_edge([&](int i, int j, const E& w)
+                          { oss << "  " << idx_to_vertex_[i] << " -- " << idx_to_vertex_[j] << "(w=" << w << ")\n"; });
+        }
+
+        oss << "}";
+        return oss.str();
+    }
+
+    /// Export the graph as Graphviz DOT.
+    std::string to_dot() const override
+    {
+        auto quote = [](const auto& v)
+        {
+            std::ostringstream oss;
+            oss << '"' << v << '"';
+            return oss.str();
+        };
+
+        std::ostringstream oss;
+        oss << (Directed ? "digraph G {\n" : "graph G {\n");
+
+        for (int i = 0; i < idx_to_vertex_.size(); ++i)
+        {
+            oss << "  " << quote(idx_to_vertex_[i]) << ";\n";
+        }
+
+        const char* connector = Directed ? " -> " : " -- ";
+        for_each_edge([&](int i, int j, const E& w)
+                      { oss << "  " << quote(idx_to_vertex_[i]) << connector << quote(idx_to_vertex_[j])
+                            << " [label=\"" << w << "\"];\n"; });
+
+        return oss << "}", oss.str();
+    }
+
     /*
      * Manipulation
      */
@@ -351,115 +441,6 @@ public:
         vertex_to_idx_.clear();
         idx_to_vertex_.clear();
         adjacency_.clear();
-    }
-
-    /*
-     * Print
-     */
-
-    /// Print the graph.
-    friend std::ostream& operator<<(std::ostream& os, const ListGraph& graph)
-    {
-        int edges = 0;
-        for (int i = 0; i < graph.adjacency_.size(); ++i)
-        {
-            if constexpr (Directed)
-            {
-                edges += graph.adjacency_[i].size();
-            }
-            else
-            {
-                for (int j = 0; j < graph.adjacency_[i].size(); ++j)
-                {
-                    if (i <= graph.adjacency_[i][j].to_)
-                    {
-                        ++edges;
-                    }
-                }
-            }
-        }
-
-        os << "Graph {\n"
-           << "  type: " << (Directed ? "directed" : "undirected") << "\n"
-           << "  vertices: " << graph.idx_to_vertex_.size() << "\n"
-           << "  edges: " << edges << "\n";
-
-        if constexpr (Directed)
-        {
-            for (int i = 0; i < graph.idx_to_vertex_.size(); ++i)
-            {
-                os << "  " << graph.idx_to_vertex_[i] << ": [";
-
-                const auto& edges = graph.adjacency_[i];
-                for (int j = 0; j < edges.size(); ++j)
-                {
-                    if (j != 0)
-                    {
-                        os << ", ";
-                    }
-                    os << graph.idx_to_vertex_[edges[j].to_] << "(w=" << edges[j].weight_ << ")";
-                }
-
-                os << "]\n";
-            }
-        }
-        else
-        {
-            for (int i = 0; i < graph.idx_to_vertex_.size(); ++i)
-            {
-                const auto& edges = graph.adjacency_[i];
-                for (int j = 0; j < edges.size(); ++j)
-                {
-                    if (i <= edges[j].to_)
-                    {
-                        os << "  " << graph.idx_to_vertex_[i] << " -- " << graph.idx_to_vertex_[edges[j].to_]
-                           << "(w=" << edges[j].weight_ << ")\n";
-                    }
-                }
-            }
-        }
-
-        return os << "}";
-    }
-
-    /// Export the graph as Graphviz DOT.
-    std::string to_dot() const override
-    {
-        auto quote = [](const auto& value)
-        {
-            std::ostringstream oss;
-            oss << '"' << value << '"';
-            return oss.str();
-        };
-
-        std::ostringstream oss;
-        oss << (Directed ? "digraph G {\n" : "graph G {\n");
-
-        for (int i = 0; i < idx_to_vertex_.size(); ++i)
-        {
-            oss << "  " << quote(idx_to_vertex_[i]) << ";\n";
-        }
-
-        const char* connector = Directed ? " -> " : " -- ";
-        for (int i = 0; i < adjacency_.size(); ++i)
-        {
-            const auto& edges = adjacency_[i];
-            for (int j = 0; j < edges.size(); ++j)
-            {
-                if constexpr (!Directed)
-                {
-                    if (i > edges[j].to_)
-                    {
-                        continue;
-                    }
-                }
-
-                oss << "  " << quote(idx_to_vertex_[i]) << connector << quote(idx_to_vertex_[edges[j].to_])
-                    << " [label=\"" << edges[j].weight_ << "\"];\n";
-            }
-        }
-
-        return oss << "}", oss.str();
     }
 };
 
