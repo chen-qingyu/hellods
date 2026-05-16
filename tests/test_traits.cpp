@@ -19,6 +19,7 @@
 #include "../sources/Set/TreeSet.hpp"
 #include "../sources/Stack/ArrayStack.hpp"
 #include "../sources/Stack/LinkedStack.hpp"
+#include "../sources/Tree/AVLTree.hpp"
 #include "../sources/Tree/BinarySearchTree.hpp"
 #include "../sources/Tree/RedBlackTree.hpp"
 #include "../sources/Tree/SplayTree.hpp"
@@ -71,3 +72,11 @@ static_assert(std::bidirectional_iterator<decltype(std::declval<HashMap<int, int
 static_assert(std::bidirectional_iterator<decltype(std::declval<TreeMap<int, int>&>().begin())>);
 static_assert(!std::is_const_v<std::remove_reference_t<decltype(std::declval<HashMap<int, int>&>().begin()->value())>>);
 static_assert(std::is_const_v<std::remove_reference_t<decltype(std::declval<const HashMap<int, int>&>().begin()->value())>>);
+
+// Tree containers support EqLtType
+static_assert(requires(BinarySearchTree<EqLtType>& t, const EqLtType& e) { t.insert(e); });
+static_assert(requires(RedBlackTree<EqLtType>& t, const EqLtType& e) { t.insert(e); });
+static_assert(requires(AVLTree<EqLtType>& t, const EqLtType& e) { t.insert(e); });
+static_assert(requires(SplayTree<EqLtType>& t, const EqLtType& e) { t.insert(e); });
+static_assert(requires(TreeSet<EqLtType>& s, const EqLtType& e) { s.insert(e); });
+static_assert(requires(TreeMap<EqLtType, int>& m, const EqLtType& k, int v) { m.insert(k, v); });

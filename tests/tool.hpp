@@ -7,23 +7,20 @@ using Catch::Matchers::Message;
 // Only overloaded == to test compatibility.
 struct EqType
 {
-    bool operator==(const EqType& that) const
-    {
-        return false;
-    }
+    bool operator==(const EqType& that) const = default;
+    bool operator<(const EqType& that) const = delete;
+    bool operator>(const EqType& that) const = delete;
 };
 
 // Only overloaded == and < to test compatibility.
 struct EqLtType
 {
-    bool operator==(const EqLtType& that) const
-    {
-        return false;
-    }
+    bool operator==(const EqLtType& that) const = default;
     bool operator<(const EqLtType& that) const
     {
         return true;
     }
+    bool operator>(const EqLtType& that) const = delete;
 };
 
 template <>
