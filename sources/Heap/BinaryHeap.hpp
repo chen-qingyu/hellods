@@ -14,8 +14,7 @@
 namespace hellods
 {
 
-template <detail::StoredElement T, typename Cmp = std::greater<T>>
-    requires detail::ComparatorFor<T, Cmp>
+template <typename T, typename Cmp = std::greater<T>>
 class BinaryHeap : public Heap<T>
 {
     using Heap<T>::MAX_CAPACITY;

@@ -15,7 +15,7 @@ namespace hellods
 {
 
 /// Set implemented by tree.
-template <detail::OrderedElement T, typename Tree = RedBlackTree<T>>
+template <typename T, typename Tree = RedBlackTree<T>>
 class TreeSet : public Set<T>
 {
     Tree tree_;

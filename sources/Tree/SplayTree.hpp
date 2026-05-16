@@ -22,7 +22,7 @@ namespace hellods
 ///
 /// Unlike AVL or red-black trees, the splay tree stores no extra balancing
 /// data and relies only on rotation during each access.
-template <detail::OrderedElement T>
+template <typename T>
 class SplayTree : public BinarySearchTree<T>
 {
 protected:

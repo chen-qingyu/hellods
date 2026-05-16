@@ -15,10 +15,7 @@ namespace hellods
 {
 
 /// Map implemented by tree.
-template <typename K, std::copyable V, typename Tree = RedBlackTree<detail::MapEntry<K, V>>>
-    requires detail::OrderedElement<K> && requires(const Tree& tree, const K& key) {
-        tree.find_equivalent(key);
-    }
+template <typename K, typename V, typename Tree = RedBlackTree<detail::MapEntry<K, V>>>
 class TreeMap : public Map<K, V>
 {
     Tree tree_;
@@ -97,7 +94,6 @@ public:
 
     /// Check whether two maps are equal.
     bool operator==(const TreeMap& that) const
-        requires detail::LinearElement<V>
     {
         if (tree_.size() != that.tree_.size())
         {

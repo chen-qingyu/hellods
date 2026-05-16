@@ -15,7 +15,7 @@ namespace hellods
 {
 
 /// Deque implemented by array.
-template <detail::StoredElement T>
+template <typename T>
 class ArrayDeque : public Deque<T>
 {
     template <bool Const>
@@ -194,7 +194,6 @@ public:
 
     /// Check whether two deques are equal.
     bool operator==(const ArrayDeque& that) const
-        requires detail::LinearElement<T>
     {
         if (size_ != that.size_)
         {

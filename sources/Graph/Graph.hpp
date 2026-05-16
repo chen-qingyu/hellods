@@ -15,7 +15,6 @@ namespace hellods
 
 /// Abstract graph interface. Default is directed graph.
 template <typename V = int, typename E = int, bool Directed = true>
-    requires detail::HashKey<V, std::hash<V>, std::equal_to<V>>
 class Graph : public detail::ConstIterable<V>
 {
 public:
@@ -58,7 +57,7 @@ public:
     virtual std::optional<E> distance(const V& from, const V& to) const = 0;
 
     /// Determine if vertex `from` has a link to vertex `to`.
-    bool is_adjacent(const V& from, const V& to) const
+    virtual bool is_adjacent(const V& from, const V& to) const
     {
         return distance(from, to).has_value();
     }

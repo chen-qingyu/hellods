@@ -15,7 +15,7 @@ namespace hellods
 {
 
 /// Stack implemented by array list.
-template <detail::StoredElement T>
+template <typename T>
 class ArrayStack : public Stack<T>
 {
     ArrayList<T> list_;
@@ -48,7 +48,6 @@ public:
 
     /// Check whether two stacks are equal.
     bool operator==(const ArrayStack& that) const
-        requires detail::LinearElement<T>
     {
         return list_ == that.list_;
     }

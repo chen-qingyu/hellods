@@ -18,7 +18,6 @@ namespace hellods
 
 /// Graph implemented by adjacency matrix. Default is directed graph.
 template <typename V = int, typename E = int, bool Directed = true>
-    requires detail::HashKey<V, std::hash<V>, std::equal_to<V>>
 class MatrixGraph : public Graph<V, E, Directed>
 {
 protected:

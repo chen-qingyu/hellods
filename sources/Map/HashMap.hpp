@@ -14,8 +14,7 @@ namespace hellods
 {
 
 /// Hash map.
-template <typename K, detail::StoredElement V, typename Hash = std::hash<K>, typename Eq = std::equal_to<K>>
-    requires detail::HashKey<K, Hash, Eq>
+template <typename K, typename V, typename Hash = std::hash<K>, typename Eq = std::equal_to<K>>
 class HashMap : public Map<K, V>
 {
 protected:
@@ -291,7 +290,6 @@ public:
 
     /// Check whether two maps are equal.
     bool operator==(const HashMap& that) const
-        requires detail::LinearElement<V>
     {
         if (size_ != that.size_)
         {

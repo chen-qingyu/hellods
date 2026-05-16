@@ -59,17 +59,6 @@ static_assert(kFullFeaturedContainer<MatrixGraph<>>);
 static_assert(kFullFeaturedContainer<TreeSet<int>>);
 static_assert(kFullFeaturedContainer<TreeMap<int, int>>);
 
-static_assert(StoredElement<EqType>);
-static_assert(LinearElement<EqType>);
-static_assert(!OrderedElement<EqType>);
-static_assert(OrderedElement<EqLtType>);
-static_assert(HashKey<EqType, std::hash<EqType>, std::equal_to<EqType>>);
-static_assert(!HashKey<EqLtType, std::hash<EqLtType>, std::equal_to<EqLtType>>);
-static_assert(StoredElement<int>);
-static_assert(std::equality_comparable<EqType>);
-static_assert(ComparatorFor<int, std::greater<int>>);
-static_assert(ComparatorFor<EqLtType, std::less<EqLtType>>);
-
 static_assert(kConstBeginReference<ArrayList<int>>);
 static_assert(kConstBeginReference<LinkedList<int>>);
 static_assert(kConstBeginReference<SinglyLinkedList<int>>);

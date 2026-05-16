@@ -14,7 +14,7 @@ namespace hellods
 {
 
 /// List implemented by array.
-template <detail::StoredElement T>
+template <typename T>
 class ArrayList : public List<T>
 {
 protected:
@@ -111,7 +111,6 @@ public:
 
     /// Check whether two lists are equal.
     bool operator==(const ArrayList& that) const
-        requires detail::LinearElement<T>
     {
         return size_ == that.size_ && std::equal(data_, data_ + size_, that.data_);
     }

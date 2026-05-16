@@ -18,7 +18,6 @@ namespace hellods
 
 /// Graph implemented by adjacency list. Default is directed graph.
 template <typename V = int, typename E = int, bool Directed = true>
-    requires detail::HashKey<V, std::hash<V>, std::equal_to<V>>
 class ListGraph : public Graph<V, E, Directed>
 {
 protected:

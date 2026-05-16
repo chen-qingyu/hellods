@@ -16,7 +16,6 @@ namespace hellods
 
 /// Hash set.
 template <typename T, typename Hash = std::hash<T>, typename Eq = std::equal_to<T>>
-    requires detail::HashKey<T, Hash, Eq>
 class HashSet : public Set<T>
 {
 protected:

@@ -46,14 +46,12 @@ public:
      */
 
     /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contain the element.
-    Iterator find(const T& element)
-        requires detail::LinearElement<T>
+    virtual Iterator find(const T& element)
     {
         return std::find(this->begin(), this->end(), element);
     }
 
-    ConstIterator find(const T& element) const
-        requires detail::LinearElement<T>
+    virtual ConstIterator find(const T& element) const
     {
         return std::find(this->begin(), this->end(), element);
     }

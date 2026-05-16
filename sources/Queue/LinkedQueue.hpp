@@ -15,7 +15,7 @@ namespace hellods
 {
 
 /// Queue implemented by doubly linked list.
-template <detail::StoredElement T>
+template <typename T>
 class LinkedQueue : public Queue<T>
 {
     LinkedList<T> list_;
@@ -48,7 +48,6 @@ public:
 
     /// Check whether two queues are equal.
     bool operator==(const LinkedQueue& that) const
-        requires detail::LinearElement<T>
     {
         return list_ == that.list_;
     }

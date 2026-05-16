@@ -16,7 +16,7 @@ namespace hellods
 {
 
 /// Binary search tree.
-template <detail::OrderedElement T>
+template <typename T>
 class BinarySearchTree : public Tree<T>
 {
 protected:
@@ -570,10 +570,6 @@ public:
 
     template <typename U>
     typename Tree<T>::Iterator find_equivalent(const U& element) const
-        requires requires(const T& stored, const U& key) {
-            { stored < key } -> std::convertible_to<bool>;
-            { key < stored } -> std::convertible_to<bool>;
-        }
     {
         Node* current = root_;
         while (current)

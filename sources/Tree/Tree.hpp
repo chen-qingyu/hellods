@@ -14,7 +14,7 @@ namespace hellods
 {
 
 /// Abstract tree interface.
-template <detail::OrderedElement T>
+template <typename T>
 class Tree : public detail::ConstIterable<T>
 {
 public:
@@ -56,8 +56,7 @@ public:
     virtual Iterator find(const T& element) const = 0;
 
     /// Check if the tree contains the specified element.
-    bool contains(const T& element) const
-        requires detail::LinearElement<T>
+    virtual bool contains(const T& element) const
     {
         return find(element) != this->end();
     }

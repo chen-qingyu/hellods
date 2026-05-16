@@ -15,7 +15,7 @@ namespace hellods
 {
 
 /// Queue implemented by array.
-template <detail::StoredElement T>
+template <typename T>
 class ArrayQueue : public Queue<T>
 {
     ArrayDeque<T> deque_;
@@ -48,7 +48,6 @@ public:
 
     /// Check whether two queues are equal.
     bool operator==(const ArrayQueue& that) const
-        requires detail::LinearElement<T>
     {
         return deque_ == that.deque_;
     }

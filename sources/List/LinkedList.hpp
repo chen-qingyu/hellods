@@ -14,7 +14,7 @@ namespace hellods
 {
 
 /// List implemented by doubly linked list.
-template <detail::StoredElement T>
+template <typename T>
 class LinkedList : public List<T>
 {
 protected:
@@ -229,7 +229,6 @@ public:
 
     /// Check whether two lists are equal.
     bool operator==(const LinkedList& that) const
-        requires detail::LinearElement<T>
     {
         return size_ == that.size_ && std::equal(begin(), end(), that.begin());
     }

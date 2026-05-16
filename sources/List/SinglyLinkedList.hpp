@@ -14,7 +14,7 @@ namespace hellods
 {
 
 /// List implemented by singly linked list.
-template <detail::StoredElement T>
+template <typename T>
 class SinglyLinkedList : public List<T>
 {
 protected:
@@ -185,7 +185,6 @@ public:
 
     /// Check whether two lists are equal.
     bool operator==(const SinglyLinkedList& that) const
-        requires detail::LinearElement<T>
     {
         return size_ == that.size_ && std::equal(begin(), end(), that.begin());
     }

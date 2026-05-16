@@ -18,7 +18,7 @@ namespace hellods
 /// In AVL trees, the heights of the two child subtrees of any node
 /// differ by at most one; if at any time they differ by more than one,
 /// rebalancing is performed to restore this property.
-template <detail::OrderedElement T>
+template <typename T>
 class AVLTree : public BinarySearchTree<T>
 {
 protected:
