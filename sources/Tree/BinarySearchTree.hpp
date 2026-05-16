@@ -527,14 +527,14 @@ public:
     }
 
     /// Return the smallest element of the tree.
-    T min() const
+    T min() const override
     {
         detail::check_empty(size_);
         return find_min(root_)->data_;
     }
 
     /// Return the largest element of the tree.
-    T max() const
+    T max() const override
     {
         detail::check_empty(size_);
         Node* current = root_;
@@ -581,7 +581,7 @@ public:
     }
 
     /// Return the maximum depth of the tree. Empty tree depth is 0.
-    int depth() const
+    int depth() const override
     {
         return depth_node(root_);
     }
@@ -591,7 +591,7 @@ public:
      */
 
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
-    bool insert(const T& element)
+    bool insert(const T& element) override
     {
         int old_size = size_;
         set_root(insert_node(root_, element));
@@ -599,7 +599,7 @@ public:
     }
 
     /// Remove the specified element from the tree. Return whether such an element was present.
-    bool remove(const T& element)
+    bool remove(const T& element) override
     {
         int old_size = size_;
         set_root(remove_node(root_, element));
@@ -607,7 +607,7 @@ public:
     }
 
     /// Remove all of the elements from the tree.
-    void clear()
+    void clear() override
     {
         if (size_ != 0)
         {

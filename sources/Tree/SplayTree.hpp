@@ -193,7 +193,7 @@ public:
      */
 
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
-    bool insert(const T& element)
+    bool insert(const T& element) override
     {
         if (root_ == nullptr)
         {
@@ -236,7 +236,7 @@ public:
     }
 
     /// Remove the specified element from the tree. Return whether such an element was present.
-    bool remove(const T& element)
+    bool remove(const T& element) override
     {
         if (root_ == nullptr)
         {

@@ -241,7 +241,7 @@ public:
      */
 
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
-    bool insert(const T& element)
+    bool insert(const T& element) override
     {
         int old_size = size_;
         set_root(insert_avlnode(root_, element));
@@ -249,7 +249,7 @@ public:
     }
 
     /// Remove the specified element from the tree. Return whether such an element was present.
-    bool remove(const T& element)
+    bool remove(const T& element) override
     {
         int old_size = size_;
         set_root(remove_avlnode(root_, element));

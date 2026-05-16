@@ -381,13 +381,13 @@ public:
      */
 
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
-    bool insert(const T& element)
+    bool insert(const T& element) override
     {
         return insert_rbnode(root_, element);
     }
 
     /// Remove the specified element from the tree. Return whether such an element was present.
-    bool remove(const T& element)
+    bool remove(const T& element) override
     {
         return remove_rbnode(element);
     }
