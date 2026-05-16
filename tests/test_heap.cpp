@@ -1,5 +1,7 @@
 #include "tool.hpp"
 
+#include "../sources/Heap/BinaryHeap.hpp"
+
 TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less<int>>))
 {
     using Heap = TestType;

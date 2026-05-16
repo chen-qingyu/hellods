@@ -1,5 +1,8 @@
 #include "tool.hpp"
 
+#include "../sources/Map/HashMap.hpp"
+#include "../sources/Map/TreeMap.hpp"
+
 TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, std::string>))
 {
     using Map = TestType;

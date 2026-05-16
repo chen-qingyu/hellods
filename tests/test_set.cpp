@@ -1,5 +1,8 @@
 #include "tool.hpp"
 
+#include "../sources/Set/HashSet.hpp"
+#include "../sources/Set/TreeSet.hpp"
+
 TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>, TreeSet<int>)
 {
     using Set = TestType;

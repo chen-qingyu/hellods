@@ -1,5 +1,8 @@
 #include "tool.hpp"
 
+#include "../sources/Queue/ArrayQueue.hpp"
+#include "../sources/Queue/LinkedQueue.hpp"
+
 TEMPLATE_TEST_CASE("Queue", "[queue]", ArrayQueue<int>, LinkedQueue<int>)
 {
     using Queue = TestType;

@@ -1,5 +1,8 @@
 #include "tool.hpp"
 
+#include "../sources/Stack/ArrayStack.hpp"
+#include "../sources/Stack/LinkedStack.hpp"
+
 TEMPLATE_TEST_CASE("Stack", "[stack]", ArrayStack<int>, LinkedStack<int>)
 {
     using Stack = TestType;

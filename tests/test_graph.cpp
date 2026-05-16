@@ -1,5 +1,8 @@
 #include "tool.hpp"
 
+#include "../sources/Graph/ListGraph.hpp"
+#include "../sources/Graph/MatrixGraph.hpp"
+
 TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>, ListGraph<>)
 {
     using Graph = TestType;

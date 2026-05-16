@@ -1,5 +1,8 @@
 #include "tool.hpp"
 
+#include "../sources/Deque/ArrayDeque.hpp"
+#include "../sources/Deque/LinkedDeque.hpp"
+
 TEMPLATE_TEST_CASE("Deque", "[deque]", ArrayDeque<int>, LinkedDeque<int>)
 {
     using Deque = TestType;
