@@ -565,12 +565,6 @@ public:
     /// Return an iterator to the specified element, or end() if the tree does not contain the element.
     typename Tree<T>::Iterator find(const T& element) const override
     {
-        return find_equivalent(element);
-    }
-
-    template <typename U>
-    typename Tree<T>::Iterator find_equivalent(const U& element) const
-    {
         Node* current = root_;
         while (current)
         {

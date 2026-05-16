@@ -59,13 +59,20 @@ template <typename K, typename V>
 struct MapEntry
 {
     K key_;
-    V value_;
+    std::optional<V> value_;
 
     MapEntry() = default;
 
     MapEntry(const K& key, const V& value)
         : key_(key)
         , value_(value)
+    {
+    }
+
+    // Key-only constructor for tree lookup without requiring V to be default-constructible.
+    explicit MapEntry(const K& key)
+        : key_(key)
+        , value_(std::nullopt)
     {
     }
 
@@ -76,12 +83,12 @@ struct MapEntry
 
     V& value()
     {
-        return value_;
+        return *value_;
     }
 
     const V& value() const
     {
-        return value_;
+        return *value_;
     }
 
     // For tree ordering: compare by key only.
@@ -100,18 +107,6 @@ template <typename K, typename V>
 std::ostream& operator<<(std::ostream& os, const MapEntry<K, V>& entry)
 {
     return os << entry.key() << ": " << entry.value();
-}
-
-template <typename K, typename V>
-bool operator<(const MapEntry<K, V>& lhs, const K& rhs)
-{
-    return lhs.key() < rhs;
-}
-
-template <typename K, typename V>
-bool operator<(const K& lhs, const MapEntry<K, V>& rhs)
-{
-    return lhs < rhs.key();
 }
 
 // Print helper for range [`first`, `last`).

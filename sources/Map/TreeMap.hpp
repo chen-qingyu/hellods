@@ -122,7 +122,7 @@ public:
     /// Return the reference of value for key if key is in the map, else throw exception.
     V& operator[](const K& key) override
     {
-        auto tree_it = tree_.find_equivalent(key);
+        auto tree_it = tree_.find(detail::MapEntry<K, V>{key});
         if (tree_it == tree_.end())
         {
             throw std::runtime_error("Error: The key-value pair does not exist.");
@@ -133,7 +133,7 @@ public:
     /// Return the const reference of value for key if key is in the map, else throw exception.
     const V& operator[](const K& key) const override
     {
-        auto tree_it = tree_.find_equivalent(key);
+        auto tree_it = tree_.find(detail::MapEntry<K, V>{key});
         if (tree_it == tree_.end())
         {
             throw std::runtime_error("Error: The key-value pair does not exist.");
@@ -180,19 +180,19 @@ public:
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
     Map<K, V>::Iterator find(const K& key) override
     {
-        return typename Map<K, V>::Iterator(Iter<false>(tree_.find_equivalent(key)));
+        return typename Map<K, V>::Iterator(Iter<false>(tree_.find(detail::MapEntry<K, V>{key})));
     }
 
     /// Return a const iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
     Map<K, V>::ConstIterator find(const K& key) const override
     {
-        return typename Map<K, V>::ConstIterator(Iter<true>(tree_.find_equivalent(key)));
+        return typename Map<K, V>::ConstIterator(Iter<true>(tree_.find(detail::MapEntry<K, V>{key})));
     }
 
     /// Determine whether a key is in the map.
     bool contains(const K& key) const override
     {
-        return tree_.find_equivalent(key) != tree_.end();
+        return tree_.find(detail::MapEntry<K, V>{key}) != tree_.end();
     }
 
     /*
@@ -208,7 +208,7 @@ public:
     /// Remove the key-value pair corresponding to the key in the map. Return whether such a key was present.
     bool remove(const K& key) override
     {
-        auto tree_it = tree_.find_equivalent(key);
+        auto tree_it = tree_.find(detail::MapEntry<K, V>{key});
         if (tree_it == tree_.end())
         {
             return false;
