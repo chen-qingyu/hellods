@@ -294,6 +294,24 @@ TEMPLATE_TEST_CASE("Tree", "[tree]", BinarySearchTree<int>, RedBlackTree<int>, A
     oss.str("");
     oss << Tree({1, 2, 3, 4, 5});
     REQUIRE(oss.str() == "Tree(1, 2, 3, 4, 5)");
+
+    // Single-element tree
+    REQUIRE(Tree({42}).to_ascii() == "42");
+    REQUIRE(Tree({42}).to_dot() == "digraph BST {\n}");
+
+    // Two-element tree {1, 2}
+    if constexpr (std::is_same_v<Tree, SplayTree<int>>)
+    {
+        // SplayTree splays 2 to root
+        REQUIRE(Tree({1, 2}).to_ascii() == "2\n└── 1");
+        REQUIRE(Tree({1, 2}).to_dot() == "digraph BST {\n  \"2\" -> \"1\";\n}");
+    }
+    else
+    {
+        // BST: root 1 with right child 2
+        REQUIRE(Tree({1, 2}).to_ascii() == "1\n└── 2");
+        REQUIRE(Tree({1, 2}).to_dot() == "digraph BST {\n  \"1\" -> \"2\";\n}");
+    }
 }
 
 // Shared helpers for invariant tests.

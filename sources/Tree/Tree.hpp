@@ -67,6 +67,12 @@ public:
         return find(element) != this->end();
     }
 
+    /// Export the tree as ASCII art.
+    virtual std::string to_ascii() const = 0;
+
+    /// Export the tree as Graphviz DOT.
+    virtual std::string to_dot() const = 0;
+
     /*
      * Manipulation
      */

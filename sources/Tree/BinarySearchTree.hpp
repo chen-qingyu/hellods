@@ -590,6 +590,65 @@ public:
         return depth_node(root_);
     }
 
+    /// Export the tree as ASCII art.
+    std::string to_ascii() const override
+    {
+        if (root_ == nullptr)
+        {
+            return "";
+        }
+
+        std::ostringstream oss;
+        oss << root_->data();
+
+        std::function<void(const std::string&, Node*, bool)> print_node = [&](const std::string& prefix, Node* node, bool is_last)
+        {
+            if (node == nullptr)
+            {
+                return;
+            }
+
+            oss << "\n"
+                << prefix << (is_last ? "└── " : "├── ") << node->data();
+
+            std::string child_prefix = prefix + (is_last ? "    " : "│   ");
+            print_node(child_prefix, node->left_, node->right_ == nullptr);
+            print_node(child_prefix, node->right_, true);
+        };
+
+        print_node("", root_->left_, root_->right_ == nullptr);
+        print_node("", root_->right_, true);
+        return oss.str();
+    }
+
+    /// Export the tree as Graphviz DOT.
+    std::string to_dot() const override
+    {
+        std::ostringstream oss;
+        oss << "digraph BST {\n";
+
+        std::function<void(Node*)> print_node = [&](Node* node)
+        {
+            if (node == nullptr)
+            {
+                return;
+            }
+            if (node->left_)
+            {
+                oss << "  \"" << node->data() << "\" -> \"" << node->left_->data() << "\";\n";
+                print_node(node->left_);
+            }
+            if (node->right_)
+            {
+                oss << "  \"" << node->data() << "\" -> \"" << node->right_->data() << "\";\n";
+                print_node(node->right_);
+            }
+        };
+
+        print_node(root_);
+        return oss << "}", oss.str();
+    }
+
     /*
      * Manipulation
      */
