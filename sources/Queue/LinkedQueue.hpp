@@ -121,9 +121,7 @@ public:
     /// Print the queue.
     friend std::ostream& operator<<(std::ostream& os, const LinkedQueue& queue)
     {
-        std::ostringstream oss;
-        oss << queue.list_;
-        return os << "Queue" << oss.str().erase(0, 4);
+        return detail::print(os, queue.begin(), queue.end(), "Queue");
     }
 };
 

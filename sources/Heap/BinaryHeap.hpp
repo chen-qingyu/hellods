@@ -178,9 +178,7 @@ public:
     /// Print the heap.
     friend std::ostream& operator<<(std::ostream& os, const BinaryHeap& heap)
     {
-        std::ostringstream oss;
-        oss << heap.list_;
-        return os << "Heap" << oss.str().erase(0, 4);
+        return detail::print(os, heap.begin(), heap.end(), "Heap");
     }
 };
 

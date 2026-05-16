@@ -120,9 +120,7 @@ public:
     /// Print the queue.
     friend std::ostream& operator<<(std::ostream& os, const ArrayQueue& queue)
     {
-        std::ostringstream oss;
-        oss << queue.deque_;
-        return os << "Queue" << oss.str().erase(0, 5);
+        return detail::print(os, queue.begin(), queue.end(), "Queue");
     }
 };
 

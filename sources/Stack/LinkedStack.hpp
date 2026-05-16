@@ -121,9 +121,7 @@ public:
     /// Print the stack.
     friend std::ostream& operator<<(std::ostream& os, const LinkedStack& stack)
     {
-        std::ostringstream oss;
-        oss << stack.list_;
-        return os << "Stack" << oss.str().erase(0, 4);
+        return detail::print(os, stack.begin(), stack.end(), "Stack");
     }
 };
 
