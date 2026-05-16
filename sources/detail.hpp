@@ -50,7 +50,7 @@ concept HashKey =
     };
 
 // Check whether the index is valid (begin <= pos < end).
-static inline void check_bounds(int pos, int begin, int end)
+inline void check_bounds(int pos, int begin, int end)
 {
     if (pos < begin || pos >= end)
     {
@@ -59,7 +59,7 @@ static inline void check_bounds(int pos, int begin, int end)
 }
 
 // Check whether is not empty.
-static inline void check_empty(int size)
+inline void check_empty(int size)
 {
     if (size == 0)
     {
@@ -68,7 +68,7 @@ static inline void check_empty(int size)
 }
 
 // Check whether there is any remaining capacity.
-static inline void check_full(int size, int capacity)
+inline void check_full(int size, int capacity)
 {
     if (size >= capacity)
     {
@@ -138,7 +138,7 @@ bool operator<(const K& lhs, const MapEntry<K, V>& rhs)
 
 // Print helper for range [`first`, `last`).
 template <std::input_iterator InputIt>
-static inline std::ostream& print(std::ostream& os, const InputIt& first, const InputIt& last, const std::string& name)
+inline std::ostream& print(std::ostream& os, const InputIt& first, const InputIt& last, const std::string& name)
 {
     // This form looks complex, but there is only one judgment in the loop.
     // At the Assembly level (see https://godbolt.org/z/qT9n7GKf8), this is more efficient
