@@ -1,11 +1,5 @@
 #include "tool.hpp"
 
-#include "../sources/List/ArrayList.hpp"
-#include "../sources/List/LinkedList.hpp"
-#include "../sources/List/SinglyLinkedList.hpp"
-
-using namespace hellods;
-
 TEMPLATE_TEST_CASE("List", "[list]", ArrayList<int>, LinkedList<int>, SinglyLinkedList<int>)
 {
     using List = TestType;

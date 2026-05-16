@@ -1,12 +1,5 @@
 #include "tool.hpp"
 
-#include "../sources/Tree/AVLTree.hpp"
-#include "../sources/Tree/BinarySearchTree.hpp"
-#include "../sources/Tree/RedBlackTree.hpp"
-#include "../sources/Tree/SplayTree.hpp"
-
-using namespace hellods;
-
 // Verify in-order traversal produces an ascending sequence.
 template <typename Tree>
 static bool verify_order(const Tree& tree)

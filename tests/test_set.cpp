@@ -1,11 +1,4 @@
-#include <set>
-
 #include "tool.hpp"
-
-#include "../sources/Set/HashSet.hpp"
-#include "../sources/Set/TreeSet.hpp"
-
-using namespace hellods;
 
 TEMPLATE_TEST_CASE("Set", "[set]", HashSet<int>, TreeSet<int>)
 {

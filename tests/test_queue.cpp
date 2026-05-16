@@ -1,11 +1,4 @@
-#include <set>
-
 #include "tool.hpp"
-
-#include "../sources/Queue/ArrayQueue.hpp"
-#include "../sources/Queue/LinkedQueue.hpp"
-
-using namespace hellods;
 
 TEMPLATE_TEST_CASE("Queue", "[queue]", ArrayQueue<int>, LinkedQueue<int>)
 {

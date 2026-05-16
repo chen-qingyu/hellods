@@ -1,31 +1,5 @@
-#include <iterator>
-#include <type_traits>
-
 #include "tool.hpp"
 
-#include "../sources/Deque/ArrayDeque.hpp"
-#include "../sources/Deque/LinkedDeque.hpp"
-#include "../sources/Graph/ListGraph.hpp"
-#include "../sources/Graph/MatrixGraph.hpp"
-#include "../sources/Heap/BinaryHeap.hpp"
-#include "../sources/List/ArrayList.hpp"
-#include "../sources/List/LinkedList.hpp"
-#include "../sources/List/SinglyLinkedList.hpp"
-#include "../sources/Map/HashMap.hpp"
-#include "../sources/Map/TreeMap.hpp"
-#include "../sources/Queue/ArrayQueue.hpp"
-#include "../sources/Queue/LinkedQueue.hpp"
-#include "../sources/Set/HashSet.hpp"
-#include "../sources/Set/TreeSet.hpp"
-#include "../sources/Stack/ArrayStack.hpp"
-#include "../sources/Stack/LinkedStack.hpp"
-#include "../sources/Tree/AVLTree.hpp"
-#include "../sources/Tree/BinarySearchTree.hpp"
-#include "../sources/Tree/RedBlackTree.hpp"
-#include "../sources/Tree/SplayTree.hpp"
-#include "../sources/detail.hpp"
-
-using namespace hellods;
 using namespace hellods::detail;
 
 template <typename T>
@@ -73,7 +47,18 @@ static_assert(std::bidirectional_iterator<decltype(std::declval<TreeMap<int, int
 static_assert(!std::is_const_v<std::remove_reference_t<decltype(std::declval<HashMap<int, int>&>().begin()->value())>>);
 static_assert(std::is_const_v<std::remove_reference_t<decltype(std::declval<const HashMap<int, int>&>().begin()->value())>>);
 
-// Tree containers support EqLtType
+// Only support == and < to test compatibility.
+struct EqLtType
+{
+    EqLtType() = delete;
+    bool operator==(const EqLtType& that) const = default;
+    bool operator<(const EqLtType& that) const
+    {
+        return true;
+    }
+    bool operator>(const EqLtType& that) const = delete;
+};
+
 static_assert(requires(BinarySearchTree<EqLtType>& t, const EqLtType& e) { t.insert(e); });
 static_assert(requires(RedBlackTree<EqLtType>& t, const EqLtType& e) { t.insert(e); });
 static_assert(requires(AVLTree<EqLtType>& t, const EqLtType& e) { t.insert(e); });

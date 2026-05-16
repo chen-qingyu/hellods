@@ -1,11 +1,4 @@
-#include <set>
-
 #include "tool.hpp"
-
-#include "../sources/Stack/ArrayStack.hpp"
-#include "../sources/Stack/LinkedStack.hpp"
-
-using namespace hellods;
 
 TEMPLATE_TEST_CASE("Stack", "[stack]", ArrayStack<int>, LinkedStack<int>)
 {
