@@ -50,9 +50,6 @@ public:
 
     /// Remove the specified element from the set. Return true if the set changed as a result.
     virtual bool remove(const T& element) = 0;
-
-    /// Remove all of the elements from the set.
-    virtual void clear() = 0;
 };
 
 } // namespace hellods

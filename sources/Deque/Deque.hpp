@@ -68,9 +68,6 @@ public:
 
     /// Pop back, pop the back element of the deque.
     virtual T pop_back() = 0;
-
-    /// Remove all of the elements from the deque.
-    virtual void clear() = 0;
 };
 
 } // namespace hellods

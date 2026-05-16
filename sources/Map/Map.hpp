@@ -67,9 +67,6 @@ public:
 
     /// Remove the key-value pair corresponding to the key in the map. Return whether such a key was present.
     virtual bool remove(const K& key) = 0;
-
-    /// Remove all of the elements from the map.
-    virtual void clear() = 0;
 };
 
 } // namespace hellods

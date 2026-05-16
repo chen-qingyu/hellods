@@ -50,9 +50,6 @@ public:
 
     /// Pop the top element of the stack.
     virtual T pop() = 0;
-
-    /// Remove all of the elements from the stack.
-    virtual void clear() = 0;
 };
 
 } // namespace hellods

@@ -50,9 +50,6 @@ public:
 
     /// Dequeue, pop the front element of the queue.
     virtual T dequeue() = 0;
-
-    /// Remove all of the elements from the queue.
-    virtual void clear() = 0;
 };
 
 } // namespace hellods

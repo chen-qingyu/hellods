@@ -183,6 +183,9 @@ public:
     {
         return size() == 0;
     }
+
+    // Remove all of the elements from the container.
+    virtual void clear() = 0;
 };
 
 template <typename Iter>

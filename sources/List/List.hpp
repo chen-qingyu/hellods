@@ -79,9 +79,6 @@ public:
     {
         return remove(this->size() - 1);
     }
-
-    /// Remove all of the elements from the list.
-    virtual void clear() = 0;
 };
 
 } // namespace hellods

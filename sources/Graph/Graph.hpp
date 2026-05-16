@@ -99,9 +99,6 @@ public:
 
     /// Disconnect the link from vertex `from` to vertex `to`.
     virtual void unlink(const V& from, const V& to) = 0;
-
-    /// Remove all of the elements from the graph.
-    virtual void clear() = 0;
 };
 
 } // namespace hellods

@@ -47,9 +47,6 @@ public:
 
     /// Remove the top element from the heap and return it.
     virtual T pop() = 0;
-
-    /// Remove all of the elements from the heap.
-    virtual void clear() = 0;
 };
 
 } // namespace hellods

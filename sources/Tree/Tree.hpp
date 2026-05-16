@@ -69,9 +69,6 @@ public:
 
     /// Remove the specified element from the tree. Return true if the tree changed as a result.
     virtual bool remove(const T& element) = 0;
-
-    /// Remove all of the elements from the tree.
-    virtual void clear() = 0;
 };
 
 } // namespace hellods
