@@ -185,6 +185,30 @@ public:
     }
 };
 
+template <typename Iter>
+class ConstIterable : public Container
+{
+public:
+    using Iterator = Iter;
+    using ConstIterator = Iter;
+
+    virtual Iterator begin() const = 0;
+    virtual Iterator end() const = 0;
+};
+
+template <typename Iter, typename ConstIter>
+class Iterable : public ConstIterable<ConstIter>
+{
+public:
+    using ConstIterable<ConstIter>::begin;
+    using ConstIterable<ConstIter>::end;
+    using Iterator = Iter;
+    using ConstIterator = ConstIter;
+
+    virtual Iterator begin() = 0;
+    virtual Iterator end() = 0;
+};
+
 // Type-erased bidirectional iterator.
 // Wraps any concrete iterator via type erasure; forward-only iterators
 // (e.g. SinglyLinkedList) throw on operator-- at runtime.

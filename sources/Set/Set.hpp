@@ -15,12 +15,11 @@ namespace hellods
 
 /// Abstract set interface.
 template <typename T>
-class Set : public detail::Container
+class Set : public detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>
 {
 public:
-    /// Iterator type — const access only (set elements must not be modified).
-    using Iterator = detail::BasicIterator<T, true, std::bidirectional_iterator_tag>;
-    using ConstIterator = Iterator;
+    using Base = detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>;
+    using typename Base::Iterator;
 
     /*
      * Lifecycle
@@ -28,16 +27,6 @@ public:
 
     /// Virtual destructor.
     virtual ~Set() = default;
-
-    /*
-     * Iterator
-     */
-
-    /// Return an iterator to the first element of the set.
-    virtual Iterator begin() const = 0;
-
-    /// Return an iterator to the element following the last element of the set.
-    virtual Iterator end() const = 0;
 
     /*
      * Search
@@ -49,7 +38,7 @@ public:
     /// Check if the set contains the specified element.
     virtual bool contains(const T& element) const
     {
-        return find(element) != end();
+        return find(element) != this->end();
     }
 
     /*

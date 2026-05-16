@@ -15,9 +15,12 @@ namespace hellods
 
 /// Abstract tree interface.
 template <detail::OrderedElement T>
-class Tree : public detail::Container
+class Tree : public detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>
 {
 public:
+    using Base = detail::ConstIterable<detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>;
+    using typename Base::Iterator;
+
     /// Traverse option.
     enum TraverseOption
     {
@@ -27,26 +30,12 @@ public:
         LevelOrder
     };
 
-    /// Iterator type — const access only (tree order must not be modified).
-    using Iterator = detail::BasicIterator<T, true, std::bidirectional_iterator_tag>;
-    using ConstIterator = Iterator;
-
     /*
      * Lifecycle
      */
 
     /// Virtual destructor.
     virtual ~Tree() = default;
-
-    /*
-     * Iterator
-     */
-
-    /// Return a const iterator to the first element of the tree.
-    virtual Iterator begin() const = 0;
-
-    /// Return a const iterator to the element following the last element of the tree.
-    virtual Iterator end() const = 0;
 
     /*
      * Examination
@@ -68,7 +57,7 @@ public:
     bool contains(const T& element) const
         requires detail::LinearElement<T>
     {
-        return find(element) != end();
+        return find(element) != this->end();
     }
 
     /*

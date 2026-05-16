@@ -21,8 +21,8 @@ protected:
     // T* is itself a valid input iterator — no wrapper class needed.
 
 protected:
-    using detail::Container::INIT_CAPACITY;
-    using detail::Container::MAX_CAPACITY;
+    using List<T>::INIT_CAPACITY;
+    using List<T>::MAX_CAPACITY;
 
     // Number of elements.
     int size_;

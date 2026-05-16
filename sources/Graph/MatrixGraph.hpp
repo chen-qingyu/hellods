@@ -22,8 +22,8 @@ template <typename V = int, typename E = int, bool Directed = true>
 class MatrixGraph : public Graph<V, E, Directed>
 {
 protected:
-    using detail::Container::INIT_CAPACITY;
-    using detail::Container::MAX_CAPACITY;
+    using Graph<V, E, Directed>::INIT_CAPACITY;
+    using Graph<V, E, Directed>::MAX_CAPACITY;
 
     // Number of vertices.
     int size_;

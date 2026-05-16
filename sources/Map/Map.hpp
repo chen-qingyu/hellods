@@ -15,14 +15,15 @@ namespace hellods
 
 /// Abstract map interface.
 template <typename K, typename V>
-class Map : public detail::Container
+class Map : public detail::Iterable<detail::BasicIterator<detail::MapEntry<K, V>, false, std::bidirectional_iterator_tag>,
+                                    detail::BasicIterator<detail::MapEntry<K, V>, true, std::bidirectional_iterator_tag>>
 {
 public:
     using Entry = detail::MapEntry<K, V>;
-
-    /// Iterator type — keys are read-only, values are mutable through iterators.
-    using Iterator = detail::BasicIterator<Entry, false, std::bidirectional_iterator_tag>;
-    using ConstIterator = detail::BasicIterator<Entry, true, std::bidirectional_iterator_tag>;
+    using Base = detail::Iterable<detail::BasicIterator<Entry, false, std::bidirectional_iterator_tag>,
+                                  detail::BasicIterator<Entry, true, std::bidirectional_iterator_tag>>;
+    using typename Base::ConstIterator;
+    using typename Base::Iterator;
 
     /*
      * Lifecycle
@@ -30,22 +31,6 @@ public:
 
     /// Virtual destructor.
     virtual ~Map() = default;
-
-    /*
-     * Iterator
-     */
-
-    /// Return an iterator to the first element of the map.
-    virtual Iterator begin() = 0;
-
-    /// Return a const iterator to the first element of the map.
-    virtual ConstIterator begin() const = 0;
-
-    /// Return an iterator to the element following the last element of the map.
-    virtual Iterator end() = 0;
-
-    /// Return a const iterator to the element following the last element of the map.
-    virtual ConstIterator end() const = 0;
 
     /*
      * Access
@@ -70,7 +55,7 @@ public:
     /// Check if the map contains the specified key.
     virtual bool contains(const K& key) const
     {
-        return find(key) != end();
+        return find(key) != this->end();
     }
 
     /*

@@ -79,8 +79,8 @@ class ArrayDeque : public Deque<T>
     };
 
 protected:
-    using detail::Container::INIT_CAPACITY;
-    using detail::Container::MAX_CAPACITY;
+    using Deque<T>::INIT_CAPACITY;
+    using Deque<T>::MAX_CAPACITY;
 
     // Index of front in ring buffer. data[front] is the first element, except size == 0.
     int front_;

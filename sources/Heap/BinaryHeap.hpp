@@ -18,7 +18,7 @@ template <detail::StoredElement T, typename Cmp = std::greater<T>>
     requires detail::ComparatorFor<T, Cmp>
 class BinaryHeap : public Heap<T>
 {
-    using detail::Container::MAX_CAPACITY;
+    using Heap<T>::MAX_CAPACITY;
 
     ArrayList<T> list_;
 

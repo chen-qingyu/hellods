@@ -15,11 +15,14 @@ namespace hellods
 
 /// Abstract list interface.
 template <typename T>
-class List : public detail::Container
+class List : public detail::Iterable<detail::BasicIterator<T, false, std::bidirectional_iterator_tag>,
+                                     detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>
 {
 public:
-    using Iterator = detail::BasicIterator<T, false, std::bidirectional_iterator_tag>;
-    using ConstIterator = detail::BasicIterator<T, true, std::bidirectional_iterator_tag>;
+    using Base = detail::Iterable<detail::BasicIterator<T, false, std::bidirectional_iterator_tag>,
+                                  detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>;
+    using typename Base::ConstIterator;
+    using typename Base::Iterator;
 
     /*
      * Lifecycle
@@ -42,22 +45,6 @@ public:
     }
 
     /*
-     * Iterator
-     */
-
-    /// Return an iterator to the first element of the list.
-    virtual Iterator begin() = 0;
-
-    /// Return a const iterator to the first element of the list.
-    virtual ConstIterator begin() const = 0;
-
-    /// Return an iterator to the element following the last element of the list.
-    virtual Iterator end() = 0;
-
-    /// Return a const iterator to the element following the last element of the list.
-    virtual ConstIterator end() const = 0;
-
-    /*
      * Examination
      */
 
@@ -65,13 +52,13 @@ public:
     Iterator find(const T& element)
         requires detail::LinearElement<T>
     {
-        return std::find(begin(), end(), element);
+        return std::find(this->begin(), this->end(), element);
     }
 
     ConstIterator find(const T& element) const
         requires detail::LinearElement<T>
     {
-        return std::find(begin(), end(), element);
+        return std::find(this->begin(), this->end(), element);
     }
 
     /*
@@ -90,7 +77,7 @@ public:
     /// Remove and return the last element in the list.
     virtual T pop()
     {
-        return remove(size() - 1);
+        return remove(this->size() - 1);
     }
 
     /// Remove all of the elements from the list.

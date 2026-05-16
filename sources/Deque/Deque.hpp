@@ -15,11 +15,14 @@ namespace hellods
 
 /// Abstract deque interface.
 template <typename T>
-class Deque : public detail::Container
+class Deque : public detail::Iterable<detail::BasicIterator<T, false, std::bidirectional_iterator_tag>,
+                                      detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>
 {
 public:
-    using Iterator = detail::BasicIterator<T, false, std::bidirectional_iterator_tag>;
-    using ConstIterator = detail::BasicIterator<T, true, std::bidirectional_iterator_tag>;
+    using Base = detail::Iterable<detail::BasicIterator<T, false, std::bidirectional_iterator_tag>,
+                                  detail::BasicIterator<T, true, std::bidirectional_iterator_tag>>;
+    using typename Base::ConstIterator;
+    using typename Base::Iterator;
 
     /*
      * Lifecycle
@@ -49,22 +52,6 @@ public:
     {
         return const_cast<Deque&>(*this).back();
     }
-
-    /*
-     * Iterator
-     */
-
-    /// Return an iterator to the first element of the deque.
-    virtual Iterator begin() = 0;
-
-    /// Return a const iterator to the first element of the deque.
-    virtual ConstIterator begin() const = 0;
-
-    /// Return an iterator to the element following the last element of the deque.
-    virtual Iterator end() = 0;
-
-    /// Return a const iterator to the element following the last element of the deque.
-    virtual ConstIterator end() const = 0;
 
     /*
      * Manipulation
