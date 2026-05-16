@@ -32,15 +32,12 @@ public:
     /// Set iterator class.
     ///
     /// Walk the set in random order.
-    template <bool Const>
     class Iter
     {
         friend class HashSet;
 
     protected:
-        using MapIterator = std::conditional_t<Const,
-                                               typename HashMap<T, Dummy, Hash, Eq>::ConstIterator,
-                                               typename HashMap<T, Dummy, Hash, Eq>::Iterator>;
+        using MapIterator = typename HashMap<T, Dummy, Hash, Eq>::ConstIterator;
 
         MapIterator map_it_;
 
@@ -128,23 +125,23 @@ public:
     /// Return an iterator to the first element of the set.
     Set<T>::Iterator begin() override
     {
-        return typename Set<T>::Iterator(Iter<true>(map_.begin()));
+        return typename Set<T>::Iterator(Iter(map_.begin()));
     }
 
     Set<T>::Iterator begin() const override
     {
-        return typename Set<T>::Iterator(Iter<true>(map_.begin()));
+        return typename Set<T>::Iterator(Iter(map_.begin()));
     }
 
     /// Return an iterator to the element following the last element of the set.
     Set<T>::Iterator end() override
     {
-        return typename Set<T>::Iterator(Iter<true>(map_.end()));
+        return typename Set<T>::Iterator(Iter(map_.end()));
     }
 
     Set<T>::Iterator end() const override
     {
-        return typename Set<T>::Iterator(Iter<true>(map_.end()));
+        return typename Set<T>::Iterator(Iter(map_.end()));
     }
 
     /*
@@ -160,7 +157,7 @@ public:
     /// Return an iterator to the first occurrence of the specified item, or end() if the set does not contains the item.
     Set<T>::Iterator find(const T& item) const override
     {
-        return typename Set<T>::Iterator(Iter<true>(map_.find(item)));
+        return typename Set<T>::Iterator(Iter(map_.find(item)));
     }
 
     /// Determine whether a item is in the set.

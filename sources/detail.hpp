@@ -235,18 +235,7 @@ protected:
         bool equals(const Concept& other) const override
         {
             auto* p = dynamic_cast<const Model*>(&other);
-            if (p == nullptr)
-            {
-                return false;
-            }
-            if constexpr (requires { impl_.equals(p->impl_); })
-            {
-                return impl_.equals(p->impl_);
-            }
-            else
-            {
-                return impl_ == p->impl_;
-            }
+            return p != nullptr && impl_ == p->impl_;
         }
 
         std::unique_ptr<Concept> clone() const override
@@ -317,11 +306,6 @@ public:
             return false;
         }
         return ptr_->equals(*that.ptr_);
-    }
-
-    bool operator!=(const BasicIterator& that) const
-    {
-        return !(*this == that);
     }
 
     /// Pre-increment.
