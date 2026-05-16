@@ -216,25 +216,25 @@ public:
      */
 
     /// Return an iterator to the first element of the deque.
-    Deque<T>::Iterator begin() override
+    typename Deque<T>::Iterator begin() override
     {
-        return Deque<T>::Iterator(Iter<false>(data_ + front_, data_, data_ + capacity_));
+        return typename Deque<T>::Iterator(Iter<false>(data_ + front_, data_, data_ + capacity_));
     }
 
-    Deque<T>::ConstIterator begin() const override
+    typename Deque<T>::ConstIterator begin() const override
     {
-        return Deque<T>::ConstIterator(Iter<true>(data_ + front_, data_, data_ + capacity_));
+        return typename Deque<T>::ConstIterator(Iter<true>(data_ + front_, data_, data_ + capacity_));
     }
 
     /// Return an iterator to the element following the last element of the deque.
-    Deque<T>::Iterator end() override
+    typename Deque<T>::Iterator end() override
     {
-        return Deque<T>::Iterator(Iter<false>(data_ + access(size_), data_, data_ + capacity_));
+        return typename Deque<T>::Iterator(Iter<false>(data_ + access(size_), data_, data_ + capacity_));
     }
 
-    Deque<T>::ConstIterator end() const override
+    typename Deque<T>::ConstIterator end() const override
     {
-        return Deque<T>::ConstIterator(Iter<true>(data_ + access(size_), data_, data_ + capacity_));
+        return typename Deque<T>::ConstIterator(Iter<true>(data_ + access(size_), data_, data_ + capacity_));
     }
 
     /*

@@ -159,13 +159,13 @@ public:
 
     /// Return an iterator to the first element of the heap.
     /// The order is the underlying array order (heap order), not priority order.
-    Heap<T>::Iterator begin() const override
+    typename Heap<T>::Iterator begin() const override
     {
         return list_.begin();
     }
 
     /// Return an iterator to the element following the last element of the heap.
-    Heap<T>::Iterator end() const override
+    typename Heap<T>::Iterator end() const override
     {
         return list_.end();
     }

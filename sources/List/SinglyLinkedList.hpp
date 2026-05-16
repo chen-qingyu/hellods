@@ -215,26 +215,26 @@ public:
 
     /// Return an iterator to the first element of the list.
     /// If the list is empty, the returned iterator will be equal to end().
-    List<T>::Iterator begin() override
+    typename List<T>::Iterator begin() override
     {
-        return List<T>::Iterator(Iter<false>(header_->succ_));
+        return typename List<T>::Iterator(Iter<false>(header_->succ_));
     }
 
-    List<T>::ConstIterator begin() const override
+    typename List<T>::ConstIterator begin() const override
     {
-        return List<T>::ConstIterator(Iter<true>(header_->succ_));
+        return typename List<T>::ConstIterator(Iter<true>(header_->succ_));
     }
 
     /// Return an iterator to the element following the last element of the list.
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    List<T>::Iterator end() override
+    typename List<T>::Iterator end() override
     {
-        return List<T>::Iterator(Iter<false>(nullptr));
+        return typename List<T>::Iterator(Iter<false>(nullptr));
     }
 
-    List<T>::ConstIterator end() const override
+    typename List<T>::ConstIterator end() const override
     {
-        return List<T>::ConstIterator(Iter<true>(nullptr));
+        return typename List<T>::ConstIterator(Iter<true>(nullptr));
     }
 
     /*

@@ -122,13 +122,13 @@ public:
      */
 
     /// Return an iterator to the first element of the set.
-    Set<T>::Iterator begin() const override
+    typename Set<T>::Iterator begin() const override
     {
         return typename Set<T>::Iterator(Iter(map_.begin()));
     }
 
     /// Return an iterator to the element following the last element of the set.
-    Set<T>::Iterator end() const override
+    typename Set<T>::Iterator end() const override
     {
         return typename Set<T>::Iterator(Iter(map_.end()));
     }
