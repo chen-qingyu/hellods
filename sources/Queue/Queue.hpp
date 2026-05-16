@@ -18,12 +18,26 @@ template <typename T>
 class Queue : public detail::Container
 {
 public:
+    /// Iterator type — const access only (queue elements must not be modified).
+    using Iterator = detail::BasicIterator<T, true, std::bidirectional_iterator_tag>;
+    using ConstIterator = Iterator;
+
     /*
      * Lifecycle
      */
 
     /// Virtual destructor.
     virtual ~Queue() = default;
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the queue.
+    virtual Iterator begin() const = 0;
+
+    /// Return an iterator to the element following the last element of the queue.
+    virtual Iterator end() const = 0;
 
     /*
      * Access

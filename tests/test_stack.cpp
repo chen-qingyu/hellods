@@ -1,3 +1,5 @@
+#include <set>
+
 #include "tool.hpp"
 
 #include "../sources/Stack/ArrayStack.hpp"
@@ -36,6 +38,16 @@ TEMPLATE_TEST_CASE("Stack", "[stack]", ArrayStack<int>, LinkedStack<int>)
     REQUIRE(some == Stack({1, 2, 3, 4, 5}));
     REQUIRE(empty != some);
     REQUIRE(some != Stack({1, 2, 3, 4, 6}));
+
+    // Iterator
+    REQUIRE(empty.begin() == empty.end());
+    std::set<int> items;
+    for (const auto& x : some)
+    {
+        items.insert(x);
+    }
+    REQUIRE(items == std::set<int>({1, 2, 3, 4, 5}));
+    REQUIRE(std::distance(some.begin(), some.end()) == some.size());
 
     // Access
     REQUIRE(some.top() == 5);

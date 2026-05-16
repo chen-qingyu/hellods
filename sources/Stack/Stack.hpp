@@ -18,12 +18,26 @@ template <typename T>
 class Stack : public detail::Container
 {
 public:
+    /// Iterator type — const access only (stack elements must not be modified).
+    using Iterator = detail::BasicIterator<T, true, std::bidirectional_iterator_tag>;
+    using ConstIterator = Iterator;
+
     /*
      * Lifecycle
      */
 
     /// Virtual destructor.
     virtual ~Stack() = default;
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the stack.
+    virtual Iterator begin() const = 0;
+
+    /// Return an iterator to the element following the last element of the stack.
+    virtual Iterator end() const = 0;
 
     /*
      * Access

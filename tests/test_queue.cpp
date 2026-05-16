@@ -1,3 +1,5 @@
+#include <set>
+
 #include "tool.hpp"
 
 #include "../sources/Queue/ArrayQueue.hpp"
@@ -36,6 +38,17 @@ TEMPLATE_TEST_CASE("Queue", "[queue]", ArrayQueue<int>, LinkedQueue<int>)
     REQUIRE(some == Queue({1, 2, 3, 4, 5}));
     REQUIRE(empty != some);
     REQUIRE(some != Queue({1, 2, 3, 4, 6}));
+
+    // Iterator
+    REQUIRE(empty.begin() == empty.end());
+
+    std::set<int> items;
+    for (const auto& x : some)
+    {
+        items.insert(x);
+    }
+    REQUIRE(items == std::set<int>({1, 2, 3, 4, 5}));
+    REQUIRE(std::distance(some.begin(), some.end()) == some.size());
 
     // Access
     REQUIRE(some.front() == 1);

@@ -21,6 +21,8 @@ class LinkedQueue : public Queue<T>
     LinkedList<T> list_;
 
 public:
+    using Iterator = typename Queue<T>::Iterator;
+
     /*
      * Lifecycle
      */
@@ -49,6 +51,22 @@ public:
         requires detail::LinearElement<T>
     {
         return list_ == that.list_;
+    }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the queue.
+    Iterator begin() const override
+    {
+        return list_.begin();
+    }
+
+    /// Return an iterator to the element following the last element of the queue.
+    Iterator end() const override
+    {
+        return list_.end();
     }
 
     /*

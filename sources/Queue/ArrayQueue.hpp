@@ -21,6 +21,8 @@ class ArrayQueue : public Queue<T>
     ArrayDeque<T> deque_;
 
 public:
+    using Iterator = typename Queue<T>::Iterator;
+
     /*
      * Lifecycle
      */
@@ -49,6 +51,22 @@ public:
         requires detail::LinearElement<T>
     {
         return deque_ == that.deque_;
+    }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the queue.
+    Iterator begin() const override
+    {
+        return deque_.begin();
+    }
+
+    /// Return an iterator to the element following the last element of the queue.
+    Iterator end() const override
+    {
+        return deque_.end();
     }
 
     /*

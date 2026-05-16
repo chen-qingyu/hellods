@@ -1,3 +1,5 @@
+#include <set>
+
 #include "tool.hpp"
 
 #include "../sources/Graph/ListGraph.hpp"
@@ -54,6 +56,16 @@ TEMPLATE_TEST_CASE("Graph", "[graph]", MatrixGraph<>, ListGraph<>)
 
     REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
+
+    // Iterator
+    REQUIRE(empty.begin() == empty.end());
+
+    std::set<int> vertices;
+    for (const auto& v : some)
+    {
+        vertices.insert(v);
+    }
+    REQUIRE(vertices == std::set<int>({0, 1, 2, 3, 4, 5, 6}));
 
     REQUIRE_THROWS_MATCHES(empty.is_adjacent(0, 1), std::runtime_error, Message("Error: Vertex does not exist."));
     REQUIRE(some.is_adjacent(0, 1) == false);

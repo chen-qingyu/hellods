@@ -21,6 +21,8 @@ class LinkedStack : public Stack<T>
     LinkedList<T> list_;
 
 public:
+    using Iterator = typename Stack<T>::Iterator;
+
     /*
      * Lifecycle
      */
@@ -49,6 +51,22 @@ public:
         requires detail::LinearElement<T>
     {
         return list_ == that.list_;
+    }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first element of the stack.
+    Iterator begin() const override
+    {
+        return list_.begin();
+    }
+
+    /// Return an iterator to the element following the last element of the stack.
+    Iterator end() const override
+    {
+        return list_.end();
     }
 
     /*

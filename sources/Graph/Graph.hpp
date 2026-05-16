@@ -43,12 +43,26 @@ public:
         }
     };
 
+    /// Iterator type — const access only (graph vertices must not be modified).
+    using Iterator = detail::BasicIterator<V, true, std::bidirectional_iterator_tag>;
+    using ConstIterator = Iterator;
+
     /*
      * Lifecycle
      */
 
     /// Virtual destructor.
     virtual ~Graph() = default;
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first vertex of the graph.
+    virtual Iterator begin() const = 0;
+
+    /// Return an iterator to the vertex following the last vertex of the graph.
+    virtual Iterator end() const = 0;
 
     /*
      * Examination

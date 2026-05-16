@@ -112,6 +112,7 @@ protected:
 
 public:
     using ShortestPath = typename Graph<V, E, Directed>::ShortestPath;
+    using Iterator = typename Graph<V, E, Directed>::Iterator;
 
     /*
      * Lifecycle
@@ -201,6 +202,22 @@ public:
         }
 
         return true;
+    }
+
+    /*
+     * Iterator
+     */
+
+    /// Return an iterator to the first vertex of the graph.
+    Iterator begin() const override
+    {
+        return idx_to_vertex_.begin();
+    }
+
+    /// Return an iterator to the vertex following the last vertex of the graph.
+    Iterator end() const override
+    {
+        return idx_to_vertex_.end();
     }
 
     /*
