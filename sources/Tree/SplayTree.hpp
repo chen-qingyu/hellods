@@ -79,11 +79,11 @@ protected:
         while (node != nullptr)
         {
             last = node;
-            if (element < node->data_)
+            if (element < node->data())
             {
                 node = node->left_;
             }
-            else if (node->data_ < element)
+            else if (node->data() < element)
             {
                 node = node->right_;
             }
@@ -158,11 +158,11 @@ public:
         while (node != nullptr)
         {
             last = node;
-            if (element < node->data_)
+            if (element < node->data())
             {
                 node = node->left_;
             }
-            else if (node->data_ < element)
+            else if (node->data() < element)
             {
                 node = node->right_;
             }
@@ -207,7 +207,7 @@ public:
         splay_find(element);
 
         // Duplicate check.
-        if (root_->data_ == element)
+        if (root_->data() == element)
         {
             return false;
         }
@@ -215,7 +215,7 @@ public:
         Node* new_node = new Node(element);
         size_++;
 
-        if (element < root_->data_)
+        if (element < root_->data())
         {
             // Split: new_node becomes the root, with root_ as its right child.
             new_node->link_left(root_->left_);
@@ -223,7 +223,7 @@ public:
             new_node->link_right(root_);
             set_root(new_node);
         }
-        else // element > root_->data_
+        else // element > root_->data()
         {
             // Split: new_node becomes the root, with root_ as its left child.
             new_node->link_right(root_->right_);
@@ -246,7 +246,7 @@ public:
         splay_find(element);
 
         // Element not found.
-        if (!(root_->data_ == element))
+        if (!(root_->data() == element))
         {
             return false;
         }

@@ -144,11 +144,11 @@ protected:
         Node* node = root_;
         while (node != nullptr)
         {
-            if (element < node->data_)
+            if (element < node->data())
             {
                 node = node->left_;
             }
-            else if (node->data_ < element)
+            else if (node->data() < element)
             {
                 node = node->right_;
             }
@@ -170,13 +170,13 @@ protected:
         while (current != nullptr)
         {
             // if already has the element, do nothing
-            if (element == current->data_)
+            if (element == current->data())
             {
                 return false;
             }
 
             parent = current;
-            current = current->data_ < element ? current->right_ : current->left_;
+            current = current->data() < element ? current->right_ : current->left_;
         }
 
         // current is nullptr now, here is the position to insert
@@ -192,7 +192,7 @@ protected:
         }
 
         // current is not root
-        if (parent->data_ < element)
+        if (parent->data() < element)
         {
             parent->link_right(current);
         }

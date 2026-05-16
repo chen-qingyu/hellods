@@ -7,6 +7,25 @@
 
 using namespace hellods;
 
+namespace
+{
+
+struct NonDefaultValue
+{
+    int value;
+
+    NonDefaultValue() = delete;
+
+    explicit NonDefaultValue(int value)
+        : value(value)
+    {
+    }
+
+    bool operator==(const NonDefaultValue& that) const = default;
+};
+
+} // namespace
+
 TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, std::string>))
 {
     using Map = TestType;
@@ -66,6 +85,11 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, st
     }
     REQUIRE(keys == std::set<int>({1, 2, 3}));
 
+    auto mutable_it = some.begin();
+    mutable_it->value() = "ONE";
+    REQUIRE(some[mutable_it->key()] == "ONE");
+    mutable_it->value() = "one";
+
     // backward iteration via --it from end back to begin
     auto it = some.end();
     keys.clear();
@@ -86,6 +110,12 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, st
     REQUIRE(empty.find(1) == empty.end());
     REQUIRE(some.find(2)->key() == 2);
     REQUIRE(some.find(2)->value() == "two");
+
+    auto found = some.find(2);
+    found->value() = "TWO";
+    REQUIRE(some[2] == "TWO");
+    found->value() = "two";
+
     REQUIRE(some.find(4) == some.end());
 
     REQUIRE(empty.contains(1) == false);
@@ -139,4 +169,24 @@ TEMPLATE_TEST_CASE("Map", "[map]", (HashMap<int, std::string>), (TreeMap<int, st
     oss << Map({{1, "one"}, {2, "two"}, {3, "three"}});
     REQUIRE(oss.str() == "Map(1: one, 2: two, 3: three)");
     oss.str("");
+}
+
+TEST_CASE("TreeMap supports non-default mapped values", "[map]")
+{
+    TreeMap<int, NonDefaultValue> map;
+
+    REQUIRE(map.insert(1, NonDefaultValue(10)) == true);
+    REQUIRE(map.insert(2, NonDefaultValue(20)) == true);
+    REQUIRE(map.contains(1) == true);
+    REQUIRE(map[1].value == 10);
+
+    auto it = map.find(2);
+    REQUIRE(it != map.end());
+    REQUIRE(it->value().value == 20);
+
+    it->value() = NonDefaultValue(25);
+    REQUIRE(map[2].value == 25);
+
+    REQUIRE(map.remove(1) == true);
+    REQUIRE(map.contains(1) == false);
 }

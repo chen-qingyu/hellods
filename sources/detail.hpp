@@ -33,7 +33,7 @@ template <typename T>
 concept LinearElement = StoredElement<T> && std::equality_comparable<T>;
 
 template <typename T>
-concept OrderedElement = StoredElement<T> && std::equality_comparable<T> && requires(const T& lhs, const T& rhs) {
+concept OrderedElement = std::copyable<T> && std::equality_comparable<T> && requires(const T& lhs, const T& rhs) {
     { lhs < rhs } -> std::convertible_to<bool>;
 };
 
@@ -121,6 +121,18 @@ template <typename K, typename V>
 std::ostream& operator<<(std::ostream& os, const MapEntry<K, V>& entry)
 {
     return os << entry.key() << ": " << entry.value();
+}
+
+template <typename K, typename V>
+bool operator<(const MapEntry<K, V>& lhs, const K& rhs)
+{
+    return lhs.key() < rhs;
+}
+
+template <typename K, typename V>
+bool operator<(const K& lhs, const MapEntry<K, V>& rhs)
+{
+    return lhs < rhs.key();
 }
 
 // Print helper for range [`first`, `last`).
@@ -248,8 +260,9 @@ protected:
 
 public:
     using iterator_category = Category;
+    using iterator_concept = Category;
     using value_type = T;
-    using difference_type = int;
+    using difference_type = std::ptrdiff_t;
     using pointer = PtrType;
     using reference = RefType;
 

@@ -24,7 +24,7 @@ protected:
     struct Node
     {
         // Data stored in the node.
-        T data_;
+        std::optional<T> data_;
 
         // Pointer to the parent.
         Node* parent_;
@@ -41,6 +41,17 @@ protected:
         // Height of node, for AVL tree (leaf height = 1).
         int height_;
 
+        // Create a sentinel node without stored data.
+        Node()
+            : data_(std::nullopt)
+            , parent_(nullptr)
+            , left_(nullptr)
+            , right_(nullptr)
+            , red_(false)
+            , height_(0)
+        {
+        }
+
         // Create a node with given element.
         Node(const T& data, Node* parent = nullptr, Node* left = nullptr, Node* right = nullptr, bool red = true, int height = 1)
             : data_(data)
@@ -50,6 +61,16 @@ protected:
             , red_(red)
             , height_(height)
         {
+        }
+
+        T& data()
+        {
+            return *data_;
+        }
+
+        const T& data() const
+        {
+            return *data_;
         }
 
         // Link left child.
@@ -158,7 +179,7 @@ public:
         /// Dereference.
         const T& operator*() const
         {
-            return current_->data_;
+            return current_->data();
         }
 
         /// Check if two iterators are same.
@@ -287,7 +308,7 @@ protected:
             {
                 case PreOrder:
                 {
-                    action(node->data_);
+                    action(node->data());
                     traverse_node(node->left_, PreOrder, action);
                     traverse_node(node->right_, PreOrder, action);
                     break;
@@ -296,7 +317,7 @@ protected:
                 case InOrder:
                 {
                     traverse_node(node->left_, InOrder, action);
-                    action(node->data_);
+                    action(node->data());
                     traverse_node(node->right_, InOrder, action);
                     break;
                 }
@@ -305,7 +326,7 @@ protected:
                 {
                     traverse_node(node->left_, PostOrder, action);
                     traverse_node(node->right_, PostOrder, action);
-                    action(node->data_);
+                    action(node->data());
                     break;
                 }
 
@@ -316,7 +337,7 @@ protected:
                     while (!queue.is_empty())
                     {
                         node = queue.dequeue();
-                        action(node->data_);
+                        action(node->data());
                         if (node->left_)
                         {
                             queue.enqueue(node->left_);
@@ -347,11 +368,11 @@ protected:
         }
         else
         {
-            if (element < node->data_)
+            if (element < node->data())
             {
                 node->link_left(insert_node(node->left_, element));
             }
-            else if (node->data_ < element)
+            else if (node->data() < element)
             {
                 node->link_right(insert_node(node->right_, element));
             }
@@ -379,21 +400,21 @@ protected:
     {
         if (node)
         {
-            if (element < node->data_)
+            if (element < node->data())
             {
                 node->link_left(remove_node(node->left_, element));
             }
-            else if (node->data_ < element)
+            else if (node->data() < element)
             {
                 node->link_right(remove_node(node->right_, element));
             }
-            else // element == node->data_
+            else // element == node->data()
             {
                 if (node->left_ && node->right_)
                 {
                     Node* min = find_min(node->right_);
-                    node->data_ = min->data_;
-                    node->link_right(remove_node(node->right_, min->data_));
+                    node->data() = min->data();
+                    node->link_right(remove_node(node->right_, min->data()));
                 }
                 else
                 {
@@ -415,9 +436,9 @@ protected:
     }
 
     // Construct an iterator pointing to the given node.
-    Tree<T>::Iterator make_iterator(Node* node) const
+    typename Tree<T>::Iterator make_iterator(Node* node) const
     {
-        return Tree<T>::Iterator(Iter(node));
+        return typename Tree<T>::Iterator(Iter(node));
     }
 
     // Swap with another tree.
@@ -437,7 +458,7 @@ public:
     /// Create an empty tree.
     BinarySearchTree()
         : size_(0)
-        , end_(new Node(T()))
+        , end_(new Node())
         , root_(nullptr)
     {
     }
@@ -503,17 +524,17 @@ public:
     /// Return an iterator to the first element of the tree.
     ///
     /// If the tree is empty, the returned iterator will be equal to end().
-    Tree<T>::Iterator begin() const override
+    typename Tree<T>::Iterator begin() const override
     {
-        return Tree<T>::Iterator(Iter(find_min(root_)));
+        return typename Tree<T>::Iterator(Iter(find_min(root_)));
     }
 
     /// Return an iterator to the element following the last element of the tree.
     ///
     /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    Tree<T>::Iterator end() const override
+    typename Tree<T>::Iterator end() const override
     {
-        return Tree<T>::Iterator(Iter(end_));
+        return typename Tree<T>::Iterator(Iter(end_));
     }
 
     /*
@@ -530,7 +551,7 @@ public:
     T min() const override
     {
         detail::check_empty(size_);
-        return find_min(root_)->data_;
+        return find_min(root_)->data();
     }
 
     /// Return the largest element of the tree.
@@ -542,7 +563,7 @@ public:
         {
             current = current->right_;
         }
-        return current->data_;
+        return current->data();
     }
 
     /// Traverse the tree.
@@ -553,22 +574,32 @@ public:
     }
 
     /// Return an iterator to the specified element, or end() if the tree does not contain the element.
-    Tree<T>::Iterator find(const T& element) const override
+    typename Tree<T>::Iterator find(const T& element) const override
+    {
+        return find_equivalent(element);
+    }
+
+    template <typename U>
+    typename Tree<T>::Iterator find_equivalent(const U& element) const
+        requires requires(const T& stored, const U& key) {
+            { stored < key } -> std::convertible_to<bool>;
+            { key < stored } -> std::convertible_to<bool>;
+        }
     {
         Node* current = root_;
         while (current)
         {
-            if (current->data_ < element)
+            if (current->data() < element)
             {
                 current = current->right_;
             }
-            else if (element < current->data_)
+            else if (element < current->data())
             {
                 current = current->left_;
             }
             else
             {
-                return Tree<T>::Iterator(Iter(current));
+                return make_iterator(current);
             }
         }
         return end();

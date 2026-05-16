@@ -130,7 +130,7 @@ public:
     int root_value() const
     {
         REQUIRE(root_ != nullptr);
-        return root_->data_;
+        return root_->data();
     }
 };
 

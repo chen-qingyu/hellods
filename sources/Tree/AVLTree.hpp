@@ -127,11 +127,11 @@ protected:
             node = new Node(element);
             size_++;
         }
-        else if (element < node->data_)
+        else if (element < node->data())
         {
             node->link_left(insert_avlnode(node->left_, element));
         }
-        else if (node->data_ < element)
+        else if (node->data() < element)
         {
             node->link_right(insert_avlnode(node->right_, element));
         }
@@ -164,15 +164,15 @@ protected:
             return nullptr;
         }
 
-        if (element < node->data_)
+        if (element < node->data())
         {
             node->link_left(remove_avlnode(node->left_, element));
         }
-        else if (node->data_ < element)
+        else if (node->data() < element)
         {
             node->link_right(remove_avlnode(node->right_, element));
         }
-        else // element == node->data_, found the node to remove
+        else // element == node->data(), found the node to remove
         {
             if (node->left_ == nullptr)
             {
@@ -192,8 +192,8 @@ protected:
 
             // Two children: replace with successor (minimum of right subtree)
             Node* min = find_min(node->right_);
-            node->data_ = min->data_;
-            node->link_right(remove_avlnode(node->right_, min->data_));
+            node->data() = min->data();
+            node->link_right(remove_avlnode(node->right_, min->data()));
         }
 
         return rebalance(node);

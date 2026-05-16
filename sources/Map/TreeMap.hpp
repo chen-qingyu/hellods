@@ -15,11 +15,57 @@ namespace hellods
 {
 
 /// Map implemented by tree.
-template <typename K, detail::StoredElement V, typename Tree = RedBlackTree<detail::MapEntry<K, V>>>
-    requires detail::OrderedElement<K>
+template <typename K, std::copyable V, typename Tree = RedBlackTree<detail::MapEntry<K, V>>>
+    requires detail::OrderedElement<K> && requires(const Tree& tree, const K& key) {
+        tree.find_equivalent(key);
+    }
 class TreeMap : public Map<K, V>
 {
     Tree tree_;
+
+    template <bool Const>
+    class Iter
+    {
+        using TreeIterator = typename Tree::Iterator;
+        using EntryRef = std::conditional_t<Const, const typename Map<K, V>::Entry&, typename Map<K, V>::Entry&>;
+
+        TreeIterator tree_it_;
+
+    public:
+        explicit Iter(TreeIterator tree_it)
+            : tree_it_(std::move(tree_it))
+        {
+        }
+
+        EntryRef operator*() const
+        {
+            if constexpr (Const)
+            {
+                return *tree_it_;
+            }
+            else
+            {
+                return const_cast<typename Map<K, V>::Entry&>(*tree_it_);
+            }
+        }
+
+        bool operator==(const Iter& that) const
+        {
+            return tree_it_ == that.tree_it_;
+        }
+
+        Iter& operator++()
+        {
+            ++tree_it_;
+            return *this;
+        }
+
+        Iter& operator--()
+        {
+            --tree_it_;
+            return *this;
+        }
+    };
 
 public:
     /*
@@ -80,23 +126,23 @@ public:
     /// Return the reference of value for key if key is in the map, else throw exception.
     V& operator[](const K& key) override
     {
-        auto it = tree_.find(detail::MapEntry<K, V>{key, V()});
-        if (it == tree_.end())
+        auto tree_it = tree_.find_equivalent(key);
+        if (tree_it == tree_.end())
         {
             throw std::runtime_error("Error: The key-value pair does not exist.");
         }
-        return const_cast<V&>(it->value());
+        return const_cast<V&>(tree_it->value());
     }
 
     /// Return the const reference of value for key if key is in the map, else throw exception.
     const V& operator[](const K& key) const override
     {
-        auto it = tree_.find(detail::MapEntry<K, V>{key, V()});
-        if (it == tree_.end())
+        auto tree_it = tree_.find_equivalent(key);
+        if (tree_it == tree_.end())
         {
             throw std::runtime_error("Error: The key-value pair does not exist.");
         }
-        return it->value();
+        return tree_it->value();
     }
 
     /*
@@ -106,23 +152,23 @@ public:
     /// Return an iterator to the first element of the map.
     Map<K, V>::Iterator begin() override
     {
-        return tree_.begin();
+        return typename Map<K, V>::Iterator(Iter<false>(tree_.begin()));
     }
 
-    Map<K, V>::Iterator begin() const override
+    Map<K, V>::ConstIterator begin() const override
     {
-        return tree_.begin();
+        return typename Map<K, V>::ConstIterator(Iter<true>(tree_.begin()));
     }
 
     /// Return an iterator to the element following the last element of the map.
     Map<K, V>::Iterator end() override
     {
-        return tree_.end();
+        return typename Map<K, V>::Iterator(Iter<false>(tree_.end()));
     }
 
-    Map<K, V>::Iterator end() const override
+    Map<K, V>::ConstIterator end() const override
     {
-        return tree_.end();
+        return typename Map<K, V>::ConstIterator(Iter<true>(tree_.end()));
     }
 
     /*
@@ -136,15 +182,21 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
-    Map<K, V>::Iterator find(const K& key) const override
+    Map<K, V>::Iterator find(const K& key) override
     {
-        return tree_.find(detail::MapEntry<K, V>{key, V()});
+        return typename Map<K, V>::Iterator(Iter<false>(tree_.find_equivalent(key)));
+    }
+
+    /// Return a const iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
+    Map<K, V>::ConstIterator find(const K& key) const override
+    {
+        return typename Map<K, V>::ConstIterator(Iter<true>(tree_.find_equivalent(key)));
     }
 
     /// Determine whether a key is in the map.
     bool contains(const K& key) const override
     {
-        return tree_.contains(detail::MapEntry<K, V>{key, V()});
+        return tree_.find_equivalent(key) != tree_.end();
     }
 
     /*
@@ -160,7 +212,12 @@ public:
     /// Remove the key-value pair corresponding to the key in the map. Return whether such a key was present.
     bool remove(const K& key) override
     {
-        return tree_.remove(detail::MapEntry<K, V>{key, V()});
+        auto tree_it = tree_.find_equivalent(key);
+        if (tree_it == tree_.end())
+        {
+            return false;
+        }
+        return tree_.remove(*tree_it);
     }
 
     /// Remove all of the elements from the map.
