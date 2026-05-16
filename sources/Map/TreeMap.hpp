@@ -20,47 +20,20 @@ class TreeMap : public Map<K, V>
 {
     Tree tree_;
 
-    template <bool Const>
-    class Iter
+    // Wraps the tree's const iterator to provide mutable access.
+    class Iter : public Tree::Iterator
     {
-        using TreeIterator = typename Tree::Iterator;
-        using EntryRef = std::conditional_t<Const, const typename Map<K, V>::Entry&, typename Map<K, V>::Entry&>;
-
-        TreeIterator tree_it_;
+        using Base = typename Tree::Iterator;
 
     public:
-        explicit Iter(TreeIterator tree_it)
-            : tree_it_(std::move(tree_it))
+        explicit Iter(Base it)
+            : Base(std::move(it))
         {
         }
 
-        EntryRef operator*() const
+        typename Map<K, V>::Entry& operator*() const
         {
-            if constexpr (Const)
-            {
-                return *tree_it_;
-            }
-            else
-            {
-                return const_cast<typename Map<K, V>::Entry&>(*tree_it_);
-            }
-        }
-
-        bool operator==(const Iter& that) const
-        {
-            return tree_it_ == that.tree_it_;
-        }
-
-        Iter& operator++()
-        {
-            ++tree_it_;
-            return *this;
-        }
-
-        Iter& operator--()
-        {
-            --tree_it_;
-            return *this;
+            return const_cast<typename Map<K, V>::Entry&>(Base::operator*());
         }
     };
 
@@ -148,23 +121,23 @@ public:
     /// Return an iterator to the first element of the map.
     Map<K, V>::Iterator begin() override
     {
-        return typename Map<K, V>::Iterator(Iter<false>(tree_.begin()));
+        return typename Map<K, V>::Iterator(Iter(tree_.begin()));
     }
 
     Map<K, V>::ConstIterator begin() const override
     {
-        return typename Map<K, V>::ConstIterator(Iter<true>(tree_.begin()));
+        return tree_.begin();
     }
 
     /// Return an iterator to the element following the last element of the map.
     Map<K, V>::Iterator end() override
     {
-        return typename Map<K, V>::Iterator(Iter<false>(tree_.end()));
+        return typename Map<K, V>::Iterator(Iter(tree_.end()));
     }
 
     Map<K, V>::ConstIterator end() const override
     {
-        return typename Map<K, V>::ConstIterator(Iter<true>(tree_.end()));
+        return tree_.end();
     }
 
     /*
@@ -180,13 +153,13 @@ public:
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
     Map<K, V>::Iterator find(const K& key) override
     {
-        return typename Map<K, V>::Iterator(Iter<false>(tree_.find(detail::MapEntry<K, V>{key})));
+        return typename Map<K, V>::Iterator(Iter(tree_.find(detail::MapEntry<K, V>{key})));
     }
 
     /// Return a const iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
     Map<K, V>::ConstIterator find(const K& key) const override
     {
-        return typename Map<K, V>::ConstIterator(Iter<true>(tree_.find(detail::MapEntry<K, V>{key})));
+        return tree_.find(detail::MapEntry<K, V>{key});
     }
 
     /// Determine whether a key is in the map.
