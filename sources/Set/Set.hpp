@@ -34,15 +34,9 @@ public:
      */
 
     /// Return an iterator to the first element of the set.
-    virtual Iterator begin() = 0;
-
-    /// Return a const iterator to the first element of the set.
     virtual Iterator begin() const = 0;
 
     /// Return an iterator to the element following the last element of the set.
-    virtual Iterator end() = 0;
-
-    /// Return a const iterator to the element following the last element of the set.
     virtual Iterator end() const = 0;
 
     /*

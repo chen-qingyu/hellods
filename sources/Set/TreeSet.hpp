@@ -59,22 +59,12 @@ public:
      */
 
     /// Return an iterator to the first element of the set.
-    Set<T>::Iterator begin() override
-    {
-        return tree_.begin();
-    }
-
     Set<T>::Iterator begin() const override
     {
         return tree_.begin();
     }
 
     /// Return an iterator to the element following the last element of the set.
-    Set<T>::Iterator end() override
-    {
-        return tree_.end();
-    }
-
     Set<T>::Iterator end() const override
     {
         return tree_.end();
