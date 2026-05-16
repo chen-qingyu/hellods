@@ -21,8 +21,8 @@ public:
     using Entry = detail::MapEntry<K, V>;
 
     /// Iterator type — keys are read-only, values are mutable through iterators.
-    using Iterator = detail::BasicIterator<Entry, true>;
-    using ConstIterator = detail::BasicIterator<Entry, true>;
+    using Iterator = detail::BasicIterator<Entry, false, std::bidirectional_iterator_tag>;
+    using ConstIterator = detail::BasicIterator<Entry, true, std::bidirectional_iterator_tag>;
 
     /*
      * Lifecycle
@@ -39,13 +39,13 @@ public:
     virtual Iterator begin() = 0;
 
     /// Return a const iterator to the first element of the map.
-    virtual Iterator begin() const = 0;
+    virtual ConstIterator begin() const = 0;
 
     /// Return an iterator to the element following the last element of the map.
     virtual Iterator end() = 0;
 
     /// Return a const iterator to the element following the last element of the map.
-    virtual Iterator end() const = 0;
+    virtual ConstIterator end() const = 0;
 
     /*
      * Access
@@ -61,8 +61,11 @@ public:
      * Search
      */
 
+    /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contain the key.
+    virtual Iterator find(const K& key) = 0;
+
     /// Return a const iterator to the first occurrence of the specified key, or end() if the map does not contain the key.
-    virtual Iterator find(const K& key) const = 0;
+    virtual ConstIterator find(const K& key) const = 0;
 
     /// Check if the map contains the specified key.
     virtual bool contains(const K& key) const

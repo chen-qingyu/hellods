@@ -1,3 +1,4 @@
+#include <iterator>
 #include <type_traits>
 
 #include "tool.hpp"
@@ -74,3 +75,10 @@ static_assert(kConstBeginReference<LinkedList<int>>);
 static_assert(kConstBeginReference<SinglyLinkedList<int>>);
 static_assert(kConstBeginReference<ArrayDeque<int>>);
 static_assert(kConstBeginReference<HashMap<int, int>>);
+
+static_assert(std::bidirectional_iterator<decltype(std::declval<HashSet<int>&>().begin())>);
+static_assert(std::bidirectional_iterator<decltype(std::declval<TreeSet<int>&>().begin())>);
+static_assert(std::bidirectional_iterator<decltype(std::declval<HashMap<int, int>&>().begin())>);
+static_assert(std::bidirectional_iterator<decltype(std::declval<TreeMap<int, int>&>().begin())>);
+static_assert(!std::is_const_v<std::remove_reference_t<decltype(std::declval<HashMap<int, int>&>().begin()->value())>>);
+static_assert(std::is_const_v<std::remove_reference_t<decltype(std::declval<const HashMap<int, int>&>().begin()->value())>>);

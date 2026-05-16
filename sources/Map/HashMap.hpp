@@ -347,10 +347,10 @@ public:
     /// Return an iterator to the first element of the map.
     Map<K, V>::Iterator begin() override
     {
-        return typename Map<K, V>::Iterator(Iter<true>(data_, data_, data_ + capacity_));
+        return typename Map<K, V>::Iterator(Iter<false>(data_, data_, data_ + capacity_));
     }
 
-    Map<K, V>::Iterator begin() const override
+    Map<K, V>::ConstIterator begin() const override
     {
         return typename Map<K, V>::ConstIterator(Iter<true>(data_, data_, data_ + capacity_));
     }
@@ -358,10 +358,10 @@ public:
     /// Return an iterator to the element following the last element of the map.
     Map<K, V>::Iterator end() override
     {
-        return typename Map<K, V>::Iterator(Iter<true>(data_ + capacity_, data_, data_ + capacity_));
+        return typename Map<K, V>::Iterator(Iter<false>(data_ + capacity_, data_, data_ + capacity_));
     }
 
-    Map<K, V>::Iterator end() const override
+    Map<K, V>::ConstIterator end() const override
     {
         return typename Map<K, V>::ConstIterator(Iter<true>(data_ + capacity_, data_, data_ + capacity_));
     }
@@ -377,10 +377,17 @@ public:
     }
 
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
-    Map<K, V>::Iterator find(const K& key) const override
+    Map<K, V>::Iterator find(const K& key) override
     {
         int pos = probe_pos(key, false);
-        return pos == -1 ? end() : Map<K, V>::Iterator(Iter<true>(data_ + pos, data_, data_ + capacity_));
+        return pos == -1 ? end() : typename Map<K, V>::Iterator(Iter<false>(data_ + pos, data_, data_ + capacity_));
+    }
+
+    /// Return a const iterator to the first occurrence of the specified key, or end() if the map does not contains the key.
+    Map<K, V>::ConstIterator find(const K& key) const override
+    {
+        int pos = probe_pos(key, false);
+        return pos == -1 ? end() : typename Map<K, V>::ConstIterator(Iter<true>(data_ + pos, data_, data_ + capacity_));
     }
 
     /// Determine whether a key is in the map.

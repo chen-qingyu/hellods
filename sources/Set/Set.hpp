@@ -19,7 +19,7 @@ class Set : public detail::Container
 {
 public:
     /// Iterator type — const access only (set elements must not be modified).
-    using Iterator = detail::BasicIterator<T, true>;
+    using Iterator = detail::BasicIterator<T, true, std::bidirectional_iterator_tag>;
     using ConstIterator = Iterator;
 
     /*
