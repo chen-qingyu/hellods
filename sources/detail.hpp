@@ -27,6 +27,11 @@
 namespace hellods::detail
 {
 
+template <typename T>
+concept Printable = requires(std::ostream& os, const T& value) {
+    os << value;
+};
+
 // Check whether the index is valid (begin <= pos < end).
 inline void check_bounds(int pos, int begin, int end)
 {
@@ -104,7 +109,11 @@ struct MapEntry
 
     friend std::ostream& operator<<(std::ostream& os, const MapEntry& entry)
     {
-        return os << entry.key() << ": " << entry.value();
+        if constexpr (Printable<K> && Printable<V>)
+        {
+            return os << entry.key() << ": " << entry.value();
+        }
+        throw std::runtime_error("Error: MapEntry output requires Printable key and value.");
     }
 };
 

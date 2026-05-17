@@ -78,10 +78,6 @@ struct EqLtType
         return true;
     }
     bool operator>(const EqLtType& that) const = delete;
-    friend std::ostream& operator<<(std::ostream& os, const EqLtType& obj)
-    {
-        return os << "EqLtType";
-    }
 };
 
 static_assert(requires(BinarySearchTree<EqLtType>& t, const EqLtType& e) { t.insert(e); });

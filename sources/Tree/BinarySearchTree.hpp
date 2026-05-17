@@ -597,56 +597,66 @@ public:
         {
             return "";
         }
-
-        std::ostringstream oss;
-        oss << root_->data();
-
-        std::function<void(const std::string&, Node*, bool)> print_node = [&](const std::string& prefix, Node* node, bool is_last)
+        if constexpr (detail::Printable<T>)
         {
-            if (node == nullptr)
+            std::ostringstream oss;
+            oss << root_->data();
+
+            std::function<void(const std::string&, Node*, bool)> print_node = [&](const std::string& prefix, Node* node, bool is_last)
             {
-                return;
-            }
+                if (node == nullptr)
+                {
+                    return;
+                }
 
-            oss << "\n"
-                << prefix << (is_last ? "└── " : "├── ") << node->data();
+                oss << "\n"
+                    << prefix << (is_last ? "└── " : "├── ") << node->data();
 
-            std::string child_prefix = prefix + (is_last ? "    " : "│   ");
-            print_node(child_prefix, node->left_, node->right_ == nullptr);
-            print_node(child_prefix, node->right_, true);
-        };
+                std::string child_prefix = prefix + (is_last ? "    " : "│   ");
+                print_node(child_prefix, node->left_, node->right_ == nullptr);
+                print_node(child_prefix, node->right_, true);
+            };
 
-        print_node("", root_->left_, root_->right_ == nullptr);
-        print_node("", root_->right_, true);
-        return oss.str();
+            print_node("", root_->left_, root_->right_ == nullptr);
+            print_node("", root_->right_, true);
+            return oss.str();
+        }
+
+        throw std::runtime_error("Error: Tree export requires Printable elements.");
     }
 
     /// Export the tree as Graphviz DOT.
     std::string to_dot() const override
     {
-        std::ostringstream oss;
-        oss << "digraph BST {\n";
-
-        std::function<void(Node*)> print_node = [&](Node* node)
+        if constexpr (detail::Printable<T>)
         {
-            if (node == nullptr)
-            {
-                return;
-            }
-            if (node->left_)
-            {
-                oss << "  \"" << node->data() << "\" -> \"" << node->left_->data() << "\";\n";
-                print_node(node->left_);
-            }
-            if (node->right_)
-            {
-                oss << "  \"" << node->data() << "\" -> \"" << node->right_->data() << "\";\n";
-                print_node(node->right_);
-            }
-        };
+            std::ostringstream oss;
+            oss << "digraph BST {\n";
 
-        print_node(root_);
-        return oss << "}", oss.str();
+            std::function<void(Node*)> print_node = [&](Node* node)
+            {
+                if (node == nullptr)
+                {
+                    return;
+                }
+                if (node->left_)
+                {
+                    oss << "  \"" << node->data() << "\" -> \"" << node->left_->data() << "\";\n";
+                    print_node(node->left_);
+                }
+                if (node->right_)
+                {
+                    oss << "  \"" << node->data() << "\" -> \"" << node->right_->data() << "\";\n";
+                    print_node(node->right_);
+                }
+            };
+
+            print_node(root_);
+            oss << "}";
+            return oss.str();
+        }
+
+        throw std::runtime_error("Error: Tree export requires Printable elements.");
     }
 
     /*

@@ -324,70 +324,81 @@ public:
     /// Export the graph as ASCII art.
     std::string to_ascii() const override
     {
-        std::ostringstream oss;
-
-        int edges = 0;
-        for_each_edge([&](int, int, const E&)
-                      { ++edges; });
-
-        oss << "Graph {\n"
-            << "  type: " << (Directed ? "directed" : "undirected") << "\n"
-            << "  vertices: " << idx_to_vertex_.size() << "\n"
-            << "  edges: " << edges << "\n";
-
-        if constexpr (Directed)
+        if constexpr (detail::Printable<V> && detail::Printable<E>)
         {
-            for (int i = 0; i < idx_to_vertex_.size(); ++i)
+            std::ostringstream oss;
+
+            int edges = 0;
+            for_each_edge([&](int, int, const E&)
+                          { ++edges; });
+
+            oss << "Graph {\n"
+                << "  type: " << (Directed ? "directed" : "undirected") << "\n"
+                << "  vertices: " << idx_to_vertex_.size() << "\n"
+                << "  edges: " << edges << "\n";
+
+            if constexpr (Directed)
             {
-                oss << "  " << idx_to_vertex_[i] << ": [";
-
-                const auto& edge_list = adjacency_[i];
-                for (int j = 0; j < edge_list.size(); ++j)
+                for (int i = 0; i < idx_to_vertex_.size(); ++i)
                 {
-                    if (j != 0)
+                    oss << "  " << idx_to_vertex_[i] << ": [";
+
+                    const auto& edge_list = adjacency_[i];
+                    for (int j = 0; j < edge_list.size(); ++j)
                     {
-                        oss << ", ";
+                        if (j != 0)
+                        {
+                            oss << ", ";
+                        }
+                        oss << idx_to_vertex_[edge_list[j].to_] << "(w=" << edge_list[j].weight_ << ")";
                     }
-                    oss << idx_to_vertex_[edge_list[j].to_] << "(w=" << edge_list[j].weight_ << ")";
+
+                    oss << "]\n";
                 }
-
-                oss << "]\n";
             }
-        }
-        else
-        {
-            for_each_edge([&](int i, int j, const E& w)
-                          { oss << "  " << idx_to_vertex_[i] << " -- " << idx_to_vertex_[j] << "(w=" << w << ")\n"; });
+            else
+            {
+                for_each_edge([&](int i, int j, const E& w)
+                              { oss << "  " << idx_to_vertex_[i] << " -- " << idx_to_vertex_[j] << "(w=" << w << ")\n"; });
+            }
+
+            oss << "}";
+            return oss.str();
         }
 
-        oss << "}";
-        return oss.str();
+        throw std::runtime_error("Error: Graph export requires Printable vertices and weights.");
     }
 
     /// Export the graph as Graphviz DOT.
     std::string to_dot() const override
     {
-        auto quote = [](const auto& v)
+        if constexpr (detail::Printable<V> && detail::Printable<E>)
         {
+            auto quote = [](const auto& v)
+            {
+                std::ostringstream oss;
+                oss << '"' << v << '"';
+                return oss.str();
+            };
+
             std::ostringstream oss;
-            oss << '"' << v << '"';
+            oss << (Directed ? "digraph G {\n" : "graph G {\n");
+
+            for (int i = 0; i < idx_to_vertex_.size(); ++i)
+            {
+                oss << "  " << quote(idx_to_vertex_[i]) << ";\n";
+            }
+
+            const char* connector = Directed ? " -> " : " -- ";
+            for_each_edge([&](int i, int j, const E& w)
+                          { oss << "  " << quote(idx_to_vertex_[i]) << connector << quote(idx_to_vertex_[j])
+                                << " [label=\"" << w << "\"];\n"; });
+
+            oss << "}";
             return oss.str();
-        };
-
-        std::ostringstream oss;
-        oss << (Directed ? "digraph G {\n" : "graph G {\n");
-
-        for (int i = 0; i < idx_to_vertex_.size(); ++i)
-        {
-            oss << "  " << quote(idx_to_vertex_[i]) << ";\n";
         }
 
-        const char* connector = Directed ? " -> " : " -- ";
-        for_each_edge([&](int i, int j, const E& w)
-                      { oss << "  " << quote(idx_to_vertex_[i]) << connector << quote(idx_to_vertex_[j])
-                            << " [label=\"" << w << "\"];\n"; });
-
-        return oss << "}", oss.str();
+        throw std::runtime_error("Error: Graph export requires Printable vertices and weights.");
     }
 
     /*
