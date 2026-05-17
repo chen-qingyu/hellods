@@ -54,12 +54,20 @@ public:
     /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contain the element.
     virtual Iterator find(const T& element)
     {
-        return std::find(this->begin(), this->end(), element);
+        if constexpr (std::equality_comparable<T>)
+        {
+            return std::find(this->begin(), this->end(), element);
+        }
+        throw std::runtime_error("Error: List::find requires equality comparable elements.");
     }
 
     virtual ConstIterator find(const T& element) const
     {
-        return std::find(this->begin(), this->end(), element);
+        if constexpr (std::equality_comparable<T>)
+        {
+            return std::find(this->begin(), this->end(), element);
+        }
+        throw std::runtime_error("Error: List::find requires equality comparable elements.");
     }
 
     /*
