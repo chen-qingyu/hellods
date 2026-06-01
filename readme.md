@@ -6,7 +6,7 @@ _C++ 实现的基础数据结构模板代码库_
 
 - 名称：HelloDS，意为 **Hello** **D**ata **S**tructure
 - 语言：C++，满足 C++23 标准
-- 目标：实现一套便于学习、收藏、展示的基础数据结构模板代码；项目重点是源码表达和实现思路，不以工业级通用容器库为目标；不使用任何标准库容器；支持迭代器
+- 目标：实现一套便于学习、收藏、展示的基础数据结构模板代码；不使用任何标准库容器；支持迭代器
 - 模块：List, Stack, Queue, Deque, Heap, Tree, Graph, Set, Map
 - 简洁：Stay simple, stay young. 在保证健壮的前提下，尽量简洁，便于维护和阅读
 - 健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查
@@ -16,21 +16,82 @@ _C++ 实现的基础数据结构模板代码库_
 - 文档：使用 [Doxygen](https://www.doxygen.nl) 生成文档
 - 构建：使用 [XMake](https://xmake.io) 进行构建
 
+### 项目亮点
+
+- 零标准库容器依赖：全部容器和迭代器均从零实现，展示完整的实现思路与细节
+- 统一的迭代器体系：基于 Concept + Model 实现类型擦除迭代器，全容器统一迭代器接口
+- 完备的生命周期：所有容器均实现了 Rule of Five，资源管理安全可靠
+
+### 模块一览
+
+```mermaid
+graph TD
+    subgraph 线性["线性容器"]
+        List --> ArrayList & LinkedList & SinglyLinkedList
+        Stack --> ArrayStack & LinkedStack
+        Queue --> ArrayQueue & LinkedQueue
+        Deque --> ArrayDeque & LinkedDeque
+    end
+    subgraph 树形["树形容器"]
+        Tree --> BinarySearchTree & AVLTree & RedBlackTree & SplayTree
+    end
+    subgraph 图形["图容器"]
+        Graph --> MatrixGraph & ListGraph
+    end
+    subgraph 堆["堆容器"]
+        Heap --> BinaryHeap
+    end
+    subgraph 集合["集合容器"]
+        Set --> HashSet & TreeSet
+        Map --> HashMap & TreeMap
+    end
+```
+
+### 核心特性
+
+| 容器               | 底层结构 | 特征                         | 亮点                     |
+| ------------------ | -------- | ---------------------------- | ------------------------ |
+| `ArrayList`        | 动态数组 | 随机访问 O(1)，尾部追加快    | -                        |
+| `LinkedList`       | 双向链表 | 插入删除节点高效             | 缓存实现访问加速         |
+| `SinglyLinkedList` | 单向链表 | 内存占用低，仅支持正向遍历   | -                        |
+| `ArrayStack`       | 动态数组 | LIFO，尾部 push/pop 高效     | -                        |
+| `LinkedStack`      | 双向链表 | LIFO，适合频繁动态扩缩容     | -                        |
+| `ArrayQueue`       | 循环数组 | FIFO，环形缓冲区             | -                        |
+| `LinkedQueue`      | 双向链表 | FIFO，适合频繁动态扩缩容     | -                        |
+| `ArrayDeque`       | 循环数组 | 头尾操作均为 O(1) 摊还       | 迭代器自动处理环形绕回   |
+| `LinkedDeque`      | 双向链表 | 头尾插删高效                 | -                        |
+| `BinaryHeap`       | 动态数组 | 堆顶访问高效，适合优先级场景 | 模板支持大顶堆和小顶堆   |
+| `BinarySearchTree` | 二叉树   | 中序遍历有序，查找 O(log n)  | 虚拟最大节点简化双向迭代 |
+| `AVLTree`          | 二叉树   | 严格平衡，查找性能稳定       | -                        |
+| `RedBlackTree`     | 二叉树   | 近似平衡，更新操作代价低     | -                        |
+| `SplayTree`        | 二叉树   | 访问热点会被逐步伸展到上层   | -                        |
+| `MatrixGraph`      | 邻接矩阵 | 稠密图友好，边查询 O(1)      | -                        |
+| `ListGraph`        | 邻接表   | 稀疏图友好，适合遍历邻边     | -                        |
+| `HashSet`          | 散列表   | O(1) 查找，无重复元素        | -                        |
+| `TreeSet`          | 二叉树   | 元素有序，支持范围相关操作   | -                        |
+| `HashMap`          | 散列表   | O(1) 键查找与更新            | 正负交替二次探测缓解聚集 |
+| `TreeMap`          | 二叉树   | 键有序，支持有序映射操作     | -                        |
+
 ## 2. 使用说明
 
 可以看 [examples](./examples/) 。
 
+| 示例                        | 主要容器      | 算法/场景         |
+| --------------------------- | ------------- | ----------------- |
+| `calculator.cpp`            | `ArrayStack`  | 中缀表达式求值    |
+| `simulate_bank_queuing.cpp` | `ArrayQueue`  | 多窗口排队模拟    |
+| `metro_planner.cpp`         | `MatrixGraph` | Dijkstra 最短路径 |
+
 运行示例和测试：
 
 ```
-xmake build
 xmake run example
 xmake run test
 ```
 
-其实最大的用处就是通过源码来学习/收藏/展示数据结构。
+运行 xmake run example 后进入菜单；运行 xmake run test 会执行所有测试。
 
-都是基础数据结构，没什么太大的亮点，中规中矩，因为这个项目的目的不是提供可使用的库，而是学习/收藏/展示数据结构。
+其实最大的用处就是通过源码来学习/收藏/展示数据结构。
 
 如果你想要实用的容器库/类型库，可以看看我的另一个项目：[PyInCpp](https://github.com/chen-qingyu/pyincpp)。
 
