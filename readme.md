@@ -39,7 +39,7 @@ graph TD
         Graph --> MatrixGraph & ListGraph
     end
     subgraph 堆["堆容器"]
-        Heap --> BinaryHeap
+        Heap --> BinaryHeap & PairingHeap
     end
     subgraph 集合["集合容器"]
         Set --> HashSet & TreeSet
@@ -61,6 +61,7 @@ graph TD
 | `ArrayDeque`       | 循环数组 | 头尾操作均为 O(1) 摊还       | 迭代器自动处理环形绕回   |
 | `LinkedDeque`      | 双向链表 | 头尾插删高效                 | -                        |
 | `BinaryHeap`       | 动态数组 | 堆顶访问高效，适合优先级场景 | 模板支持大顶堆和小顶堆   |
+| `PairingHeap`      | 多叉树   | 支持 O(1) 摊还插入           | 基于 meld 操作，实现极简 |
 | `BinarySearchTree` | 二叉树   | 中序遍历有序，查找 O(log n)  | 虚拟最大节点简化双向迭代 |
 | `AVLTree`          | 二叉树   | 严格平衡，查找性能稳定       | -                        |
 | `RedBlackTree`     | 二叉树   | 近似平衡，更新操作代价低     | -                        |
