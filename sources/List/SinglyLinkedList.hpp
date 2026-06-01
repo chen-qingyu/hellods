@@ -157,13 +157,9 @@ public:
 
     /// Move constructor.
     SinglyLinkedList(SinglyLinkedList&& that)
-        : size_(that.size_)
-        , header_(that.header_)
-        , tail_(that.tail_)
+        : SinglyLinkedList()
     {
-        that.size_ = 0;
-        that.header_ = new Node(T());
-        that.tail_ = nullptr;
+        swap(that);
     }
 
     SinglyLinkedList& operator=(SinglyLinkedList that)

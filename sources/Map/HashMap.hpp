@@ -263,13 +263,9 @@ public:
 
     /// Move constructor.
     HashMap(HashMap&& that)
-        : size_(that.size_)
-        , capacity_(that.capacity_)
-        , data_(that.data_)
+        : HashMap()
     {
-        that.size_ = 0;
-        that.capacity_ = INIT_PRIME_CAPACITY;
-        that.data_ = new Slot[that.capacity_]();
+        swap(that);
     }
 
     HashMap& operator=(HashMap that)

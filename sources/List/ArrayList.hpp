@@ -84,13 +84,9 @@ public:
 
     /// Move constructor.
     ArrayList(ArrayList&& that)
-        : size_(that.size_)
-        , capacity_(that.capacity_)
-        , data_(that.data_)
+        : ArrayList()
     {
-        that.size_ = 0;
-        that.capacity_ = INIT_CAPACITY;
-        that.data_ = new T[that.capacity_];
+        swap(that);
     }
 
     ArrayList& operator=(ArrayList that)

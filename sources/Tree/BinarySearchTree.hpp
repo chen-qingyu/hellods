@@ -477,11 +477,7 @@ public:
     BinarySearchTree(BinarySearchTree&& that)
         : BinarySearchTree()
     {
-        size_ = that.size_;
-        set_root(that.root_);
-
-        that.size_ = 0;
-        that.set_root(nullptr);
+        swap(that);
     }
 
     BinarySearchTree& operator=(BinarySearchTree that)

@@ -170,15 +170,9 @@ public:
 
     /// Move constructor.
     MatrixGraph(MatrixGraph&& that)
-        : size_(that.size_)
-        , capacity_(that.capacity_)
-        , matrix_(that.matrix_)
-        , vertex_to_idx_(std::move(that.vertex_to_idx_))
-        , idx_to_vertex_(std::move(that.idx_to_vertex_))
+        : MatrixGraph()
     {
-        that.size_ = 0;
-        that.capacity_ = INIT_CAPACITY;
-        that.matrix_ = new std::optional<E>[that.capacity_ * that.capacity_]();
+        swap(that);
     }
 
     MatrixGraph& operator=(MatrixGraph that)

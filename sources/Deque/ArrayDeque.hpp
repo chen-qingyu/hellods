@@ -165,15 +165,9 @@ public:
 
     /// Move constructor.
     ArrayDeque(ArrayDeque&& that)
-        : front_(that.front_)
-        , size_(that.size_)
-        , capacity_(that.capacity_)
-        , data_(that.data_)
+        : ArrayDeque()
     {
-        that.front_ = 0;
-        that.size_ = 0;
-        that.capacity_ = INIT_CAPACITY;
-        that.data_ = new T[that.capacity_];
+        swap(that);
     }
 
     ArrayDeque& operator=(ArrayDeque that)
