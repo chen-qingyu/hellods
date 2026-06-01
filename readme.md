@@ -147,12 +147,12 @@ graph TD
 
 **Graph**
 
-| 操作              | `MatrixGraph`    | `ListGraph`          |
-| ----------------- | ---------------- | -------------------- |
-| `link` / `unlink` | O(1)             | O(V)                 |
-| `distance`        | O(1)             | O(V)                 |
-| DFS / BFS         | O(V<sup>2</sup>) | O(V + E)             |
-| `dijkstra`        | O(V<sup>2</sup>) | O(V<sup>2</sup> + E) |
+|                   | `MatrixGraph`    | `ListGraph`      |
+| ----------------- | ---------------- | ---------------- |
+| `link` / `unlink` | O(1)             | O(V)             |
+| `distance`        | O(1)             | O(V)             |
+| DFS / BFS         | O(V<sup>2</sup>) | O(V + E)         |
+| `dijkstra`        | O(V<sup>2</sup>) | O((V + E) log V) |
 
 说明：
 

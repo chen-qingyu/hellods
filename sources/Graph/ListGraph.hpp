@@ -10,6 +10,7 @@
 
 #include "Graph.hpp"
 
+#include "../Heap/BinaryHeap.hpp"
 #include "../List/ArrayList.hpp"
 #include "../Queue/ArrayQueue.hpp"
 
@@ -258,9 +259,9 @@ public:
             }
         }
 
-        auto visited = std::make_unique<bool[]>(size());
         auto dist = std::make_unique<std::optional<E>[]>(size());
         auto path = std::make_unique<int[]>(size());
+        BinaryHeap<std::pair<E, int>, std::less<std::pair<E, int>>> heap;
 
         for (int v = 0; v < size(); ++v)
         {
@@ -268,42 +269,28 @@ public:
             path[v] = -1;
         }
 
-        const auto& start_edges = adjacency_[start_idx];
-        for (int i = 0; i < start_edges.size(); ++i)
-        {
-            dist[start_edges[i].to_] = start_edges[i].weight_;
-            path[start_edges[i].to_] = start_idx;
-        }
-
         dist[start_idx] = E(0);
-        visited[start_idx] = true;
+        heap.push({E(0), start_idx});
 
-        while (true)
+        while (!heap.is_empty())
         {
-            int from = -1;
-            for (int v = 0; v < size(); ++v)
-            {
-                if (!visited[v] && dist[v].has_value() && (from == -1 || dist[v].value() < dist[from].value()))
-                {
-                    from = v;
-                }
-            }
+            auto [current_dist, from] = heap.pop();
 
-            if (from == -1)
+            if (!dist[from].has_value() || current_dist != dist[from].value())
             {
-                break;
+                continue;
             }
-            visited[from] = true;
 
             const auto& edges = adjacency_[from];
             for (int i = 0; i < edges.size(); ++i)
             {
                 int to = edges[i].to_;
                 E new_dist = dist[from].value() + edges[i].weight_;
-                if (!visited[to] && (!dist[to].has_value() || new_dist < dist[to].value()))
+                if (!dist[to].has_value() || new_dist < dist[to].value())
                 {
                     dist[to] = new_dist;
                     path[to] = from;
+                    heap.push({new_dist, to});
                 }
             }
         }
