@@ -49,29 +49,120 @@ graph TD
 
 ### 核心特性
 
-| 容器               | 底层结构 | 特征                         | 亮点                     |
-| ------------------ | -------- | ---------------------------- | ------------------------ |
-| `ArrayList`        | 动态数组 | 随机访问 O(1)，尾部追加快    | -                        |
-| `LinkedList`       | 双向链表 | 插入删除节点高效             | 缓存实现访问加速         |
-| `SinglyLinkedList` | 单向链表 | 内存占用低，仅支持正向遍历   | -                        |
-| `ArrayStack`       | 动态数组 | LIFO，尾部 push/pop 高效     | -                        |
-| `LinkedStack`      | 双向链表 | LIFO，适合频繁动态扩缩容     | -                        |
-| `ArrayQueue`       | 循环数组 | FIFO，环形缓冲区             | -                        |
-| `LinkedQueue`      | 双向链表 | FIFO，适合频繁动态扩缩容     | -                        |
-| `ArrayDeque`       | 循环数组 | 头尾操作均为 O(1) 摊还       | 迭代器自动处理环形绕回   |
-| `LinkedDeque`      | 双向链表 | 头尾插删高效                 | -                        |
-| `BinaryHeap`       | 动态数组 | 堆顶访问高效，适合优先级场景 | 模板支持大顶堆和小顶堆   |
-| `PairingHeap`      | 多叉树   | 支持 O(1) 摊还插入           | 基于 meld 操作，实现极简 |
-| `BinarySearchTree` | 二叉树   | 中序遍历有序，查找 O(log n)  | 虚拟最大节点简化双向迭代 |
-| `AVLTree`          | 二叉树   | 严格平衡，查找性能稳定       | -                        |
-| `RedBlackTree`     | 二叉树   | 近似平衡，更新操作代价低     | -                        |
-| `SplayTree`        | 二叉树   | 访问热点会被逐步伸展到上层   | -                        |
-| `MatrixGraph`      | 邻接矩阵 | 稠密图友好，边查询 O(1)      | -                        |
-| `ListGraph`        | 邻接表   | 稀疏图友好，适合遍历邻边     | -                        |
-| `HashSet`          | 散列表   | O(1) 查找，无重复元素        | -                        |
-| `TreeSet`          | 二叉树   | 元素有序，支持范围相关操作   | -                        |
-| `HashMap`          | 散列表   | O(1) 键查找与更新            | 正负交替二次探测缓解聚集 |
-| `TreeMap`          | 二叉树   | 键有序，支持有序映射操作     | -                        |
+| 容器               | 底层结构 | 特征                            | 亮点                     |
+| ------------------ | -------- | ------------------------------- | ------------------------ |
+| `ArrayList`        | 动态数组 | 随机访问 O(1)，尾部追加快       | -                        |
+| `LinkedList`       | 双向链表 | 插入删除节点高效                | 缓存实现访问加速         |
+| `SinglyLinkedList` | 单向链表 | 内存占用低，仅支持正向遍历      | -                        |
+| `ArrayStack`       | 动态数组 | LIFO，尾部 push/pop 高效        | -                        |
+| `LinkedStack`      | 双向链表 | LIFO，适合频繁动态扩缩容        | -                        |
+| `ArrayQueue`       | 循环数组 | FIFO，环形缓冲区                | -                        |
+| `LinkedQueue`      | 双向链表 | FIFO，适合频繁动态扩缩容        | -                        |
+| `ArrayDeque`       | 循环数组 | 头尾操作均为 O(1) 摊还          | 迭代器自动处理环形绕回   |
+| `LinkedDeque`      | 双向链表 | 头尾插删高效                    | -                        |
+| `BinaryHeap`       | 动态数组 | 堆顶访问高效，适合优先级场景    | 模板支持大顶堆和小顶堆   |
+| `PairingHeap`      | 多叉树   | 支持 O(1) 摊还插入              | 基于 meld 操作，实现极简 |
+| `BinarySearchTree` | 二叉树   | 中序遍历有序，查找平均 O(log N) | 虚拟最大节点简化双向迭代 |
+| `AVLTree`          | 二叉树   | 严格平衡，查找性能稳定          | -                        |
+| `RedBlackTree`     | 二叉树   | 近似平衡，更新操作代价低        | -                        |
+| `SplayTree`        | 二叉树   | 访问热点会被逐步伸展到上层      | -                        |
+| `MatrixGraph`      | 邻接矩阵 | 稠密图友好，边查询 O(1)         | -                        |
+| `ListGraph`        | 邻接表   | 稀疏图友好，适合遍历邻边        | -                        |
+| `HashSet`          | 散列表   | O(1) 查找，无重复元素           | -                        |
+| `TreeSet`          | 二叉树   | 元素有序，支持范围相关操作      | -                        |
+| `HashMap`          | 散列表   | O(1) 键查找与更新               | 正负交替二次探测缓解聚集 |
+| `TreeMap`          | 二叉树   | 键有序，支持有序映射操作        | -                        |
+
+### 时间复杂度
+
+**List**
+
+|              | `ArrayList` | `LinkedList`     | `SinglyLinkedList` |
+| ------------ | ----------- | ---------------- | ------------------ |
+| `operator[]` | O(1)        | O(N)<sup>†</sup> | O(N)               |
+| `append`     | O(1) 摊还   | O(1)             | O(1)               |
+| `insert`     | O(N)        | O(N)             | O(N)               |
+| `remove`     | O(N)        | O(N)             | O(N)               |
+
+<sup>†</sup> 带最近访问缓存，时间局部性好时接近 O(1)<br>
+
+**Stack**
+
+|        | `ArrayStack` | `LinkedStack` |
+| ------ | ------------ | ------------- |
+| `push` | O(1) 摊还    | O(1)          |
+| `pop`  | O(1)         | O(1)          |
+| `top`  | O(1)         | O(1)          |
+
+**Queue**
+
+|           | `ArrayQueue` | `LinkedQueue` |
+| --------- | ------------ | ------------- |
+| `enqueue` | O(1) 摊还    | O(1)          |
+| `dequeue` | O(1)         | O(1)          |
+| `front`   | O(1)         | O(1)          |
+
+**Deque**
+
+|              | `ArrayDeque` | `LinkedDeque` |
+| ------------ | ------------ | ------------- |
+| `push_front` | O(1) 摊还    | O(1)          |
+| `push_back`  | O(1) 摊还    | O(1)          |
+| `pop_front`  | O(1)         | O(1)          |
+| `pop_back`   | O(1)         | O(1)          |
+
+**Heap**
+
+|        | `BinaryHeap` | `PairingHeap` |
+| ------ | ------------ | ------------- |
+| `peek` | O(1)         | O(1)          |
+| `push` | O(log N)     | O(1) 摊还     |
+| `pop`  | O(log N)     | O(log N) 摊还 |
+| `meld` | O(N log N)   | O(1)          |
+
+**Tree**
+
+|          | `BinarySearchTree` | `AVLTree` | `RedBlackTree` | `SplayTree`   |
+| -------- | ------------------ | --------- | -------------- | ------------- |
+| `find`   | O(log N) 平均      | O(log N)  | O(log N)       | O(log N) 摊还 |
+| `insert` | O(log N) 平均      | O(log N)  | O(log N)       | O(log N) 摊还 |
+| `remove` | O(log N) 平均      | O(log N)  | O(log N)       | O(log N) 摊还 |
+
+**Set**
+
+|          | `HashSet` | `TreeSet` |
+| -------- | --------- | --------- |
+| `find`   | O(1) 平均 | O(log N)  |
+| `insert` | O(1) 平均 | O(log N)  |
+| `remove` | O(1) 平均 | O(log N)  |
+
+**Map**
+
+|              | `HashMap` | `TreeMap` |
+| ------------ | --------- | --------- |
+| `find`       | O(1) 平均 | O(log N)  |
+| `insert`     | O(1) 平均 | O(log N)  |
+| `remove`     | O(1) 平均 | O(log N)  |
+| `operator[]` | O(1) 平均 | O(log N)  |
+
+**Graph**
+
+| 操作              | `MatrixGraph`    | `ListGraph`          |
+| ----------------- | ---------------- | -------------------- |
+| `link` / `unlink` | O(1)             | O(V)                 |
+| `distance`        | O(1)             | O(V)                 |
+| DFS / BFS         | O(V<sup>2</sup>) | O(V + E)             |
+| `dijkstra`        | O(V<sup>2</sup>) | O(V<sup>2</sup> + E) |
+
+说明：
+
+记号：`N` 表示输入数据规模，图论中 `V` 表示顶点数，`E` 表示边数。
+
+摊还：单次操作可能较慢（如触发了扩容），但多次操作的平均代价为该复杂度。
+
+平均：输入分布理想情况下的期望复杂度。比如，对散列表指哈希均匀分布；对 BST 指随机插入。
+
+链式实现的常数时间通常高于数组实现（指针间接访问、缓存不友好），同一复杂度的链式实际运行时间可能更长。
 
 ## 2. 使用说明
 
