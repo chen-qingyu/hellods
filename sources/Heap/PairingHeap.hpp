@@ -277,6 +277,36 @@ public:
         return element;
     }
 
+    /// Merge another heap into this one. O(1) when both are PairingHeap of the same type.
+    void meld(Heap<T>& that) override
+    {
+        if (size_ == 0 && that.size() == 0)
+        {
+            return;
+        }
+
+        // Fast path: same-type PairingHeap -> O(1) pointer meld.
+        if (auto* p = dynamic_cast<PairingHeap*>(&that))
+        {
+            if (this == p)
+            {
+                return;
+            }
+
+            detail::check_full(size_ + p->size_, MAX_CAPACITY);
+
+            root_ = meld(root_, p->root_);
+            size_ += p->size_;
+
+            p->root_ = nullptr;
+            p->size_ = 0;
+            return;
+        }
+
+        // Generic fallback.
+        Heap<T>::meld(that);
+    }
+
     /// Remove all of the elements from the heap.
     void clear() override
     {

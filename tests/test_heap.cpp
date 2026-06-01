@@ -90,6 +90,17 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
     some.clear(); // double clear
     REQUIRE(some == empty);
 
+    // Meld
+    Heap a = {1, 2, 3};
+    Heap b = {4, 5, 6};
+    a.meld(b);
+    REQUIRE(a == Heap({1, 2, 3, 4, 5, 6}));
+    REQUIRE(b.is_empty());
+
+    // Self-meld: no-op
+    a.meld(a);
+    REQUIRE(a == Heap({1, 2, 3, 4, 5, 6}));
+
     // Print
     std::ostringstream oss;
 

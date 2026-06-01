@@ -49,6 +49,21 @@ public:
 
     /// Remove the top element from the heap and return it.
     virtual T pop() = 0;
+
+    /// Merge another heap into this one. The other heap becomes empty.
+    virtual void meld(Heap& that)
+    {
+        if (this == &that)
+        {
+            return;
+        }
+
+        for (const auto& elem : that)
+        {
+            push(elem);
+        }
+        that.clear();
+    }
 };
 
 } // namespace hellods
