@@ -45,11 +45,11 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
     REQUIRE(empty.is_empty() == true);
     REQUIRE(some.is_empty() == false);
 
-    if constexpr (std::is_same<Heap, BinaryHeap<int>>::value || std::is_same<Heap, PairingHeap<int>>::value)
+    if constexpr (std::is_same_v<Heap, BinaryHeap<int>> || std::is_same_v<Heap, PairingHeap<int>>)
     {
         REQUIRE(some.peek() == 5);
     }
-    else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value || std::is_same<Heap, PairingHeap<int, std::less<int>>>::value)
+    else if constexpr (std::is_same_v<Heap, BinaryHeap<int, std::less<int>>> || std::is_same_v<Heap, PairingHeap<int, std::less<int>>>)
     {
         REQUIRE(some.peek() == 1);
     }
@@ -65,14 +65,14 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
     {
         empty.push(i);
     }
-    if constexpr (std::is_same<Heap, BinaryHeap<int>>::value || std::is_same<Heap, PairingHeap<int>>::value)
+    if constexpr (std::is_same_v<Heap, BinaryHeap<int>> || std::is_same_v<Heap, PairingHeap<int>>)
     {
         for (int i = 99; i >= 0; --i)
         {
             REQUIRE(empty.pop() == i);
         }
     }
-    else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value || std::is_same<Heap, PairingHeap<int, std::less<int>>>::value)
+    else if constexpr (std::is_same_v<Heap, BinaryHeap<int, std::less<int>>> || std::is_same_v<Heap, PairingHeap<int, std::less<int>>>)
     {
         for (int i = 0; i < 100; ++i)
         {
@@ -102,19 +102,19 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
     oss.str("");
 
     oss << Heap({3, 1, 2, 4, 5});
-    if constexpr (std::is_same<Heap, BinaryHeap<int>>::value)
+    if constexpr (std::is_same_v<Heap, BinaryHeap<int>>)
     {
         REQUIRE(oss.str() == "Heap(5, 4, 2, 3, 1)");
     }
-    else if constexpr (std::is_same<Heap, BinaryHeap<int, std::less<int>>>::value)
+    else if constexpr (std::is_same_v<Heap, BinaryHeap<int, std::less<int>>>)
     {
         REQUIRE(oss.str() == "Heap(1, 3, 2, 4, 5)");
     }
-    else if constexpr (std::is_same<Heap, PairingHeap<int>>::value)
+    else if constexpr (std::is_same_v<Heap, PairingHeap<int>>)
     {
         REQUIRE(oss.str() == "Heap(5, 4, 3, 2, 1)");
     }
-    else if constexpr (std::is_same<Heap, PairingHeap<int, std::less<int>>>::value)
+    else if constexpr (std::is_same_v<Heap, PairingHeap<int, std::less<int>>>)
     {
         REQUIRE(oss.str() == "Heap(1, 5, 4, 2, 3)");
     }

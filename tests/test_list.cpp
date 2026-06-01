@@ -72,7 +72,7 @@ TEMPLATE_TEST_CASE("List", "[list]", ArrayList<int>, LinkedList<int>, SinglyLink
     REQUIRE(*++it == 3);
     REQUIRE(*++it == 4);
     REQUIRE(++it == some.end());
-    if constexpr (!std::is_same<List, SinglyLinkedList<int>>::value)
+    if constexpr (!std::is_same_v<List, SinglyLinkedList<int>>)
     {
         REQUIRE(*--it == 4);
         REQUIRE(*--it == 3);
