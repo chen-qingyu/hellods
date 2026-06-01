@@ -1,5 +1,5 @@
 set_project("hellods")
-set_version("2.9.0")
+set_version("2.10.0")
 set_languages("cxx23")
 set_encodings("utf-8")
 
