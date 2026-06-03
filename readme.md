@@ -39,7 +39,7 @@ graph TD
         Graph --> MatrixGraph & ListGraph
     end
     subgraph 堆["堆容器"]
-        Heap --> BinaryHeap & PairingHeap
+        Heap --> BinaryHeap & PairingHeap & SkewHeap
     end
     subgraph 集合["集合容器"]
         Set --> HashSet & TreeSet
@@ -65,6 +65,7 @@ graph TD
 | `LinkedDeque`      | 双向链表 | 头尾插删高效                    | -                        |
 | `BinaryHeap`       | 动态数组 | 堆顶访问高效，适合优先级场景    | 模板支持大顶堆和小顶堆   |
 | `PairingHeap`      | 多叉树   | 支持 O(1) 摊还插入              | 基于 meld 操作，实现极简 |
+| `SkewHeap`         | 二叉树   | 自调整结构，不存额外平衡信息    | 代码最精简的 meld 堆     |
 | `BinarySearchTree` | 二叉树   | 中序遍历有序，查找平均 O(log N) | 虚拟最大节点简化双向迭代 |
 | `AVLTree`          | 二叉树   | 严格平衡，查找性能稳定          | -                        |
 | `RedBlackTree`     | 二叉树   | 近似平衡，更新操作代价低        | -                        |
@@ -117,12 +118,12 @@ graph TD
 
 **Heap**
 
-|        | `BinaryHeap` | `PairingHeap` |
-| ------ | ------------ | ------------- |
-| `peek` | O(1)         | O(1)          |
-| `push` | O(log N)     | O(1) 摊还     |
-| `pop`  | O(log N)     | O(log N) 摊还 |
-| `meld` | O(N log N)   | O(1)          |
+|        | `BinaryHeap` | `PairingHeap` | `SkewHeap`    |
+| ------ | ------------ | ------------- | ------------- |
+| `peek` | O(1)         | O(1)          | O(1)          |
+| `push` | O(log N)     | O(1) 摊还     | O(log N) 摊还 |
+| `pop`  | O(log N)     | O(log N) 摊还 | O(log N) 摊还 |
+| `meld` | O(N log N)   | O(1)          | O(log N) 摊还 |
 
 **Tree**
 
