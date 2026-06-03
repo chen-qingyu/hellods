@@ -494,16 +494,6 @@ public:
     }
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two trees are equal.
-    bool operator==(const BinarySearchTree& that) const
-    {
-        return size_ == that.size_ && std::equal(begin(), end(), that.begin());
-    }
-
-    /*
      * Iterator
      */
 

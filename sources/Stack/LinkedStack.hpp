@@ -43,16 +43,6 @@ public:
     LinkedStack& operator=(LinkedStack&&) = default;
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two stacks are equal.
-    bool operator==(const LinkedStack& that) const
-    {
-        return list_ == that.list_;
-    }
-
-    /*
      * Iterator
      */
 

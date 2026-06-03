@@ -45,16 +45,6 @@ public:
     TreeSet& operator=(TreeSet&&) = default;
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two sets are equal.
-    bool operator==(const TreeSet& that) const
-    {
-        return tree_ == that.tree_;
-    }
-
-    /*
      * Iterator
      */
 

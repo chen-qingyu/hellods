@@ -41,16 +41,6 @@ public:
     LinkedDeque& operator=(LinkedDeque&&) = default;
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two queues are equal.
-    bool operator==(const LinkedDeque& that) const
-    {
-        return list_ == that.list_;
-    }
-
-    /*
      * Iterator
      */
 

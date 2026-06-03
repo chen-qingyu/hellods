@@ -102,16 +102,6 @@ public:
     }
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two lists are equal.
-    bool operator==(const ArrayList& that) const
-    {
-        return size_ == that.size_ && std::equal(data_, data_ + size_, that.data_);
-    }
-
-    /*
      * Access
      */
 

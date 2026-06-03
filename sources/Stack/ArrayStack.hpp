@@ -43,16 +43,6 @@ public:
     ArrayStack& operator=(ArrayStack&&) = default;
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two stacks are equal.
-    bool operator==(const ArrayStack& that) const
-    {
-        return list_ == that.list_;
-    }
-
-    /*
      * Iterator
      */
 

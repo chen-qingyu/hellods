@@ -214,16 +214,6 @@ public:
     }
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two lists are equal.
-    bool operator==(const LinkedList& that) const
-    {
-        return size_ == that.size_ && std::equal(begin(), end(), that.begin());
-    }
-
-    /*
      * Access
      */
 

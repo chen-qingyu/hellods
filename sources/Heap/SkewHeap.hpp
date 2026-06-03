@@ -159,16 +159,6 @@ public:
     }
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two heaps are equal.
-    bool operator==(const SkewHeap& that) const
-    {
-        return size_ == that.size_ && std::equal(begin(), end(), that.begin());
-    }
-
-    /*
      * Access
      */
 

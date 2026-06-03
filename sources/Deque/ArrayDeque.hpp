@@ -239,29 +239,6 @@ public:
     }
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two deques are equal.
-    bool operator==(const ArrayDeque& that) const
-    {
-        if (size_ != that.size_)
-        {
-            return false;
-        }
-
-        for (int logic = 0; logic < size_; ++logic)
-        {
-            if (data_[access(logic)] != that.data_[that.access(logic)])
-            {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /*
      * Iterator
      */
 

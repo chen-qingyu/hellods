@@ -73,16 +73,6 @@ public:
     BinaryHeap& operator=(BinaryHeap&&) = default;
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two heaps are equal.
-    bool operator==(const BinaryHeap& that) const
-    {
-        return size() == that.size() && std::equal(begin(), end(), that.begin());
-    }
-
-    /*
      * Access
      */
 

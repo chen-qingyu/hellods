@@ -313,6 +313,16 @@ public:
     /// Return the type name for printing (e.g. "List", "Map").
     virtual const char* name() const = 0;
 
+    /// Check whether two containers are equal.
+    virtual bool operator==(const ConstIterable& that) const
+    {
+        if constexpr (std::equality_comparable<T>)
+        {
+            return size() == that.size() && std::equal(begin(), end(), that.begin(), that.end());
+        }
+        throw std::runtime_error("Error: Container comparison requires EqualityComparable elements.");
+    }
+
     /// Print the container.
     friend std::ostream& operator<<(std::ostream& os, const ConstIterable& container)
     {

@@ -43,16 +43,6 @@ public:
     ArrayQueue& operator=(ArrayQueue&&) = default;
 
     /*
-     * Comparison
-     */
-
-    /// Check whether two queues are equal.
-    bool operator==(const ArrayQueue& that) const
-    {
-        return deque_ == that.deque_;
-    }
-
-    /*
      * Iterator
      */
 
