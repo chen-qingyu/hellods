@@ -75,8 +75,9 @@ protected:
     };
 
 protected:
-    using List<T, std::forward_iterator_tag>::INIT_CAPACITY;
-    using List<T, std::forward_iterator_tag>::MAX_CAPACITY;
+    using Base = List<T, std::forward_iterator_tag>;
+    using Base::INIT_CAPACITY;
+    using Base::MAX_CAPACITY;
 
     // Number of elements.
     int size_;
@@ -193,35 +194,32 @@ public:
         return current->data_;
     }
 
-    using List<T, std::forward_iterator_tag>::operator[]; // const
+    using Base::operator[]; // const
 
     /*
      * Iterator
      */
 
-    using Iterator = typename List<T, std::forward_iterator_tag>::Iterator;
-    using ConstIterator = typename List<T, std::forward_iterator_tag>::ConstIterator;
-
     /// Return an iterator to the first element of the list.
-    Iterator begin() override
+    Base::Iterator begin() override
     {
-        return Iterator(Iter<false>(header_->succ_));
+        return Base::Iterator(Iter<false>(header_->succ_));
     }
 
-    ConstIterator begin() const override
+    Base::ConstIterator begin() const override
     {
-        return ConstIterator(Iter<true>(header_->succ_));
+        return Base::ConstIterator(Iter<true>(header_->succ_));
     }
 
     /// Return an iterator to the element following the last element of the list.
-    Iterator end() override
+    Base::Iterator end() override
     {
-        return Iterator(Iter<false>(nullptr));
+        return Base::Iterator(Iter<false>(nullptr));
     }
 
-    ConstIterator end() const override
+    Base::ConstIterator end() const override
     {
-        return ConstIterator(Iter<true>(nullptr));
+        return Base::ConstIterator(Iter<true>(nullptr));
     }
 
     /*

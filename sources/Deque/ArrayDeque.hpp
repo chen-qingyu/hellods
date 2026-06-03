@@ -135,8 +135,9 @@ class ArrayDeque : public Deque<T, std::random_access_iterator_tag>
     };
 
 protected:
-    using Deque<T, std::random_access_iterator_tag>::INIT_CAPACITY;
-    using Deque<T, std::random_access_iterator_tag>::MAX_CAPACITY;
+    using Base = Deque<T, std::random_access_iterator_tag>;
+    using Base::INIT_CAPACITY;
+    using Base::MAX_CAPACITY;
 
     // Index of front in ring buffer. data[front] is the first element, except size == 0.
     int front_;
@@ -242,29 +243,26 @@ public:
      * Iterator
      */
 
-    using Iterator = typename Deque<T, std::random_access_iterator_tag>::Iterator;
-    using ConstIterator = typename Deque<T, std::random_access_iterator_tag>::ConstIterator;
-
     /// Return an iterator to the first element of the deque.
-    Iterator begin() override
+    Base::Iterator begin() override
     {
-        return Iterator(Iter<false>(data_ + front_, data_, data_ + capacity_));
+        return Base::Iterator(Iter<false>(data_ + front_, data_, data_ + capacity_));
     }
 
-    ConstIterator begin() const override
+    Base::ConstIterator begin() const override
     {
-        return ConstIterator(Iter<true>(data_ + front_, data_, data_ + capacity_));
+        return Base::ConstIterator(Iter<true>(data_ + front_, data_, data_ + capacity_));
     }
 
     /// Return an iterator to the element following the last element of the deque.
-    Iterator end() override
+    Base::Iterator end() override
     {
-        return Iterator(Iter<false>(data_ + front_ + size_, data_, data_ + capacity_));
+        return Base::Iterator(Iter<false>(data_ + front_ + size_, data_, data_ + capacity_));
     }
 
-    ConstIterator end() const override
+    Base::ConstIterator end() const override
     {
-        return ConstIterator(Iter<true>(data_ + front_ + size_, data_, data_ + capacity_));
+        return Base::ConstIterator(Iter<true>(data_ + front_ + size_, data_, data_ + capacity_));
     }
 
     /*
@@ -278,7 +276,7 @@ public:
         return data_[front_];
     }
 
-    using Deque<T, std::random_access_iterator_tag>::front; // const
+    using Base::front; // const
 
     /// Return the reference to the element at the back in the deque.
     T& back() override
@@ -287,7 +285,7 @@ public:
         return data_[access(size_ - 1)];
     }
 
-    using Deque<T, std::random_access_iterator_tag>::back; // const
+    using Base::back; // const
 
     /*
      * Examination

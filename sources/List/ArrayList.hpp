@@ -21,8 +21,9 @@ protected:
     // T* is itself a valid input iterator — no wrapper class needed.
 
 protected:
-    using List<T, std::contiguous_iterator_tag>::INIT_CAPACITY;
-    using List<T, std::contiguous_iterator_tag>::MAX_CAPACITY;
+    using Base = List<T, std::contiguous_iterator_tag>;
+    using Base::INIT_CAPACITY;
+    using Base::MAX_CAPACITY;
 
     // Number of elements.
     int size_;
@@ -112,35 +113,32 @@ public:
         return data_[index];
     }
 
-    using List<T, std::contiguous_iterator_tag>::operator[]; // const
+    using Base::operator[]; // const
 
     /*
      * Iterator
      */
 
-    using Iterator = typename List<T, std::contiguous_iterator_tag>::Iterator;
-    using ConstIterator = typename List<T, std::contiguous_iterator_tag>::ConstIterator;
-
     /// Return an iterator to the first element of the list.
-    typename Iterator begin() override
+    Base::Iterator begin() override
     {
-        return Iterator(data_);
+        return Base::Iterator(data_);
     }
 
-    typename ConstIterator begin() const override
+    Base::ConstIterator begin() const override
     {
-        return ConstIterator(data_);
+        return Base::ConstIterator(data_);
     }
 
     /// Return an iterator to the element following the last element of the list.
-    typename Iterator end() override
+    Base::Iterator end() override
     {
-        return Iterator(data_ + size_);
+        return Base::Iterator(data_ + size_);
     }
 
-    typename ConstIterator end() const override
+    Base::ConstIterator end() const override
     {
-        return ConstIterator(data_ + size_);
+        return Base::ConstIterator(data_ + size_);
     }
 
     /*
