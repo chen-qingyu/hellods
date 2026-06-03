@@ -8,7 +8,7 @@
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
-#include "../detail.hpp"
+#include "../core.hpp"
 
 namespace hellods
 {

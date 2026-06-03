@@ -8,7 +8,7 @@
 #ifndef TREE_HPP
 #define TREE_HPP
 
-#include "../detail.hpp"
+#include "../core.hpp"
 
 namespace hellods
 {

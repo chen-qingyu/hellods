@@ -8,7 +8,7 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#include "../detail.hpp"
+#include "../core.hpp"
 
 namespace hellods
 {

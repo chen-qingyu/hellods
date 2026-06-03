@@ -8,7 +8,7 @@
 #ifndef DEQUE_HPP
 #define DEQUE_HPP
 
-#include "../detail.hpp"
+#include "../core.hpp"
 
 namespace hellods
 {

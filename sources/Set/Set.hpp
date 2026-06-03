@@ -8,7 +8,7 @@
 #ifndef SET_HPP
 #define SET_HPP
 
-#include "../detail.hpp"
+#include "../core.hpp"
 
 namespace hellods
 {

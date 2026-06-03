@@ -8,7 +8,7 @@
 #ifndef STACK_HPP
 #define STACK_HPP
 
-#include "../detail.hpp"
+#include "../core.hpp"
 
 namespace hellods
 {

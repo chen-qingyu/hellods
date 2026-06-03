@@ -8,7 +8,7 @@
 #ifndef LIST_HPP
 #define LIST_HPP
 
-#include "../detail.hpp"
+#include "../core.hpp"
 
 namespace hellods
 {

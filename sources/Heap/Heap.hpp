@@ -8,7 +8,7 @@
 #ifndef HEAP_HPP
 #define HEAP_HPP
 
-#include "../detail.hpp"
+#include "../core.hpp"
 
 namespace hellods
 {

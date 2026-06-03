@@ -8,7 +8,7 @@
 #ifndef ARRAYDEQUE_HPP
 #define ARRAYDEQUE_HPP
 
-#include "../detail.hpp"
+#include "../core.hpp"
 #include "Deque.hpp"
 
 namespace hellods
