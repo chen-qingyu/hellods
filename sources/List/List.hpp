@@ -63,11 +63,7 @@ public:
 
     virtual ConstIterator find(const T& element) const
     {
-        if constexpr (std::equality_comparable<T>)
-        {
-            return std::find(this->begin(), this->end(), element);
-        }
-        throw std::runtime_error("Error: List::find requires equality comparable elements.");
+        return const_cast<List&>(*this).find(element);
     }
 
     /*
