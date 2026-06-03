@@ -7,7 +7,7 @@ _C++ 实现的基础数据结构模板代码库_
 - 名称：HelloDS，意为 **Hello** **D**ata **S**tructure
 - 语言：C++，满足 C++23 标准
 - 目标：实现一套便于学习、收藏、展示的基础数据结构模板代码；不使用任何标准库容器；支持迭代器
-- 模块：List, Stack, Queue, Deque, Heap, Tree, Graph, Set, Map
+- 模块：List, Stack, Queue, Deque, Heap, Tree, Graph, Set, Map, DisjointSet
 - 简洁：Stay simple, stay young. 在保证健壮的前提下，尽量简洁，便于维护和阅读
 - 健壮：安全的扩容机制，防止溢出。对容器的增删改查都有相应的检查
 - 风格：大部分遵循 [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html) ，小部分基于项目规模和源码简洁性的考虑采用自己的风格
@@ -45,6 +45,9 @@ graph TD
         Set --> HashSet & TreeSet
         Map --> HashMap & TreeMap
     end
+    subgraph 划分["划分结构"]
+        DisjointSet --> UnionFind
+    end
 ```
 
 ### 核心特性
@@ -72,6 +75,7 @@ graph TD
 | `TreeSet`          | 二叉树   | 元素有序，支持范围相关操作      | -                        |
 | `HashMap`          | 散列表   | O(1) 键查找与更新               | 正负交替二次探测缓解聚集 |
 | `TreeMap`          | 二叉树   | 键有序，支持有序映射操作        | -                        |
+| `UnionFind`        | 树形数组 | 路径压缩 + 按秩合并 O(α(N))     | 模板支持任意类型         |
 
 ### 时间复杂度
 
@@ -153,6 +157,14 @@ graph TD
 | `distance`        | O(1)             | O(V)             |
 | DFS / BFS         | O(V<sup>2</sup>) | O(V + E)         |
 | `dijkstra`        | O(V<sup>2</sup>) | O((V + E) log V) |
+
+**DisjointSet**
+
+|                | `UnionFind` |
+| -------------- | ----------- |
+| `find`         | O(α(N))     |
+| `unite`        | O(α(N))     |
+| `is_connected` | O(α(N))     |
 
 说明：
 
