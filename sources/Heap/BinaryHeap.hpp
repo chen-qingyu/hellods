@@ -79,21 +79,7 @@ public:
     /// Check whether two heaps are equal.
     bool operator==(const BinaryHeap& that) const
     {
-        if (list_.size() != that.list_.size())
-        {
-            return false;
-        }
-
-        // copy raw data to temporary arrays, sort, then compare element by element
-        auto this_data = std::make_unique<T[]>(list_.size());
-        std::copy(list_.begin(), list_.end(), this_data.get());
-        std::sort(this_data.get(), this_data.get() + list_.size(), Cmp{});
-
-        auto that_data = std::make_unique<T[]>(that.list_.size());
-        std::copy(that.list_.begin(), that.list_.end(), that_data.get());
-        std::sort(that_data.get(), that_data.get() + that.list_.size(), Cmp{});
-
-        return std::equal(this_data.get(), this_data.get() + list_.size(), that_data.get());
+        return size() == that.size() && std::equal(begin(), end(), that.begin());
     }
 
     /*
@@ -157,17 +143,57 @@ public:
      * Iterator
      */
 
+    struct CacheIter
+    {
+        std::shared_ptr<ArrayList<T>> data_;
+        int index_;
+
+        CacheIter(const ArrayList<T>& list)
+            : data_(std::make_shared<ArrayList<T>>(list))
+            , index_(0)
+        {
+            std::sort(data_->begin(), data_->end(), Cmp{});
+        }
+
+        CacheIter(int size)
+            : data_(nullptr)
+            , index_(size)
+        {
+        }
+
+        const T& operator*() const
+        {
+            return (*data_)[index_];
+        }
+
+        bool operator==(const CacheIter& that) const
+        {
+            return index_ == that.index_;
+        }
+
+        CacheIter& operator++()
+        {
+            ++index_;
+            return *this;
+        }
+
+        CacheIter& operator--()
+        {
+            --index_;
+            return *this;
+        }
+    };
+
     /// Return an iterator to the first element of the heap.
-    /// The order is the underlying array order (heap order), not priority order.
     typename Heap<T>::Iterator begin() const override
     {
-        return list_.begin();
+        return typename Heap<T>::Iterator(CacheIter(list_));
     }
 
     /// Return an iterator to the element following the last element of the heap.
     typename Heap<T>::Iterator end() const override
     {
-        return list_.end();
+        return typename Heap<T>::Iterator(CacheIter(list_.size()));
     }
 };
 

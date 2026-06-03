@@ -211,21 +211,7 @@ public:
     /// Check whether two heaps are equal.
     bool operator==(const PairingHeap& that) const
     {
-        if (size_ != that.size_)
-        {
-            return false;
-        }
-
-        // Copy raw data to temporary arrays, sort, then compare element by element.
-        auto this_data = std::make_unique<T[]>(size_);
-        std::copy(begin(), end(), this_data.get());
-        std::sort(this_data.get(), this_data.get() + size_, Cmp{});
-
-        auto that_data = std::make_unique<T[]>(that.size_);
-        std::copy(that.begin(), that.end(), that_data.get());
-        std::sort(that_data.get(), that_data.get() + that.size_, Cmp{});
-
-        return std::equal(this_data.get(), this_data.get() + size_, that_data.get());
+        return size_ == that.size_ && std::equal(begin(), end(), that.begin());
     }
 
     /*
@@ -353,12 +339,13 @@ public:
                     stack.append(children[i]);
                 }
             }
+
+            std::sort(data_->begin(), data_->end(), Cmp{});
         }
 
-        // End sentinel: shares data with begin iterator, starts at end position.
-        CacheIter(std::shared_ptr<ArrayList<T>> data)
-            : data_(std::move(data))
-            , index_(data_->size())
+        CacheIter(int size)
+            : data_(nullptr)
+            , index_(size)
         {
         }
 
@@ -386,7 +373,6 @@ public:
     };
 
     /// Return an iterator to the first element of the heap.
-    /// The order is pre-order traversal order, not priority order.
     typename Heap<T>::Iterator begin() const override
     {
         return typename Heap<T>::Iterator(CacheIter(root_));
@@ -395,9 +381,7 @@ public:
     /// Return an iterator to the element following the last element of the heap.
     typename Heap<T>::Iterator end() const override
     {
-        // Build a begin iterator first to share its collected data.
-        CacheIter begin_iter(root_);
-        return typename Heap<T>::Iterator(CacheIter(std::move(begin_iter.data_)));
+        return typename Heap<T>::Iterator(CacheIter(size_));
     }
 };
 

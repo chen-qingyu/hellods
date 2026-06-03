@@ -50,13 +50,9 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
     {
         REQUIRE(some.peek() == 5);
     }
-    else if constexpr (std::is_same_v<Heap, BinaryHeap<int, std::less<int>>> || std::is_same_v<Heap, PairingHeap<int, std::less<int>>> || std::is_same_v<Heap, SkewHeap<int, std::less<int>>>)
+    else // min-heap
     {
         REQUIRE(some.peek() == 1);
-    }
-    else
-    {
-        FAIL();
     }
 
     REQUIRE_THROWS_MATCHES(empty.peek(), std::runtime_error, Message("Error: The container is empty."));
@@ -73,16 +69,12 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
             REQUIRE(empty.pop() == i);
         }
     }
-    else if constexpr (std::is_same_v<Heap, BinaryHeap<int, std::less<int>>> || std::is_same_v<Heap, PairingHeap<int, std::less<int>>> || std::is_same_v<Heap, SkewHeap<int, std::less<int>>>)
+    else // min-heap
     {
         for (int i = 0; i < 100; ++i)
         {
             REQUIRE(empty.pop() == i);
         }
-    }
-    else
-    {
-        FAIL();
     }
     REQUIRE_THROWS_MATCHES(empty.pop(), std::runtime_error, Message("Error: The container is empty."));
 
@@ -114,29 +106,13 @@ TEMPLATE_TEST_CASE("Heap", "[heap]", BinaryHeap<int>, (BinaryHeap<int, std::less
     oss.str("");
 
     oss << Heap({3, 1, 2, 4, 5});
-    if constexpr (std::is_same_v<Heap, BinaryHeap<int>>)
-    {
-        REQUIRE(oss.str() == "Heap(5, 4, 2, 3, 1)");
-    }
-    else if constexpr (std::is_same_v<Heap, BinaryHeap<int, std::less<int>>>)
-    {
-        REQUIRE(oss.str() == "Heap(1, 3, 2, 4, 5)");
-    }
-    else if constexpr (std::is_same_v<Heap, PairingHeap<int>> || std::is_same_v<Heap, SkewHeap<int>>)
+    if constexpr (std::is_same_v<Heap, BinaryHeap<int>> || std::is_same_v<Heap, PairingHeap<int>> || std::is_same_v<Heap, SkewHeap<int>>)
     {
         REQUIRE(oss.str() == "Heap(5, 4, 3, 2, 1)");
     }
-    else if constexpr (std::is_same_v<Heap, PairingHeap<int, std::less<int>>>)
+    else // min-heap
     {
-        REQUIRE(oss.str() == "Heap(1, 5, 4, 2, 3)");
-    }
-    else if constexpr (std::is_same_v<Heap, SkewHeap<int, std::less<int>>>)
-    {
-        REQUIRE(oss.str() == "Heap(1, 2, 5, 3, 4)");
-    }
-    else
-    {
-        FAIL();
+        REQUIRE(oss.str() == "Heap(1, 2, 3, 4, 5)");
     }
     oss.str("");
 }
