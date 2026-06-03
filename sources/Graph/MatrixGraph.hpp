@@ -109,22 +109,6 @@ protected:
         }
     }
 
-    // Iterate each unique edge with a callback (from, to, weight).
-    template <typename F>
-    void for_each_edge(F&& callback) const
-    {
-        for (int i = 0; i < size_; ++i)
-        {
-            for (int j = (Directed ? 0 : i); j < size_; ++j)
-            {
-                if (at(i, j).has_value())
-                {
-                    callback(i, j, at(i, j).value());
-                }
-            }
-        }
-    }
-
 public:
     using ShortestPath = typename Graph<V, E, Directed>::ShortestPath;
     using Iterator = typename Graph<V, E, Directed>::Iterator;
@@ -245,6 +229,30 @@ public:
         return at(index(from), index(to));
     }
 
+    /// Return the number of edges in the graph.
+    int edge_count() const override
+    {
+        int count = 0;
+        for_each_edge([&](const V&, const V&, const E&)
+                      { ++count; });
+        return count;
+    }
+
+    /// Invoke `action(from, to, weight)` for every edge in the graph.
+    void for_each_edge(const std::function<void(const V&, const V&, const E&)>& action) const override
+    {
+        for (int i = 0; i < size_; ++i)
+        {
+            for (int j = (Directed ? 0 : i); j < size_; ++j)
+            {
+                if (at(i, j).has_value())
+                {
+                    action(idx_to_vertex_[i], idx_to_vertex_[j], at(i, j).value());
+                }
+            }
+        }
+    }
+
     /// Depth-first search graph.
     void depth_first_search(const V& start, const std::function<void(const V&)>& action) const override
     {
@@ -363,9 +371,7 @@ public:
         {
             std::ostringstream oss;
 
-            int edges = 0;
-            for_each_edge([&](int, int, const E&)
-                          { ++edges; });
+            int edges = edge_count();
 
             oss << "Graph {\n"
                 << "  type: " << (Directed ? "directed" : "undirected") << "\n"
@@ -399,8 +405,8 @@ public:
             }
             else
             {
-                for_each_edge([&](int i, int j, const E& w)
-                              { oss << "  " << idx_to_vertex_[i] << " -- " << idx_to_vertex_[j] << "(w=" << w << ")\n"; });
+                for_each_edge([&](const V& f, const V& t, const E& w)
+                              { oss << "  " << f << " -- " << t << "(w=" << w << ")\n"; });
             }
 
             oss << "}";
@@ -431,9 +437,8 @@ public:
             }
 
             const char* connector = Directed ? " -> " : " -- ";
-            for_each_edge([&](int i, int j, const E& w)
-                          { oss << "  " << quote(idx_to_vertex_[i]) << connector << quote(idx_to_vertex_[j])
-                                << " [label=\"" << w << "\"];\n"; });
+            for_each_edge([&](const V& f, const V& t, const E& w)
+                          { oss << "  " << quote(f) << connector << quote(t) << " [label=\"" << w << "\"];\n"; });
 
             oss << "}";
             return oss.str();

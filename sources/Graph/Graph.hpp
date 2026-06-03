@@ -77,6 +77,13 @@ public:
     /// The Dijkstra algorithm on the graph. Return shortest paths from start.
     virtual ShortestPath dijkstra(const V& start) const = 0;
 
+    /// Return the number of edges in the graph.
+    virtual int edge_count() const = 0;
+
+    /// Invoke `action(from, to, weight)` for every edge in the graph.
+    /// For an undirected graph, each unordered pair is reported once.
+    virtual void for_each_edge(const std::function<void(const V&, const V&, const E&)>& action) const = 0;
+
     /// Export the graph as ASCII art.
     virtual std::string to_ascii() const = 0;
 
