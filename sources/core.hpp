@@ -39,9 +39,7 @@ public:
     virtual void clear() = 0;
 };
 
-// Type-erased bidirectional iterator.
-// Wraps any concrete iterator via type erasure; forward-only iterators
-// (e.g. SinglyLinkedList) throw on operator-- at runtime.
+// Type-erased iterator.
 template <typename T, bool Const, typename Category = std::bidirectional_iterator_tag>
 class BasicIterator
 {
@@ -49,11 +47,17 @@ public:
     using RefType = std::conditional_t<Const, const T&, T&>;
     using PtrType = std::conditional_t<Const, const T*, T*>;
 
+    static constexpr bool is_fwd = std::is_same_v<Category, std::forward_iterator_tag>;
+    static constexpr bool is_ra = std::is_same_v<Category, std::random_access_iterator_tag> ||
+                                  std::is_same_v<Category, std::contiguous_iterator_tag>;
+
 protected:
     struct Concept
     {
-        virtual void advance() = 0;
-        virtual void retreat() = 0;
+        virtual void inc() = 0;
+        virtual void dec() = 0;
+        virtual void advance(std::ptrdiff_t n) = 0;
+        virtual std::ptrdiff_t distance(const Concept&) const = 0;
         virtual RefType deref() const = 0;
         virtual PtrType arrow() const = 0;
         virtual bool equals(const Concept&) const = 0;
@@ -71,21 +75,35 @@ protected:
         {
         }
 
-        void advance() override
+        void inc() override
         {
             ++impl_;
         }
 
-        void retreat() override
+        void dec() override
         {
-            if constexpr (requires { --impl_; })
+            if constexpr (!is_fwd)
             {
                 --impl_;
             }
-            else
+        }
+
+        void advance(std::ptrdiff_t n) override
+        {
+            if constexpr (is_ra)
             {
-                throw std::runtime_error("Error: Cannot decrement a forward-only iterator.");
+                impl_ += n;
             }
+        }
+
+        std::ptrdiff_t distance(const Concept& other) const override
+        {
+            if constexpr (is_ra)
+            {
+                auto& p = static_cast<const Model&>(other);
+                return static_cast<std::ptrdiff_t>(impl_ - p.impl_);
+            }
+            return 0;
         }
 
         RefType deref() const override
@@ -120,22 +138,23 @@ public:
     using pointer = PtrType;
     using reference = RefType;
 
-    // Construct from a concrete iterator.
+    /// Construct from a concrete iterator.
     template <typename Impl>
     BasicIterator(Impl impl)
         : ptr_(std::make_unique<Model<Impl>>(std::move(impl)))
     {
     }
 
-    // Default constructor (end-like sentinel).
+    /// Default constructor (end-like sentinel).
     BasicIterator() = default;
 
-    // Copy.
+    /// Copy.
     BasicIterator(const BasicIterator& that)
         : ptr_(that.ptr_ ? that.ptr_->clone() : nullptr)
     {
     }
 
+    /// Copy assignment.
     BasicIterator& operator=(const BasicIterator& that)
     {
         if (this != &that)
@@ -145,7 +164,7 @@ public:
         return *this;
     }
 
-    // Move.
+    /// Move and move assignment.
     BasicIterator(BasicIterator&&) = default;
     BasicIterator& operator=(BasicIterator&&) = default;
 
@@ -178,7 +197,7 @@ public:
     /// Pre-increment.
     BasicIterator& operator++()
     {
-        ptr_->advance();
+        ptr_->inc();
         return *this;
     }
 
@@ -186,32 +205,106 @@ public:
     BasicIterator operator++(int)
     {
         auto tmp = *this;
-        ptr_->advance();
+        ptr_->inc();
         return tmp;
     }
 
-    /// Pre-decrement. Throws for forward-only iterators.
+    /// Pre-decrement.
     BasicIterator& operator--()
+        requires(!is_fwd)
     {
-        ptr_->retreat();
+        ptr_->dec();
         return *this;
     }
 
-    /// Post-decrement. Throws for forward-only iterators.
+    /// Post-decrement.
     BasicIterator operator--(int)
+        requires(!is_fwd)
     {
         auto tmp = *this;
-        ptr_->retreat();
+        ptr_->dec();
         return tmp;
+    }
+
+    /// Advance by n steps.
+    BasicIterator& operator+=(std::ptrdiff_t n)
+        requires(is_ra)
+    {
+        ptr_->advance(n);
+        return *this;
+    }
+
+    /// Advance by n steps.
+    BasicIterator operator+(std::ptrdiff_t n) const
+        requires(is_ra)
+    {
+        auto tmp = *this;
+        tmp += n;
+        return tmp;
+    }
+
+    /// Retreat by n steps.
+    BasicIterator& operator-=(std::ptrdiff_t n)
+        requires(is_ra)
+    {
+        *this += -n;
+        return *this;
+    }
+
+    /// Retreat by n steps.
+    BasicIterator operator-(std::ptrdiff_t n) const
+        requires(is_ra)
+    {
+        auto tmp = *this;
+        tmp -= n;
+        return tmp;
+    }
+
+    /// Random access.
+    RefType operator[](std::ptrdiff_t n) const
+        requires(is_ra)
+    {
+        return *(*this + n);
+    }
+
+    /// Distance between iterators.
+    std::ptrdiff_t operator-(const BasicIterator& that) const
+        requires(is_ra)
+    {
+        return ptr_->distance(*that.ptr_);
+    }
+
+    bool operator<(const BasicIterator& that) const
+        requires(is_ra)
+    {
+        return *this - that < 0;
+    }
+
+    bool operator<=(const BasicIterator& that) const
+        requires(is_ra)
+    {
+        return *this - that <= 0;
+    }
+
+    bool operator>(const BasicIterator& that) const
+        requires(is_ra)
+    {
+        return *this - that > 0;
+    }
+
+    bool operator>=(const BasicIterator& that) const
+        requires(is_ra)
+    {
+        return *this - that >= 0;
     }
 };
 
 // Iterable base: provides const begin/end. T is the element type for BasicIterator.
-template <typename T>
+template <typename T, typename Cat = std::bidirectional_iterator_tag>
 class ConstIterable : public Container
 {
 public:
-    using Iterator = BasicIterator<T, true>;
+    using Iterator = BasicIterator<T, true, Cat>;
     using ConstIterator = Iterator;
 
     virtual Iterator begin() const = 0;
@@ -228,14 +321,14 @@ public:
 };
 
 // Iterable base: adds mutable begin/end on top of ConstIterable.
-template <typename T>
-class Iterable : public ConstIterable<T>
+template <typename T, typename Cat = std::bidirectional_iterator_tag>
+class Iterable : public ConstIterable<T, Cat>
 {
 public:
-    using ConstIterable<T>::begin;
-    using ConstIterable<T>::end;
-    using Iterator = BasicIterator<T, false>;
-    using ConstIterator = BasicIterator<T, true>;
+    using ConstIterable<T, Cat>::begin;
+    using ConstIterable<T, Cat>::end;
+    using Iterator = BasicIterator<T, false, Cat>;
+    using ConstIterator = BasicIterator<T, true, Cat>;
 
     virtual Iterator begin() = 0;
     virtual Iterator end() = 0;

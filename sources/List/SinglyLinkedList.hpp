@@ -15,7 +15,7 @@ namespace hellods
 
 /// List implemented by singly linked list.
 template <typename T>
-class SinglyLinkedList : public List<T>
+class SinglyLinkedList : public List<T, std::forward_iterator_tag>
 {
 protected:
     // Node of singly linked list.
@@ -75,8 +75,8 @@ protected:
     };
 
 protected:
-    using List<T>::INIT_CAPACITY;
-    using List<T>::MAX_CAPACITY;
+    using List<T, std::forward_iterator_tag>::INIT_CAPACITY;
+    using List<T, std::forward_iterator_tag>::MAX_CAPACITY;
 
     // Number of elements.
     int size_;
@@ -203,34 +203,35 @@ public:
         return current->data_;
     }
 
-    using List<T>::operator[]; // const
+    using List<T, std::forward_iterator_tag>::operator[]; // const
 
     /*
      * Iterator
      */
 
+    using Iterator = typename List<T, std::forward_iterator_tag>::Iterator;
+    using ConstIterator = typename List<T, std::forward_iterator_tag>::ConstIterator;
+
     /// Return an iterator to the first element of the list.
-    /// If the list is empty, the returned iterator will be equal to end().
-    typename List<T>::Iterator begin() override
+    Iterator begin() override
     {
-        return typename List<T>::Iterator(Iter<false>(header_->succ_));
+        return Iterator(Iter<false>(header_->succ_));
     }
 
-    typename List<T>::ConstIterator begin() const override
+    ConstIterator begin() const override
     {
-        return typename List<T>::ConstIterator(Iter<true>(header_->succ_));
+        return ConstIterator(Iter<true>(header_->succ_));
     }
 
     /// Return an iterator to the element following the last element of the list.
-    /// This element acts as a placeholder, attempting to access it results in undefined behavior.
-    typename List<T>::Iterator end() override
+    Iterator end() override
     {
-        return typename List<T>::Iterator(Iter<false>(nullptr));
+        return Iterator(Iter<false>(nullptr));
     }
 
-    typename List<T>::ConstIterator end() const override
+    ConstIterator end() const override
     {
-        return typename List<T>::ConstIterator(Iter<true>(nullptr));
+        return ConstIterator(Iter<true>(nullptr));
     }
 
     /*

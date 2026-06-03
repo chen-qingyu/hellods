@@ -16,7 +16,7 @@ namespace hellods
 
 /// Deque implemented by array.
 template <typename T>
-class ArrayDeque : public Deque<T>
+class ArrayDeque : public Deque<T, std::random_access_iterator_tag>
 {
     template <bool Const>
     class Iter
@@ -26,6 +26,7 @@ class ArrayDeque : public Deque<T>
     protected:
         using Value = std::conditional_t<Const, const T, T>;
 
+        // Virtual pointer = buffer_begin_ + head_ + offset_ (linear, no modulo).
         Value* current_;
 
         // Begin of the ring buffer.
@@ -46,7 +47,7 @@ class ArrayDeque : public Deque<T>
         /// Dereference.
         Value& operator*() const
         {
-            return *current_;
+            return current_ < buffer_end_ ? *current_ : *(current_ - (buffer_end_ - buffer_begin_));
         }
 
         /// Check if two iterators are same.
@@ -59,28 +60,83 @@ class ArrayDeque : public Deque<T>
         Iter& operator++()
         {
             ++current_;
-            if (current_ == buffer_end_)
-            {
-                current_ = buffer_begin_;
-            }
             return *this;
         }
 
         /// Decrement the iterator.
         Iter& operator--()
         {
-            if (current_ == buffer_begin_)
-            {
-                current_ = buffer_end_;
-            }
             --current_;
             return *this;
+        }
+
+        /// Advance by n elements.
+        Iter& operator+=(std::ptrdiff_t n)
+        {
+            current_ += n;
+            return *this;
+        }
+
+        /// Return a copy advanced by n elements.
+        Iter operator+(std::ptrdiff_t n) const
+        {
+            auto tmp = *this;
+            tmp += n;
+            return tmp;
+        }
+
+        /// Retreat by n elements.
+        Iter& operator-=(std::ptrdiff_t n)
+        {
+            current_ -= n;
+            return *this;
+        }
+
+        /// Return a copy retreated by n elements.
+        Iter operator-(std::ptrdiff_t n) const
+        {
+            auto tmp = *this;
+            tmp -= n;
+            return tmp;
+        }
+
+        /// Signed distance (number of elements) between two iterators.
+        std::ptrdiff_t operator-(const Iter& that) const
+        {
+            return current_ - that.current_;
+        }
+
+        /// Access the element at offset n without advancing.
+        Value& operator[](std::ptrdiff_t n) const
+        {
+            return *(*this + n);
+        }
+
+        /// Ordering comparisons (based on virtual pointer position).
+        bool operator<(const Iter& that) const
+        {
+            return current_ < that.current_;
+        }
+
+        bool operator<=(const Iter& that) const
+        {
+            return current_ <= that.current_;
+        }
+
+        bool operator>(const Iter& that) const
+        {
+            return current_ > that.current_;
+        }
+
+        bool operator>=(const Iter& that) const
+        {
+            return current_ >= that.current_;
         }
     };
 
 protected:
-    using Deque<T>::INIT_CAPACITY;
-    using Deque<T>::MAX_CAPACITY;
+    using Deque<T, std::random_access_iterator_tag>::INIT_CAPACITY;
+    using Deque<T, std::random_access_iterator_tag>::MAX_CAPACITY;
 
     // Index of front in ring buffer. data[front] is the first element, except size == 0.
     int front_;
@@ -209,26 +265,29 @@ public:
      * Iterator
      */
 
+    using Iterator = typename Deque<T, std::random_access_iterator_tag>::Iterator;
+    using ConstIterator = typename Deque<T, std::random_access_iterator_tag>::ConstIterator;
+
     /// Return an iterator to the first element of the deque.
-    typename Deque<T>::Iterator begin() override
+    Iterator begin() override
     {
-        return typename Deque<T>::Iterator(Iter<false>(data_ + front_, data_, data_ + capacity_));
+        return Iterator(Iter<false>(data_ + front_, data_, data_ + capacity_));
     }
 
-    typename Deque<T>::ConstIterator begin() const override
+    ConstIterator begin() const override
     {
-        return typename Deque<T>::ConstIterator(Iter<true>(data_ + front_, data_, data_ + capacity_));
+        return ConstIterator(Iter<true>(data_ + front_, data_, data_ + capacity_));
     }
 
     /// Return an iterator to the element following the last element of the deque.
-    typename Deque<T>::Iterator end() override
+    Iterator end() override
     {
-        return typename Deque<T>::Iterator(Iter<false>(data_ + access(size_), data_, data_ + capacity_));
+        return Iterator(Iter<false>(data_ + front_ + size_, data_, data_ + capacity_));
     }
 
-    typename Deque<T>::ConstIterator end() const override
+    ConstIterator end() const override
     {
-        return typename Deque<T>::ConstIterator(Iter<true>(data_ + access(size_), data_, data_ + capacity_));
+        return ConstIterator(Iter<true>(data_ + front_ + size_, data_, data_ + capacity_));
     }
 
     /*
@@ -242,7 +301,7 @@ public:
         return data_[front_];
     }
 
-    using Deque<T>::front; // const
+    using Deque<T, std::random_access_iterator_tag>::front; // const
 
     /// Return the reference to the element at the back in the deque.
     T& back() override
@@ -251,7 +310,7 @@ public:
         return data_[access(size_ - 1)];
     }
 
-    using Deque<T>::back; // const
+    using Deque<T, std::random_access_iterator_tag>::back; // const
 
     /*
      * Examination

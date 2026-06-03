@@ -14,12 +14,12 @@ namespace hellods
 {
 
 /// Abstract list interface.
-template <typename T>
-class List : public detail::Iterable<T>
+template <typename T, typename Cat = std::bidirectional_iterator_tag>
+class List : public detail::Iterable<T, Cat>
 {
 public:
-    using typename detail::Iterable<T>::ConstIterator;
-    using typename detail::Iterable<T>::Iterator;
+    using typename detail::Iterable<T, Cat>::ConstIterator;
+    using typename detail::Iterable<T, Cat>::Iterator;
 
     /*
      * Lifecycle
