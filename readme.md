@@ -84,90 +84,78 @@ graph TD
 
 **List**
 
-|              | `ArrayList` | `LinkedList`     | `SinglyLinkedList` |
-| ------------ | ----------- | ---------------- | ------------------ |
-| `operator[]` | O(1)        | O(N)<sup>†</sup> | O(N)               |
-| `append`     | O(1) 摊还   | O(1)             | O(1)               |
-| `insert`     | O(N)        | O(N)             | O(N)               |
-| `remove`     | O(N)        | O(N)             | O(N)               |
+|                    | `operator[]`     | `append`  | `insert` | `remove` |
+| ------------------ | ---------------- | --------- | -------- | -------- |
+| `ArrayList`        | O(1)             | O(1) 摊还 | O(N)     | O(N)     |
+| `LinkedList`       | O(N)<sup>†</sup> | O(1)      | O(N)     | O(N)     |
+| `SinglyLinkedList` | O(N)             | O(1)      | O(N)     | O(N)     |
 
 <sup>†</sup> 带最近访问缓存，时间局部性好时接近 O(1)<br>
 
 **Stack**
 
-|        | `ArrayStack` | `LinkedStack` |
-| ------ | ------------ | ------------- |
-| `push` | O(1) 摊还    | O(1)          |
-| `pop`  | O(1)         | O(1)          |
-| `top`  | O(1)         | O(1)          |
+|               | `push`    | `pop` | `top` |
+| ------------- | --------- | ----- | ----- |
+| `ArrayStack`  | O(1) 摊还 | O(1)  | O(1)  |
+| `LinkedStack` | O(1)      | O(1)  | O(1)  |
 
 **Queue**
 
-|           | `ArrayQueue` | `LinkedQueue` |
-| --------- | ------------ | ------------- |
-| `enqueue` | O(1) 摊还    | O(1)          |
-| `dequeue` | O(1)         | O(1)          |
-| `front`   | O(1)         | O(1)          |
+|               | `enqueue` | `dequeue` | `front` |
+| ------------- | --------- | --------- | ------- |
+| `ArrayQueue`  | O(1) 摊还 | O(1)      | O(1)    |
+| `LinkedQueue` | O(1)      | O(1)      | O(1)    |
 
 **Deque**
 
-|              | `ArrayDeque` | `LinkedDeque` |
-| ------------ | ------------ | ------------- |
-| `push_front` | O(1) 摊还    | O(1)          |
-| `push_back`  | O(1) 摊还    | O(1)          |
-| `pop_front`  | O(1)         | O(1)          |
-| `pop_back`   | O(1)         | O(1)          |
+|               | `push_front` | `push_back` | `pop_front` | `pop_back` |
+| ------------- | ------------ | ----------- | ----------- | ---------- |
+| `ArrayDeque`  | O(1) 摊还    | O(1) 摊还   | O(1)        | O(1)       |
+| `LinkedDeque` | O(1)         | O(1)        | O(1)        | O(1)       |
 
 **Heap**
 
-|        | `BinaryHeap` | `PairingHeap` | `SkewHeap`    |
-| ------ | ------------ | ------------- | ------------- |
-| `peek` | O(1)         | O(1)          | O(1)          |
-| `push` | O(log N)     | O(1) 摊还     | O(log N) 摊还 |
-| `pop`  | O(log N)     | O(log N) 摊还 | O(log N) 摊还 |
-| `meld` | O(N log N)   | O(1)          | O(log N) 摊还 |
+|               | `peek` | `push`        | `pop`         | `meld`        |
+| ------------- | ------ | ------------- | ------------- | ------------- |
+| `BinaryHeap`  | O(1)   | O(log N)      | O(log N)      | O(N log N)    |
+| `PairingHeap` | O(1)   | O(1) 摊还     | O(log N) 摊还 | O(1)          |
+| `SkewHeap`    | O(1)   | O(log N) 摊还 | O(log N) 摊还 | O(log N) 摊还 |
 
 **Tree**
 
-|          | `BinarySearchTree` | `AVLTree` | `RedBlackTree` | `SplayTree`   |
-| -------- | ------------------ | --------- | -------------- | ------------- |
-| `find`   | O(log N) 平均      | O(log N)  | O(log N)       | O(log N) 摊还 |
-| `insert` | O(log N) 平均      | O(log N)  | O(log N)       | O(log N) 摊还 |
-| `remove` | O(log N) 平均      | O(log N)  | O(log N)       | O(log N) 摊还 |
+|                    | `find`        | `insert`      | `remove`      |
+| ------------------ | ------------- | ------------- | ------------- |
+| `BinarySearchTree` | O(log N) 平均 | O(log N) 平均 | O(log N) 平均 |
+| `AVLTree`          | O(log N)      | O(log N)      | O(log N)      |
+| `RedBlackTree`     | O(log N)      | O(log N)      | O(log N)      |
+| `SplayTree`        | O(log N) 摊还 | O(log N) 摊还 | O(log N) 摊还 |
 
 **Set**
 
-|          | `HashSet` | `TreeSet` |
-| -------- | --------- | --------- |
-| `find`   | O(1) 平均 | O(log N)  |
-| `insert` | O(1) 平均 | O(log N)  |
-| `remove` | O(1) 平均 | O(log N)  |
+|           | `find`    | `insert`  | `remove`  |
+| --------- | --------- | --------- | --------- |
+| `HashSet` | O(1) 平均 | O(1) 平均 | O(1) 平均 |
+| `TreeSet` | O(log N)  | O(log N)  | O(log N)  |
 
 **Map**
 
-|              | `HashMap` | `TreeMap` |
-| ------------ | --------- | --------- |
-| `find`       | O(1) 平均 | O(log N)  |
-| `insert`     | O(1) 平均 | O(log N)  |
-| `remove`     | O(1) 平均 | O(log N)  |
-| `operator[]` | O(1) 平均 | O(log N)  |
+|           | `find`    | `insert`  | `remove`  | `operator[]` |
+| --------- | --------- | --------- | --------- | ------------ |
+| `HashMap` | O(1) 平均 | O(1) 平均 | O(1) 平均 | O(1) 平均    |
+| `TreeMap` | O(log N)  | O(log N)  | O(log N)  | O(log N)     |
 
 **Graph**
 
-|                   | `MatrixGraph`    | `ListGraph`      |
-| ----------------- | ---------------- | ---------------- |
-| `link` / `unlink` | O(1)             | O(V)             |
-| `distance`        | O(1)             | O(V)             |
-| DFS / BFS         | O(V<sup>2</sup>) | O(V + E)         |
-| `dijkstra`        | O(V<sup>2</sup>) | O((V + E) log V) |
+|               | `link` / `unlink` | `distance` | DFS / BFS        | `dijkstra`       |
+| ------------- | ----------------- | ---------- | ---------------- | ---------------- |
+| `MatrixGraph` | O(1)              | O(1)       | O(V<sup>2</sup>) | O(V<sup>2</sup>) |
+| `ListGraph`   | O(V)              | O(V)       | O(V + E)         | O((V + E) log V) |
 
 **DisjointSet**
 
-|                | `UnionFind` |
-| -------------- | ----------- |
-| `find`         | O(α(N))     |
-| `unite`        | O(α(N))     |
-| `is_connected` | O(α(N))     |
+|             | `find`  | `unite` | `is_connected` |
+| ----------- | ------- | ------- | -------------- |
+| `UnionFind` | O(α(N)) | O(α(N)) | O(α(N))        |
 
 说明：
 
