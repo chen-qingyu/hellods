@@ -18,9 +18,8 @@ template <typename T>
 class ArrayList : public List<T, std::contiguous_iterator_tag>
 {
 protected:
-    // T* is itself a valid input iterator — no wrapper class needed.
+    // T* is itself a valid contiguous iterator, no wrapper needed.
 
-protected:
     using Base = List<T, std::contiguous_iterator_tag>;
     using Base::INIT_CAPACITY;
     using Base::MAX_CAPACITY;
