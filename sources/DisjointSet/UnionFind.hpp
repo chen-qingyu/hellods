@@ -24,17 +24,14 @@ class UnionFind : public detail::Container
 {
 protected:
     // Number of elements.
-    int size_;
-
-    // Allocated capacity for parent_/rank_ arrays.
-    int capacity_;
+    int size_ = 0;
 
     // Parent pointer: parent_[i] is the parent of element i.
-    // Roots point to themselves. Elements beyond size_ are uninitialized.
-    std::unique_ptr<int[]> parent_;
+    // Roots point to themselves.
+    ArrayList<int> parent_;
 
     // Rank (tree height upper bound): rank_[i] is the rank of the root i.
-    std::unique_ptr<int[]> rank_;
+    ArrayList<int> rank_;
 
     // Element-to-index mapping.
     HashMap<T, int> map_;
@@ -42,30 +39,10 @@ protected:
     // Index-to-element inverse mapping (for returning representative).
     ArrayList<T> elements_;
 
-    // Expand internal arrays to double capacity.
-    void expand()
-    {
-        int old_cap = capacity_;
-        capacity_ = (capacity_ < MAX_CAPACITY / 2) ? capacity_ * 2 : MAX_CAPACITY;
-
-        auto new_parent = std::make_unique<int[]>(capacity_);
-        auto new_rank = std::make_unique<int[]>(capacity_);
-
-        for (int i = 0; i < old_cap; ++i)
-        {
-            new_parent[i] = parent_[i];
-            new_rank[i] = rank_[i];
-        }
-
-        parent_ = std::move(new_parent);
-        rank_ = std::move(new_rank);
-    }
-
     // Swap with another union-find set.
     void swap(UnionFind& that)
     {
         std::swap(size_, that.size_);
-        std::swap(capacity_, that.capacity_);
         std::swap(parent_, that.parent_);
         std::swap(rank_, that.rank_);
         std::swap(map_, that.map_);
@@ -83,12 +60,22 @@ protected:
         return it->value();
     }
 
-    // Iterative path compression find by internal index.
-    int find_by_index(int x) const
+    // Non-const find: with path compression.
+    int find_by_index(int x)
     {
         while (parent_[x] != x)
         {
             parent_[x] = parent_[parent_[x]];
+            x = parent_[x];
+        }
+        return x;
+    }
+
+    // Const find: without path compression.
+    int find_by_index(int x) const
+    {
+        while (parent_[x] != x)
+        {
             x = parent_[x];
         }
         return x;
@@ -100,15 +87,7 @@ public:
      */
 
     /// Create an empty union-find set.
-    UnionFind()
-        : size_(0)
-        , capacity_(INIT_CAPACITY)
-        , parent_(std::make_unique<int[]>(INIT_CAPACITY))
-        , rank_(std::make_unique<int[]>(INIT_CAPACITY))
-        , map_()
-        , elements_()
-    {
-    }
+    UnionFind() = default;
 
     /// Create a union-find set from the given initializer list.
     UnionFind(std::initializer_list<T> il)
@@ -120,34 +99,11 @@ public:
         }
     }
 
-    /// Copy constructor.
-    UnionFind(const UnionFind& that)
-        : size_(that.size_)
-        , capacity_(that.capacity_)
-        , parent_(std::make_unique<int[]>(that.capacity_))
-        , rank_(std::make_unique<int[]>(that.capacity_))
-        , map_(that.map_)
-        , elements_(that.elements_)
-    {
-        for (int i = 0; i < capacity_; ++i)
-        {
-            parent_[i] = that.parent_[i];
-            rank_[i] = that.rank_[i];
-        }
-    }
+    UnionFind(const UnionFind&) = default;
+    UnionFind(UnionFind&&) = default;
 
-    /// Move constructor.
-    UnionFind(UnionFind&& that)
-        : UnionFind()
-    {
-        swap(that);
-    }
-
-    UnionFind& operator=(UnionFind that)
-    {
-        swap(that);
-        return *this;
-    }
+    UnionFind& operator=(const UnionFind&) = default;
+    UnionFind& operator=(UnionFind&&) = default;
 
     /*
      * Comparison
@@ -224,16 +180,11 @@ public:
             return false;
         }
 
-        if (size_ == capacity_)
-        {
-            expand();
-        }
-
         int idx = size_++;
         map_.insert(element, idx);
         elements_.append(element);
-        parent_[idx] = idx;
-        rank_[idx] = 0;
+        parent_.append(idx);
+        rank_.append(0);
         return true;
     }
 
@@ -271,9 +222,8 @@ public:
     void clear() override
     {
         size_ = 0;
-        capacity_ = INIT_CAPACITY;
-        parent_ = std::make_unique<int[]>(INIT_CAPACITY);
-        rank_ = std::make_unique<int[]>(INIT_CAPACITY);
+        parent_.clear();
+        rank_.clear();
         map_.clear();
         elements_.clear();
     }
