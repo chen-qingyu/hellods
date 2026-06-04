@@ -162,15 +162,8 @@ protected:
     {
         capacity_ = (capacity_ < MAX_CAPACITY / 2) ? capacity_ * 2 : MAX_CAPACITY; // double the capacity until MAX_CAPACITY
         T* new_data = new T[capacity_];
-        int j = 0;
-        for (int i = front_; i < size_; ++i)
-        {
-            new_data[j++] = data_[i];
-        }
-        for (int i = 0; i < front_; ++i)
-        {
-            new_data[j++] = data_[i];
-        }
+        std::copy(data_ + front_, data_ + capacity_, new_data);
+        std::copy(data_, data_ + front_, new_data + (capacity_ - front_));
 
         delete[] data_;
         data_ = new_data;

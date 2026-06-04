@@ -73,10 +73,7 @@ protected:
         // Copy active region
         for (int i = 0; i < size_; i++)
         {
-            for (int j = 0; j < size_; j++)
-            {
-                new_matrix[i * capacity_ + j] = std::move(matrix_[i * old_cap + j]);
-            }
+            std::copy_n(std::make_move_iterator(matrix_ + i * old_cap), size_, new_matrix + i * capacity_);
         }
 
         delete[] matrix_;
@@ -146,10 +143,7 @@ public:
         , vertex_to_idx_(that.vertex_to_idx_)
         , idx_to_vertex_(that.idx_to_vertex_)
     {
-        for (int i = 0; i < capacity_ * capacity_; i++)
-        {
-            matrix_[i] = that.matrix_[i];
-        }
+        std::copy_n(that.matrix_, capacity_ * capacity_, matrix_);
     }
 
     /// Move constructor.
