@@ -307,9 +307,9 @@ public:
         }
 
         // Init state
-        auto visited = std::make_unique<bool[]>(size_);
-        auto dist = std::make_unique<std::optional<E>[]>(size_);
-        auto path = std::make_unique<int[]>(size_);
+        ArrayList<bool> visited(size_);
+        ArrayList<std::optional<E>> dist(size_);
+        ArrayList<int> path(size_);
 
         for (int v = 0; v < size_; v++)
         {
