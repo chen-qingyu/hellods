@@ -122,23 +122,23 @@ public:
     /// Return an iterator to the first element of the list.
     Base::Iterator begin() override
     {
-        return Base::Iterator(data_);
+        return typename Base::Iterator(data_);
     }
 
     Base::ConstIterator begin() const override
     {
-        return Base::ConstIterator(data_);
+        return typename Base::ConstIterator(data_);
     }
 
     /// Return an iterator to the element following the last element of the list.
     Base::Iterator end() override
     {
-        return Base::Iterator(data_ + size_);
+        return typename Base::Iterator(data_ + size_);
     }
 
     Base::ConstIterator end() const override
     {
-        return Base::ConstIterator(data_ + size_);
+        return typename Base::ConstIterator(data_ + size_);
     }
 
     /*

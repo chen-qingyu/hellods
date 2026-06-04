@@ -246,23 +246,23 @@ public:
     /// Return an iterator to the first element of the deque.
     Base::Iterator begin() override
     {
-        return Base::Iterator(Iter<false>(data_ + front_, data_, data_ + capacity_));
+        return typename Base::Iterator(Iter<false>(data_ + front_, data_, data_ + capacity_));
     }
 
     Base::ConstIterator begin() const override
     {
-        return Base::ConstIterator(Iter<true>(data_ + front_, data_, data_ + capacity_));
+        return typename Base::ConstIterator(Iter<true>(data_ + front_, data_, data_ + capacity_));
     }
 
     /// Return an iterator to the element following the last element of the deque.
     Base::Iterator end() override
     {
-        return Base::Iterator(Iter<false>(data_ + front_ + size_, data_, data_ + capacity_));
+        return typename Base::Iterator(Iter<false>(data_ + front_ + size_, data_, data_ + capacity_));
     }
 
     Base::ConstIterator end() const override
     {
-        return Base::ConstIterator(Iter<true>(data_ + front_ + size_, data_, data_ + capacity_));
+        return typename Base::ConstIterator(Iter<true>(data_ + front_ + size_, data_, data_ + capacity_));
     }
 
     /*

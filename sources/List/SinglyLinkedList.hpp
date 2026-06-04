@@ -203,23 +203,23 @@ public:
     /// Return an iterator to the first element of the list.
     Base::Iterator begin() override
     {
-        return Base::Iterator(Iter<false>(header_->succ_));
+        return typename Base::Iterator(Iter<false>(header_->succ_));
     }
 
     Base::ConstIterator begin() const override
     {
-        return Base::ConstIterator(Iter<true>(header_->succ_));
+        return typename Base::ConstIterator(Iter<true>(header_->succ_));
     }
 
     /// Return an iterator to the element following the last element of the list.
     Base::Iterator end() override
     {
-        return Base::Iterator(Iter<false>(nullptr));
+        return typename Base::Iterator(Iter<false>(nullptr));
     }
 
     Base::ConstIterator end() const override
     {
-        return Base::ConstIterator(Iter<true>(nullptr));
+        return typename Base::ConstIterator(Iter<true>(nullptr));
     }
 
     /*
