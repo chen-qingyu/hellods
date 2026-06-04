@@ -5,6 +5,9 @@ set_encodings("utf-8")
 
 add_rules("mode.debug", "mode.release")
 add_requires("catch2")
+if is_plat("windows") then -- disable permissive mode for strict standard compliance
+    add_cxflags("/permissive-")
+end
 
 target("test")
     set_kind("binary")
