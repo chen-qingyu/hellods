@@ -172,6 +172,16 @@ public:
         trailer_->pred_ = header_;
     }
 
+    /// Create a list with the specified number of default-inserted elements.
+    explicit LinkedList(int size)
+        : LinkedList()
+    {
+        for (int i = 0; i < size; ++i)
+        {
+            insert_node(trailer_, T());
+        }
+    }
+
     /// Create a list based on the given initializer list.
     LinkedList(const std::initializer_list<T>& il)
         : LinkedList()

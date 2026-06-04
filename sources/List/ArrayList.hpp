@@ -65,6 +65,14 @@ public:
     {
     }
 
+    /// Create a list with the specified number of default-inserted elements.
+    explicit ArrayList(int size)
+        : size_(size)
+        , capacity_(size > INIT_CAPACITY ? size : INIT_CAPACITY)
+        , data_(new T[capacity_]())
+    {
+    }
+
     /// Create a list based on the given initializer list.
     ArrayList(const std::initializer_list<T>& il)
         : size_(int(il.size()))

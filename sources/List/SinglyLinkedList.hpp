@@ -124,6 +124,22 @@ public:
     {
     }
 
+    /// Create a list with the specified number of default-inserted elements.
+    explicit SinglyLinkedList(int size)
+        : size_(size)
+        , header_(new Node(T()))
+        , tail_(nullptr)
+    {
+        Node* current = header_;
+        for (int i = 0; i < size; ++i)
+        {
+            auto node = new Node(T());
+            current->succ_ = node;
+            current = node;
+        }
+        tail_ = current;
+    }
+
     /// Create a list based on the given initializer list.
     SinglyLinkedList(const std::initializer_list<T>& il)
         : size_(int(il.size()))
