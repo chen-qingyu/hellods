@@ -274,28 +274,11 @@ public:
         return ptr_->distance(*that.ptr_);
     }
 
-    bool operator<(const BasicIterator& that) const
+    /// Three-way comparison.
+    auto operator<=>(const BasicIterator& that) const
         requires(is_ra)
     {
-        return *this - that < 0;
-    }
-
-    bool operator<=(const BasicIterator& that) const
-        requires(is_ra)
-    {
-        return *this - that <= 0;
-    }
-
-    bool operator>(const BasicIterator& that) const
-        requires(is_ra)
-    {
-        return *this - that > 0;
-    }
-
-    bool operator>=(const BasicIterator& that) const
-        requires(is_ra)
-    {
-        return *this - that >= 0;
+        return ptr_->distance(*that.ptr_) <=> 0;
     }
 };
 
