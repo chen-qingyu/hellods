@@ -133,11 +133,6 @@ public:
         return true;
     }
 
-    bool operator!=(const UnionFind& that) const
-    {
-        return !(*this == that);
-    }
-
     /*
      * Examination
      */

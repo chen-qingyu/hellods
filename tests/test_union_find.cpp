@@ -21,6 +21,7 @@ TEST_CASE("UnionFind", "[union_find]")
 
     // Initial state equals a freshly built set with same elements
     REQUIRE(uf == UnionFind<int>({0, 1, 2, 3, 4}));
+    REQUIRE(uf != UnionFind<int>({0, 1, 2, 3, 5}));
 
     // Unite and check connectivity
     REQUIRE(uf.unite(0, 1) == true);
