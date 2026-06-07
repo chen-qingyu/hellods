@@ -102,9 +102,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty tree.
     SplayTree() = default;
@@ -137,10 +136,10 @@ public:
         this->BinarySearchTree<T>::swap(that);
         return *this;
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Return an iterator to the specified element, or end() if the tree does
     /// not contain the element. The accessed element (or the last accessed node)
@@ -187,10 +186,10 @@ public:
     {
         return find(element) != this->end();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
     bool insert(const T& element) override
@@ -293,6 +292,8 @@ public:
 
         return true;
     }
+
+    /// @}
 };
 
 } // namespace hellods

@@ -48,9 +48,8 @@ class BinaryHeap : public Heap<T>
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty heap.
     BinaryHeap() = default;
@@ -71,10 +70,10 @@ public:
 
     BinaryHeap& operator=(const BinaryHeap&) = default;
     BinaryHeap& operator=(BinaryHeap&&) = default;
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Peek the top element in the heap.
     const T& peek() const override
@@ -82,20 +81,20 @@ public:
         detail::check_empty(list_.size());
         return list_[0];
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
     {
         return list_.size();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Push an element onto the heap.
     void push(const T& element) override
@@ -128,10 +127,10 @@ public:
     {
         list_.clear();
     }
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     struct CacheIter
     {
@@ -185,6 +184,8 @@ public:
     {
         return typename Heap<T>::Iterator(CacheIter(list_.size()));
     }
+
+    /// @}
 };
 
 } // namespace hellods

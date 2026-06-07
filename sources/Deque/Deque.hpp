@@ -21,9 +21,8 @@ public:
     using typename detail::Iterable<T, Cat>::ConstIterator;
     using typename detail::Iterable<T, Cat>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Virtual destructor.
     ~Deque() override = default;
@@ -33,10 +32,10 @@ public:
     {
         return "Deque";
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the front in the deque.
     virtual T& front() = 0;
@@ -55,10 +54,10 @@ public:
     {
         return const_cast<Deque&>(*this).back();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Push front, insert an element at the front of the deque.
     virtual void push_front(const T& element) = 0;
@@ -71,6 +70,8 @@ public:
 
     /// Pop back, pop the back element of the deque.
     virtual T pop_back() = 0;
+
+    /// @}
 };
 
 } // namespace hellods

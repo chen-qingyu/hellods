@@ -112,9 +112,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty list.
     SinglyLinkedList()
@@ -191,10 +190,10 @@ public:
         clear_data();
         delete header_;
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the specified position in the list.
     T& operator[](int index) override
@@ -211,10 +210,10 @@ public:
     }
 
     using Base::operator[]; // const
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the list.
     Base::Iterator begin() override
@@ -237,20 +236,20 @@ public:
     {
         return typename Base::ConstIterator(Iter<true>(nullptr));
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
     {
         return size_;
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Append the specified element to the list.
     void append(const T& element) override
@@ -341,6 +340,8 @@ public:
             clear_data();
         }
     }
+
+    /// @}
 };
 
 } // namespace hellods

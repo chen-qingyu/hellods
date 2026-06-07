@@ -71,9 +71,8 @@ public:
     };
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty set.
     HashSet() = default;
@@ -93,10 +92,10 @@ public:
 
     HashSet& operator=(const HashSet&) = default;
     HashSet& operator=(HashSet&&) = default;
+    /// @}
 
-    /*
-     * Comparison
-     */
+    /// @name Comparison
+    /// @{
 
     /// Check whether two sets are equal.
     bool operator==(const HashSet& that) const
@@ -116,10 +115,10 @@ public:
 
         return true;
     }
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the set.
     typename Set<T>::Iterator begin() const override
@@ -132,10 +131,10 @@ public:
     {
         return typename Set<T>::Iterator(Iter(map_.end()));
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
@@ -148,10 +147,10 @@ public:
     {
         return typename Set<T>::Iterator(Iter(map_.find(item)));
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert a new item into the set. Return whether the item was newly inserted.
     bool insert(const T& item) override
@@ -170,6 +169,8 @@ public:
     {
         map_.clear();
     }
+
+    /// @}
 };
 
 } // namespace hellods

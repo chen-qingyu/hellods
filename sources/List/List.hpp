@@ -21,9 +21,8 @@ public:
     using typename detail::Iterable<T, Cat>::ConstIterator;
     using typename detail::Iterable<T, Cat>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Virtual destructor.
     ~List() override = default;
@@ -33,10 +32,10 @@ public:
     {
         return "List";
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the specified position in the list.
     virtual T& operator[](int index) = 0;
@@ -46,10 +45,10 @@ public:
     {
         return const_cast<List&>(*this)[index];
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Return an iterator to the first occurrence of the specified element, or end() if the list does not contain the element.
     virtual Iterator find(const T& element)
@@ -65,10 +64,10 @@ public:
     {
         return const_cast<List&>(*this).find(element);
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Append the specified element to the list.
     virtual void append(const T& element) = 0;
@@ -84,6 +83,8 @@ public:
     {
         return remove(this->size() - 1);
     }
+
+    /// @}
 };
 
 } // namespace hellods

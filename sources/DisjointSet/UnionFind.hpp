@@ -82,9 +82,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty union-find set.
     UnionFind() = default;
@@ -104,10 +103,10 @@ public:
 
     UnionFind& operator=(const UnionFind&) = default;
     UnionFind& operator=(UnionFind&&) = default;
+    /// @}
 
-    /*
-     * Comparison
-     */
+    /// @name Comparison
+    /// @{
 
     /// Check whether two union-find sets are structurally equal.
     bool operator==(const UnionFind& that) const
@@ -132,10 +131,10 @@ public:
 
         return true;
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
@@ -162,10 +161,10 @@ public:
     {
         return find_by_index(index(a)) == find_by_index(index(b));
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Add a new isolated element. Return true if newly inserted (false if already exists).
     bool add(const T& element)
@@ -222,6 +221,8 @@ public:
         map_.clear();
         elements_.clear();
     }
+
+    /// @}
 };
 
 } // namespace hellods

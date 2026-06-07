@@ -38,9 +38,8 @@ class TreeMap : public Map<K, V>
     };
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty map.
     TreeMap() = default;
@@ -60,10 +59,10 @@ public:
 
     TreeMap& operator=(const TreeMap&) = default;
     TreeMap& operator=(TreeMap&&) = default;
+    /// @}
 
-    /*
-     * Comparison
-     */
+    /// @name Comparison
+    /// @{
 
     /// Check whether two maps are equal.
     bool operator==(const TreeMap& that) const
@@ -87,10 +86,10 @@ public:
 
         return true;
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference of value for key if key is in the map, else throw exception.
     V& operator[](const K& key) override
@@ -113,10 +112,10 @@ public:
         }
         return tree_it->value();
     }
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the map.
     Map<K, V>::Iterator begin() override
@@ -139,10 +138,10 @@ public:
     {
         return tree_.end();
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
@@ -161,10 +160,10 @@ public:
     {
         return tree_.find(detail::MapEntry<K, V>{key});
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert a new key-value pair into the map. Return whether the pair was newly inserted.
     bool insert(const K& key, const V& value) override
@@ -188,6 +187,8 @@ public:
     {
         tree_.clear();
     }
+
+    /// @}
 };
 
 } // namespace hellods

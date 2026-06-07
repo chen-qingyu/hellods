@@ -180,9 +180,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty deque.
     ArrayDeque()
@@ -231,10 +230,10 @@ public:
     {
         delete[] data_;
     }
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the deque.
     Base::Iterator begin() override
@@ -257,10 +256,10 @@ public:
     {
         return typename Base::ConstIterator(Iter<true>(data_ + front_ + size_, data_, data_ + capacity_));
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the front in the deque.
     T& front() override
@@ -279,20 +278,20 @@ public:
     }
 
     using Base::back; // const
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
     {
         return size_;
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Push front, insert an element at the front of the deque.
     void push_front(const T& element) override
@@ -354,6 +353,8 @@ public:
         size_ = 0;
         front_ = 0;
     }
+
+    /// @}
 };
 
 } // namespace hellods

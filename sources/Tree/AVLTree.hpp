@@ -200,9 +200,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty tree.
     AVLTree() = default;
@@ -235,10 +234,10 @@ public:
         this->BinarySearchTree<T>::swap(that);
         return *this;
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
     bool insert(const T& element) override
@@ -255,6 +254,8 @@ public:
         set_root(remove_avlnode(root_, element));
         return old_size != size_;
     }
+
+    /// @}
 };
 
 } // namespace hellods

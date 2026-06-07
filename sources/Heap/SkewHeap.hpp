@@ -111,9 +111,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty heap.
     SkewHeap()
@@ -157,10 +156,10 @@ public:
     {
         destroy(root_);
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Peek the top element in the heap.
     const T& peek() const override
@@ -168,20 +167,20 @@ public:
         detail::check_empty(size_);
         return root_->data_;
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
     {
         return size_;
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Push an element onto the heap.
     void push(const T& element) override
@@ -244,10 +243,10 @@ public:
         root_ = nullptr;
         size_ = 0;
     }
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     struct CacheIter
     {
@@ -325,6 +324,8 @@ public:
     {
         return typename Heap<T>::Iterator(CacheIter(size_));
     }
+
+    /// @}
 };
 
 } // namespace hellods

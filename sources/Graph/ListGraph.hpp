@@ -98,9 +98,8 @@ public:
     using ShortestPath = typename Graph<V, E, Directed>::ShortestPath;
     using Iterator = typename Graph<V, E, Directed>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty graph.
     ListGraph() = default;
@@ -116,10 +115,10 @@ public:
 
     ListGraph& operator=(const ListGraph&) = default;
     ListGraph& operator=(ListGraph&&) = default;
+    /// @}
 
-    /*
-     * Comparison
-     */
+    /// @name Comparison
+    /// @{
 
     /// Check whether two graphs are equal.
     bool operator==(const ListGraph& that) const
@@ -139,10 +138,10 @@ public:
 
         return true;
     }
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first vertex of the graph.
     Iterator begin() const override
@@ -155,10 +154,10 @@ public:
     {
         return idx_to_vertex_.end();
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of vertices.
     int size() const override
@@ -392,10 +391,10 @@ public:
 
         throw std::runtime_error("Error: Graph export requires Printable vertices and weights.");
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Add a vertex. Return whether it was newly inserted (false if already exists).
     bool add_vertex(const V& v) override
@@ -445,6 +444,8 @@ public:
         idx_to_vertex_.clear();
         adjacency_.clear();
     }
+
+    /// @}
 };
 
 } // namespace hellods

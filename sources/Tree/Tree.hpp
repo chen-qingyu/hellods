@@ -29,9 +29,8 @@ public:
         LevelOrder
     };
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Virtual destructor.
     ~Tree() override = default;
@@ -41,10 +40,10 @@ public:
     {
         return "Tree";
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Return the minimum element in the tree.
     virtual T min() const = 0;
@@ -72,16 +71,18 @@ public:
 
     /// Export the tree as Graphviz DOT.
     virtual std::string to_dot() const = 0;
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert the specified element into the tree. Return true if the tree changed as a result.
     virtual bool insert(const T& element) = 0;
 
     /// Remove the specified element from the tree. Return true if the tree changed as a result.
     virtual bool remove(const T& element) = 0;
+
+    /// @}
 };
 
 } // namespace hellods

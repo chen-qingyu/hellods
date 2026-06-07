@@ -441,9 +441,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty tree.
     BinarySearchTree()
@@ -492,10 +491,10 @@ public:
         destroy(root_);
         delete end_;
     }
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the tree.
     ///
@@ -512,10 +511,10 @@ public:
     {
         return typename Tree<T>::Iterator(Iter(end_));
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
@@ -644,10 +643,10 @@ public:
 
         throw std::runtime_error("Error: Tree export requires Printable elements.");
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
     bool insert(const T& element) override
@@ -675,6 +674,8 @@ public:
             set_root(nullptr);
         }
     }
+
+    /// @}
 };
 
 } // namespace hellods

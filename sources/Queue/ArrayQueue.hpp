@@ -23,9 +23,8 @@ class ArrayQueue : public Queue<T>
 public:
     using Iterator = typename Queue<T>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty queue.
     ArrayQueue() = default;
@@ -41,10 +40,10 @@ public:
 
     ArrayQueue& operator=(const ArrayQueue&) = default;
     ArrayQueue& operator=(ArrayQueue&&) = default;
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the queue.
     Iterator begin() const override
@@ -57,10 +56,10 @@ public:
     {
         return deque_.end();
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the front in the queue.
     T& front() override
@@ -69,20 +68,20 @@ public:
     }
 
     using Queue<T>::front; // const
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
     {
         return deque_.size();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Enqueue, insert an element at the rear of the queue.
     void enqueue(const T& element) override
@@ -101,6 +100,8 @@ public:
     {
         deque_.clear();
     }
+
+    /// @}
 };
 
 } // namespace hellods

@@ -21,9 +21,8 @@ class LinkedDeque : public Deque<T>
     LinkedList<T> list_;
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty deque.
     LinkedDeque() = default;
@@ -39,10 +38,10 @@ public:
 
     LinkedDeque& operator=(const LinkedDeque&) = default;
     LinkedDeque& operator=(LinkedDeque&&) = default;
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the deque.
     typename Deque<T>::Iterator begin() override
@@ -65,10 +64,10 @@ public:
     {
         return list_.end();
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the front in the deque.
     T& front() override
@@ -87,20 +86,20 @@ public:
     }
 
     using Deque<T>::back; // const
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
     {
         return list_.size();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Push front, insert an element at the front of the deque.
     void push_front(const T& element) override
@@ -131,6 +130,8 @@ public:
     {
         list_.clear();
     }
+
+    /// @}
 };
 
 } // namespace hellods

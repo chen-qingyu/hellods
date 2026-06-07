@@ -341,9 +341,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty tree.
     RedBlackTree() = default;
@@ -375,10 +374,10 @@ public:
         this->BinarySearchTree<T>::swap(that);
         return *this;
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert the specified element in the tree. Return whether the element was newly inserted.
     bool insert(const T& element) override
@@ -391,6 +390,8 @@ public:
     {
         return remove_rbnode(element);
     }
+
+    /// @}
 };
 
 } // namespace hellods

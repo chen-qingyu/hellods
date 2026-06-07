@@ -20,9 +20,8 @@ class Heap : public detail::ConstIterable<T>
 public:
     using typename detail::ConstIterable<T>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Virtual destructor.
     ~Heap() override = default;
@@ -32,17 +31,17 @@ public:
     {
         return "Heap";
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Peek the top element in the heap.
     virtual const T& peek() const = 0;
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Push an element onto the heap.
     virtual void push(const T& element) = 0;
@@ -64,6 +63,8 @@ public:
         }
         that.clear();
     }
+
+    /// @}
 };
 
 } // namespace hellods

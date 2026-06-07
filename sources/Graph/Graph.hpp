@@ -42,9 +42,8 @@ public:
         }
     };
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Virtual destructor.
     ~Graph() override = default;
@@ -54,10 +53,10 @@ public:
     {
         return "Graph";
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Return the distance from vertex `from` to vertex `to`, or nullopt if no edge exists.
     virtual std::optional<E> distance(const V& from, const V& to) const = 0;
@@ -89,10 +88,10 @@ public:
 
     /// Export the graph as Graphviz DOT.
     virtual std::string to_dot() const = 0;
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Add a vertex. Return whether it was newly inserted (false if already exists).
     virtual bool add_vertex(const V& vertex) = 0;
@@ -111,6 +110,8 @@ public:
 
     /// Disconnect the link from vertex `from` to vertex `to`.
     virtual void unlink(const V& from, const V& to) = 0;
+
+    /// @}
 };
 
 } // namespace hellods

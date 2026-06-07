@@ -156,9 +156,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty list.
     LinkedList()
@@ -222,10 +221,10 @@ public:
         delete header_;
         delete trailer_;
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the specified position in the list. list[index] for index in 0..size() will be O(1) on each access.
     T& operator[](int index) override
@@ -262,10 +261,10 @@ public:
     }
 
     using List<T>::operator[]; // const
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the list.
     /// If the list is empty, the returned iterator will be equal to end().
@@ -290,20 +289,20 @@ public:
     {
         return typename List<T>::ConstIterator(Iter<true>(trailer_));
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
     {
         return size_;
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Append the specified element to the list.
     void append(const T& element) override
@@ -391,6 +390,8 @@ public:
             clear_data();
         }
     }
+
+    /// @}
 };
 
 } // namespace hellods

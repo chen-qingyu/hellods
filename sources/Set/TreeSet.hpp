@@ -21,9 +21,8 @@ class TreeSet : public Set<T>
     Tree tree_;
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty set.
     TreeSet() = default;
@@ -43,10 +42,10 @@ public:
 
     TreeSet& operator=(const TreeSet&) = default;
     TreeSet& operator=(TreeSet&&) = default;
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the set.
     typename Set<T>::Iterator begin() const override
@@ -59,10 +58,10 @@ public:
     {
         return tree_.end();
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
@@ -75,10 +74,10 @@ public:
     {
         return tree_.find(item);
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert a new item into the set. Return whether the item was newly inserted.
     bool insert(const T& item) override
@@ -97,6 +96,8 @@ public:
     {
         tree_.clear();
     }
+
+    /// @}
 };
 
 } // namespace hellods

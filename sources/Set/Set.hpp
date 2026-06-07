@@ -20,9 +20,8 @@ class Set : public detail::ConstIterable<T>
 public:
     using typename detail::ConstIterable<T>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Virtual destructor.
     ~Set() override = default;
@@ -32,10 +31,10 @@ public:
     {
         return "Set";
     }
+    /// @}
 
-    /*
-     * Search
-     */
+    /// @name Search
+    /// @{
 
     /// Return an iterator to the first occurrence of the specified element, or end() if the set does not contain the element.
     virtual Iterator find(const T& element) const = 0;
@@ -45,16 +44,18 @@ public:
     {
         return find(element) != this->end();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert the specified element into the set. Return true if the set changed as a result.
     virtual bool insert(const T& element) = 0;
 
     /// Remove the specified element from the set. Return true if the set changed as a result.
     virtual bool remove(const T& element) = 0;
+
+    /// @}
 };
 
 } // namespace hellods

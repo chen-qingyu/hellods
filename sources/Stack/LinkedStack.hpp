@@ -23,9 +23,8 @@ class LinkedStack : public Stack<T>
 public:
     using Iterator = typename Stack<T>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty stack.
     LinkedStack() = default;
@@ -41,10 +40,10 @@ public:
 
     LinkedStack& operator=(const LinkedStack&) = default;
     LinkedStack& operator=(LinkedStack&&) = default;
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the stack.
     Iterator begin() const override
@@ -57,10 +56,10 @@ public:
     {
         return list_.end();
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the top in the stack.
     T& top() override
@@ -70,20 +69,20 @@ public:
     }
 
     using Stack<T>::top; // const
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
     {
         return list_.size();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Push an element at the top of the stack.
     void push(const T& element) override
@@ -102,6 +101,8 @@ public:
     {
         list_.clear();
     }
+
+    /// @}
 };
 
 } // namespace hellods

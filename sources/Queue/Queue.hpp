@@ -20,9 +20,8 @@ class Queue : public detail::ConstIterable<T>
 public:
     using typename detail::ConstIterable<T>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Virtual destructor.
     ~Queue() override = default;
@@ -32,10 +31,10 @@ public:
     {
         return "Queue";
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the front in the queue.
     virtual T& front() = 0;
@@ -45,16 +44,18 @@ public:
     {
         return const_cast<Queue&>(*this).front();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Enqueue, insert an element at the rear of the queue.
     virtual void enqueue(const T& element) = 0;
 
     /// Dequeue, pop the front element of the queue.
     virtual T dequeue() = 0;
+
+    /// @}
 };
 
 } // namespace hellods

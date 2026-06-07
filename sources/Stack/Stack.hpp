@@ -20,9 +20,8 @@ class Stack : public detail::ConstIterable<T>
 public:
     using typename detail::ConstIterable<T>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Virtual destructor.
     ~Stack() override = default;
@@ -32,10 +31,10 @@ public:
     {
         return "Stack";
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference to the element at the top in the stack.
     virtual T& top() = 0;
@@ -45,16 +44,18 @@ public:
     {
         return const_cast<Stack&>(*this).top();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Push an element at the top of the stack.
     virtual void push(const T& element) = 0;
 
     /// Pop the top element of the stack.
     virtual T pop() = 0;
+
+    /// @}
 };
 
 } // namespace hellods

@@ -22,9 +22,8 @@ public:
     using typename detail::Iterable<Entry>::ConstIterator;
     using typename detail::Iterable<Entry>::Iterator;
 
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Virtual destructor.
     ~Map() override = default;
@@ -34,20 +33,20 @@ public:
     {
         return "Map";
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference of value for key if key is in the map, else throw exception.
     virtual V& operator[](const K& key) = 0;
 
     /// Return the const reference of value for key if key is in the map, else throw exception.
     virtual const V& operator[](const K& key) const = 0;
+    /// @}
 
-    /*
-     * Search
-     */
+    /// @name Search
+    /// @{
 
     /// Return an iterator to the first occurrence of the specified key, or end() if the map does not contain the key.
     virtual Iterator find(const K& key) = 0;
@@ -60,16 +59,18 @@ public:
     {
         return find(key) != this->end();
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert a new key-value pair into the map. Return whether the pair was newly inserted.
     virtual bool insert(const K& key, const V& value) = 0;
 
     /// Remove the key-value pair corresponding to the key in the map. Return whether such a key was present.
     virtual bool remove(const K& key) = 0;
+
+    /// @}
 };
 
 } // namespace hellods

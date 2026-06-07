@@ -224,9 +224,8 @@ protected:
     }
 
 public:
-    /*
-     * Lifecycle
-     */
+    /// @name Lifecycle
+    /// @{
 
     /// Create an empty map.
     HashMap()
@@ -279,10 +278,10 @@ public:
     {
         delete[] data_;
     }
+    /// @}
 
-    /*
-     * Comparison
-     */
+    /// @name Comparison
+    /// @{
 
     /// Check whether two maps are equal.
     bool operator==(const HashMap& that) const
@@ -303,10 +302,10 @@ public:
 
         return true;
     }
+    /// @}
 
-    /*
-     * Access
-     */
+    /// @name Access
+    /// @{
 
     /// Return the reference of value for key if key is in the map, else throw exception.
     V& operator[](const K& key) override
@@ -333,10 +332,10 @@ public:
 
         return data_[pos].first.value();
     }
+    /// @}
 
-    /*
-     * Iterator
-     */
+    /// @name Iterator
+    /// @{
 
     /// Return an iterator to the first element of the map.
     Map<K, V>::Iterator begin() override
@@ -359,10 +358,10 @@ public:
     {
         return typename Map<K, V>::ConstIterator(Iter<true>(data_ + capacity_, data_, data_ + capacity_));
     }
+    /// @}
 
-    /*
-     * Examination
-     */
+    /// @name Examination
+    /// @{
 
     /// Get the number of elements.
     int size() const override
@@ -383,10 +382,10 @@ public:
         int pos = probe_pos(key, false);
         return pos == -1 ? end() : typename Map<K, V>::ConstIterator(Iter<true>(data_ + pos, data_, data_ + capacity_));
     }
+    /// @}
 
-    /*
-     * Manipulation
-     */
+    /// @name Manipulation
+    /// @{
 
     /// Insert a new key-value pair into the map. Return whether the pair was newly inserted.
     bool insert(const K& key, const V& value) override
@@ -439,6 +438,8 @@ public:
             size_ = 0;
         }
     }
+
+    /// @}
 };
 
 } // namespace hellods
